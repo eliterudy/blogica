@@ -3,10 +3,11 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
-    "dev": "set NODE_ENV=development && start",
-    "prod": "set NODE_ENV=production && start"
+    "start": "nodemon ./bin/www",
+    "staging": "NODE_ENV=development nodemon ./bin/www",
+    "production": "NODE_ENV=production  nodemon ./bin/www"
   },
+  
   "dependencies": {
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",
