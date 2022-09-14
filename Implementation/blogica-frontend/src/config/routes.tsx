@@ -11,17 +11,18 @@ import { Dispatch } from "@reduxjs/toolkit";
 import { Modal, ModalBody, ModalFooter, ModalHeader, Button } from "reactstrap";
 import { useSelector, useDispatch } from "react-redux";
 
-/* component/screen inports */
+/* component/ inports */
 import Header from "../components/Header";
 import {
-  Home as HomeScreen,
-  SignIn as SignInScreen,
-  SignUp as SignUpScreen,
-  ContributorList as ContributorListScreen,
-  ArticleList as ArticleListScreen,
-  ArticleDetail as ArticleDetailScreen,
-  AuthorProfile as AuthorProfileScreen,
-  NotFound as NotFoundScreen,
+  Home,
+  Feeds,
+  SignIn,
+  SignUp,
+  ContributorList,
+  ArticleList,
+  ArticleDetail,
+  AuthorProfile,
+  NotFound,
 } from "../screens/index";
 import ScrollToTop from "../components/generic/scrollToTop";
 
@@ -33,108 +34,48 @@ const MainRouter = () => {
   let location = useLocation();
   const navigate = useNavigate();
 
-  const HomeRoutes = () => {
-    return (
-      <Routes>
-        <Route path="/" element={<HomeScreen />} />
-        <Route
-          path="/articleId/:articleId"
-          element={
-            <ScrollToTop>
-              <ArticleDetailScreen />
-            </ScrollToTop>
-          }
-        />
-        <Route
-          path="/authorId/:authorId"
-          element={
-            <ScrollToTop>
-              <AuthorProfileScreen />
-            </ScrollToTop>
-          }
-        />
-
-        {/* default route */}
-        <Route path="*" element={<Navigate to="/not-found" replace />} />
-      </Routes>
-    );
-  };
-
-  const ContributorRoutes = () => {
-    return (
-      <Routes>
-        <Route path="/" element={<ContributorListScreen />} />
-        <Route
-          path="/authorId/:authorId"
-          element={
-            <ScrollToTop>
-              <AuthorProfileScreen />
-            </ScrollToTop>
-          }
-        />
-        <Route
-          path="/articleId/:articleId"
-          element={
-            <ScrollToTop>
-              <ArticleDetailScreen />
-            </ScrollToTop>
-          }
-        />
-        <Route path="*" element={<Navigate to="/not-found" replace />} />
-      </Routes>
-    );
-  };
-
-  const ArticleRoute = () => {
-    return (
-      <Routes>
-        <Route path="/" element={<ContributorListScreen />} />
-        <Route
-          path="/authorId/:authorId"
-          element={
-            <ScrollToTop>
-              <AuthorProfileScreen />
-            </ScrollToTop>
-          }
-        />
-        <Route
-          path="/articleId/:articleId"
-          element={
-            <ScrollToTop>
-              <ArticleDetailScreen />
-            </ScrollToTop>
-          }
-        />
-        <Route path="*" element={<Navigate to="/not-found" replace />} />
-      </Routes>
-    );
-  };
-
   const MainRoutes = () => {
     const [isModalOpen, updateModalOpen] = useState(false);
     const toggleModal = () => {
       updateModalOpen(!isModalOpen);
     };
 
-    const state = useSelector((state: any) => {});
-    // const {} = state;
+    const state = useSelector((state: any) => {
+      // eslint-disable-next-line no-labels, no-label-var
+      return { user: true };
+    });
+    const { user } = state;
 
     return (
       <div>
         <Header modalCallback={() => toggleModal()} />
         <Routes>
-          {/* Home */}
-          <Route path="home/*" element={<HomeRoutes />} />
-
-          {/* Contributors */}
-          <Route path="recipes/*" element={<ContributorRoutes />} />
-
-          {/* My Profile */}
-          {/* <Route path="my-profile/*" element={<ProfileRoute />} /> */}
-
-          {/* Articles */}
-          <Route path="articles/*" element={<ArticleRoute />} />
-
+          <Route
+            path="/"
+            element={
+              <Navigate to={user ? "/main/feeds" : "/main/home"} replace />
+            }
+          />
+          <Route path="/home" element={<Home />} />
+          <Route path="/feeds" element={<Feeds />} />
+          <Route path="/contributors" element={<ContributorList />} />
+          <Route path="/articles" element={<ArticleList />} />
+          <Route
+            path="/articleId/:articleId"
+            element={
+              <ScrollToTop>
+                <ArticleDetail />
+              </ScrollToTop>
+            }
+          />
+          <Route
+            path="/authorId/:authorId"
+            element={
+              <ScrollToTop>
+                <AuthorProfile />
+              </ScrollToTop>
+            }
+          />
           {/* default route */}
           <Route path="*" element={<Navigate to="/not-found" replace />} />
         </Routes>
@@ -146,8 +87,8 @@ const MainRouter = () => {
     return (
       <div>
         <Routes>
-          <Route path="signin" element={<SignInScreen />} />
-          <Route path="signup" element={<SignUpScreen />} />
+          <Route path="/signin" element={<SignIn />} />
+          <Route path="/signup" element={<SignUp />} />
           {/* default route */}
           <Route path="*" element={<Navigate to="/not-found" replace />} />
         </Routes>
@@ -158,10 +99,11 @@ const MainRouter = () => {
   return (
     <div>
       <Routes>
-        <Route path={"auth/*"} element={<AuthRoutes />} />
+        <Route path="/" element={<Navigate to="/main" replace />} />
         <Route path={"main/*"} element={<MainRoutes />} />
-        <Route path={"not-found"} element={<NotFoundScreen />} />
-        <Route path="*" element={<Navigate to="/main/home" replace />} />
+        <Route path={"auth/*"} element={<AuthRoutes />} />
+        <Route path={"not-found"} element={<NotFound />} />
+        <Route path="*" element={<Navigate to="/not-found" replace />} />
       </Routes>
     </div>
   );

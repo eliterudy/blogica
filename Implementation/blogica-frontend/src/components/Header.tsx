@@ -103,10 +103,7 @@ const Header = ({ modalCallback }: any) => {
           )}
 
           {isTabletOrMobile && (
-            <NavbarBrand
-              className=" col-8 col-md-2 m-sm-0 p-sm-0"
-              href="/main/home"
-            >
+            <NavbarBrand className=" col-8 col-md-2 m-sm-0 p-sm-0" href="/">
               <div
                 className=" d-flex justify-content-center align-items-center"
                 style={{ marginLeft: 12 }}
@@ -131,7 +128,7 @@ const Header = ({ modalCallback }: any) => {
                   <NavLink
                     tag={RRNavLink}
                     className={"nav-link "}
-                    to="/main/co"
+                    to="/main/articles"
                   >
                     <div className=" d-flex flex-row justify-content-start justify-content-md-center align-items-center ">
                       <i
@@ -146,11 +143,7 @@ const Header = ({ modalCallback }: any) => {
               )}
               {user && (
                 <NavItem className=" ms-sm-2 flex-grow-1 flex-shrink-1 d-sm-flex flex-column justify-content-center">
-                  <NavLink
-                    tag={RRNavLink}
-                    className={"nav-link "}
-                    to="/main/home"
-                  >
+                  <NavLink tag={RRNavLink} className={"nav-link "} to="/">
                     <div className=" d-flex flex-row justify-content-start justify-content-md-center align-items-center ">
                       <i className="fa fa-home fa-lg me-2" />
                       <span className="mb-0 pb-0">Home</span>
@@ -162,7 +155,7 @@ const Header = ({ modalCallback }: any) => {
                 <NavLink
                   tag={RRNavLink}
                   className={"nav-link "}
-                  to="/main/home"
+                  to="/main/contributors"
                 >
                   <div className=" d-flex flex-row justify-content-start justify-content-md-center align-items-center ">
                     <i className="fa  fa-pencil-square-o fa-lg me-2 " />
@@ -175,7 +168,8 @@ const Header = ({ modalCallback }: any) => {
                   {/* <NavLink
                     tag={RRNavLink}
                     className={"nav-link  "}
-                    to="/main/home"
+                    to="/"
+
                   > */}
                   <div
                     onClick={() => updateUser(!user)}
@@ -198,7 +192,7 @@ const Header = ({ modalCallback }: any) => {
                   <NavLink
                     tag={RRNavLink}
                     className={"nav-link "}
-                    to="/main/home"
+                    to="/auth/signup"
                   >
                     <div className=" d-flex flex-row justify-content-start justify-content-md-center align-items-center ">
                       <i
@@ -215,7 +209,7 @@ const Header = ({ modalCallback }: any) => {
                   <NavLink
                     tag={RRNavLink}
                     className={"nav-link "}
-                    to="/main/co"
+                    to="/auth/signin"
                   >
                     <div className=" d-flex flex-row justify-content-start justify-content-md-center align-items-center ">
                       <i
@@ -234,7 +228,7 @@ const Header = ({ modalCallback }: any) => {
                   <NavLink
                     tag={RRNavLink}
                     className={"nav-link "}
-                    to="/main/co"
+                    to="/main/articles"
                   >
                     <div className=" d-flex flex-row justify-content-start justify-content-md-center align-items-center ">
                       <i
@@ -249,59 +243,51 @@ const Header = ({ modalCallback }: any) => {
               )}
 
               {user && (
-                <NavItem className=" ms-sm-2 flex-grow-1 flex-shrink-1 d-sm-flex flex-column justify-content-center">
-                  <NavLink
-                    tag={RRNavLink}
-                    className={"nav-link "}
-                    to="/main/co"
-                  >
-                    <div className=" d-flex flex-row justify-content-start justify-content-md-center align-items-center ">
-                      <Dropdown
-                        isOpen={isDropdownOpen}
-                        toggle={() => {
-                          console.log("Here", isDropdownOpen);
-                          updateDropdown(!isDropdownOpen);
+                <div className=" ms-sm-2 flex-grow-1 flex-shrink-1 d-sm-flex flex-column justify-content-center">
+                  <div className=" d-flex flex-row justify-content-start justify-content-md-center align-items-center ">
+                    <Dropdown
+                      isOpen={isDropdownOpen}
+                      toggle={() => {
+                        updateDropdown(!isDropdownOpen);
+                      }}
+                    >
+                      <DropdownToggle
+                        style={{
+                          backgroundColor: avatarColor,
+                          borderRadius: 40,
+                          height: 40,
+                          width: 40,
+                          padding: 0,
                         }}
                       >
-                        <DropdownToggle
+                        <Avatar size={"md"} name="Gavin D'mello" />
+                      </DropdownToggle>
+
+                      <DropdownMenu style={{ marginTop: 14, marginRight: -15 }}>
+                        <div
+                          className="mx-3 mt-1 mb-2"
+                          onClick={() =>
+                            updateMyProfileDropdown(!myProfileDropdown)
+                          }
                           style={{
-                            backgroundColor: avatarColor,
-                            borderRadius: 40,
-                            height: 40,
-                            width: 40,
-                            padding: 0,
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
                           }}
                         >
-                          <Avatar size={"md"} name="Gavin D'mello" />
-                        </DropdownToggle>
+                          <span> My Profile </span>
+                          {myProfileDropdown ? (
+                            <i className="fa fa-chevron-down " />
+                          ) : (
+                            <i className="fa fa-chevron-right " />
+                          )}
+                        </div>
 
-                        <DropdownMenu
-                          style={{ marginTop: 14, marginRight: -15 }}
-                        >
-                          <div
-                            className="mx-3 mt-1 mb-2"
-                            onClick={() =>
-                              updateMyProfileDropdown(!myProfileDropdown)
-                            }
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              alignItems: "center",
-                            }}
-                          >
-                            <span> My Profile </span>
-                            {myProfileDropdown ? (
-                              <i className="fa fa-chevron-down " />
-                            ) : (
-                              <i className="fa fa-chevron-right " />
-                            )}
-                          </div>
-
-                          {myProfileDropdown && (
-                            <div>
-                              <DropdownItem divider />
-                              {/* For v2 */}
-                              {/* <DropdownItem
+                        {myProfileDropdown && (
+                          <div>
+                            <DropdownItem divider />
+                            {/* For v2 */}
+                            {/* <DropdownItem
                           onClick={() => {
                             navigate('/main/my-profile/', {
                               state: {tab: 0},
@@ -309,33 +295,32 @@ const Header = ({ modalCallback }: any) => {
                           }}>
                           My Recipes
                         </DropdownItem> */}
-                              <DropdownItem
-                                onClick={() => {
-                                  navigate("/main/my-profile/", {
-                                    state: { tab: 1 },
-                                  });
-                                }}
-                              >
-                                Recent Viewed
-                              </DropdownItem>
-                              <DropdownItem
-                                onClick={() => {
-                                  navigate("/main/my-profile/", {
-                                    state: { tab: 2 },
-                                  });
-                                }}
-                              >
-                                Saved Recipes
-                              </DropdownItem>
-                            </div>
-                          )}
-                          <DropdownItem divider />
-                          <DropdownItem onClick={() => {}}>Logout</DropdownItem>
-                        </DropdownMenu>
-                      </Dropdown>{" "}
-                    </div>
-                  </NavLink>
-                </NavItem>
+                            <DropdownItem
+                              onClick={() => {
+                                navigate("/main/my-profile/", {
+                                  state: { tab: 1 },
+                                });
+                              }}
+                            >
+                              Recent Viewed
+                            </DropdownItem>
+                            <DropdownItem
+                              onClick={() => {
+                                navigate("/main/my-profile/", {
+                                  state: { tab: 2 },
+                                });
+                              }}
+                            >
+                              Saved Recipes
+                            </DropdownItem>
+                          </div>
+                        )}
+                        <DropdownItem divider />
+                        <DropdownItem onClick={() => {}}>Logout</DropdownItem>
+                      </DropdownMenu>
+                    </Dropdown>{" "}
+                  </div>
+                </div>
               )}
             </Nav>
           </Collapse>
