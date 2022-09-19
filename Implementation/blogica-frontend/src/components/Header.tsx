@@ -26,19 +26,16 @@ import { NavLink as RRNavLink, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Dispatch } from "@reduxjs/toolkit";
 import { useMediaQuery } from "react-responsive";
-import { Avatar, AvatarGroup } from "@chakra-ui/avatar";
 
 /* component/screen inports */
 
 /* helper imports */
 import { cssHover } from "./generic/hoverProps";
 import { icons } from "../config/configuration";
-import { randomColorGenerator } from "../utils/generic";
 import Generic from "../components/generic/GenericComponents";
 import { toggler } from "../utils/generic";
 import actions from "../redux/actionReducers/index";
 
-const avatarColor = randomColorGenerator();
 const Header = ({ modalCallback }: any) => {
   const dispatch: Dispatch<any> = useDispatch();
   const isTabletOrMobile = useMediaQuery({ query: "(max-width: 767px)" });
@@ -74,9 +71,7 @@ const Header = ({ modalCallback }: any) => {
   const [myProfileDropdown, updateMyProfileDropdown] = useState(false);
   const [user, updateUser] = useState(false);
 
-  const state = useSelector((state: any) => {
-    return {};
-  });
+  const state = useSelector((state: any) => {});
 
   return (
     <div className="col-12">
@@ -252,15 +247,9 @@ const Header = ({ modalCallback }: any) => {
                       }}
                     >
                       <DropdownToggle
-                        style={{
-                          backgroundColor: avatarColor,
-                          borderRadius: 40,
-                          height: 40,
-                          width: 40,
-                          padding: 0,
-                        }}
+                        style={{ backgroundColor: "white", border: "0px" }}
                       >
-                        <Avatar size={"md"} name="Gavin D'mello" />
+                        <Generic.Avatar imageUrl="" fullname="Gavin D'mello" />
                       </DropdownToggle>
 
                       <DropdownMenu style={{ marginTop: 14, marginRight: -15 }}>
@@ -293,7 +282,7 @@ const Header = ({ modalCallback }: any) => {
                               state: {tab: 0},
                             });
                           }}>
-                          My Recipes
+                          My Articles
                         </DropdownItem> */}
                             <DropdownItem
                               onClick={() => {
@@ -311,7 +300,7 @@ const Header = ({ modalCallback }: any) => {
                                 });
                               }}
                             >
-                              Saved Recipes
+                              Saved Articles
                             </DropdownItem>
                           </div>
                         )}

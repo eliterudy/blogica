@@ -13,7 +13,13 @@ const images: any = {
   no_internet: require("../assets/images/no_internet.png"),
 };
 
-const gifs: any = {};
+const gifs: any = {
+  loader: require("../assets/gifs/loader.gif"),
+};
+
+const constants: any = {
+  TEXT_SHIMMER_FILLER: "shimmer text filler",
+};
 
 const svgs: any = {};
 
@@ -41,6 +47,7 @@ const colors = [
   "#3D2C8D",
   "#B42B51",
   "#334756",
+  "#C40042",
 ];
 
-export { colorCodes, icons, images, gifs, svgs, themes, colors };
+export { colorCodes, constants, icons, images, gifs, svgs, themes, colors };

@@ -1,55 +1,45 @@
-import {To} from 'react-router-dom';
+import { To } from "react-router-dom";
 
-export interface RecipeDetails {
-  _id: string;
+export interface Article {
+  _id: number;
   title: string;
-  ingredients: string[];
-  instructions: string[];
   imageUrl: string;
-  cuisine: string;
-  course: string;
-  diet: string;
-  prepTimeInMins: number;
-  cookTimeInMins: number;
-  totalTimeInMins: number;
-  servings: number;
-  featured: boolean;
-  isFavorite?: boolean;
+  description: string;
   author: User;
+  isBookmarked?: boolean;
+  numberOfLikes: number;
+  numberOfViews?: number;
   comments?: any;
+  created: string;
+  updated: string;
 }
 
-export interface RecipeListElement {
-  _id: string;
+export interface ArticleListElement {
+  _id: number;
   title: string;
   imageUrl: string;
-  cuisine: string;
-  course: string;
-  diet: string;
-  prepTimeInMins: number;
-  cookTimeInMins: number;
-  totalTimeInMins: number;
-  servings: number;
-  featured: boolean;
-  isFavorite?: boolean;
+  description: string;
   author: User;
+  isBookmarked?: boolean;
+  created: string;
+  updated: string;
 }
 
-export interface RecipeCardProps {
-  data: RecipeListElement;
+export interface ArticleCardProps {
+  article: ArticleListElement | null;
   index: number;
   redirect: To;
 }
 
-export interface Favorites {
-  recipes: string[];
+export interface Bookmarks {
+  articles: string[];
 }
 
 export interface Recents {
-  recipes: string[];
+  articles: string[];
 }
 export interface Published {
-  recipes: string[];
+  articles: string[];
 }
 
 export interface User {
@@ -58,11 +48,9 @@ export interface User {
   lastname: string;
   fullname: string;
   username: string;
-  favorites: Favorites;
-  recents: Recents;
+  bookmarks: Bookmarks;
   published: Published;
   isAdmin: boolean;
-  isVerified?: boolean;
   email: string;
 }
 
@@ -72,7 +60,7 @@ export interface CheckboxProps {
   onChange: () => void;
 }
 
-export interface RecipeFilters {
+export interface ArticleFilters {
   cuisine?: string[];
   course?: string[];
   diet?: string[];

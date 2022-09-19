@@ -35,6 +35,7 @@ const MainRouter = () => {
   const navigate = useNavigate();
 
   const MainRoutes = () => {
+    console.log("here");
     const [isModalOpen, updateModalOpen] = useState(false);
     const toggleModal = () => {
       updateModalOpen(!isModalOpen);
@@ -42,12 +43,21 @@ const MainRouter = () => {
 
     const state = useSelector((state: any) => {
       // eslint-disable-next-line no-labels, no-label-var
-      return { user: true };
+      return { user: false };
     });
     const { user } = state;
 
+    // useEffect(() => {
+    //   var userToken = localStorage.getItem("token");
+    //   if (user) {
+    //     navigate("/main/feeds");
+    //   } else {
+    //     navigate("/main/home");
+    //   }
+    // }, [location.pathname, user]);
+
     return (
-      <div>
+      <div className="vh-100 d-flex flex-column">
         <Header modalCallback={() => toggleModal()} />
         <Routes>
           <Route
@@ -97,7 +107,7 @@ const MainRouter = () => {
   };
 
   return (
-    <div>
+    <div className="">
       <Routes>
         <Route path="/" element={<Navigate to="/main" replace />} />
         <Route path={"main/*"} element={<MainRoutes />} />
