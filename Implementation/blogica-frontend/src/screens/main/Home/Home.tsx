@@ -1,6 +1,6 @@
 /* package inports */
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, ChangeEvent } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
@@ -33,12 +33,18 @@ import { useMediaQuery } from "react-responsive";
 /* helper imports */
 import { cssHover } from "../../../components/generic/hoverProps";
 
-import { icons } from "../../../config/configuration";
+import { icons, images } from "../../../config/configuration";
 import Generic from "../../../components/generic/GenericComponents";
 import { toggler } from "../../../utils/generic";
 import actions from "../../../redux/actionReducers/index";
 import LargeArticleCard from "./LargeArticleCard";
 import WideArticleCard from "./WideArticleCard";
+import { constants } from "../../../config/configuration";
+import { ArticleListElement } from "../../../config/types";
+import LargeShimmerCard from "./LargeShimmerCard";
+import WideShimmerCard from "./WideShimmerCard";
+import RankArticleCard from "./RankArticleCard";
+import RankShimmerCard from "./RankShimmerCard";
 
 const articleDataset = [
   {
@@ -102,7 +108,7 @@ const articleDataset = [
   {
     _id: 2,
     title: "Is 18 and 34 too much of an age gap??",
-    imageUrl: "https://picsum.photos/seed/picsum/400/400",
+    imageUrl: "https://picsum.photos/400/400/?random=1",
     description: `Especially remember Rule 1: Be polite and civil.
 
       Be polite and courteous to each other. Do not be mean, insulting or disrespectful to any other user on this subreddit.
@@ -127,10 +133,11 @@ const articleDataset = [
   },
   {
     _id: 3,
-    title: "Article 3",
-    imageUrl: "https://picsum.photos/seed/picsum/400/400",
-    description:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. ",
+    title: "NFL news roundup: Latest league updates from Monday, Sept. 19",
+    imageUrl: "https://picsum.photos/400/400/?random=2",
+    description: `Sleep literally "cleans" your brain (at least, that is the commonly accepted understanding). https://www.health.harvard.edu/mind-and-mood/are-toxins-flushed-out-of-the-brain-during-sleep
+
+    It's not too many days without sleep, and a person can start to have mental illness concerns. https://www.bbc.com/future/article/20150220-how-long-can-we-stay-awake`,
     author: {
       _id: 21,
       firstname: "Gavin",
@@ -147,8 +154,9 @@ const articleDataset = [
   },
   {
     _id: 4,
-    title: "Article 4",
-    imageUrl: "https://picsum.photos/seed/picsum/400/400",
+    title:
+      "Fantasy football news and notes - Trey Lance out, James Robinson steps up    ",
+    imageUrl: "https://picsum.photos/400/400/?random=3",
     description:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. ",
     author: {
@@ -167,8 +175,9 @@ const articleDataset = [
   },
   {
     _id: 5,
-    title: "Article 5",
-    imageUrl: "https://picsum.photos/seed/picsum/400/400",
+    title:
+      "Britain's state funeral, Hurricane Fiona, Biden's comments on Taiwan",
+    imageUrl: "https://picsum.photos/400/400/?random=4",
     description:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. ",
     author: {
@@ -187,8 +196,8 @@ const articleDataset = [
   },
   {
     _id: 6,
-    title: "Article 6",
-    imageUrl: "https://picsum.photos/seed/picsum/400/400",
+    title: "Teen killed; Queen Elizabeth; Tax rebates",
+    imageUrl: "https://picsum.photos/400/400/?random=5",
     description:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. ",
     author: {
@@ -207,8 +216,9 @@ const articleDataset = [
   },
   {
     _id: 7,
-    title: "Article 7",
-    imageUrl: "https://picsum.photos/seed/picsum/400/400",
+    title:
+      "UAMS Ramping Up ‘Resource Optimization’ Efforts for Fiscal Year 2023",
+    imageUrl: "https://picsum.photos/400/400/?random=6",
     description:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. ",
     author: {
@@ -227,8 +237,8 @@ const articleDataset = [
   },
   {
     _id: 8,
-    title: "Article 8",
-    imageUrl: "https://picsum.photos/seed/picsum/400/400",
+    title: "Annual MED Week Slated for October 5",
+    imageUrl: "https://picsum.photos/400/400/?random=7",
     description:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. ",
     author: {
@@ -247,8 +257,8 @@ const articleDataset = [
   },
   {
     _id: 9,
-    title: "Article 9",
-    imageUrl: "https://picsum.photos/seed/picsum/400/400",
+    title: "Climate law spurs CCS at new West Virginia gas plant",
+    imageUrl: "https://picsum.photos/400/400/?random=8",
     description:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. ",
     author: {
@@ -267,8 +277,28 @@ const articleDataset = [
   },
   {
     _id: 10,
-    title: "Article 10",
-    imageUrl: "https://picsum.photos/seed/picsum/400/400",
+    title: "Iconic Russian singer asks to be named ‘foreign agent’",
+    imageUrl: "https://picsum.photos/400/400/?random=9",
+    description:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. ",
+    author: {
+      _id: 21,
+      firstname: "Gavin",
+      lastname: "D'mello",
+      fullname: "Gavin D'mello",
+      username: "gavin1040",
+      bookmarks: { articles: [] },
+      published: { articles: [] },
+      isAdmin: false,
+      email: "gavin@gmail.ccom",
+    },
+    created: "2022-09-16T12:59-0500",
+    updated: "2022-09-16T12:59-0500",
+  },
+  {
+    _id: 11,
+    title: "Fiona slams Dominican Republic after pounding Puerto Rico",
+    imageUrl: "https://picsum.photos/400/400/?random=9",
     description:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. ",
     author: {
@@ -290,11 +320,38 @@ const articleDataset = [
 const Home = (props: any) => {
   const navigate = useNavigate();
   const [loading, isLoading] = useState(false);
-  const [articles, updateArticles] = useState(articleDataset);
+  const [articles, updateArticles] = useState<null | ArticleListElement[]>(
+    articleDataset
+  );
+  const [selectFilter, updateSelectFilter] = useState("top");
+  const refToSpecialsUsingSmoothScroll = useRef() as React.MutableRefObject<
+    HTMLInputElement
+  >;
   const state = useSelector((state: any) => {
     return { user: true };
   });
   const { user } = state;
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+    updateSelectFilter(e.target.value);
+  };
+
+  const onSearch = (value: string) => {
+    console.log("search:", value);
+  };
+
+  const fetchArticles = async () => {
+    await updateArticles(null);
+    await isLoading(true);
+    setTimeout(async () => {
+      await updateArticles(articleDataset);
+      isLoading(false);
+    }, 1200);
+  };
+  const scrollTo = (ref: any) => {
+    if (ref && ref.current /* + other conditions */) {
+      ref.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
 
   useEffect(() => {
     // if (user) navigate("/main/feeds");
@@ -302,32 +359,143 @@ const Home = (props: any) => {
   }, []);
 
   return (
-    <div className=" container col col-12 py-4 ">
-      {/* {loading && <Generic.Loader message="Loading" />} */}
+    <div className=" col-12">
+      <div
+        id="intro"
+        style={{
+          backgroundImage: `url(${images.blog_background})`,
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+        className="noselect bg-image shadow-5-strong vh-100 col-12"
+      >
+        <div
+          className="noselect mask vh-100 col-12"
+          style={{ backgroundColor: "rgba(0, 0, 0, 0.85)" }}
+        >
+          <div className="noselect container d-flex align-items-center justify-content-center text-center h-100">
+            <div className="noselect text-white">
+              <h1
+                className="noselect mb-3"
+                style={{
+                  fontFamily: "Kaushan Script",
+                  fontWeight: 400,
+                  fontSize: "100px",
+                }}
+              >
+                {constants.INTRO_BANNER_TITLE}
+              </h1>
+              <h5 className=" mb-4"> {constants.INTRO_BANNER_MESSAGE}</h5>
 
-      <div className="row  col-12 col-md-8 border-end  ">
-        <div className="col-12 col-md-6 p-4 p-md-3 ">
-          <p className="">Home</p>
-
-          <LargeArticleCard
-            article={articles[0]}
-            index={0}
-            redirect={`/main/recipeId/${articles[0]._id}`}
-          />
-        </div>
-        <div className="col-12 col-md-6 p-4 p-md-3 ">
-          {articles.slice(1, 5).map((article, index) => (
-            <div className="p-2">
-              <WideArticleCard
-                article={null}
-                index={1}
-                redirect={`/main/recipeId/${articles[1]._id}`}
-              />
+              <div
+                className=" btn btn-outline-light btn-lg m-2"
+                onClick={() => navigate("/main/articles")}
+              >
+                Start Reading
+              </div>
+              <div
+                className=" btn btn-outline-light btn-lg m-2"
+                onClick={() => scrollTo(refToSpecialsUsingSmoothScroll)}
+              >
+                Trending Articles
+              </div>
             </div>
-          ))}
+          </div>
         </div>
       </div>
-      <div className=" row col-12 col-md-4 "></div>
+      <div className="container col-12">
+        <h1
+          className="noselect text-center my-5"
+          style={{ fontWeight: "bold" }}
+          ref={refToSpecialsUsingSmoothScroll}
+        >
+          TRENDING ARTICLES
+        </h1>
+        <div className=" row col-12 py-4 m-0 ">
+          {/* {loading && <Generic.Loader message="Loading" />} */}
+
+          <div className="row  col-12 col-md-8 border-end  ">
+            <div className="col-12 col-md-6 p-4 p-md-3 ">
+              {articles && articles.length > 0 && !loading ? (
+                <LargeArticleCard
+                  article={articles && articles[0]}
+                  index={0}
+                  redirect={`/main/recipeId/${articles[0]._id}`}
+                />
+              ) : (
+                <LargeShimmerCard />
+              )}
+            </div>
+            <div className="col-12 col-md-6 p-4 p-md-3 ">
+              {articles && !loading
+                ? articles
+                    .slice(1, 5)
+                    .map((article: ArticleListElement, index: number) => (
+                      <div className="p-2">
+                        <WideArticleCard
+                          key={index}
+                          article={article}
+                          index={index + 1}
+                          redirect={`/main/recipeId/${article._id}`}
+                        />
+                      </div>
+                    ))
+                : new Array(4).fill(0).map((shimmer, index) => (
+                    <div className="pb-3">
+                      <WideShimmerCard />
+                    </div>
+                  ))}
+            </div>
+          </div>
+          <div className=" col col-12 col-md-4  ps-5 py-2">
+            <h6 style={{ fontWeight: "bold" }}>FILTER ARTICLES</h6>
+            <Input
+              type="select"
+              name="select"
+              className="col-12"
+              style={{ padding: 10 }}
+              onChange={(e) => onChange(e)}
+              value={selectFilter}
+            >
+              <option>Top</option>
+              <option>New</option>
+            </Input>
+            <p className="subMessages my-2">
+              {constants.FILTER_ARTICLE_NOTES}{" "}
+            </p>
+            <Button
+              size="md"
+              className="w-100 bg-black"
+              onClick={() => fetchArticles()}
+            >
+              Filter
+            </Button>
+          </div>
+        </div>
+        <div className=" col col-12 border-top">
+          <div className="row col-12 p-4 p-md-3">
+            {articles && !loading
+              ? articles
+                  .slice(5, 13)
+                  .map((article: ArticleListElement, index: number) => (
+                    <div className=" d-flex  col-12 col-md-4">
+                      <RankArticleCard
+                        key={index}
+                        article={article}
+                        index={index}
+                        redirect={`/main/recipeId/${article._id}`}
+                      />
+                    </div>
+                  ))
+              : new Array(4).fill(0).map((shimmer, index) => (
+                  <div className="pb-3">
+                    <RankShimmerCard />
+                  </div>
+                ))}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
