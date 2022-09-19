@@ -11,6 +11,7 @@ const images: any = {
   route_not_found: require("../assets/images/404-error.png"),
   server_down: require("../assets/images/server-down.jpg"),
   no_internet: require("../assets/images/no_internet.png"),
+  blog_background: require("../assets/images/blog_background.jpeg"),
 };
 
 const gifs: any = {
@@ -18,7 +19,11 @@ const gifs: any = {
 };
 
 const constants: any = {
-  TEXT_SHIMMER_FILLER: "shimmer text filler",
+  TEXT_SHIMMER_FILLER: "text shimmer",
+  FILTER_ARTICLE_NOTES: "View articles based on the filter categories.",
+  INTRO_BANNER_TITLE: "Stay Curious & Get a Read",
+  INTRO_BANNER_MESSAGE:
+    "Discover stories, thinking, and expertise from writers on any topic.",
 };
 
 const svgs: any = {};

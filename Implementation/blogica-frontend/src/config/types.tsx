@@ -26,7 +26,7 @@ export interface ArticleListElement {
 }
 
 export interface ArticleCardProps {
-  article: ArticleListElement | null;
+  article: ArticleListElement;
   index: number;
   redirect: To;
 }

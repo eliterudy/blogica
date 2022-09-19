@@ -60,6 +60,17 @@
   animation: k1 1.2s ease-in-out infinite;
 }
 
+.footer{
+  background-color: rgb(0, 0, 0);
+  margin:0px auto;
+  padding: 8px 0px 8px 0px;
+}
+
+.subMessages {
+  color: #888;
+  font-style: italic;
+  font-size: 13px;
+}
 
 
 
