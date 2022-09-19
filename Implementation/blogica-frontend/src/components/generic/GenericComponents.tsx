@@ -18,8 +18,8 @@ const Generic = {
   Avatar: ({ imageUrl, fullname }: { imageUrl: string; fullname: string }) => {
     return (
       <Avatar
-        size="30"
-        round="30px"
+        size="25"
+        round="25px"
         src="http://www.gravatar.com/avatar/a16a38cdfe8b2cbd38e8a56ab93238d3"
         name="Wim Mostmans"
       />

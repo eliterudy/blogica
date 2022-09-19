@@ -29,6 +29,7 @@ import ScrollToTop from "../components/generic/scrollToTop";
 /* helper imports */
 import reduxApiCallers from "../redux/thunks/reduxApiCallers";
 import actions from "../redux/actionReducers/index";
+import Footer from "../components/Footer";
 
 const MainRouter = () => {
   let location = useLocation();
@@ -57,7 +58,7 @@ const MainRouter = () => {
     // }, [location.pathname, user]);
 
     return (
-      <div className="vh-100 d-flex flex-column">
+      <div className="vh-100 col-12 d-flex flex-column">
         <Header modalCallback={() => toggleModal()} />
         <Routes>
           <Route
@@ -89,6 +90,7 @@ const MainRouter = () => {
           {/* default route */}
           <Route path="*" element={<Navigate to="/not-found" replace />} />
         </Routes>
+        <Footer />
       </div>
     );
   };
