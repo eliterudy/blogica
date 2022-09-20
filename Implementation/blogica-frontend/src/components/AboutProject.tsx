@@ -1,7 +1,7 @@
 import React from "react";
-import { ArticleCardProps } from "../../../config/types";
-import Generic from "../../../components/generic/GenericComponents";
-import { constants } from "../../../config/configuration";
+import { ArticleCardProps } from "../config/types";
+import Generic from "./generic/GenericComponents";
+import { constants } from "../config/configuration";
 import moment from "moment";
 import {
   Navbar,

@@ -7,22 +7,21 @@ export interface Article {
   description: string;
   author: User;
   isBookmarked?: boolean;
-  numberOfLikes: number;
+  numberOfLikes?: number;
   numberOfViews?: number;
   comments?: any;
   created: string;
   updated: string;
 }
 
-export interface ArticleListElement {
-  _id: number;
-  title: string;
-  imageUrl: string;
-  description: string;
-  author: User;
-  isBookmarked?: boolean;
-  created: string;
-  updated: string;
+export interface ArticleListElement extends Article {}
+
+export interface ContributorListElement extends User {}
+
+export interface ContributorCardProps {
+  contributor: ContributorListElement;
+  index: number;
+  redirect: To;
 }
 
 export interface ArticleCardProps {
@@ -38,6 +37,7 @@ export interface Bookmarks {
 export interface Recents {
   articles: string[];
 }
+
 export interface Published {
   articles: string[];
 }
@@ -48,10 +48,14 @@ export interface User {
   lastname: string;
   fullname: string;
   username: string;
+  bio: string;
+  imageUrl: string;
   bookmarks: Bookmarks;
   published: Published;
   isAdmin: boolean;
   email: string;
+  created: string;
+  updated: string;
 }
 
 export interface CheckboxProps {

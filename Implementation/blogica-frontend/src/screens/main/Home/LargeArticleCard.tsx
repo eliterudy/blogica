@@ -54,7 +54,10 @@ const LargeArticleCard = (cardProps: ArticleCardProps) => {
           }}
         ></div>
         <div className=" mt-3 d-flex align-items-center">
-          <Generic.Avatar imageUrl="" fullname="Gavin D'mello" />
+          <Generic.Avatar
+            imageUrl={article.author.imageUrl}
+            fullname="Gavin D'mello"
+          />
           <a className="ms-2" href={`/main/authorId/${article.author._id}`}>
             <span
               className="text-primary"

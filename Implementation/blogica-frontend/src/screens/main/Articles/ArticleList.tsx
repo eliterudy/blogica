@@ -31,12 +31,12 @@ import { useMediaQuery } from "react-responsive";
 /* component/screen inports */
 
 /* helper imports */
-import { cssHover } from "../../components/generic/hoverProps";
+import { cssHover } from "../../../components/generic/hoverProps";
 
-import { icons } from "../../config/configuration";
-import Generic from "../../components/generic/GenericComponents";
-import { toggler } from "../../utils/generic";
-import actions from "../../redux/actionReducers/index";
+import { icons } from "../../../config/configuration";
+import Generic from "../../../components/generic/GenericComponents";
+import { toggler } from "../../../utils/generic";
+import actions from "../../../redux/actionReducers/index";
 
 const ArticleList = (props: any) => {
   const navigate = useNavigate();

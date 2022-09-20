@@ -21,7 +21,10 @@ const RankArticleCard = (cardProps: ArticleCardProps) => {
       </h2>
       <div className="">
         <div className="mt-1 col-12 ">
-          <Generic.Avatar imageUrl="" fullname="Gavin D'mello" />
+          <Generic.Avatar
+            imageUrl={article.author.imageUrl}
+            fullname="Gavin D'mello"
+          />
           <a className="ms-2" href={`/main/authorId/${article.author._id}`}>
             <span className="">{"@" + article.author.username}</span>
           </a>

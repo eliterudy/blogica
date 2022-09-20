@@ -18,7 +18,10 @@ const WideArticleCard = (cardProps: ArticleCardProps) => {
       <div className=" d-flex mb-2">
         <div className="col-8 pe-4">
           <div className=" d-flex flex-row align-items-center">
-            <Generic.Avatar imageUrl="" fullname="Gavin D'mello" />
+            <Generic.Avatar
+              imageUrl={article.author.imageUrl}
+              fullname="Gavin D'mello"
+            />
             <a className="ms-2" href={`/main/authorId/${article.author._id}`}>
               <span className="">{"@" + article.author.username}</span>
             </a>
