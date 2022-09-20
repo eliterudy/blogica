@@ -405,7 +405,7 @@ const Home = (props: any) => {
           </div>
         </div>
       </div>
-      <div className="col-12 container">
+      <div className="col-12 px-5">
         <h1
           className=" text-center pt-5 pb-2"
           style={{ fontWeight: "bold" }}
@@ -416,7 +416,7 @@ const Home = (props: any) => {
         <div className=" row col-12 py-2 m-0 ">
           {/* {loading && <Generic.Loader message="Loading" />} */}
 
-          <div className="col col-12  col-md-9 p-0 border-end ">
+          <div className="col col-12  col-lg-9 p-0  ">
             <div className="row col-12  m-0">
               <div className="col-12 col-md-6 p-4 p-md-3 ">
                 {articles && articles.length > 0 && !loading ? (
@@ -451,7 +451,7 @@ const Home = (props: any) => {
               </div>
             </div>
           </div>
-          <div className=" col-12 col-md-3 px-4 py-2 d-none d-md-flex">
+          <div className=" col-12 col-md-3 px-4 py-2 d-none d-lg-flex border-start">
             <div className="col col-12">
               <h6 style={{ fontWeight: "bold" }}>FILTER ARTICLES</h6>
               <Input
@@ -478,7 +478,11 @@ const Home = (props: any) => {
             </div>
           </div>
         </div>
-        <div className=" col col-12 border-top">
+        <div className=" col col-12 border-top pt-4">
+          <div className="d-flex flex-row">
+            <i className="fa fa-cubes fa-lg me-2"></i>
+            <h6 style={{ fontWeight: "bold" }}>MORE TRENDING ARTICLES</h6>
+          </div>
           <div className="row col-12 p-4 p-md-3">
             {articles && !loading
               ? articles
