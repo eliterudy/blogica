@@ -41,7 +41,7 @@ const LargeArticleCard = (cardProps: ArticleCardProps) => {
     >
       <div className="col-12">
         <div
-          className="noselect w-100 img-fluid center"
+          className=" w-100 img-fluid center"
           style={{
             borderTopRightRadius: 4,
             borderTopLeftRadius: 4,

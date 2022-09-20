@@ -4,7 +4,7 @@ import { constants } from "../../../config/configuration";
 const LargeShimmerCard = () => (
   <div className="col-12 shimmer">
     <div
-      className="noselect w-100 img-fluid center shimmer-bg"
+      className=" w-100 img-fluid center shimmer-bg"
       style={{
         borderTopRightRadius: 4,
         borderTopLeftRadius: 4,

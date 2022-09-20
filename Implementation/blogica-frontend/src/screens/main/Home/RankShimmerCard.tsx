@@ -1,10 +1,16 @@
 import React from "react";
 import { constants } from "../../../config/configuration";
 
-const RankShimmerCard = () => {
+const RankShimmerCard = ({ index }: { index: number }) => {
   return (
-    <div className=" d-flex shimmer">
-      <div className="col-8 pe-4">
+    <div
+      className="col-12  py-3  shimmer"
+      style={{ textDecoration: "none", color: "black" }}
+    >
+      <h2 className=" pe-3 " style={{ color: "#999", fontWeight: "bold" }}>
+        {index + 6}
+      </h2>
+      <div className="">
         <div className=" d-flex align-items-center">
           <p
             className=" col-6 shimmer-bg mt-0 mb-2 py-0"
@@ -34,14 +40,6 @@ const RankShimmerCard = () => {
             {constants.TEXT_SHIMMER_FILLER}
           </p>
         </div>
-      </div>
-      <div className="col-4 row align-items-center justify-content-center">
-        <div
-          className=" shimmer-bg"
-          style={{
-            aspectRatio: "1/1",
-          }}
-        ></div>
       </div>
     </div>
   );

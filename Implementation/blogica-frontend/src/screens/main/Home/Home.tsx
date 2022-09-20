@@ -45,6 +45,7 @@ import LargeShimmerCard from "./LargeShimmerCard";
 import WideShimmerCard from "./WideShimmerCard";
 import RankArticleCard from "./RankArticleCard";
 import RankShimmerCard from "./RankShimmerCard";
+import AboutProjectCard from "./AboutProjectCard";
 
 const articleDataset = [
   {
@@ -368,16 +369,16 @@ const Home = (props: any) => {
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
-        className="noselect bg-image shadow-5-strong vh-100 col-12"
+        className=" bg-image shadow-5-strong vh-100 col-12"
       >
         <div
-          className="noselect mask vh-100 col-12"
+          className=" mask vh-100 col-12"
           style={{ backgroundColor: "rgba(0, 0, 0, 0.85)" }}
         >
-          <div className="noselect container d-flex align-items-center justify-content-center text-center h-100">
-            <div className="noselect text-white">
+          <div className=" container d-flex align-items-center justify-content-center text-center h-100">
+            <div className=" text-white">
               <h1
-                className="noselect mb-3"
+                className=" mb-3"
                 style={{
                   fontFamily: "Kaushan Script",
                   fontWeight: 400,
@@ -404,73 +405,77 @@ const Home = (props: any) => {
           </div>
         </div>
       </div>
-      <div className="container col-12">
+      <div className="col-12 container">
         <h1
-          className="noselect text-center my-5"
+          className=" text-center pt-5 pb-2"
           style={{ fontWeight: "bold" }}
           ref={refToSpecialsUsingSmoothScroll}
         >
           TRENDING ARTICLES
         </h1>
-        <div className=" row col-12 py-4 m-0 ">
+        <div className=" row col-12 py-2 m-0 ">
           {/* {loading && <Generic.Loader message="Loading" />} */}
 
-          <div className="row  col-12 col-md-8 border-end  ">
-            <div className="col-12 col-md-6 p-4 p-md-3 ">
-              {articles && articles.length > 0 && !loading ? (
-                <LargeArticleCard
-                  article={articles && articles[0]}
-                  index={0}
-                  redirect={`/main/recipeId/${articles[0]._id}`}
-                />
-              ) : (
-                <LargeShimmerCard />
-              )}
-            </div>
-            <div className="col-12 col-md-6 p-4 p-md-3 ">
-              {articles && !loading
-                ? articles
-                    .slice(1, 5)
-                    .map((article: ArticleListElement, index: number) => (
-                      <div className="p-2">
-                        <WideArticleCard
-                          key={index}
-                          article={article}
-                          index={index + 1}
-                          redirect={`/main/recipeId/${article._id}`}
-                        />
+          <div className="col col-12  col-md-9 p-0 border-end ">
+            <div className="row col-12  m-0">
+              <div className="col-12 col-md-6 p-4 p-md-3 ">
+                {articles && articles.length > 0 && !loading ? (
+                  <LargeArticleCard
+                    article={articles && articles[0]}
+                    index={0}
+                    redirect={`/main/recipeId/${articles[0]._id}`}
+                  />
+                ) : (
+                  <LargeShimmerCard />
+                )}
+              </div>
+              <div className="col-12 col-md-6 p-4 p-md-3 ">
+                {articles && !loading
+                  ? articles
+                      .slice(1, 5)
+                      .map((article: ArticleListElement, index: number) => (
+                        <div className="p-2">
+                          <WideArticleCard
+                            key={index}
+                            article={article}
+                            index={index + 1}
+                            redirect={`/main/recipeId/${article._id}`}
+                          />
+                        </div>
+                      ))
+                  : new Array(4).fill(0).map((shimmer, index) => (
+                      <div className="pb-3">
+                        <WideShimmerCard />
                       </div>
-                    ))
-                : new Array(4).fill(0).map((shimmer, index) => (
-                    <div className="pb-3">
-                      <WideShimmerCard />
-                    </div>
-                  ))}
+                    ))}
+              </div>
             </div>
           </div>
-          <div className=" col col-12 col-md-4  ps-5 py-2">
-            <h6 style={{ fontWeight: "bold" }}>FILTER ARTICLES</h6>
-            <Input
-              type="select"
-              name="select"
-              className="col-12"
-              style={{ padding: 10 }}
-              onChange={(e) => onChange(e)}
-              value={selectFilter}
-            >
-              <option>Top</option>
-              <option>New</option>
-            </Input>
-            <p className="subMessages my-2">
-              {constants.FILTER_ARTICLE_NOTES}{" "}
-            </p>
-            <Button
-              size="md"
-              className="w-100 bg-black"
-              onClick={() => fetchArticles()}
-            >
-              Filter
-            </Button>
+          <div className=" col-12 col-md-3 px-4 py-2 d-none d-md-flex">
+            <div className="col col-12">
+              <h6 style={{ fontWeight: "bold" }}>FILTER ARTICLES</h6>
+              <Input
+                type="select"
+                name="select"
+                className="col-12"
+                style={{ padding: 10 }}
+                onChange={(e) => onChange(e)}
+                value={selectFilter}
+              >
+                <option>Top</option>
+                <option>New</option>
+              </Input>
+              <p className="subMessages my-2">
+                {constants.FILTER_ARTICLE_NOTES}{" "}
+              </p>
+              <Button
+                size="md"
+                className="w-100 bg-black"
+                onClick={() => fetchArticles()}
+              >
+                Filter
+              </Button>
+            </div>
           </div>
         </div>
         <div className=" col col-12 border-top">
@@ -488,13 +493,20 @@ const Home = (props: any) => {
                       />
                     </div>
                   ))
-              : new Array(4).fill(0).map((shimmer, index) => (
-                  <div className="pb-3">
-                    <RankShimmerCard />
+              : new Array(6).fill(0).map((shimmer, index) => (
+                  <div className=" d-flex  col-12 col-md-4">
+                    <RankShimmerCard index={index} />
                   </div>
                 ))}
           </div>
+          {/* For future versions */}
         </div>
+      </div>
+      <div
+        className=" px-4 "
+        style={{ backgroundColor: "#ECDBBA", borderRadius: 5 }}
+      >
+        <AboutProjectCard />
       </div>
     </div>
   );

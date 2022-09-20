@@ -15,9 +15,9 @@ const WideArticleCard = (cardProps: ArticleCardProps) => {
       state={{ recipeId: article._id }}
       style={{ textDecoration: "none", color: "black" }}
     >
-      <div className=" d-flex ">
+      <div className=" d-flex mb-2">
         <div className="col-8 pe-4">
-          <div className="mt-3 d-flex flex-row align-items-center">
+          <div className=" d-flex flex-row align-items-center">
             <Generic.Avatar imageUrl="" fullname="Gavin D'mello" />
             <a className="ms-2" href={`/main/authorId/${article.author._id}`}>
               <span className="">{"@" + article.author.username}</span>
