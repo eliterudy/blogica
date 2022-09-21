@@ -166,7 +166,7 @@ const contributorsDataset: ContributorListElement[] = [
 const Contributors = (props: any) => {
   const navigate = useNavigate();
   const dispatch: Dispatch<any> = useDispatch();
-  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 820px)" });
+  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 767px)" });
   const locationParams = useLocation();
   // state hooks
   const [loading, isLoading] = useState(false);

@@ -5,6 +5,7 @@ const icons: any = {
   search_black: require("../assets/icons/search_black.png"),
   search_white: require("../assets/icons/search_white.png"),
   app_logo: require("../assets/icons/app_logo.png"),
+  app_icon: require("../assets/icons/app_icon.png"),
 };
 
 const images: any = {
@@ -19,6 +20,7 @@ const gifs: any = {
 };
 
 const constants: any = {
+  APP_NAME: "Blogica",
   TEXT_SHIMMER_FILLER: "text shimmer",
   FILTER_ARTICLE_NOTES: "View articles based on the filter categories.",
   INTRO_BANNER_TITLE: "Stay Curious & Get a Read",

@@ -10,7 +10,7 @@ export const cssHover = (
   styleDefault: CSSProperties = {}
 ) => {
   const [style, setStyle] = useState({ ...styleDefault, ...styleOnNotHover });
-  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 820px)" });
+  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 767px)" });
   const onMouseEnter = () =>
     !isTabletOrMobile && setStyle({ ...styleDefault, ...styleOnHover });
   const onMouseLeave = () =>
@@ -20,7 +20,7 @@ export const cssHover = (
 
 export const isHovered = () => {
   const [isHovered, setIsHovered] = useState(false);
-  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 820px)" });
+  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 767px)" });
 
   const onMouseEnter = () => !isTabletOrMobile && setIsHovered(true);
   const onMouseLeave = () => !isTabletOrMobile && setIsHovered(false);
