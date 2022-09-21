@@ -199,7 +199,7 @@ const Contributors = (props: any) => {
     // await updateCallerCounter(callerCounter + 1);
   };
 
-  const getArticlesFromApi = () => {};
+  const getContributorsFromApi = () => {};
 
   // component conditional render
   const loadContributors = (localContributors: ContributorListElement[]) => {
@@ -228,7 +228,7 @@ const Contributors = (props: any) => {
   return (
     <div className="col-12 d-flex flex-column  flex-grow-1">
       {/* Searchbar */}
-      <div className="d-flex col-12 flex-row justify-content-center container">
+      <div className="d-flex col-12 flex-row justify-content-center container mt-4 ">
         <div className="col-12 col-md-8  p-4 " style={{}}>
           <Generic.SearchBar
             searchFor="contributors"
@@ -258,7 +258,7 @@ const Contributors = (props: any) => {
               className="pt-4 "
               dataLength={contributors ? contributors.length : 0} //This is important field to render the next data
               next={() => {
-                getArticlesFromApi();
+                getContributorsFromApi();
               }}
               hasMore={contributorCount > contributors.length}
               style={{

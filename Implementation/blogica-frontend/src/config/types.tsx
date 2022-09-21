@@ -65,8 +65,5 @@ export interface CheckboxProps {
 }
 
 export interface ArticleFilters {
-  cuisine?: string[];
-  course?: string[];
-  diet?: string[];
-  servings?: string[];
+  exchanges?: string[];
 }

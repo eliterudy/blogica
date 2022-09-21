@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { Tooltip } from "reactstrap";
 import { ArticleCardProps } from "../../../config/types";
 import Generic from "../../../components/generic/GenericComponents";
 import { constants } from "../../../config/configuration";
@@ -7,8 +8,17 @@ import { Link, useNavigate } from "react-router-dom";
 
 // https://picsum.photos/seed/picsum/200/300)
 
-const WideArticleCard = (cardProps: ArticleCardProps) => {
+const ArticleListCard = (cardProps: ArticleCardProps) => {
   const { article, index, redirect } = cardProps;
+  const [tooltipOpen, setTooltipOpen] = useState(false);
+
+  const toggle = () => setTooltipOpen(!tooltipOpen);
+  var bookmarkIcon = () => {
+    if (article.isBookmarked) {
+      return <i className="fa fa-bookmark fa-lg" id="bookmark"></i>;
+    }
+    return <i className="fa fa-bookmark-o fa-lg" id="bookmark"></i>;
+  };
   return (
     <Link
       to={redirect}
@@ -16,7 +26,7 @@ const WideArticleCard = (cardProps: ArticleCardProps) => {
       style={{ textDecoration: "none", color: "black" }}
     >
       <div className=" d-flex mb-2">
-        <div className="col-8 pe-4">
+        <div className=" col-10 pe-4">
           <div className=" d-flex flex-row align-items-center">
             <Generic.Avatar
               imageUrl={article.author.imageUrl}
@@ -37,7 +47,21 @@ const WideArticleCard = (cardProps: ArticleCardProps) => {
           <h6
             className=" mt-2 col-12 "
             style={{
+              fontSize: 22,
               fontWeight: "bold",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              display: "-webkit-box",
+              WebkitLineClamp: "1",
+              WebkitBoxOrient: "vertical",
+            }}
+          >
+            {article.title}
+          </h6>
+          <span
+            className=" mb-2  col-12"
+            style={{
+              fontSize: 16,
               overflow: "hidden",
               textOverflow: "ellipsis",
               display: "-webkit-box",
@@ -45,16 +69,31 @@ const WideArticleCard = (cardProps: ArticleCardProps) => {
               WebkitBoxOrient: "vertical",
             }}
           >
-            {article.title}
-          </h6>
-          <span
-            className=" mb-3  col-12"
-            style={{ fontSize: 14, color: "#555" }}
-          >
-            {moment(article.created, "YYYYMMDD").fromNow()}
+            {article.description}
           </span>
+          <div className="col-12 d-flex flex-row justify-content-between mt-1 ">
+            <div>
+              <span style={{ fontSize: 14, color: "#555" }}>
+                {moment(article.created, "YYYYMMDD").fromNow()}
+              </span>
+            </div>
+            <div className="mt-1">
+              <span>
+                {bookmarkIcon()}
+                <Tooltip
+                  className=""
+                  placement={"top"}
+                  isOpen={tooltipOpen}
+                  target={"bookmark"}
+                  toggle={toggle}
+                >
+                  Save
+                </Tooltip>
+              </span>
+            </div>
+          </div>
         </div>
-        <div className="col-4 row align-items-center justify-content-center">
+        <div className="col-2 d-flex flex-column justify-content-center">
           <div
             onClick={() => {}}
             className="img-fluid"
@@ -72,4 +111,4 @@ const WideArticleCard = (cardProps: ArticleCardProps) => {
   );
 };
 
-export default WideArticleCard;
+export default ArticleListCard;

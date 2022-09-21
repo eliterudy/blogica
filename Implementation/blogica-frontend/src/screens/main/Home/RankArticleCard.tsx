@@ -25,8 +25,16 @@ const RankArticleCard = (cardProps: ArticleCardProps) => {
             imageUrl={article.author.imageUrl}
             fullname="Gavin D'mello"
           />
-          <a className="ms-2" href={`/main/authorId/${article.author._id}`}>
-            <span className="">{"@" + article.author.username}</span>
+          <a
+            className="ms-2 text-decoration-none"
+            href={`/main/authorId/${article.author._id}`}
+          >
+            <span
+              className="text-primary"
+              style={{ fontWeight: "bold", fontSize: 14 }}
+            >
+              {article.author.fullname}
+            </span>{" "}
           </a>
         </div>
         <h6

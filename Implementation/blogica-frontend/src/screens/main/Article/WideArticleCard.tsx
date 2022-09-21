@@ -25,8 +25,9 @@ const ArticleListCard = (cardProps: ArticleCardProps) => {
       userState: state.userActionReducer,
     };
   });
-  const { userState } = state;
-  const { user } = userState;
+  // const { userState } = state;
+  // const { user } = userState;
+  const user = true;
 
   const [isMouseHoveredOnBookmarkButton, changeMouseStatus] = useState(false);
   const { article, index, redirect } = cardProps;
