@@ -132,37 +132,40 @@ const SignUpComponent = () => {
           <div className="col-12 col-md-7">
             <div className="col-12  p-2 ">
               <div className=" mx-5 mt-3 d-flex flex-column align-items-center">
-                {isTabletOrMobile && (
-                  <img
-                    className="noselect m-auto"
-                    src={icons.app_logo}
-                    width={100}
-                    alt={constants.APP_NAME}
-                  />
-                )}
+                <img
+                  className="noselect m-auto"
+                  src={icons.app_logo}
+                  width={100}
+                  alt={constants.APP_NAME}
+                />
+
                 <span className="noselect col-auto  mb-0 mt-2 align-middle h3 ">
                   {`Sign Up to ${constants.APP_NAME}`}
                 </span>
               </div>
-              <div className="d-flex flex-row justify-content-center mt-4">
-                {imagePreview ? (
-                  <Generic.Avatar
-                    imageUrl={imagePreview}
-                    fullname={formValues.firstname + " " + formValues.lastname}
-                    size={140}
-                  />
-                ) : (
-                  <div
-                    className="bg-secondary d-flex flex-row justify-content-center align-items-center"
-                    style={{ width: 140, height: 140, borderRadius: 140 }}
-                  >
-                    <i
-                      className=" img-fluid fa fa-user fa-lg "
-                      style={{ fontSize: 120, color: "white" }}
+              {isTabletOrMobile && (
+                <div className="d-flex flex-row justify-content-center mt-4">
+                  {imagePreview ? (
+                    <Generic.Avatar
+                      imageUrl={imagePreview}
+                      fullname={
+                        formValues.firstname + " " + formValues.lastname
+                      }
+                      size={140}
                     />
-                  </div>
-                )}
-              </div>
+                  ) : (
+                    <div
+                      className="bg-secondary d-flex flex-row justify-content-center align-items-center"
+                      style={{ width: 140, height: 140, borderRadius: 140 }}
+                    >
+                      <i
+                        className=" img-fluid fa fa-user fa-lg "
+                        style={{ fontSize: 120, color: "white" }}
+                      />
+                    </div>
+                  )}
+                </div>
+              )}
               <div className="col-12  mt-3  p-3 ">
                 <Form>
                   {/* Username */}
