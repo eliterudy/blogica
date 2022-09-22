@@ -27,8 +27,48 @@ const Generic = {
       </div>
     );
   },
-  Avatar: ({ imageUrl, fullname }: { imageUrl: string; fullname: string }) => {
-    return <Avatar size="25" round="25px" src={imageUrl} name="Wim Mostmans" />;
+  Avatar: ({
+    imageUrl,
+    fullname,
+    size,
+  }: {
+    imageUrl: string;
+    fullname: string;
+    size: number;
+  }) => {
+    var initials = fullname
+      .split(" ")
+      .map((e) => e.charAt(0))
+      .join("");
+    if (imageUrl)
+      return (
+        <img
+          src={imageUrl}
+          alt={fullname}
+          style={{
+            objectFit: "cover",
+            width: size,
+            height: size,
+            borderRadius: size,
+          }}
+        />
+      );
+    else
+      return (
+        <div
+          style={{
+            width: size,
+            height: size,
+            borderRadius: size,
+            backgroundColor: avatarColor,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <span style={{ fontWeight: "bold" }}>{initials}</span>
+        </div>
+      );
   },
   SearchBar: (props: any) => {
     const { apiCallback, searchFor } = props;

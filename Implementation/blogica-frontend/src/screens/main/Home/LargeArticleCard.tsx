@@ -57,6 +57,7 @@ const LargeArticleCard = (cardProps: ArticleCardProps) => {
           <Generic.Avatar
             imageUrl={article.author.imageUrl}
             fullname="Gavin D'mello"
+            size={25}
           />
           <a
             className="ms-2 text-decoration-none"

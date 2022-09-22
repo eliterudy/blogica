@@ -240,7 +240,7 @@ const Contributors = (props: any) => {
       {loading && <Generic.Loader message="Loading" />}
       <div className="noselect  col-12   pt-1 px-3">
         {contributors && !loading && (
-          <div className="container">
+          <div className="container p-0">
             <div className="d-flex flex-column align-items-end pt-3">
               <em
                 className="px-2 pt-1  me-3"

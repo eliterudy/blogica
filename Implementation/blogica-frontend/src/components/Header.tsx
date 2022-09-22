@@ -140,8 +140,8 @@ const Header = ({ modalCallback }: any) => {
                 <NavItem className=" ms-sm-2 flex-grow-1 flex-shrink-1 d-sm-flex flex-column justify-content-center">
                   <NavLink tag={RRNavLink} className={"nav-link "} to="/">
                     <div className=" d-flex flex-row justify-content-start justify-content-md-center align-items-center ">
-                      <i className="fa fa-home fa-lg me-2" />
-                      <span className="mb-0 pb-0">Home</span>
+                      <i className="fa fa-eercast fa-lg me-2" />
+                      <span className="mb-0 pb-0">My feeds</span>
                     </div>
                   </NavLink>
                 </NavItem>
@@ -172,10 +172,10 @@ const Header = ({ modalCallback }: any) => {
                     style={{ marginLeft: 12 }}
                   >
                     <img
-                      className=" col-auto"
+                      className=" col-auto mb-2"
                       src={icons.app_logo}
-                      height={70}
-                      width={70}
+                      height={60}
+                      width={60}
                       alt="Blogica"
                     />
                   </div>
@@ -249,7 +249,11 @@ const Header = ({ modalCallback }: any) => {
                       <DropdownToggle
                         style={{ backgroundColor: "white", border: "0px" }}
                       >
-                        <Generic.Avatar imageUrl="" fullname="Gavin D'mello" />
+                        <Generic.Avatar
+                          imageUrl=""
+                          fullname="Gavin D'mello"
+                          size={40}
+                        />
                       </DropdownToggle>
 
                       <DropdownMenu style={{ marginTop: 14, marginRight: -15 }}>

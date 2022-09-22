@@ -461,7 +461,7 @@ const Home = (props: any) => {
           </div>
         </div>
       </div>
-      <div className="col-12 px-5">
+      <div className="col-12 px-2 px-md-5">
         <h1
           className=" text-center pt-5 pb-2"
           style={{ fontWeight: "bold" }}
@@ -535,11 +535,11 @@ const Home = (props: any) => {
           </div>
         </div>
         <div className=" col col-12 border-top pt-4">
-          <div className="d-flex flex-row">
+          <div className="d-flex flex-row ms-3">
             <i className="fa fa-cubes fa-lg me-2"></i>
             <h6 style={{ fontWeight: "bold" }}>MORE TRENDING ARTICLES</h6>
           </div>
-          <div className="row col-12 p-4 p-md-3">
+          <div className="row col-12 m-0 p-4 p-md-3">
             {articles && !loading
               ? articles
                   .slice(5, 13)

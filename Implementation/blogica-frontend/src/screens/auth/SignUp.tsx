@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import {
   Navbar,
   InputGroup,
@@ -17,10 +17,20 @@ import { Dispatch } from "@reduxjs/toolkit";
 import { cssHover } from "../../components/generic/hoverProps";
 import { useMediaQuery } from "react-responsive";
 import FormValidators from "../../utils/FormValidators";
-import debounce from "lodash.debounce";
+
 import apis from "../../config/api";
 import { icons, constants } from "../../config/configuration";
+import Generic from "../../components/generic/GenericComponents";
 
+interface SignupFormValues {
+  username: string;
+  firstname: string;
+  lastname: string;
+  email: string;
+  image: null | File;
+  password: string;
+  confirmPassword: string;
+}
 const SignUpComponent = () => {
   const isTabletOrMobile = useMediaQuery({ query: "(max-width: 767px)" });
 
@@ -49,11 +59,15 @@ const SignUpComponent = () => {
   });
   const { userState } = state;
 
-  const [formValues, updateFormValues] = useState({
+  const [imagePreview, updateImagePreview] = useState<undefined | string>(
+    undefined
+  );
+  const [formValues, updateFormValues] = useState<SignupFormValues>({
     username: "",
     firstname: "",
     lastname: "",
     email: "",
+    image: null,
     password: "",
     confirmPassword: "",
   });
@@ -62,6 +76,7 @@ const SignUpComponent = () => {
     firstname: "",
     lastname: "",
     email: "",
+    image: "",
     password: "",
     confirmPassword: "",
   });
@@ -73,6 +88,27 @@ const SignUpComponent = () => {
   const [usernameAvailableStatus, updateUsernameAvailableStatus] = useState(
     false
   );
+  const [crop, setCrop] = useState({ x: 0, y: 0 });
+  const [zoom, setZoom] = useState(1);
+  const onCropComplete = useCallback(
+    (croppedArea: any, croppedAreaPixels: any) => {
+      console.log(croppedArea, croppedAreaPixels);
+    },
+    []
+  );
+
+  useEffect(() => {
+    if (!formValues.image) {
+      updateImagePreview(undefined);
+      return;
+    }
+
+    const objectUrl = URL.createObjectURL(formValues.image);
+    updateImagePreview(objectUrl);
+
+    // free memory when ever this component is unmounted
+    return () => URL.revokeObjectURL(objectUrl);
+  }, [formValues.image]);
 
   useEffect(() => {
     if (!textValidator(formValues.username, 5, 20)[1]) {
@@ -108,10 +144,32 @@ const SignUpComponent = () => {
                   {`Sign Up to ${constants.APP_NAME}`}
                 </span>
               </div>
+              <div className="d-flex flex-row justify-content-center mt-4">
+                {imagePreview ? (
+                  <Generic.Avatar
+                    imageUrl={imagePreview}
+                    fullname={formValues.firstname + " " + formValues.lastname}
+                    size={140}
+                  />
+                ) : (
+                  <div
+                    className="bg-secondary d-flex flex-row justify-content-center align-items-center"
+                    style={{ width: 140, height: 140, borderRadius: 140 }}
+                  >
+                    <i
+                      className=" img-fluid fa fa-user fa-lg "
+                      style={{ fontSize: 120, color: "white" }}
+                    />
+                  </div>
+                )}
+              </div>
               <div className="col-12  mt-3  p-3 ">
                 <Form>
+                  {/* Username */}
                   <FormGroup className="mb-4">
-                    <Label for="username">Username </Label>
+                    <Label for="username">
+                      Username<span style={{ color: "red" }}>*</span>
+                    </Label>
                     <Input
                       invalid={formErrors.username.length > 0}
                       type="text"
@@ -158,8 +216,12 @@ const SignUpComponent = () => {
                     </FormText>
                     <FormFeedback>{formErrors.username}</FormFeedback>
                   </FormGroup>
-                  <FormGroup className="mb-4 fa fa-cance">
-                    <Label for="firstname">First name</Label>
+
+                  {/* Firstname */}
+                  <FormGroup className="mb-4">
+                    <Label for="firstname">
+                      First name<span style={{ color: "red" }}>*</span>
+                    </Label>
                     <Input
                       invalid={formErrors.firstname.length > 0}
                       type="text"
@@ -187,8 +249,11 @@ const SignUpComponent = () => {
                     <FormFeedback>{formErrors.firstname}</FormFeedback>
                   </FormGroup>
 
+                  {/* Lastname */}
                   <FormGroup className="mb-4">
-                    <Label for="lastname">Last name</Label>
+                    <Label for="lastname">
+                      Last name<span style={{ color: "red" }}>*</span>
+                    </Label>
                     <Input
                       invalid={formErrors.lastname.length > 0}
                       type="text"
@@ -215,8 +280,52 @@ const SignUpComponent = () => {
                     />
                     <FormFeedback>{formErrors.lastname}</FormFeedback>
                   </FormGroup>
+
+                  {/* Profile Picture */}
                   <FormGroup className="mb-4">
-                    <Label for="email">Email</Label>
+                    <Label for="profile-picture">
+                      Profile picture
+                      <span style={{ color: "red" }}>*</span>
+                    </Label>
+                    <Input
+                      invalid={formErrors.image.length > 0}
+                      type="file"
+                      name="profile-picture"
+                      id="profile-picture"
+                      accept="image/*"
+                      onChange={(e) => {
+                        var file = e.target.files;
+                        console.log(file);
+
+                        if (file && file.length > 0) {
+                          updateFormValues({
+                            ...formValues,
+                            image: file[0],
+                          });
+                          updateFormErrors({
+                            ...formErrors,
+                            image: "",
+                          });
+                        } else {
+                          updateFormValues({
+                            ...formValues,
+                            image: null,
+                          });
+                          updateFormErrors({
+                            ...formErrors,
+                            image: "Please upload profile picture",
+                          });
+                        }
+                      }}
+                    />
+                    <FormFeedback>{formErrors.password}</FormFeedback>
+                  </FormGroup>
+
+                  {/* Email */}
+                  <FormGroup className="mb-4">
+                    <Label for="email">
+                      Email<span style={{ color: "red" }}>*</span>
+                    </Label>
                     <Input
                       invalid={formErrors.email.length > 0}
                       type="text"
@@ -244,8 +353,12 @@ const SignUpComponent = () => {
                     {/* <FormText>Example: johndoe123@gmail.com</FormText> */}
                     <FormFeedback>{formErrors.email}</FormFeedback>
                   </FormGroup>
+
+                  {/* Password */}
                   <FormGroup className="mb-4">
-                    <Label for="password">Password</Label>
+                    <Label for="password">
+                      Password<span style={{ color: "red" }}>*</span>
+                    </Label>
                     <Input
                       invalid={formErrors.password.length > 0}
                       type="password"
@@ -272,8 +385,12 @@ const SignUpComponent = () => {
                     />
                     <FormFeedback>{formErrors.password}</FormFeedback>
                   </FormGroup>
+
+                  {/* Confirm Password */}
                   <FormGroup className="mb-4">
-                    <Label for="confirmpassword">Confirm Password</Label>
+                    <Label for="confirmpassword">
+                      Confirm Password<span style={{ color: "red" }}>*</span>
+                    </Label>
                     <Input
                       invalid={formErrors.confirmPassword.length > 0}
                       type="password"
@@ -310,6 +427,8 @@ const SignUpComponent = () => {
                     />
                     <FormFeedback>{formErrors.confirmPassword}</FormFeedback>
                   </FormGroup>
+
+                  {/* Signup button */}
                   <Button
                     {...signUpButtonStyle}
                     onClick={(e) => {
@@ -321,6 +440,7 @@ const SignUpComponent = () => {
                         email,
                         password,
                         confirmPassword,
+                        image,
                       } = formValues;
                       const {
                         textValidator,
@@ -333,6 +453,7 @@ const SignUpComponent = () => {
                         textValidator(username, 5, 20)[1] ||
                         textValidator(firstname, 4, 20)[1] ||
                         textValidator(lastname, 4, 20)[1] ||
+                        image == null ||
                         emailValidator(email)[1] ||
                         passwordValidator(password, 6, 20)[1] ||
                         confirmPasswordValidator(
@@ -348,6 +469,7 @@ const SignUpComponent = () => {
                           firstname: textValidator(firstname, 4, 20)[0],
                           lastname: textValidator(lastname, 4, 20)[0],
                           email: emailValidator(email)[0],
+                          image: image ? "" : "Please upload profile picture",
                           password: passwordValidator(password, 6, 20)[0],
                           confirmPassword: confirmPasswordValidator(
                             confirmPassword,
@@ -383,12 +505,25 @@ const SignUpComponent = () => {
           </div>
           {!isTabletOrMobile && (
             <div className="col-12 col-sm-5 d-flex justify-content-center align-items-center">
-              <img
-                className="noselect m-auto"
-                src={icons.app_logo}
-                width={220}
-                alt={constants.APP_NAME}
-              />
+              <div className="col-12 d-flex flex-column align-items-center">
+                {imagePreview ? (
+                  <Generic.Avatar
+                    imageUrl={imagePreview}
+                    fullname={formValues.firstname + " " + formValues.lastname}
+                    size={200}
+                  />
+                ) : (
+                  <div
+                    className="bg-secondary d-flex flex-row justify-content-center align-items-center"
+                    style={{ width: 200, height: 200, borderRadius: 200 }}
+                  >
+                    <i
+                      className=" img-fluid fa fa-user fa-lg "
+                      style={{ fontSize: 140, color: "white" }}
+                    />
+                  </div>
+                )}
+              </div>
             </div>
           )}
         </div>
