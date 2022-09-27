@@ -18,10 +18,6 @@ import actions from "../../../redux/actionReducers/index";
 import { ArticleFilters, ArticleListElement } from "../../../config/types";
 import ArticleListCard from "./ArticleListCard";
 import { Input, Button } from "reactstrap";
-import LargeArticleCard from "../Home/LargeArticleCard";
-import LargeShimmerCard from "../Home/LargeShimmerCard";
-import WideArticleCard from "../Home/WideArticleCard";
-import WideShimmerCard from "../Home/WideShimmerCard";
 
 const articleDataset: ArticleListElement[] = [
   {
