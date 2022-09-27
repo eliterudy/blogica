@@ -1,6 +1,6 @@
 // main
 export { default as Home } from "./main/Home/Home";
-export { default as Feeds } from "./main/Feeds";
+export { default as Feeds } from "./main/Feeds/Feeds";
 
 export { default as ArticleList } from "./main/Article/Articles";
 export { default as ContributorList } from "./main/Contributor/Contributors";

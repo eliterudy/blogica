@@ -38,7 +38,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 /* helper imports */
 import { cssHover } from "../../components/generic/hoverProps";
-import { User, ArticleListElement } from "../../config/types";
+import { Article, AuthorDetail } from "../../config/types";
 import { icons } from "../../config/configuration";
 import Generic from "../../components/generic/GenericComponents";
 import { toggler } from "../../utils/generic";
@@ -46,11 +46,11 @@ import actions from "../../redux/actionReducers/index";
 import ArticleListCard from "../../components/ArticleListCard";
 import moment from "moment";
 
-const articleDataset: ArticleListElement[] = [
+const articleDataset: Article[] = [
   {
     _id: 1,
     title: "Biden on ‘60 Minutes’: ‘The pandemic is over’",
-    imageUrl:
+    image_url:
       "https://www.politico.com/dims4/default/d864c86/2147483647/strip/true/crop/4798x3199+0+0/resize/1260x840!/quality/90/?url=https%3A%2F%2Fstatic.politico.com%2F5e%2Fc6%2F7684a418451c94c58470bbee15b9%2Fhttps-delivery.gettyimages.com%2Fdownloads%2F1423991273",
     description: `President Joe Biden said “the pandemic is over” in discussing Covid during an interview that aired on Sunday evening on CBS’ “60 Minutes.”
 
@@ -99,22 +99,16 @@ const articleDataset: ArticleListElement[] = [
       username: "gavin1040",
       bio:
         "Gavin D'mello is a content creator currently building an app called Blogica for his Masters degree",
-      bookmarks: { articles: [] },
-      published: { articles: [] },
-      isAdmin: false,
-      imageUrl:
+      image_url:
         "https://phantom-marca.unidadeditorial.es/9adb565dcfc4dc3e9b1948c7cf5b8f01/resize/1320/f/jpg/assets/multimedia/imagenes/2022/02/21/16454391499069.jpg",
-      email: "gavin@gmail.ccom",
       created: "2022-09-16T12:59-0500",
-      updated: "2022-09-16T12:59-0500",
     },
     created: "2022-09-16T12:59-0500",
-    updated: "2022-09-16T12:59-0500",
   },
   {
     _id: 2,
     title: "Is 18 and 34 too much of an age gap??",
-    imageUrl: "https://picsum.photos/400/400/?random=1",
+    image_url: "https://picsum.photos/400/400/?random=1",
     description: `Especially remember Rule 1: Be polite and civil.
 
       Be polite and courteous to each other. Do not be mean, insulting or disrespectful to any other user on this subreddit.
@@ -130,22 +124,16 @@ const articleDataset: ArticleListElement[] = [
       fullname: "Gavin D'mello",
       username: "gavin1040",
       bio: "",
-      bookmarks: { articles: [] },
-      published: { articles: [] },
-      isAdmin: false,
-      imageUrl:
+      image_url:
         "https://phantom-marca.unidadeditorial.es/9adb565dcfc4dc3e9b1948c7cf5b8f01/resize/1320/f/jpg/assets/multimedia/imagenes/2022/02/21/16454391499069.jpg",
-      email: "gavin@gmail.ccom",
       created: "2022-09-16T12:59-0500",
-      updated: "2022-09-16T12:59-0500",
     },
     created: "2022-09-16T12:59-0500",
-    updated: "2022-09-16T12:59-0500",
   },
   {
     _id: 3,
     title: "NFL news roundup: Latest league updates from Monday, Sept. 19",
-    imageUrl: "https://picsum.photos/400/400/?random=2",
+    image_url: "https://picsum.photos/400/400/?random=2",
     description: `Sleep literally "cleans" your brain (at least, that is the commonly accepted understanding). https://www.health.harvard.edu/mind-and-mood/are-toxins-flushed-out-of-the-brain-during-sleep
 
     It's not too many days without sleep, and a person can start to have mental illness concerns. https://www.bbc.com/future/article/20150220-how-long-can-we-stay-awake`,
@@ -156,23 +144,17 @@ const articleDataset: ArticleListElement[] = [
       fullname: "Gavin D'mello",
       username: "gavin1040",
       bio: "",
-      bookmarks: { articles: [] },
-      published: { articles: [] },
-      isAdmin: false,
-      imageUrl:
+      image_url:
         "https://phantom-marca.unidadeditorial.es/9adb565dcfc4dc3e9b1948c7cf5b8f01/resize/1320/f/jpg/assets/multimedia/imagenes/2022/02/21/16454391499069.jpg",
-      email: "gavin@gmail.ccom",
       created: "2022-09-16T12:59-0500",
-      updated: "2022-09-16T12:59-0500",
     },
     created: "2022-09-16T12:59-0500",
-    updated: "2022-09-16T12:59-0500",
   },
   {
     _id: 4,
     title:
       "Fantasy football news and notes - Trey Lance out, James Robinson steps up    ",
-    imageUrl: "https://picsum.photos/400/400/?random=3",
+    image_url: "https://picsum.photos/400/400/?random=3",
     description:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. ",
     author: {
@@ -182,23 +164,17 @@ const articleDataset: ArticleListElement[] = [
       fullname: "Gavin D'mello",
       username: "gavin1040",
       bio: "",
-      bookmarks: { articles: [] },
-      published: { articles: [] },
-      isAdmin: false,
-      imageUrl:
+      image_url:
         "https://phantom-marca.unidadeditorial.es/9adb565dcfc4dc3e9b1948c7cf5b8f01/resize/1320/f/jpg/assets/multimedia/imagenes/2022/02/21/16454391499069.jpg",
-      email: "gavin@gmail.ccom",
       created: "2022-09-16T12:59-0500",
-      updated: "2022-09-16T12:59-0500",
     },
     created: "2022-09-16T12:59-0500",
-    updated: "2022-09-16T12:59-0500",
   },
   {
     _id: 5,
     title:
       "Britain's state funeral, Hurricane Fiona, Biden's comments on Taiwan",
-    imageUrl: "https://picsum.photos/400/400/?random=4",
+    image_url: "https://picsum.photos/400/400/?random=4",
     description:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. ",
     author: {
@@ -208,22 +184,16 @@ const articleDataset: ArticleListElement[] = [
       fullname: "Gavin D'mello",
       username: "gavin1040",
       bio: "",
-      bookmarks: { articles: [] },
-      published: { articles: [] },
-      isAdmin: false,
-      imageUrl:
+      image_url:
         "https://phantom-marca.unidadeditorial.es/9adb565dcfc4dc3e9b1948c7cf5b8f01/resize/1320/f/jpg/assets/multimedia/imagenes/2022/02/21/16454391499069.jpg",
-      email: "gavin@gmail.ccom",
       created: "2022-09-16T12:59-0500",
-      updated: "2022-09-16T12:59-0500",
     },
     created: "2022-09-16T12:59-0500",
-    updated: "2022-09-16T12:59-0500",
   },
   {
     _id: 6,
     title: "Teen killed; Queen Elizabeth; Tax rebates",
-    imageUrl: "https://picsum.photos/400/400/?random=5",
+    image_url: "https://picsum.photos/400/400/?random=5",
     description:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. ",
     author: {
@@ -233,23 +203,17 @@ const articleDataset: ArticleListElement[] = [
       fullname: "Gavin D'mello",
       username: "gavin1040",
       bio: "",
-      bookmarks: { articles: [] },
-      published: { articles: [] },
-      isAdmin: false,
-      imageUrl:
+      image_url:
         "https://phantom-marca.unidadeditorial.es/9adb565dcfc4dc3e9b1948c7cf5b8f01/resize/1320/f/jpg/assets/multimedia/imagenes/2022/02/21/16454391499069.jpg",
-      email: "gavin@gmail.ccom",
       created: "2022-09-16T12:59-0500",
-      updated: "2022-09-16T12:59-0500",
     },
     created: "2022-09-16T12:59-0500",
-    updated: "2022-09-16T12:59-0500",
   },
   {
     _id: 7,
     title:
       "UAMS Ramping Up ‘Resource Optimization’ Efforts for Fiscal Year 2023",
-    imageUrl: "https://picsum.photos/400/400/?random=6",
+    image_url: "https://picsum.photos/400/400/?random=6",
     description:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. ",
     author: {
@@ -259,22 +223,16 @@ const articleDataset: ArticleListElement[] = [
       fullname: "Gavin D'mello",
       username: "gavin1040",
       bio: "",
-      bookmarks: { articles: [] },
-      published: { articles: [] },
-      isAdmin: false,
-      imageUrl:
+      image_url:
         "https://phantom-marca.unidadeditorial.es/9adb565dcfc4dc3e9b1948c7cf5b8f01/resize/1320/f/jpg/assets/multimedia/imagenes/2022/02/21/16454391499069.jpg",
-      email: "gavin@gmail.ccom",
       created: "2022-09-16T12:59-0500",
-      updated: "2022-09-16T12:59-0500",
     },
     created: "2022-09-16T12:59-0500",
-    updated: "2022-09-16T12:59-0500",
   },
   {
     _id: 8,
     title: "Annual MED Week Slated for October 5",
-    imageUrl: "https://picsum.photos/400/400/?random=7",
+    image_url: "https://picsum.photos/400/400/?random=7",
     description:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. ",
     author: {
@@ -284,22 +242,16 @@ const articleDataset: ArticleListElement[] = [
       fullname: "Gavin D'mello",
       username: "gavin1040",
       bio: "",
-      bookmarks: { articles: [] },
-      published: { articles: [] },
-      isAdmin: false,
-      imageUrl:
+      image_url:
         "https://phantom-marca.unidadeditorial.es/9adb565dcfc4dc3e9b1948c7cf5b8f01/resize/1320/f/jpg/assets/multimedia/imagenes/2022/02/21/16454391499069.jpg",
-      email: "gavin@gmail.ccom",
       created: "2022-09-16T12:59-0500",
-      updated: "2022-09-16T12:59-0500",
     },
     created: "2022-09-16T12:59-0500",
-    updated: "2022-09-16T12:59-0500",
   },
   {
     _id: 9,
     title: "Climate law spurs CCS at new West Virginia gas plant",
-    imageUrl: "https://picsum.photos/400/400/?random=8",
+    image_url: "https://picsum.photos/400/400/?random=8",
     description:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. ",
     author: {
@@ -309,22 +261,16 @@ const articleDataset: ArticleListElement[] = [
       fullname: "Gavin D'mello",
       username: "gavin1040",
       bio: "",
-      bookmarks: { articles: [] },
-      published: { articles: [] },
-      isAdmin: false,
-      imageUrl:
+      image_url:
         "https://phantom-marca.unidadeditorial.es/9adb565dcfc4dc3e9b1948c7cf5b8f01/resize/1320/f/jpg/assets/multimedia/imagenes/2022/02/21/16454391499069.jpg",
-      email: "gavin@gmail.ccom",
       created: "2022-09-16T12:59-0500",
-      updated: "2022-09-16T12:59-0500",
     },
     created: "2022-09-16T12:59-0500",
-    updated: "2022-09-16T12:59-0500",
   },
   {
     _id: 10,
     title: "Iconic Russian singer asks to be named ‘foreign agent’",
-    imageUrl: "https://picsum.photos/400/400/?random=9",
+    image_url: "https://picsum.photos/400/400/?random=9",
     description:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. ",
     author: {
@@ -334,22 +280,16 @@ const articleDataset: ArticleListElement[] = [
       fullname: "Gavin D'mello",
       username: "gavin1040",
       bio: "",
-      bookmarks: { articles: [] },
-      published: { articles: [] },
-      isAdmin: false,
-      imageUrl:
+      image_url:
         "https://phantom-marca.unidadeditorial.es/9adb565dcfc4dc3e9b1948c7cf5b8f01/resize/1320/f/jpg/assets/multimedia/imagenes/2022/02/21/16454391499069.jpg",
-      email: "gavin@gmail.ccom",
       created: "2022-09-16T12:59-0500",
-      updated: "2022-09-16T12:59-0500",
     },
     created: "2022-09-16T12:59-0500",
-    updated: "2022-09-16T12:59-0500",
   },
   {
     _id: 11,
     title: "Fiona slams Dominican Republic after pounding Puerto Rico",
-    imageUrl: "https://picsum.photos/400/400/?random=9",
+    image_url: "https://picsum.photos/400/400/?random=9",
     description:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. ",
     author: {
@@ -359,17 +299,11 @@ const articleDataset: ArticleListElement[] = [
       fullname: "Gavin D'mello",
       username: "gavin1040",
       bio: "",
-      bookmarks: { articles: [] },
-      published: { articles: [] },
-      isAdmin: false,
-      imageUrl:
+      image_url:
         "https://phantom-marca.unidadeditorial.es/9adb565dcfc4dc3e9b1948c7cf5b8f01/resize/1320/f/jpg/assets/multimedia/imagenes/2022/02/21/16454391499069.jpg",
-      email: "gavin@gmail.ccom",
       created: "2022-09-16T12:59-0500",
-      updated: "2022-09-16T12:59-0500",
     },
     created: "2022-09-16T12:59-0500",
-    updated: "2022-09-16T12:59-0500",
   },
 ];
 
@@ -377,36 +311,26 @@ const AuthorProfile = (props: any) => {
   const navigate = useNavigate();
   const isTabletOrMobile = useMediaQuery({ query: "(max-width: 820px)" });
 
-  const state = useSelector((state: any) => {
-    return {
-      user: {
-        _id: 21,
-        firstname: "Gavin",
-        lastname: "D'mello",
-        fullname: "Gavin D'mello",
-        username: "gavin1040",
-        bio:
-          "Gavin D'mello is a content creator currently building an app called Blogica for his Masters degree",
-        bookmarks: { articles: [] },
-        published: { articles: [] },
-        isAdmin: false,
-        imageUrl:
-          "https://phantom-marca.unidadeditorial.es/9adb565dcfc4dc3e9b1948c7cf5b8f01/resize/1320/f/jpg/assets/multimedia/imagenes/2022/02/21/16454391499069.jpg",
-        email: "gavin@gmail.ccom",
-        created: "2022-09-16T12:59-0500",
-        updated: "2022-09-16T12:59-0500",
-      },
-    };
+  const [author, updateAuthorDetails] = useState<null | AuthorDetail>({
+    _id: 21,
+    firstname: "Gavin",
+    lastname: "D'mello",
+    fullname: "Gavin D'mello",
+    username: "gavin1040",
+    bio:
+      "Gavin D'mello is a content creator currently building an app called Blogica for his Masters degree",
+    image_url:
+      "https://phantom-marca.unidadeditorial.es/9adb565dcfc4dc3e9b1948c7cf5b8f01/resize/1320/f/jpg/assets/multimedia/imagenes/2022/02/21/16454391499069.jpg",
+    created: "2022-09-16T12:59-0500",
+    published: {
+      articles: [],
+    },
   });
-  const { user }: { user: User } = state;
-
-  const [articles, updateArticles] = useState<null | ArticleListElement[]>(
-    articleDataset
-  );
+  const [articles, updateArticles] = useState<null | Article[]>(articleDataset);
   const [articlesCount, updateArticlesCount] = useState(0);
 
   const [loading, updateArticleLoading] = useState(false);
-  const [articleError, updateArticleError] = useState(null);
+  const [error, updateArticleError] = useState(null);
 
   const tabs = ["My Recipes", "Recently Viewed", "Saved Recipes"];
 
@@ -415,19 +339,19 @@ const AuthorProfile = (props: any) => {
     // isLoading(false);
   }, []);
 
-  var loadAuthorArticles = (articles: ArticleListElement[]) => {
+  var loadAuthorArticles = (articles: Article[]) => {
     var response;
 
     if (articles.length > 0) {
       response = (
         <div>
           <div className="noselect  col-12  d-flex flex-row flex-wrap pt-4">
-            {articles.map((article: ArticleListElement, index: number) => (
+            {articles.map((article: Article, index: number) => (
               <div key={index} className={`col-12 mb-5 px-3 `}>
                 <ArticleListCard
                   article={article}
                   index={index}
-                  redirect={`/main/my-profile/recipeId/${article._id}`}
+                  showAuthorDetails={false}
                 />
               </div>
             ))}
@@ -450,7 +374,9 @@ const AuthorProfile = (props: any) => {
 
   return (
     <div className="col-12 d-flex flex-column  flex-grow-1">
-      {!loading && (
+      {loading && <Generic.Loader message="Loading" />}
+      {!loading && error && <Generic.ListError error={error} />}
+      {!loading && author && articles && (
         <div className="">
           <div className="col-12">
             <div>
@@ -459,7 +385,7 @@ const AuthorProfile = (props: any) => {
                   <div style={{ marginBottom: isTabletOrMobile ? 30 : 600 }}>
                     <div className="d-flex flex-column align-items-center pt-5">
                       <Generic.Avatar
-                        imageUrl={user.imageUrl}
+                        image_url={author.image_url}
                         fullname="Gavin D'mello"
                         size={150}
                       />
@@ -468,11 +394,11 @@ const AuthorProfile = (props: any) => {
                           padding: 10,
                           overflowWrap: "break-word",
                         }}
-                      >{`${user.firstname} ${user.lastname}`}</h4>
+                      >{`${author.firstname} ${author.lastname}`}</h4>
                     </div>
 
                     <Col className="mt-2">
-                      <em>{user.bio} </em>
+                      <em>{author.bio} </em>
                     </Col>
                     <Col className="mt-4">
                       <i
@@ -489,7 +415,7 @@ const AuthorProfile = (props: any) => {
                       ></i>
 
                       <span>
-                        Joined in {moment(user.created).format("MMM, YYYY")}
+                        Joined in {moment(author.created).format("MMM, YYYY")}
                       </span>
                     </Col>
                     {/* For v2 */}
@@ -545,10 +471,6 @@ const AuthorProfile = (props: any) => {
                   </div>
                 </div>
                 <div className="noselect  col-12 col-md-8 col-xl-9  p-2">
-                  {loading && !articles && <Generic.Loader message="Loading" />}
-                  {!loading && articleError && (
-                    <Generic.ListError error={articleError} />
-                  )}
                   {articles && (
                     <div>
                       <div className="bg-dark py-4 px-2 ">
@@ -556,7 +478,7 @@ const AuthorProfile = (props: any) => {
                           className="text-white text-center"
                           style={{ fontSize: 40 }}
                         >
-                          <em> Articles by {user.fullname}</em>
+                          <em> Articles by {author.fullname}</em>
                         </h1>
                       </div>
                       <InfiniteScroll

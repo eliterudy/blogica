@@ -15,10 +15,10 @@ import { icons } from "../../../config/configuration";
 import Generic from "../../../components/generic/GenericComponents";
 import { toggler } from "../../../utils/generic";
 import actions from "../../../redux/actionReducers/index";
-import { ContributorListElement } from "../../../config/types";
+import { Person } from "../../../config/types";
 import ContributorListCard from "./ContributorListCard";
 
-const contributorsDataset: ContributorListElement[] = [
+const contributorsDataset: Person[] = [
   {
     _id: 21,
     firstname: "Robert",
@@ -26,16 +26,11 @@ const contributorsDataset: ContributorListElement[] = [
     fullname: "Robert Danny Jr.",
     bio:
       "Robert Danny Jr. is a content creator currently building an app called Blogica for his Masters degree",
-    imageUrl:
+    image_url:
       "https://wellgroomedgentleman.com/media/images/Tony_Stark_Beard_with_Quiff_Hairstyle.width-800.jpg",
 
     username: "tom1040",
-    bookmarks: { articles: [] },
-    published: { articles: [] },
-    isAdmin: false,
-    email: "gavin@gmail.ccom",
     created: "2022-09-16T12:59-0500",
-    updated: "2022-09-16T12:59-0500",
   },
   {
     _id: 22,
@@ -44,16 +39,11 @@ const contributorsDataset: ContributorListElement[] = [
     fullname: "Mike Ross",
     bio:
       "Mike Ross is a content creator currently building an app called Blogica for his Masters degree",
-    imageUrl:
+    image_url:
       "https://www.tvinsider.com/wp-content/uploads/2019/07/Suits-Mike-1014x570.jpg",
 
     username: "mike1040",
-    bookmarks: { articles: [] },
-    published: { articles: [] },
-    isAdmin: false,
-    email: "gavin@gmail.ccom",
     created: "2022-09-16T12:59-0500",
-    updated: "2022-09-16T12:59-0500",
   },
   {
     _id: 23,
@@ -62,16 +52,11 @@ const contributorsDataset: ContributorListElement[] = [
     fullname: "Harvey Spectre",
     bio:
       "Harvey Spectre is a content creator currently building an app called Blogica for his Masters degree",
-    imageUrl:
+    image_url:
       "https://i.pinimg.com/474x/3f/d1/b8/3fd1b807b8425cb3f328fa06e5dcd63b--gabriel-macht-harvey-specter.jpg",
 
     username: "harvey1040",
-    bookmarks: { articles: [] },
-    published: { articles: [] },
-    isAdmin: false,
-    email: "gavin@gmail.ccom",
     created: "2022-09-16T12:59-0500",
-    updated: "2022-09-16T12:59-0500",
   },
   {
     _id: 24,
@@ -80,15 +65,10 @@ const contributorsDataset: ContributorListElement[] = [
     fullname: "Gavin D'mello",
     bio:
       "Gavin D'mello is a content creator currently building an app called Blogica for his Masters degree",
-    imageUrl: "https://avatars.githubusercontent.com/u/54526769?v=4",
+    image_url: "https://avatars.githubusercontent.com/u/54526769?v=4",
 
     username: "gavin1040",
-    bookmarks: { articles: [] },
-    published: { articles: [] },
-    isAdmin: false,
-    email: "gavin@gmail.ccom",
     created: "2022-09-16T12:59-0500",
-    updated: "2022-09-16T12:59-0500",
   },
   {
     _id: 25,
@@ -97,16 +77,11 @@ const contributorsDataset: ContributorListElement[] = [
     fullname: "Robert Danny Jr.",
     bio:
       "Robert Danny Jr. is a content creator currently building an app called Blogica for his Masters degree",
-    imageUrl:
+    image_url:
       "https://wellgroomedgentleman.com/media/images/Tony_Stark_Beard_with_Quiff_Hairstyle.width-800.jpg",
 
     username: "tom1040",
-    bookmarks: { articles: [] },
-    published: { articles: [] },
-    isAdmin: false,
-    email: "gavin@gmail.ccom",
     created: "2022-09-16T12:59-0500",
-    updated: "2022-09-16T12:59-0500",
   },
   {
     _id: 26,
@@ -115,16 +90,11 @@ const contributorsDataset: ContributorListElement[] = [
     fullname: "Mike Ross",
     bio:
       "Mike Ross is a content creator currently building an app called Blogica for his Masters degree",
-    imageUrl:
+    image_url:
       "https://www.tvinsider.com/wp-content/uploads/2019/07/Suits-Mike-1014x570.jpg",
 
     username: "mike1040",
-    bookmarks: { articles: [] },
-    published: { articles: [] },
-    isAdmin: false,
-    email: "gavin@gmail.ccom",
     created: "2022-09-16T12:59-0500",
-    updated: "2022-09-16T12:59-0500",
   },
   {
     _id: 27,
@@ -133,16 +103,11 @@ const contributorsDataset: ContributorListElement[] = [
     fullname: "Harvey Spectre",
     bio:
       "Harvey Spectre is a content creator currently building an app called Blogica for his Masters degree",
-    imageUrl:
+    image_url:
       "https://i.pinimg.com/474x/3f/d1/b8/3fd1b807b8425cb3f328fa06e5dcd63b--gabriel-macht-harvey-specter.jpg",
 
     username: "harvey1040",
-    bookmarks: { articles: [] },
-    published: { articles: [] },
-    isAdmin: false,
-    email: "gavin@gmail.ccom",
     created: "2022-09-16T12:59-0500",
-    updated: "2022-09-16T12:59-0500",
   },
   {
     _id: 28,
@@ -151,15 +116,10 @@ const contributorsDataset: ContributorListElement[] = [
     fullname: "Gavin D'mello",
     bio:
       "Gavin D'mello is a content creator currently building an app called Blogica for his Masters degree",
-    imageUrl: "https://avatars.githubusercontent.com/u/54526769?v=4",
+    image_url: "https://avatars.githubusercontent.com/u/54526769?v=4",
 
     username: "gavin1040",
-    bookmarks: { articles: [] },
-    published: { articles: [] },
-    isAdmin: false,
-    email: "gavin@gmail.ccom",
     created: "2022-09-16T12:59-0500",
-    updated: "2022-09-16T12:59-0500",
   },
 ];
 
@@ -170,9 +130,9 @@ const Contributors = (props: any) => {
   const locationParams = useLocation();
   // state hooks
   const [search, updateSearch] = useState("");
-  const [contributors, updateContributors] = useState<
-    null | ContributorListElement[]
-  >(contributorsDataset);
+  const [contributors, updateContributors] = useState<null | Person[]>(
+    contributorsDataset
+  );
   const [offset, updateOffset] = useState(0);
   const [loading, updateLoading] = useState(false);
   const [error, updateError] = useState(null);
@@ -181,16 +141,16 @@ const Contributors = (props: any) => {
 
   // redux state
   const state = useSelector((state: any) => {
-    return { user: true };
+    // eslint-disable-next-line no-labels, no-label-var
+    return { userState: state.userActionReducer };
   });
-  const { user } = state;
+  const { user } = state.userState;
 
   // useEffects
   useEffect(() => {}, []);
 
   // functions/callbacks
   const searchUpdateCallback = async (value: string) => {
-    console.log("here", value);
     // updateOffset(0);
     // updateContributor(null);
     // updateContributorLoading(true);
@@ -201,18 +161,12 @@ const Contributors = (props: any) => {
   const getContributorsFromApi = () => {};
 
   // component conditional render
-  const loadContributors = (contributorList: ContributorListElement[]) => {
-    return contributorList.map(
-      (contributor: ContributorListElement, index: number) => (
-        <div key={index} className={`col-12 col-sm-6 col-lg-3 mb-5 px-3 `}>
-          <ContributorListCard
-            contributor={contributor}
-            index={index}
-            redirect={`/main/authorId/${contributor._id}`}
-          />
-        </div>
-      )
-    );
+  const loadContributors = (contributorList: Person[]) => {
+    return contributorList.map((contributor: Person, index: number) => (
+      <div key={index} className={`col-12 col-sm-6 col-lg-3 mb-5 px-3 `}>
+        <ContributorListCard contributor={contributor} index={index} />
+      </div>
+    ));
   };
 
   // main render
@@ -249,7 +203,6 @@ const Contributors = (props: any) => {
               className="pt-4"
               dataLength={contributors ? contributors.length : 0} //This is important field to render the next data
               next={() => {
-                console.log("Here");
                 getContributorsFromApi();
               }}
               hasMore={listCount > contributors.length}

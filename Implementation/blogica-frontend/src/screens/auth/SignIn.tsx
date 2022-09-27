@@ -38,11 +38,10 @@ const SignInComponent = () => {
   });
 
   const state = useSelector((state: any) => {
-    return {
-      userState: state.userActionReducer,
-    };
+    // eslint-disable-next-line no-labels, no-label-var
+    return { userState: state.userActionReducer };
   });
-  const { userState } = state;
+  const { user } = state.userState;
   const signInButtonStyle = cssHover(
     {
       borderWidth: 1,

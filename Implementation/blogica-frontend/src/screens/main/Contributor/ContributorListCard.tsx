@@ -21,15 +21,13 @@ const ContributorListCard = (cardProps: ContributorCardProps) => {
   const navigate = useNavigate();
 
   const state = useSelector((state: any) => {
-    return {
-      userState: state.userActionReducer,
-    };
+    // eslint-disable-next-line no-labels, no-label-var
+    return { userState: state.userActionReducer };
   });
-  // const { userState } = state;
-  // const { user } = userState;
+  const { user } = state.userState;
 
-  const { contributor, index, redirect } = cardProps;
-  const { _id, fullname, created, updated, imageUrl, bio } = contributor;
+  const { contributor, index } = cardProps;
+  const { _id, fullname, created, updated, image_url, bio } = contributor;
   const cardHoverStlye = cssHover(
     {
       transform: "scale(1.05)",
@@ -41,8 +39,8 @@ const ContributorListCard = (cardProps: ContributorCardProps) => {
 
   return (
     <Link
-      to={redirect}
-      state={{ recipeId: contributor._id }}
+      to={`/main/authorId/${_id}`}
+      state={{ authorId: _id }}
       style={{ textDecoration: "none", color: "black" }}
     >
       <div
@@ -75,7 +73,7 @@ const ContributorListCard = (cardProps: ContributorCardProps) => {
                 borderTopLeftRadius: 4,
                 aspectRatio: "1/1",
                 objectFit: "cover",
-                backgroundImage: `url(${imageUrl})`,
+                backgroundImage: `url(${image_url})`,
                 backgroundRepeat: "no-repeat",
                 backgroundSize: "cover",
                 backgroundPosition: "center",

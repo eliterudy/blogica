@@ -30,13 +30,32 @@ import ScrollToTop from "../components/generic/scrollToTop";
 import reduxApiCallers from "../redux/thunks/reduxApiCallers";
 import actions from "../redux/actionReducers/index";
 import Footer from "../components/Footer";
+const { loadUser, removeUser } = actions;
+
+const userDetails = {
+  _id: 21,
+  firstname: "Gavin",
+  lastname: "D'mello",
+  fullname: "Gavin D'mello",
+  username: "gavin1040",
+  bio:
+    "Gavin D'mello is a content creator currently building an app called Blogica for his Masters degree",
+  image_url:
+    "https://phantom-marca.unidadeditorial.es/9adb565dcfc4dc3e9b1948c7cf5b8f01/resize/1320/f/jpg/assets/multimedia/imagenes/2022/02/21/16454391499069.jpg",
+  created: "2022-09-16T12:59-0500",
+  published: {
+    articles: [],
+  },
+  bookmarks: {
+    articles: [],
+  },
+};
 
 const MainRouter = () => {
   let location = useLocation();
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const MainRoutes = () => {
-    console.log("here");
     const [isModalOpen, updateModalOpen] = useState(false);
     const toggleModal = () => {
       updateModalOpen(!isModalOpen);
@@ -44,18 +63,41 @@ const MainRouter = () => {
 
     const state = useSelector((state: any) => {
       // eslint-disable-next-line no-labels, no-label-var
-      return { user: false };
+      return { userState: state.userActionReducer };
     });
-    const { user } = state;
+    const { user } = state.userState;
 
-    // useEffect(() => {
-    //   var userToken = localStorage.getItem("token");
-    //   if (user) {
-    //     navigate("/main/feeds");
-    //   } else {
-    //     navigate("/main/home");
-    //   }
-    // }, [location.pathname, user]);
+    useEffect(() => {
+      console.log("HERE");
+
+      // var userToken = localStorage.getItem("token");
+      // userToken &&
+      //   userToken.length > 0 &&
+      // apis
+      //   .getUserDetails()
+      //   .then(({ data }) => {
+      dispatch(loadUser(userDetails));
+      // })
+      // .catch((err) => {
+      //   // alert('failed to load user. Please login');
+      //   // dispatch(removeUser());
+      //   if (err && err.message && err.message === "Network Error") {
+      //     if (navigator.onLine) {
+      //       navigate("/server-down", { state: { redirectPath: "/" } });
+      //     } else {
+      //       navigate("/no-internet", { state: { redirectPath: "/" } });
+      //     }
+      //   }
+      // });
+    }, []);
+
+    useEffect(() => {
+      if (user && location.pathname == "/main/home") {
+        navigate("/main/feeds");
+      } else if (!user && location.pathname == "/main/feeds") {
+        navigate("/main/home");
+      }
+    }, [location.pathname, user]);
 
     return (
       <div className="vh-100 col-12 d-flex flex-column">

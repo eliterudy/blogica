@@ -3,31 +3,55 @@ import { To } from "react-router-dom";
 export interface Article {
   _id: number;
   title: string;
-  imageUrl: string;
+  image_url: string;
   description: string;
-  author: User;
+  author: Author;
   isBookmarked?: boolean;
+  created: string;
+  updated?: string;
+}
+
+export interface ArticleDetail extends Article {
   numberOfLikes?: number;
   numberOfViews?: number;
   comments?: any;
-  created: string;
-  updated: string;
 }
 
-export interface ArticleListElement extends Article {}
-
-export interface ContributorListElement extends User {}
-
 export interface ContributorCardProps {
-  contributor: ContributorListElement;
+  contributor: Person;
   index: number;
-  redirect: To;
 }
 
 export interface ArticleCardProps {
-  article: ArticleListElement;
+  article: Article;
   index: number;
-  redirect: To;
+  showAuthorDetails?: boolean;
+}
+
+export interface Person {
+  _id: number;
+  firstname: string;
+  lastname: string;
+  fullname: string;
+  username: string;
+  bio: string;
+  image_url: string;
+  created: string;
+  updated?: string;
+}
+
+export interface User extends Person {
+  bookmarks?: Bookmarks;
+  published: Published;
+  recents?: Recents;
+  currency?: string;
+  currency_type?: string;
+}
+
+export interface Author extends Person {}
+
+export interface AuthorDetail extends Person {
+  published: Published;
 }
 
 export interface Bookmarks {
@@ -36,28 +60,14 @@ export interface Bookmarks {
 
 export interface Recents {
   articles: string[];
+  authors: string[];
 }
 
 export interface Published {
   articles: string[];
 }
 
-export interface User {
-  _id: number;
-  firstname: string;
-  lastname: string;
-  fullname: string;
-  username: string;
-  bio: string;
-  imageUrl: string;
-  bookmarks: Bookmarks;
-  published: Published;
-  isAdmin: boolean;
-  email: string;
-  created: string;
-  updated: string;
-}
-
+// Others
 export interface CheckboxProps {
   label: string;
   value: boolean;

@@ -28,11 +28,11 @@ const Generic = {
     );
   },
   Avatar: ({
-    imageUrl,
+    image_url,
     fullname,
     size,
   }: {
-    imageUrl: string;
+    image_url: string;
     fullname: string;
     size: number;
   }) => {
@@ -40,10 +40,10 @@ const Generic = {
       .split(" ")
       .map((e) => e.charAt(0))
       .join("");
-    if (imageUrl)
+    if (image_url)
       return (
         <img
-          src={imageUrl}
+          src={image_url}
           alt={fullname}
           style={{
             objectFit: "cover",

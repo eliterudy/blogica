@@ -30,13 +30,15 @@ import { Link, useNavigate } from "react-router-dom";
 // https://picsum.photos/seed/picsum/200/300)
 
 const LargeArticleCard = (cardProps: ArticleCardProps) => {
-  const { article, index, redirect } = cardProps;
-  // console.log("article?.imageUrl", article?.imageUrl);
+  const { article, index } = cardProps;
+  const navigate = useNavigate();
+
+  // console.log("article?.image_url", article?.image_url);
 
   return (
     <Link
-      to={redirect}
-      state={{ recipeId: article._id }}
+      to={`/main/articleId/${article._id}`}
+      state={{ articleId: article._id }}
       style={{ textDecoration: "none", color: "black" }}
     >
       <div className="col-12">
@@ -46,7 +48,7 @@ const LargeArticleCard = (cardProps: ArticleCardProps) => {
             borderTopRightRadius: 4,
             borderTopLeftRadius: 4,
             objectFit: "cover",
-            backgroundImage: `url(${article.imageUrl})`,
+            backgroundImage: `url(${article.image_url})`,
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
             backgroundPosition: "center",
@@ -54,22 +56,30 @@ const LargeArticleCard = (cardProps: ArticleCardProps) => {
           }}
         ></div>
         <div className=" mt-3 d-flex align-items-center">
-          <Generic.Avatar
-            imageUrl={article.author.imageUrl}
-            fullname="Gavin D'mello"
-            size={25}
-          />
-          <a
-            className="ms-2 text-decoration-none"
-            href={`/main/authorId/${article.author._id}`}
+          <div
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              navigate(`/main/authorId/${article.author._id}`);
+            }}
           >
-            <span
-              className="text-primary"
-              style={{ fontWeight: "bold", fontSize: 14 }}
-            >
-              {article.author.fullname}
-            </span>
-          </a>
+            <Generic.Avatar
+              image_url={article.author.image_url}
+              fullname="Gavin D'mello"
+              size={25}
+            />
+          </div>
+          <span
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              navigate(`/main/authorId/${article.author._id}`);
+            }}
+            className=" ms-2 text-primary"
+            style={{ fontWeight: "bold", fontSize: 14 }}
+          >
+            {article.author.fullname}
+          </span>
         </div>
         <h3
           className=" mt-2 col-12 "

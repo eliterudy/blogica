@@ -43,9 +43,10 @@ const ArticleDetail = (props: any) => {
   const [loading, isLoading] = useState(true);
   const [articles, updateArticles] = useState([]);
   const state = useSelector((state: any) => {
-    return { user: true };
+    // eslint-disable-next-line no-labels, no-label-var
+    return { userState: state.userActionReducer };
   });
-  const { user } = state;
+  const { user } = state.userState;
 
   useEffect(() => {
     // if (user) navigate("/main/feeds");

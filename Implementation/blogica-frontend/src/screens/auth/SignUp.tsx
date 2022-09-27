@@ -53,11 +53,10 @@ const SignUpComponent = () => {
     }
   );
   const state = useSelector((state: any) => {
-    return {
-      userState: state.userActionReducer,
-    };
+    // eslint-disable-next-line no-labels, no-label-var
+    return { userState: state.userActionReducer };
   });
-  const { userState } = state;
+  const { user } = state.userState;
 
   const [imagePreview, updateImagePreview] = useState<undefined | string>(
     undefined
@@ -147,7 +146,7 @@ const SignUpComponent = () => {
                 <div className="d-flex flex-row justify-content-center mt-4">
                   {imagePreview ? (
                     <Generic.Avatar
-                      imageUrl={imagePreview}
+                      image_url={imagePreview}
                       fullname={
                         formValues.firstname + " " + formValues.lastname
                       }
@@ -511,7 +510,7 @@ const SignUpComponent = () => {
               <div className="col-12 d-flex flex-column align-items-center">
                 {imagePreview ? (
                   <Generic.Avatar
-                    imageUrl={imagePreview}
+                    image_url={imagePreview}
                     fullname={formValues.firstname + " " + formValues.lastname}
                     size={200}
                   />
