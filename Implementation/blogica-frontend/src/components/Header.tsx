@@ -138,7 +138,11 @@ const Header = ({ modalCallback }: any) => {
               )}
               {user && (
                 <NavItem className=" ms-sm-2 flex-grow-1 flex-shrink-1 d-sm-flex flex-column justify-content-center">
-                  <NavLink tag={RRNavLink} className={"nav-link "} to="/">
+                  <NavLink
+                    tag={RRNavLink}
+                    className={"nav-link "}
+                    to="/main/feeds"
+                  >
                     <div className=" d-flex flex-row justify-content-start justify-content-md-center align-items-center ">
                       <i className="fa fa-eercast fa-lg me-2" />
                       <span className="mb-0 pb-0">My feeds</span>

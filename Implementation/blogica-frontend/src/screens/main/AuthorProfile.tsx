@@ -44,6 +44,7 @@ import Generic from "../../components/generic/GenericComponents";
 import { toggler } from "../../utils/generic";
 import actions from "../../redux/actionReducers/index";
 import ArticleListCard from "../../components/ArticleListCard";
+import moment from "moment";
 
 const articleDataset: ArticleListElement[] = [
   {
@@ -481,6 +482,16 @@ const AuthorProfile = (props: any) => {
 
                       <span>{articlesCount} Published Articles</span>
                     </Col>
+                    <Col className="mt-2">
+                      <i
+                        className="fa fa-desktop fa-lg me-2 "
+                        aria-hidden="true"
+                      ></i>
+
+                      <span>
+                        Joined in {moment(user.created).format("MMM, YYYY")}
+                      </span>
+                    </Col>
                     {/* For v2 */}
                     {/* <Button
                   className="col-12 mb-5"
@@ -543,7 +554,7 @@ const AuthorProfile = (props: any) => {
                       <div className="bg-dark py-4 px-2 ">
                         <h1
                           className="text-white text-center"
-                          style={{ fontSize: 50 }}
+                          style={{ fontSize: 40 }}
                         >
                           <em> Articles by {user.fullname}</em>
                         </h1>

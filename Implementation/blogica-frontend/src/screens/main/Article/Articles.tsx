@@ -358,8 +358,8 @@ const Articles = (props: any) => {
   const [articles, updateArticles] = useState<null | ArticleListElement[]>(
     articleDataset
   );
-  const [articleLoading, updateArticleLoading] = useState(false);
-  const [articleError, updateArticleError] = useState(null);
+  const [loading, updateLoading] = useState(false);
+  const [error, updateError] = useState(null);
   const [articleCount, updateArticleCount] = useState(0);
   const [callerCounter, updateCallerCounter] = useState(0);
   const [selectFilter, updateSelectFilter] = useState("top");
@@ -395,54 +395,17 @@ const Articles = (props: any) => {
   const getArticlesFromApi = () => {};
 
   // component conditional render
-  const loadArticles = (localArticles: ArticleListElement[]) => {
-    if (articleLoading) {
-      return (
-        <div className="py-5 my-5 col col-12 align-items-center">
-          <Generic.Loader message={"Fetching Articles"} />
-        </div>
-      );
-    } else if (!articleLoading && localArticles) {
-      return (
-        <InfiniteScroll
-          className=" mx-2 ms-md-3 "
-          dataLength={localArticles.length || 0} //This is important field to render the next data
-          next={() => {
-            getArticlesFromApi();
-          }}
-          hasMore={articleCount > localArticles.length}
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            flexWrap: "wrap",
-          }}
-          loader={<h4 className="col-12 text-center">Loading...</h4>}
-          endMessage={
-            !articleLoading && (
-              <p className="col-12" style={{ textAlign: "center" }}>
-                <b>Yay! You have seen it all</b>
-              </p>
-            )
-          }
-        >
-          {localArticles.map((article: ArticleListElement, index: number) => (
-            <div
-              key={index}
-              className={`col-12  p-3 `}
-              style={{ borderBottom: "1px solid #ddd" }}
-            >
-              <ArticleListCard
-                article={article}
-                index={index}
-                redirect={`/main/articleId/${article._id}`}
-              />
-            </div>
-          ))}
-        </InfiniteScroll>
-      );
-    } else {
-      return <Generic.ListError error={articleError} />;
-    }
+
+  const loadArticles = (articles: ArticleListElement[]) => {
+    return articles.map((contributor: ArticleListElement, index: number) => (
+      <div key={index} className={`col-12  mb-5 px-3 `}>
+        <ArticleListCard
+          article={contributor}
+          index={index}
+          redirect={`/main/authorId/${contributor._id}`}
+        />
+      </div>
+    ));
   };
 
   // main render
@@ -450,9 +413,14 @@ const Articles = (props: any) => {
 
   return (
     <div className="col-12 d-flex flex-column  flex-grow-1">
+      {/* <div className="bg-dark py-3 px-2 ">
+        <h1 className="text-white px-5 text-center" style={{ fontSize: 80 }}>
+          <span> Articles</span>
+        </h1>
+      </div> */}
       {/* Searchbar */}
       <div className="d-flex col-12 flex-row justify-content-center container mt-4">
-        <div className="col-12 col-md-8  p-4 " style={{}}>
+        <div className="col-12 col-md-10  p-4 " style={{}}>
           <Generic.SearchBar
             searchFor="articles"
             apiCallback={(val: any) => searchUpdateCallback(val)}
@@ -460,10 +428,10 @@ const Articles = (props: any) => {
         </div>
       </div>
 
-      <div className=" row col-12 py-2 m-0 px-md-5 ">
+      <div className=" row col-12 py-2 m-0 px-md-5 flex-grow-1">
         {/* Left section */}
-        <div className=" col-12 col-md-3 px-4 pb-2  ">
-          <div className="col col-12 sticky-md-top">
+        <div className=" col-12 col-md-3 px-4 pb-2 d-none d-md-block  ">
+          <div className="col col-12 sticky-md-top mt-5">
             <h6 style={{ fontWeight: "bold" }}>FILTER ARTICLES</h6>
             <Input
               type="select"
@@ -485,24 +453,29 @@ const Articles = (props: any) => {
           </div>
         </div>
         {/* Right section */}
-        <div className="col col-12 col-md-9 p-0 border-start ">
-          {articles && (
-            <div className="d-flex flex-column align-items-end pt-3">
-              <em
-                className="px-2 pt-1  me-3"
-                style={{
-                  border: "0.5px solid #ddd",
-                  backgroundColor: "#eee",
-                  borderRadius: 3,
-                }}
-              >
-                Showing: {articles.length} of {articleCount} articles
-              </em>
+        <div className="col col-12 col-md-9 p-0  border-start d-flex flex-column  flex-grow-1 ">
+          {loading && <Generic.Loader message="Loading Articles" />}
+          {!loading && articles && (
+            <div className="col-12">
+              <div className="d-flex flex-column align-items-end pt-3">
+                <em
+                  className="px-2 pt-1  me-3"
+                  style={{
+                    border: "0.5px solid #ddd",
+                    backgroundColor: "#eee",
+                    borderRadius: 3,
+                  }}
+                >
+                  Showing: {articles.length} of {articleCount} articles
+                </em>
+              </div>
+
+              <div className="col-12  ">
+                {localArticles && loadArticles(localArticles)}
+              </div>
             </div>
           )}
-          <div className="col-12  ">
-            {localArticles && loadArticles(localArticles)}
-          </div>
+          {!loading && error && <Generic.ListError error={error} />}
         </div>
       </div>
     </div>

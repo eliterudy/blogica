@@ -169,15 +169,14 @@ const Contributors = (props: any) => {
   const isTabletOrMobile = useMediaQuery({ query: "(max-width: 767px)" });
   const locationParams = useLocation();
   // state hooks
-  const [loading, isLoading] = useState(false);
   const [search, updateSearch] = useState("");
   const [contributors, updateContributors] = useState<
     null | ContributorListElement[]
   >(contributorsDataset);
   const [offset, updateOffset] = useState(0);
-  const [contributorLoading, updateContributorLoading] = useState(false);
-  const [contributorError, updateContributorError] = useState(null);
-  const [contributorCount, updateContributorCount] = useState(0);
+  const [loading, updateLoading] = useState(false);
+  const [error, updateError] = useState(null);
+  const [listCount, updateListCount] = useState(0);
   const [callerCounter, updateCallerCounter] = useState(0);
 
   // redux state
@@ -203,23 +202,17 @@ const Contributors = (props: any) => {
 
   // component conditional render
   const loadContributors = (contributorList: ContributorListElement[]) => {
-    if (contributorLoading) {
-      return <Generic.Loader message={"contributors"} />;
-    } else if (!contributorLoading && contributorList) {
-      return contributorList.map(
-        (contributor: ContributorListElement, index: number) => (
-          <div key={index} className={`col-12 col-sm-6 col-lg-3 mb-5 px-3 `}>
-            <ContributorListCard
-              contributor={contributor}
-              index={index}
-              redirect={`/main/authorId/${contributor._id}`}
-            />
-          </div>
-        )
-      );
-    } else {
-      return <Generic.ListError error={contributorError} />;
-    }
+    return contributorList.map(
+      (contributor: ContributorListElement, index: number) => (
+        <div key={index} className={`col-12 col-sm-6 col-lg-3 mb-5 px-3 `}>
+          <ContributorListCard
+            contributor={contributor}
+            index={index}
+            redirect={`/main/authorId/${contributor._id}`}
+          />
+        </div>
+      )
+    );
   };
 
   // main render
@@ -227,7 +220,7 @@ const Contributors = (props: any) => {
     <div className="col-12 d-flex flex-column  flex-grow-1">
       {/* Searchbar */}
       <div className="d-flex col-12 flex-row justify-content-center container mt-4 ">
-        <div className="col-12 col-md-8  p-4 " style={{}}>
+        <div className="col-12 col-md-10  p-4 " style={{}}>
           <Generic.SearchBar
             searchFor="contributors"
             apiCallback={(val: any) => searchUpdateCallback(val)}
@@ -235,9 +228,10 @@ const Contributors = (props: any) => {
         </div>
       </div>
       {/* List */}
+
       {loading && <Generic.Loader message="Loading" />}
-      <div className="noselect  col-12   pt-1 px-3">
-        {contributors && !loading && (
+      {!loading && contributors && (
+        <div className="noselect  col-12   pt-1 px-3">
           <div className="container p-0">
             <div className="d-flex flex-column align-items-end pt-3">
               <em
@@ -248,23 +242,23 @@ const Contributors = (props: any) => {
                   borderRadius: 3,
                 }}
               >
-                Showing: {contributors.length} of {contributorCount}{" "}
-                contributors
+                Showing: {contributors.length} of {listCount} contributors
               </em>
             </div>
             <InfiniteScroll
-              className="pt-4 "
+              className="pt-4"
               dataLength={contributors ? contributors.length : 0} //This is important field to render the next data
               next={() => {
+                console.log("Here");
                 getContributorsFromApi();
               }}
-              hasMore={contributorCount > contributors.length}
+              hasMore={listCount > contributors.length}
               style={{
                 display: "flex",
                 flexDirection: "row",
                 flexWrap: "wrap",
               }}
-              loader={<h4 className="col-12 text-center">Loading...</h4>}
+              loader={<h4 className="col-12 text-center">Fetching more...</h4>}
               endMessage={
                 <p className="col-12" style={{ textAlign: "center" }}>
                   <b>Yay! You have seen it all</b>
@@ -274,8 +268,9 @@ const Contributors = (props: any) => {
               {contributors && loadContributors(contributors)}
             </InfiniteScroll>
           </div>
-        )}
-      </div>
+        </div>
+      )}
+      {!loading && error && <Generic.ListError error={error} />}
     </div>
   );
 };
