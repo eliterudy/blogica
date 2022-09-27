@@ -16,7 +16,7 @@ import Generic from "../../../components/generic/GenericComponents";
 import { toggler } from "../../../utils/generic";
 import actions from "../../../redux/actionReducers/index";
 import { ArticleFilters, ArticleListElement } from "../../../config/types";
-import ArticleListCard from "./ArticleListCard";
+import ArticleListCard from "../../../components/ArticleListCard";
 import { Input, Button } from "reactstrap";
 
 const articleDataset: ArticleListElement[] = [

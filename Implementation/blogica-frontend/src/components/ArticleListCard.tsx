@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Tooltip } from "reactstrap";
-import { ArticleCardProps } from "../../../config/types";
-import Generic from "../../../components/generic/GenericComponents";
-import { constants } from "../../../config/configuration";
+import { ArticleCardProps } from "../config/types";
+import Generic from "./generic/GenericComponents";
+import { constants } from "../config/configuration";
 import moment from "moment";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -13,12 +13,12 @@ const ArticleListCard = (cardProps: ArticleCardProps) => {
   const [tooltipOpen, setTooltipOpen] = useState(false);
 
   const toggle = () => setTooltipOpen(!tooltipOpen);
-  var bookmarkIcon = () => {
-    if (article.isBookmarked) {
-      return <i className="fa fa-bookmark fa-lg" id="bookmark"></i>;
-    }
-    return <i className="fa fa-bookmark-o fa-lg" id="bookmark"></i>;
-  };
+  // var bookmarkIcon = () => {
+  //   if (article.isBookmarked) {
+  //     return <i className="fa fa-bookmark fa-lg" id="bookmark"></i>;
+  //   }
+  //   return <i className="fa fa-bookmark-o fa-lg" id="bookmark"></i>;
+  // };
   return (
     <Link
       to={redirect}
@@ -79,7 +79,7 @@ const ArticleListCard = (cardProps: ArticleCardProps) => {
               </span>
             </div>
             <div className="mt-1">
-              <span>
+              {/* <span>
                 {bookmarkIcon()}
                 <Tooltip
                   className=""
@@ -90,7 +90,7 @@ const ArticleListCard = (cardProps: ArticleCardProps) => {
                 >
                   Save
                 </Tooltip>
-              </span>
+              </span> */}
             </div>
           </div>
         </div>

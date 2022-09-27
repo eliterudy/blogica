@@ -202,17 +202,17 @@ const Contributors = (props: any) => {
   const getContributorsFromApi = () => {};
 
   // component conditional render
-  const loadContributors = (localContributors: ContributorListElement[]) => {
+  const loadContributors = (contributorList: ContributorListElement[]) => {
     if (contributorLoading) {
       return <Generic.Loader message={"contributors"} />;
-    } else if (!contributorLoading && localContributors) {
-      return localContributors.map(
+    } else if (!contributorLoading && contributorList) {
+      return contributorList.map(
         (contributor: ContributorListElement, index: number) => (
           <div key={index} className={`col-12 col-sm-6 col-lg-3 mb-5 px-3 `}>
             <ContributorListCard
               contributor={contributor}
               index={index}
-              redirect={`/main/contributorId/${contributor._id}`}
+              redirect={`/main/authorId/${contributor._id}`}
             />
           </div>
         )
@@ -223,8 +223,6 @@ const Contributors = (props: any) => {
   };
 
   // main render
-  var localContributors = contributors;
-
   return (
     <div className="col-12 d-flex flex-column  flex-grow-1">
       {/* Searchbar */}
@@ -273,7 +271,7 @@ const Contributors = (props: any) => {
                 </p>
               }
             >
-              {localContributors && loadContributors(localContributors)}
+              {contributors && loadContributors(contributors)}
             </InfiniteScroll>
           </div>
         )}
