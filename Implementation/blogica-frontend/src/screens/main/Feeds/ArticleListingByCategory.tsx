@@ -1,6 +1,6 @@
 /* package inports */
 
-import React, { useState, useRef, useEffect, LegacyRef } from "react";
+import React, { useState, useRef, useEffect, LegacyRef, Key } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
@@ -39,7 +39,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 /* helper imports */
 import { cssHover } from "../../../components/generic/hoverProps";
 import { Article, AuthorDetail, User } from "../../../config/types";
-import { icons } from "../../../config/configuration";
+import { icons, constants } from "../../../config/configuration";
 import Generic from "../../../components/generic/GenericComponents";
 import { toggler } from "../../../utils/generic";
 import actions from "../../../redux/actionReducers/index";
@@ -306,7 +306,15 @@ const articleDataset: Article[] = [
   },
 ];
 
-const ArticleListingByCategory = (props: any) => {
+const ArticleListingByCategory = ({
+  index,
+  category,
+  tabMessage,
+}: {
+  index: number;
+  category: string;
+  tabMessage: string;
+}) => {
   const navigate = useNavigate();
   const isTabletOrMobile = useMediaQuery({ query: "(max-width: 767px)" });
   const [articles, updateArticles] = useState<null | Article[]>(articleDataset);
@@ -358,14 +366,11 @@ const ArticleListingByCategory = (props: any) => {
 
     return response;
   };
-
   return (
     <div
       className={`d-flex flex-column flex-grow-1 justify-content-center align-items-center`}
     >
-      <p>
-        Tab{props.index} {props.category}
-      </p>
+      <span className="subMessages">{tabMessage}</span>
       {articles && (
         <div>
           <InfiniteScroll

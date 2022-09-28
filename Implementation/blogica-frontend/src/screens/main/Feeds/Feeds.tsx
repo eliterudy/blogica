@@ -39,7 +39,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 /* helper imports */
 import { cssHover } from "../../../components/generic/hoverProps";
 import { Article, AuthorDetail, User } from "../../../config/types";
-import { icons } from "../../../config/configuration";
+import { icons, constants } from "../../../config/configuration";
 import Generic from "../../../components/generic/GenericComponents";
 import { toggler } from "../../../utils/generic";
 import actions from "../../../redux/actionReducers/index";
@@ -47,6 +47,12 @@ import ArticleListCard from "../../../components/ArticleListCard";
 import moment from "moment";
 import ArticleListingByCategory from "./ArticleListingByCategory";
 import NewArticleCard from "./NewArticleCard";
+
+const tabs = ["My Articles", "Recently Viewed Articles"];
+const dict: { [key: string]: string[] } = {
+  "My Articles": [constants.MY_ARTICLES, "published"],
+  "Recently Viewed Articles": [constants.RECENTLY_VIEWED_ARTICLES, "recents"],
+};
 
 const Feeds = (props: any) => {
   const navigate = useNavigate();
@@ -60,17 +66,6 @@ const Feeds = (props: any) => {
   const { user } = state.userState;
 
   const [activeTab, updateActiveTab] = useState(0);
-
-  const tabs = [
-    "My Articles",
-    "Recently Viewed Articles",
-    "Recently Viewed Contributors",
-    "Bookmarked Articles",
-    "My Articles",
-    "Recently Viewed Articles",
-    "Recently Viewed Contributors",
-    "Bookmarked Articles",
-  ];
 
   // useEffect(() => {
   //   if (!user) navigate("/main/home");
@@ -235,9 +230,9 @@ const Feeds = (props: any) => {
                         return (
                           <TabPane tabId={index} className="flex-grow-1">
                             <ArticleListingByCategory
-                              color="bg-primary"
                               index={index}
                               category={tab}
+                              tabMessage={dict[tab][0].toString()}
                             />
                           </TabPane>
                         );

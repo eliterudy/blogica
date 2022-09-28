@@ -28,6 +28,10 @@ const constants: any = {
   INTRO_BANNER_TITLE: "Stay Curious & Get a Read",
   INTRO_BANNER_MESSAGE:
     "Discover stories, thinking, and expertise from writers on any topic.",
+  MY_ARTICLES:
+    "This tab displays the amazing articles you have written so far.",
+  RECENTLY_VIEWED_ARTICLES:
+    "This tab displays the most recently viewed articles by you.",
 };
 
 const svgs: any = {};
