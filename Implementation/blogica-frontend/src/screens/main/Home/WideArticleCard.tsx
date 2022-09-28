@@ -13,7 +13,7 @@ const WideArticleCard = (cardProps: ArticleCardProps) => {
 
   return (
     <Link
-      to={`/main/articleId/${article._id}`}
+      to={`/main/article/id/${article._id}`}
       state={{ articleId: article._id }}
       style={{ textDecoration: "none", color: "black" }}
     >
@@ -24,7 +24,7 @@ const WideArticleCard = (cardProps: ArticleCardProps) => {
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                navigate(`/main/authorId/${article.author._id}`);
+                navigate(`/main/author/id/${article.author._id}`);
               }}
             >
               <Generic.Avatar
@@ -37,7 +37,7 @@ const WideArticleCard = (cardProps: ArticleCardProps) => {
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                navigate(`/main/authorId/${article.author._id}`);
+                navigate(`/main/author/id/${article.author._id}`);
               }}
               className=" ms-2 text-primary"
               style={{ fontWeight: "bold", fontSize: 14 }}

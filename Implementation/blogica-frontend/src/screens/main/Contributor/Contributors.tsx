@@ -163,7 +163,7 @@ const Contributors = (props: any) => {
   // component conditional render
   const loadContributors = (contributorList: Person[]) => {
     return contributorList.map((contributor: Person, index: number) => (
-      <div key={index} className={`col-12 col-sm-6 col-lg-3 mb-5 px-3 `}>
+      <div key={index} className={`col-12 col-sm-6 col-lg-3 mb-5  px-4`}>
         <ContributorListCard contributor={contributor} index={index} />
       </div>
     ));
@@ -173,8 +173,8 @@ const Contributors = (props: any) => {
   return (
     <div className="col-12 d-flex flex-column  flex-grow-1">
       {/* Searchbar */}
-      <div className="d-flex col-12 flex-row justify-content-center container mt-4 ">
-        <div className="col-12 col-md-10  p-4 " style={{}}>
+      <div className="d-flex col-12 flex-row justify-content-center container mt-4 px-0 ">
+        <div className="col-12 col-md-8  p-4 " style={{}}>
           <Generic.SearchBar
             searchFor="contributors"
             apiCallback={(val: any) => searchUpdateCallback(val)}
@@ -185,11 +185,11 @@ const Contributors = (props: any) => {
 
       {loading && <Generic.Loader message="Loading" />}
       {!loading && contributors && (
-        <div className="noselect  col-12   pt-1 px-3">
+        <div className="noselect  col-12   pt-1">
           <div className="container p-0">
-            <div className="d-flex flex-column align-items-end pt-3">
+            <div className="d-flex flex-column align-items-end pt-3 pe-4">
               <em
-                className="px-2 pt-1  me-3"
+                className="px-2 pt-1"
                 style={{
                   border: "0.5px solid #ddd",
                   backgroundColor: "#eee",

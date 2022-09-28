@@ -6,6 +6,7 @@ export { default as ArticleList } from "./main/Article/Articles";
 export { default as ContributorList } from "./main/Contributor/Contributors";
 export { default as AuthorProfile } from "./main/AuthorProfile";
 export { default as ArticleDetail } from "./main/ArticleDetail";
+export { default as NewArticle } from "./main/NewArticle";
 
 // auth
 export { default as SignIn } from "./auth/SignIn";

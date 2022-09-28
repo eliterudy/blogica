@@ -14,7 +14,7 @@ const RankArticleCard = (cardProps: ArticleCardProps) => {
   return (
     <Link
       className="col-12  py-3 d-flex flex-row"
-      to={`/main/articleId/${article._id}`}
+      to={`/main/article/id/${article._id}`}
       state={{ articleId: article._id }}
       style={{ textDecoration: "none", color: "black" }}
     >
@@ -28,7 +28,7 @@ const RankArticleCard = (cardProps: ArticleCardProps) => {
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                navigate(`/main/authorId/${article.author._id}`);
+                navigate(`/main/author/id/${article.author._id}`);
               }}
             >
               <Generic.Avatar
@@ -41,7 +41,7 @@ const RankArticleCard = (cardProps: ArticleCardProps) => {
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                navigate(`/main/authorId/${article.author._id}`);
+                navigate(`/main/author/id/${article.author._id}`);
               }}
               className=" ms-2 text-primary"
               style={{ fontWeight: "bold", fontSize: 14 }}

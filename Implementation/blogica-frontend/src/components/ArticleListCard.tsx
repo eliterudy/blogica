@@ -22,7 +22,7 @@ const ArticleListCard = (cardProps: ArticleCardProps) => {
   // };
   return (
     <Link
-      to={`/main/articleId/${article._id}`}
+      to={`/main/article/id/${article._id}`}
       state={{ recipeId: article._id }}
       style={{ textDecoration: "none", color: "black" }}
     >
@@ -34,7 +34,7 @@ const ArticleListCard = (cardProps: ArticleCardProps) => {
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
-                  navigate(`/main/authorId/${article.author._id}`);
+                  navigate(`/main/author/id/${article.author._id}`);
                 }}
               >
                 <Generic.Avatar
@@ -47,7 +47,7 @@ const ArticleListCard = (cardProps: ArticleCardProps) => {
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
-                  navigate(`/main/authorId/${article.author._id}`);
+                  navigate(`/main/author/id/${article.author._id}`);
                 }}
                 className=" ms-2 text-primary"
                 style={{ fontWeight: "bold", fontSize: 14 }}

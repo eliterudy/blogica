@@ -309,7 +309,7 @@ const articleDataset: Article[] = [
 
 const AuthorProfile = (props: any) => {
   const navigate = useNavigate();
-  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 820px)" });
+  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 767px)" });
 
   const [author, updateAuthorDetails] = useState<null | AuthorDetail>({
     _id: 21,
@@ -328,7 +328,6 @@ const AuthorProfile = (props: any) => {
   });
   const [articles, updateArticles] = useState<null | Article[]>(articleDataset);
   const [articlesCount, updateArticlesCount] = useState(0);
-
   const [loading, updateArticleLoading] = useState(false);
   const [error, updateArticleError] = useState(null);
 
@@ -344,18 +343,16 @@ const AuthorProfile = (props: any) => {
 
     if (articles.length > 0) {
       response = (
-        <div>
-          <div className="noselect  col-12  d-flex flex-row flex-wrap pt-4">
-            {articles.map((article: Article, index: number) => (
-              <div key={index} className={`col-12 mb-5 px-3 `}>
-                <ArticleListCard
-                  article={article}
-                  index={index}
-                  showAuthorDetails={false}
-                />
-              </div>
-            ))}
-          </div>
+        <div className="noselect col-12 d-flex flex-row flex-wrap px-2  ">
+          {articles.map((article: Article, index: number) => (
+            <div key={index} className={`col-12  px-2 py-4 border-bottom `}>
+              <ArticleListCard
+                article={article}
+                index={index}
+                showAuthorDetails={false}
+              />
+            </div>
+          ))}
         </div>
       );
     } else {
@@ -381,7 +378,7 @@ const AuthorProfile = (props: any) => {
           <div className="col-12">
             <div>
               <div className="noselect row col-12 m-0">
-                <div className="noselect  col-12 col-md-4 col-xl-3 border-end  px-5 bg-white ">
+                <div className="noselect  col-12 col-md-4 col-xl-3 border-end  px-4 bg-white ">
                   <div style={{ marginBottom: isTabletOrMobile ? 30 : 600 }}>
                     <div className="d-flex flex-column align-items-center pt-5">
                       <Generic.Avatar
@@ -482,7 +479,7 @@ const AuthorProfile = (props: any) => {
                         </h1>
                       </div>
                       <InfiniteScroll
-                        className="pt-4 "
+                        className="col-12 pt-2 mx-0 px-0 "
                         dataLength={articles ? articles.length : 0} //This is important field to render the next data
                         next={() => {
                           //  getContributorsFromApi();

@@ -23,6 +23,7 @@ import {
   ArticleDetail,
   AuthorProfile,
   NotFound,
+  NewArticle,
 } from "../screens/index";
 import ScrollToTop from "../components/generic/scrollToTop";
 
@@ -114,7 +115,15 @@ const MainRouter = () => {
           <Route path="/contributors" element={<ContributorList />} />
           <Route path="/articles" element={<ArticleList />} />
           <Route
-            path="/articleId/:articleId"
+            path="/article/new"
+            element={
+              <ScrollToTop>
+                <NewArticle />
+              </ScrollToTop>
+            }
+          />
+          <Route
+            path="/article/id/:articleId"
             element={
               <ScrollToTop>
                 <ArticleDetail />
@@ -122,7 +131,7 @@ const MainRouter = () => {
             }
           />
           <Route
-            path="/authorId/:authorId"
+            path="/author/id/:authorId"
             element={
               <ScrollToTop>
                 <AuthorProfile />

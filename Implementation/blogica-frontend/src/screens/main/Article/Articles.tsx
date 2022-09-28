@@ -323,11 +323,29 @@ const Articles = (props: any) => {
   // component conditional render
 
   const loadArticles = (articles: Article[]) => {
-    return articles.map((contributor: Article, index: number) => (
-      <div key={index} className={`col-12  mb-5 px-3 `}>
-        <ArticleListCard article={contributor} index={index} />
-      </div>
-    ));
+    var response;
+    if (articles.length > 0) {
+      response = (
+        <div className="noselect  col-12  d-flex flex-row flex-wrap pt-4">
+          {articles.map((article: Article, index: number) => (
+            <div key={index} className={`col-12 mb-5 px-4 `}>
+              <ArticleListCard article={article} index={index} />
+            </div>
+          ))}
+        </div>
+      );
+    } else {
+      response = (
+        <div
+          className="noselect  col-12  d-flex flex-row flex-wrap pt-5 pe-3"
+          style={{ marginBottom: isTabletOrMobile ? 500 : 600 }}
+        >
+          <span className="col-12 text-center">{`The author has not written any articles yet`}</span>
+        </div>
+      );
+    }
+
+    return response;
   };
 
   // main render
@@ -341,7 +359,7 @@ const Articles = (props: any) => {
         </h1>
       </div> */}
       {/* Searchbar */}
-      <div className="d-flex col-12 flex-row justify-content-center container mt-4">
+      <div className="d-flex col-12 flex-row justify-content-center container mt-4 p-xl-0">
         <div className="col-12 col-md-10  p-4 " style={{}}>
           <Generic.SearchBar
             searchFor="articles"
@@ -374,14 +392,15 @@ const Articles = (props: any) => {
             </Button>
           </div>
         </div>
+
         {/* Right section */}
-        <div className="col col-12 col-md-9 p-0  border-start d-flex flex-column  flex-grow-1 ">
+        <div className="col col-12 col-md-9 p-0  border-start d-flex flex-column flex-grow-1">
           {loading && <Generic.Loader message="Loading Articles" />}
           {!loading && articles && (
             <div className="col-12">
-              <div className="d-flex flex-column align-items-end pt-3">
+              <div className="d-flex flex-column align-items-end py-3">
                 <em
-                  className="px-2 pt-1  me-3"
+                  className="px-2 pt-1 me-4"
                   style={{
                     border: "0.5px solid #ddd",
                     backgroundColor: "#eee",
@@ -393,7 +412,29 @@ const Articles = (props: any) => {
               </div>
 
               <div className="col-12  ">
-                {localArticles && loadArticles(localArticles)}
+                {localArticles && (
+                  <InfiniteScroll
+                    className="pt-4 "
+                    dataLength={articles ? articles.length : 0} //This is important field to render the next data
+                    next={() => {
+                      //  getContributorsFromApi();
+                    }}
+                    hasMore={articleCount > articles.length}
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      flexWrap: "wrap",
+                    }}
+                    loader={<h4 className="col-12 text-center">Loading...</h4>}
+                    endMessage={
+                      <p className="col-12" style={{ textAlign: "center" }}>
+                        <b>Yay! You have seen it all</b>
+                      </p>
+                    }
+                  >
+                    {loadArticles(localArticles)}
+                  </InfiniteScroll>
+                )}
               </div>
             </div>
           )}

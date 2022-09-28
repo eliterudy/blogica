@@ -39,7 +39,7 @@ const ContributorListCard = (cardProps: ContributorCardProps) => {
 
   return (
     <Link
-      to={`/main/authorId/${_id}`}
+      to={`/main/author/id/${_id}`}
       state={{ authorId: _id }}
       style={{ textDecoration: "none", color: "black" }}
     >
