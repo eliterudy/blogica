@@ -59,17 +59,12 @@ const Feeds = (props: any) => {
   const isTabletOrMobile = useMediaQuery({ query: "(max-width: 767px)" });
   const state = useSelector((state: any) => {
     return {
-      // userState: state.userActionReducer,
       userState: state.userActionReducer,
     };
   });
   const { user } = state.userState;
 
   const [activeTab, updateActiveTab] = useState(0);
-
-  // useEffect(() => {
-  //   if (!user) navigate("/main/home");
-  // }, []);
 
   return (
     <div>
@@ -192,6 +187,7 @@ const Feeds = (props: any) => {
                         className="m-2 "
                         style={{
                           display: "flex",
+                          flex: 1,
                           flexDirection: "row",
                           overflowX: "auto",
                           overflowY: "hidden",
