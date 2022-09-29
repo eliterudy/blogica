@@ -55,6 +55,8 @@
 
 .ql-container .ql-editor {
   font-size: 18px;
+  text-align: justify;
+  text-justify: inter-word;
   /* line-height: 40px; */
 }
 

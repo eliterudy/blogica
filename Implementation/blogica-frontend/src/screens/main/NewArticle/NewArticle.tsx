@@ -14,12 +14,12 @@ import "react-quill/dist/quill.snow.css";
 /* component/screen inports */
 
 /* helper imports */
-import { cssHover } from "../../components/generic/hoverProps";
+import { cssHover } from "../../../components/generic/hoverProps";
 
-import { icons } from "../../config/configuration";
-import Generic from "../../components/generic/GenericComponents";
-import { toggler } from "../../utils/generic";
-import actions from "../../redux/actionReducers/index";
+import { icons } from "../../../config/configuration";
+import Generic from "../../../components/generic/GenericComponents";
+import { toggler } from "../../../utils/generic";
+import actions from "../../../redux/actionReducers/index";
 import ReactDOM from "react-dom";
 
 var toolbarOptions = [
@@ -62,22 +62,31 @@ const NewArticle = (props: any) => {
   console.log(formValues.description);
 
   return (
-    <div className="col-12 d-flex flex-column flex-grow-1 p-5 container-fluid">
-      <div className="d-flex flex-row justify-content-between mb-4">
-        <h1>Write a new article</h1>
-        <Button
-          disabled={
-            formValues.description == "" ||
-            formValues.description == "<p><br></p>" ||
-            formValues.image == null ||
-            formValues.title == ""
-          }
-          className={"bg-success px-4 "}
-          style={{ borderRadius: 40 }}
-          onClick={() => {}}
-        >
-          <span>Publish Article</span>
-        </Button>
+    <div className="col-12 d-flex flex-column flex-grow-1 p-4 container-fluid">
+      <div className="col-12 row mb-5 ms-1">
+        <div className="col-12 col-md-8 ps-1">
+          <h1
+            className=" text-center text-md-start mb-0 "
+            style={{ fontSize: 60, color: "#666" }}
+          >
+            Write a new article
+          </h1>
+        </div>
+        <div className="col-12 col-md-4 d-flex justify-content-end align-items-end">
+          <Button
+            disabled={
+              formValues.description == "" ||
+              formValues.description == "<p><br></p>" ||
+              formValues.image == null ||
+              formValues.title == ""
+            }
+            className={" bg-success px-4 "}
+            style={{ borderRadius: 40, height: 40 }}
+            onClick={() => {}}
+          >
+            <span>Publish Article</span>
+          </Button>
+        </div>
       </div>
       <Input
         className="mb-4"
@@ -113,6 +122,16 @@ const NewArticle = (props: any) => {
         modules={{ toolbar: toolbarOptions }}
         placeholder={"Write what is on your mind"}
       />
+
+      {/* <div className="d-flex flex-row justify-content-center align-items-center">
+        <Button
+          className={" bg-primary px-4 "}
+          style={{ borderRadius: 40, height: 40 }}
+          onClick={() => {}}
+        >
+          <span>Scroll to top</span>
+        </Button>
+      </div> */}
     </div>
   );
 };

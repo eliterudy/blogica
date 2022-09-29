@@ -415,56 +415,6 @@ const AuthorProfile = (props: any) => {
                         Joined in {moment(author.created).format("MMM, YYYY")}
                       </span>
                     </Col>
-                    {/* For v2 */}
-                    {/* <Button
-                  className="col-12 mb-5"
-                  {...editProfileButtonStyle}
-                  outline>
-                  Edit Profile
-                </Button> */}
-                    {/* <Col className="col-12 ">
-                  {!user.isVerified && (
-                    <div className="py-4" {...verifyCardHoverStyle}>
-                      <p style={{color: '#ECDBBA', marginBottom: 20}}>
-                        If you love cooking like we do and wish to contribute to
-                        our website with you marvelous recipes, click on the
-                        link below to become a verified contributor
-                      </p>
-                      <Button
-                        {...getVerifiedButtonStyle}
-                        className="col-12 "
-                        onClick={() => {
-                          apis
-                            .postVerifyUser({})
-                            .then(({data}) => {
-                              dispatch(verifyUser(true));
-                              // updateActiveTab(0);
-                            })
-                            .catch(err => {
-                              if (
-                                err &&
-                                err.message &&
-                                err.message === 'Network Error'
-                              ) {
-                                if (navigator.onLine) {
-            navigate('/server-down', {
-              state: {redirectPath: '/main/my-profile/'},
-            });
-          } else {
-            alert(
-              'This action cannot be performed at the moment because of no internet connection. Please connect to an internet connection and try again',
-            );
-          }
-                              } else {
-                                alert('Oops! Something went wrong');
-                              }
-                            });
-                        }}>
-                        <span>Get Verified</span>
-                      </Button>
-                    </div>
-                  )}
-                </Col> */}
                   </div>
                 </div>
                 <div className="noselect  col-12 col-md-8 col-xl-9  p-2">
