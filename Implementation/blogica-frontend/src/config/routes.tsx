@@ -102,7 +102,9 @@ const MainRouter = () => {
 
     return (
       <div className="vh-100 col-12 d-flex flex-column">
-        <Header modalCallback={() => toggleModal()} />
+        {location.pathname != "/main/article/new" && (
+          <Header modalCallback={() => toggleModal()} />
+        )}
         <Routes>
           <Route
             path="/"
@@ -141,7 +143,7 @@ const MainRouter = () => {
           {/* default route */}
           <Route path="*" element={<Navigate to="/not-found" replace />} />
         </Routes>
-        <Footer />
+        {location.pathname != "/main/article/new" && <Footer />}
       </div>
     );
   };

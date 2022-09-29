@@ -53,6 +53,11 @@
   color: red
 }
 
+.ql-container .ql-editor {
+  font-size: 18px;
+  /* line-height: 40px; */
+}
+
 
 
 #feedtabs::-webkit-scrollbar { 
