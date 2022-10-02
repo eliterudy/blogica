@@ -3,49 +3,21 @@
 import React, { useState, useRef, useEffect, ChangeEvent } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import {
-  Navbar,
-  NavbarBrand,
-  Nav,
-  NavbarToggler,
-  Collapse,
-  NavItem,
-  NavLink,
-  Button,
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownToggle,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-} from "reactstrap";
 import { Dispatch } from "@reduxjs/toolkit";
 import { useMediaQuery } from "react-responsive";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 /* component/screen inports */
 
 /* helper imports */
 import { cssHover } from "../../../components/generic/hoverProps";
-
-import { icons, images } from "../../../config/configuration";
+import { constants, icons } from "../../../config/configuration";
 import Generic from "../../../components/generic/GenericComponents";
 import { toggler } from "../../../utils/generic";
 import actions from "../../../redux/actionReducers/index";
-import LargeArticleCard from "./LargeArticleCard";
-import WideArticleCard from "./WideArticleCard";
-import { constants } from "../../../config/configuration";
-import { Article } from "../../../config/types";
-import LargeShimmerCard from "./LargeShimmerCard";
-import WideShimmerCard from "./WideShimmerCard";
-import RankArticleCard from "./RankArticleCard";
-import RankShimmerCard from "./RankShimmerCard";
-import AboutProjectCard from "../../../components/AboutProject";
+import { ArticleFilters, Article } from "../../../config/types";
+import ArticleListCard from "../../../components/ArticleListCard";
+import { Input, Button } from "reactstrap";
 
 const articleDataset: Article[] = [
   {
@@ -308,200 +280,169 @@ const articleDataset: Article[] = [
   },
 ];
 
-const Home = (props: any) => {
+const Articles = (props: any) => {
   const navigate = useNavigate();
+  const dispatch: Dispatch<any> = useDispatch();
+  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 767px)" });
+  const locationParams = useLocation();
+  // state hooks
+  const [search, updateSearch] = useState("");
+  const [offset, updateOffset] = useState(0);
+  const [articles, updateArticles] = useState<null | Article[]>(articleDataset);
+  const [loading, updateLoading] = useState(false);
+  const [error, updateError] = useState(null);
+  const [articleCount, updateArticleCount] = useState(0);
+  const [callerCounter, updateCallerCounter] = useState(0);
+  const [selectFilter, updateSelectFilter] = useState("top");
+
+  // redux state
   const state = useSelector((state: any) => {
     // eslint-disable-next-line no-labels, no-label-var
     return { userState: state.userActionReducer };
   });
   const { user } = state.userState;
 
-  const [loading, isLoading] = useState(false);
-  const [articles, updateArticles] = useState<null | Article[]>(articleDataset);
-  const [selectFilter, updateSelectFilter] = useState("top");
-  const refToSpecialsUsingSmoothScroll = useRef() as React.MutableRefObject<
-    HTMLInputElement
-  >;
+  // useEffects
+  useEffect(() => {}, []);
 
-  // useEffect(() => {
-  //   console.log("HERE HOME", user);
+  // functions/callbacks
+  const searchUpdateCallback = async (value: string) => {
+    // updateOffset(0);
+    // updateArticle(null);
+    // updateArticleLoading(true);
+    await updateSearch(value);
+    // await updateCallerCounter(callerCounter + 1);
+  };
 
-  //   if (user) {
-  //     navigate("/main/feeds");
-  //   }
-  // }, []);
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     updateSelectFilter(e.target.value);
   };
 
-  const onSearch = (value: string) => {
-    console.log("search:", value);
+  const getArticlesFromApi = () => {};
+
+  // component conditional render
+
+  const loadArticles = (articles: Article[]) => {
+    var response;
+    if (articles.length > 0) {
+      response = (
+        <div className="noselect  col-12  d-flex flex-row flex-wrap pt-4">
+          {articles.map((article: Article, index: number) => (
+            <div key={index} className={`col-12 mb-5 px-4 `}>
+              <ArticleListCard article={article} index={index} />
+            </div>
+          ))}
+        </div>
+      );
+    } else {
+      response = (
+        <div
+          className="noselect  col-12  d-flex flex-row flex-wrap pt-5 pe-3"
+          style={{ marginBottom: isTabletOrMobile ? 500 : 600 }}
+        >
+          <span className="col-12 text-center">{`The author has not written any articles yet`}</span>
+        </div>
+      );
+    }
+
+    return response;
   };
 
-  const fetchArticles = async () => {
-    await updateArticles(null);
-    await isLoading(true);
-    setTimeout(async () => {
-      await updateArticles(articleDataset);
-      isLoading(false);
-    }, 1200);
-  };
-  const scrollTo = (ref: any) => {
-    if (ref && ref.current /* + other conditions */) {
-      ref.current.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  };
+  // main render
+  var localArticles = articles;
 
   return (
-    <div className=" col-12">
-      <div
-        id="intro"
-        style={{
-          backgroundImage: `url(${images.blog_background})`,
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-        className=" bg-image shadow-5-strong vh-100 col-12"
-      >
-        <div
-          className=" mask vh-100 col-12"
-          style={{ backgroundColor: "rgba(0, 0, 0, 0.85)" }}
-        >
-          <div className=" container d-flex align-items-center justify-content-center text-center h-100">
-            <div className=" text-white">
-              <h1
-                className=" mb-3"
-                style={{
-                  fontFamily: "Kaushan Script",
-                  fontWeight: 400,
-                  fontSize: "100px",
-                }}
-              >
-                {constants.INTRO_BANNER_TITLE}
-              </h1>
-              <h5 className=" mb-4"> {constants.INTRO_BANNER_MESSAGE}</h5>
-
-              <div
-                className=" btn btn-outline-light btn-lg m-2"
-                onClick={() => navigate("/main/articles")}
-              >
-                Start Reading
-              </div>
-              <div
-                className=" btn btn-outline-light btn-lg m-2"
-                onClick={() => scrollTo(refToSpecialsUsingSmoothScroll)}
-              >
-                Trending Articles
-              </div>
-            </div>
-          </div>
+    <div className="col-12 d-flex flex-column  flex-grow-1">
+      {/* <div className="bg-dark py-3 px-2 ">
+        <h1 className="text-white px-5 text-center" style={{ fontSize: 80 }}>
+          <span> Articles</span>
+        </h1>
+      </div> */}
+      {/* Searchbar */}
+      <div className="d-flex col-12 flex-row justify-content-center container mt-4 p-xl-0">
+        <div className="col-12 col-md-10  p-4 " style={{}}>
+          <Generic.SearchBar
+            searchFor="articles"
+            apiCallback={(val: any) => searchUpdateCallback(val)}
+          />
         </div>
       </div>
-      <div className="col-12 px-2 px-md-5">
-        <h1
-          className=" text-center pt-5 pb-2"
-          style={{ fontWeight: "bold" }}
-          ref={refToSpecialsUsingSmoothScroll}
-        >
-          TRENDING ARTICLES
-        </h1>
-        <div className=" row col-12 py-2 m-0 ">
-          {/* {loading && <Generic.Loader message="Loading" />} */}
 
-          <div className="col col-12  col-lg-9 p-0  ">
-            <div className="row col-12  m-0">
-              <div className="col-12 col-md-6 p-4 p-md-3 ">
-                {articles && articles.length > 0 && !loading ? (
-                  <LargeArticleCard
-                    article={articles && articles[0]}
-                    index={0}
-                  />
-                ) : (
-                  <LargeShimmerCard />
+      <div className=" row col-12 py-2 m-0 px-md-5 flex-grow-1">
+        {/* Left section */}
+        <div className=" col-12 col-md-3 px-4 pb-2 d-none d-md-block  ">
+          <div className="col col-12 sticky-md-top mt-5">
+            <h6 style={{ fontWeight: "bold" }}>FILTER ARTICLES</h6>
+            <Input
+              type="select"
+              name="select"
+              className="col-12"
+              style={{ padding: 10 }}
+              onChange={(e) => onChange(e)}
+              value={selectFilter}
+            >
+              <option>Top</option>
+              <option>New</option>
+            </Input>
+            <p className="subMessages my-2">
+              {constants.FILTER_ARTICLE_NOTES}{" "}
+            </p>
+            <Button size="md" className="w-100 bg-black" onClick={() => {}}>
+              Filter
+            </Button>
+          </div>
+        </div>
+
+        {/* Right section */}
+        <div className="col col-12 col-md-9 p-0  border-start d-flex flex-column flex-grow-1">
+          {loading && <Generic.Loader message="Loading Articles" />}
+          {!loading && articles && (
+            <div className="col-12">
+              <div className="d-flex flex-column align-items-end py-3">
+                <em
+                  className="px-2 pt-1 me-4"
+                  style={{
+                    border: "0.5px solid #ddd",
+                    backgroundColor: "#eee",
+                    borderRadius: 3,
+                  }}
+                >
+                  Showing: {articles.length} of {articleCount} articles
+                </em>
+              </div>
+
+              <div className="col-12  ">
+                {localArticles && (
+                  <InfiniteScroll
+                    className="pt-4 "
+                    dataLength={articles ? articles.length : 0} //This is important field to render the next data
+                    next={() => {
+                      //  getContributorsFromApi();
+                    }}
+                    hasMore={articleCount > articles.length}
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      flexWrap: "wrap",
+                    }}
+                    loader={<h4 className="col-12 text-center">Loading...</h4>}
+                    endMessage={
+                      <p className="col-12" style={{ textAlign: "center" }}>
+                        <b>Yay! You have seen it all</b>
+                      </p>
+                    }
+                  >
+                    {loadArticles(localArticles)}
+                  </InfiniteScroll>
                 )}
               </div>
-              <div className="col-12 col-md-6 p-4 p-md-3 ">
-                {articles && !loading
-                  ? articles
-                      .slice(1, 5)
-                      .map((article: Article, index: number) => (
-                        <div className="p-2">
-                          <WideArticleCard
-                            key={index}
-                            article={article}
-                            index={index + 1}
-                          />
-                        </div>
-                      ))
-                  : new Array(4).fill(0).map((shimmer, index) => (
-                      <div className="pb-3">
-                        <WideShimmerCard />
-                      </div>
-                    ))}
-              </div>
             </div>
-          </div>
-          <div className=" col-12 col-md-3 px-4 py-2 d-none d-lg-flex border-start">
-            <div className="col col-12">
-              <h6 style={{ fontWeight: "bold" }}>FILTER ARTICLES</h6>
-              <Input
-                type="select"
-                name="select"
-                className="col-12"
-                style={{ padding: 10 }}
-                onChange={(e) => onChange(e)}
-                value={selectFilter}
-              >
-                <option>Top</option>
-                <option>New</option>
-              </Input>
-              <p className="subMessages my-2">
-                {constants.FILTER_ARTICLE_NOTES}{" "}
-              </p>
-              <Button
-                size="md"
-                className="w-100 bg-black"
-                onClick={() => fetchArticles()}
-              >
-                Filter
-              </Button>
-            </div>
-          </div>
+          )}
+          {!loading && error && <Generic.ListError error={error} />}
         </div>
-        <div className=" col col-12 border-top pt-4">
-          <div className="d-flex flex-row ms-3">
-            <i className="fa fa-cubes fa-lg me-2"></i>
-            <h6 style={{ fontWeight: "bold" }}>MORE TRENDING ARTICLES</h6>
-          </div>
-          <div className="row col-12 m-0 p-4 p-md-3">
-            {articles && !loading
-              ? articles.slice(5, 13).map((article: Article, index: number) => (
-                  <div className=" d-flex  col-12 col-md-4">
-                    <RankArticleCard
-                      key={index}
-                      article={article}
-                      index={index}
-                    />
-                  </div>
-                ))
-              : new Array(6).fill(0).map((shimmer, index) => (
-                  <div className=" d-flex  col-12 col-md-4">
-                    <RankShimmerCard index={index} />
-                  </div>
-                ))}
-          </div>
-          {/* For future versions */}
-        </div>
-      </div>
-      <div
-        className=" px-4 "
-        style={{ backgroundColor: "#ECDBBA", borderRadius: 5 }}
-      >
-        <AboutProjectCard />
       </div>
     </div>
   );
 };
 
-export default Home;
+export default Articles;

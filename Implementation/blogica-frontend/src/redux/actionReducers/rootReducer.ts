@@ -1,4 +1,4 @@
-import {createSlice} from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 export interface initialStateUser {
   isServerDown: boolean;
@@ -8,7 +8,7 @@ const initialState: initialStateUser = {
   isServerDown: false,
 };
 export const userSlice = createSlice({
-  name: 'root',
+  name: "root",
   initialState,
   reducers: {},
 });

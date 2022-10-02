@@ -5,15 +5,34 @@ const icons: any = {
   search_black: require("../assets/icons/search_black.png"),
   search_white: require("../assets/icons/search_white.png"),
   app_logo: require("../assets/icons/app_logo.png"),
+  app_icon: require("../assets/icons/app_icon.png"),
 };
 
 const images: any = {
   route_not_found: require("../assets/images/404-error.png"),
   server_down: require("../assets/images/server-down.jpg"),
   no_internet: require("../assets/images/no_internet.png"),
+  blog_background: require("../assets/images/blog_background.jpeg"),
 };
 
-const gifs: any = {};
+const gifs: any = {
+  loader: require("../assets/gifs/loader.gif"),
+};
+
+const constants: any = {
+  APP_NAME: "Blogica",
+  TEXT_SHIMMER_FILLER: "text shimmer",
+  FILTER_ARTICLE_NOTES: "View articles based on the filter categories.",
+  NEW_ARTICLE_NOTES:
+    "What's the first thought that pops in your head. Is it informative and interesting. If so, why wait? Write it down and share it with everyone!",
+  INTRO_BANNER_TITLE: "Stay Curious & Get a Read",
+  INTRO_BANNER_MESSAGE:
+    "Discover stories, thinking, and expertise from writers on any topic.",
+  MY_ARTICLES:
+    "This tab displays the amazing articles you have written so far.",
+  RECENTLY_VIEWED_ARTICLES:
+    "This tab displays the most recently viewed articles by you.",
+};
 
 const svgs: any = {};
 
@@ -41,6 +60,7 @@ const colors = [
   "#3D2C8D",
   "#B42B51",
   "#334756",
+  "#C40042",
 ];
 
-export { colorCodes, icons, images, gifs, svgs, themes, colors };
+export { colorCodes, constants, icons, images, gifs, svgs, themes, colors };

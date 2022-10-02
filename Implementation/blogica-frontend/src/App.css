@@ -1,3 +1,5 @@
+
+
 .App {
   text-align: center;
 }
@@ -49,5 +51,73 @@
 
 .nav.link:active {
   color: red
+}
 
+.ql-container .ql-editor {
+  font-size: 18px;
+  text-align: justify;
+  text-justify: inter-word;
+  /* line-height: 40px; */
+}
+
+
+
+#feedtabs::-webkit-scrollbar { 
+  display: none;  /* Safari and Chrome */
+}
+
+.shimmer-bg {
+  background-color: rgb(216, 216, 216);
+}
+
+.shimmer {
+  animation: k1 1.2s ease-in-out infinite;
+}
+
+.footer{
+  background-color: rgb(0, 0, 0);
+  margin:0px auto;
+  padding: 8px 0px 8px 0px;
+}
+
+.subMessages {
+  color: #888;
+  font-style: italic;
+  font-size: 13px;
+}
+
+
+
+@-webkit-keyframes k1 {
+  0% {
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0.8;
+  }
+}
+@-moz-keyframes k1 {
+  0% {
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0.8;
+  }
+}
+@keyframes k1 {
+  0% {
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0.8;
+  }
 }

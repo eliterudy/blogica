@@ -1,80 +1,79 @@
-import {To} from 'react-router-dom';
+import { To } from "react-router-dom";
 
-export interface RecipeDetails {
-  _id: string;
+export interface Article {
+  _id: number;
   title: string;
-  ingredients: string[];
-  instructions: string[];
-  imageUrl: string;
-  cuisine: string;
-  course: string;
-  diet: string;
-  prepTimeInMins: number;
-  cookTimeInMins: number;
-  totalTimeInMins: number;
-  servings: number;
-  featured: boolean;
-  isFavorite?: boolean;
-  author: User;
+  image_url: string;
+  description: string;
+  author: Author;
+  isBookmarked?: boolean;
+  created: string;
+  updated?: string;
+}
+
+export interface ArticleDetail extends Article {
+  numberOfLikes?: number;
+  numberOfViews?: number;
   comments?: any;
 }
 
-export interface RecipeListElement {
-  _id: string;
-  title: string;
-  imageUrl: string;
-  cuisine: string;
-  course: string;
-  diet: string;
-  prepTimeInMins: number;
-  cookTimeInMins: number;
-  totalTimeInMins: number;
-  servings: number;
-  featured: boolean;
-  isFavorite?: boolean;
-  author: User;
-}
-
-export interface RecipeCardProps {
-  data: RecipeListElement;
+export interface ContributorCardProps {
+  contributor: Person;
   index: number;
-  redirect: To;
 }
 
-export interface Favorites {
-  recipes: string[];
+export interface ArticleCardProps {
+  article: Article;
+  index: number;
+  showAuthorDetails?: boolean;
 }
 
-export interface Recents {
-  recipes: string[];
-}
-export interface Published {
-  recipes: string[];
-}
-
-export interface User {
+export interface Person {
   _id: number;
   firstname: string;
   lastname: string;
   fullname: string;
   username: string;
-  favorites: Favorites;
-  recents: Recents;
-  published: Published;
-  isAdmin: boolean;
-  isVerified?: boolean;
-  email: string;
+  bio: string;
+  image_url: string;
+  created: string;
+  updated?: string;
 }
 
+export interface User extends Person {
+  bookmarks?: Bookmarks;
+  published: Published;
+  recents?: Recents;
+  currency?: string;
+  currency_type?: string;
+}
+
+export interface Author extends Person {}
+
+export interface AuthorDetail extends Person {
+  published: Published;
+}
+
+export interface Bookmarks {
+  articles: string[];
+}
+
+export interface Recents {
+  articles: string[];
+  authors: string[];
+}
+
+export interface Published {
+  articles: string[];
+}
+
+// Others
 export interface CheckboxProps {
   label: string;
   value: boolean;
   onChange: () => void;
 }
 
-export interface RecipeFilters {
-  cuisine?: string[];
-  course?: string[];
-  diet?: string[];
-  servings?: string[];
+export interface ArticleFilters {
+  exchanges?: string[];
 }
