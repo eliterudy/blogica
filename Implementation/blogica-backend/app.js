@@ -1,12 +1,64 @@
-var createError = require("http-errors");
-var express = require("express");
-var path = require("path");
-var cookieParser = require("cookie-parser");
-var logger = require("morgan");
-var indexRouter = require("./routes/index");
-var usersRouter = require("./routes/users");
+const createError = require("http-errors");
+const express = require("express");
+const path = require("path");
+const cookieParser = require("cookie-parser");
+const logger = require("morgan");
+const passport = require("passport");
+const authenticate = require("./config/authenticate");
+const config = require("./config/config");
+const mongoose = require("mongoose");
+const indexRouter = require("./routes/index");
+const usersRouter = require("./routes/users");
+const schedule = require("node-schedule");
 
-var app = express();
+const mongoUrl = config.mongoUrl;
+const connect = mongoose.connect(mongoUrl, {
+  useUnifiedTopology: true,
+  useNewUrlParser: true,
+  autoIndex: true, //make this also true
+});
+
+const updateFeatured = (count) => {
+  if (count < 5) {
+    count = count + 1;
+    Article.updateMany({ featured: true }, { $set: { featured: false } })
+      .then((docs) => {
+        Article.find({}).then((articles) => {
+          var numberOfArticles = articles.length;
+          if (numberOfArticles < 9) {
+          } else {
+            for (var i = 0; i < 9; i++) {
+              var index = Math.floor(Math.random() * numberOfArticles);
+
+              Article.findByIdAndUpdate(
+                articles[index]._id,
+                {
+                  $set: { featured: true },
+                },
+                { new: true }
+              )
+                .then((article) => {})
+                .catch((err) => updateFeatured(count));
+            }
+          }
+        });
+      })
+      .catch((err) => updateFeatured(count));
+  }
+};
+const rule = new schedule.RecurrenceRule();
+rule.hour = 00;
+rule.tz = "Etc/UTC";
+
+connect
+  .then((db) => {
+    schedule.scheduleJob(rule, () => {
+      var count = 0;
+      updateFeatured(count);
+    });
+  })
+  .catch((err) => {});
+const app = express();
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));

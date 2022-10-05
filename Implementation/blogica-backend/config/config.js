@@ -1,7 +1,18 @@
+const dotenv = require("dotenv");
+const { resolve } = require("path");
+
+if (process.env.NODE_ENV) {
+  dotenv.config({ path: resolve(__dirname, `../${process.env.NODE_ENV}`) });
+} else {
+  dotenv.config();
+}
+
+console.log(
+  resolve(__dirname, `../${process.env.NODE_ENV}`),
+  process.env.IS_PRODUCTION
+);
 module.exports = {
-  secretKey: "12345-67890-09876-54321",
-  mongoUrl:
-    "mongodb+srv://BuildMyStack:BuildMyStack97@staging.bg5rd5m.mongodb.net/?retryWrites=true&w=majority",
-  // mongoUrl: "mongodb+srv://gavin:gavindmello123@cluster0.8vbqp72.mongodb.net/?retryWrites=true&w=majority",
-  // mongoUrl: "mongodb://127.0.0.1:27017/recipe-diary",
+  NODE_ENV: process.env.NODE_ENV || "development",
+  DB_CONNECT: process.env.DB_CONNECT || "localhost",
+  JWT_SECRET: process.env.JWT_SECRET || 3000,
 };
