@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www",
-    "staging": "NODE_ENV=development nodemon ./bin/www",
-    "production": "NODE_ENV=production  nodemon ./bin/www"
+    "start": "node ./bin/www",
+    "staging": "NODE_ENV=staging npm run start",
+    "production": "NODE_ENV=production npm run start"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
