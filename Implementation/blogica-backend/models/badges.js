@@ -6,14 +6,17 @@ var badgeSchema = new Schema({
   title: {
     type: String,
     default: "",
+    required: true,
   },
   image_url: {
     type: String,
     default: "",
+    required: true,
   },
-  count: {
+  currency: {
     type: Number,
-    default: "",
+    required: true,
+    default: 0,
   },
 });
 
