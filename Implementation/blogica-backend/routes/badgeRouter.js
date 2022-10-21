@@ -11,7 +11,6 @@ const UserPropUpdate = require("../components/UserPropUpdate");
 const UploadFile = require("../components/UploadFile");
 const Badge = require("../models/badges");
 
-// const { addArticleToUser } = UserPropUpdate;
 var badgeRouter = express.Router();
 badgeRouter.use(bodyParser.json());
 
@@ -38,7 +37,12 @@ badgeRouter
       if (!req.file) {
         return res.status(401).json({ error: "Please provide an image" });
       }
-      var image_url = await UploadFile.uploadPhoto(req.file, "badge", 480, 480);
+      var image_url = await UploadFile.uploadPhoto(
+        req.file,
+        "badges",
+        480,
+        480
+      );
       console.log("body", req.body, User);
       var badge = {
         ...req.body,

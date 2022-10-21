@@ -2,6 +2,11 @@ var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 var passportLocalMongoose = require("passport-local-mongoose");
 
+var badgeUserSchema = new Schema({
+  badge: { type: mongoose.Schema.Types.ObjectId, ref: "Badge" },
+  count: Number,
+});
+
 var userSchema = new Schema({
   firstname: {
     type: String,
@@ -24,8 +29,14 @@ var userSchema = new Schema({
     default: "",
   },
   badges: {
-    type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Badge" }],
+    type: [badgeUserSchema],
     default: [],
+  },
+  saved: {
+    articles: {
+      type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Article" }],
+      default: [],
+    },
   },
   favorites: {
     articles: {

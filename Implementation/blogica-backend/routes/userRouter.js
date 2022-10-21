@@ -8,14 +8,7 @@ const authenticate = require("../config/authenticate");
 const cors = require("../config/cors");
 const UserPropUpdate = require("../components/UserPropUpdate");
 const UploadFile = require("../components/UploadFile");
-const upload = () =>
-  multer({
-    limits: {
-      fileSize: 100 * 1920 * 1920,
-    },
-  });
 
-// const { addArticleToUser } = UserPropUpdate;
 var userRouter = express.Router();
 userRouter.use(bodyParser.json());
 
@@ -193,17 +186,35 @@ userRouter
     res.sendStatus(200);
   })
   .get(cors.cors, authenticate.verifyUser, (req, res, next) => {
-    UserPropUpdate.getArticlesByProperty(req, res, next, true);
+    if (req.query.property == "recipes") {
+      UserPropUpdate.getArticlesByProperty(req, res, next);
+    }
   })
   .post(cors.corsWithOptions, authenticate.verifyUser, (req, res, next) => {
-    UserPropUpdate.addArticleToUser(req, res, next, true);
+    if (req.query.category == "favorites" && req.query.property == "recipes") {
+      Recipe.findById(req.body.id).then((recipe) => {
+        recipe.numberOfLikes += 1;
+        recipe.save();
+      });
+    }
+    if (req.query.property == "recipes") {
+      UserPropUpdate.addArticleToUser(req, res, next);
+    }
   })
   .put(cors.corsWithOptions, authenticate.verifyUser, (req, res, next) => {
     res.statusCode = 403;
     res.end("Put operation not supported on /users/category");
   })
   .delete(cors.corsWithOptions, authenticate.verifyUser, (req, res, next) => {
-    UserPropUpdate.deleteArticlesFromUser(req, res, next, true);
+    if (req.query.category == "favorites" && req.query.property == "recipes") {
+      Recipe.findById(req.body.id).then((recipe) => {
+        recipe.numberOfLikes -= 1;
+        recipe.save();
+      });
+    }
+    if (req.query.property == "recipes") {
+      UserPropUpdate.deleteArticlesFromUser(req, res, next);
+    }
   });
 
 module.exports = userRouter;
