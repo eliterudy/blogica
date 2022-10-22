@@ -7,10 +7,6 @@ if (process.env.NODE_ENV) {
   dotenv.config();
 }
 
-// console.log(
-//   resolve(__dirname, `../${process.env.NODE_ENV}`),
-//   process.env.IS_PRODUCTION
-// );
 module.exports = {
   NODE_ENV: process.env.NODE_ENV || "development",
   DB_CONNECT: process.env.DB_CONNECT || "localhost",

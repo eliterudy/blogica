@@ -59,12 +59,10 @@ userRouter.post(
   cors.corsWithOptions,
   UploadFile.multerConfig().single("image"),
   async (req, res, next) => {
-    // console.log(req.file, req.body, req.hostname, req);
     if (!req.file) {
       return res.status(401).json({ error: "Please provide an image" });
     }
     var image_url = await UploadFile.uploadPhoto(req.file, "users", 720, 720);
-    console.log("body", req.body, User);
 
     // register is a passport method
     User.register(

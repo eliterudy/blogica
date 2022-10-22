@@ -189,7 +189,6 @@ articleRouter
                           const i = await author.badges.findIndex(
                             (b) => b.badge.toString() == badge._id.toString()
                           );
-                          console.log("here", i);
 
                           if (i != -1) {
                             author.badges[i].count += 1;

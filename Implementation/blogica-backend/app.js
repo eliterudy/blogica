@@ -22,7 +22,6 @@ var connect = mongoose.connect(mongoUrl, {
 });
 
 var updateFeatured = (count) => {
-  console.log("updateFeatured");
   if (count < 5) {
     count = count + 1;
     Article.updateMany({ featured: true }, { $set: { featured: false } })

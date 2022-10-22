@@ -49,7 +49,6 @@ badgeRouter
         ...req.body,
         image_url,
       };
-      console.log(badge);
 
       Badge.create(badge).then(
         (badge) => {
