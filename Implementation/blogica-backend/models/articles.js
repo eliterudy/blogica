@@ -14,7 +14,7 @@ var articleSchema = new Schema(
     },
     image_url: {
       type: String,
-      required: true,
+      default: "",
     },
     numberOfLikes: {
       type: Number,

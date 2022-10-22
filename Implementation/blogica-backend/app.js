@@ -4,12 +4,15 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 var passport = require("passport");
+var schedule = require("node-schedule");
+
 var authenticate = require("./config/authenticate");
 var config = require("./config/config");
 var mongoose = require("mongoose");
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/userRouter");
-var schedule = require("node-schedule");
+var articleRouter = require("./routes/articleRouter");
+var badgeRouter = require("./routes/badgeRouter");
 
 var mongoUrl = config.DB_CONNECT;
 var connect = mongoose.connect(mongoUrl, {
@@ -53,10 +56,10 @@ rule.tz = "Etc/UTC";
 
 connect
   .then((db) => {
-    schedule.scheduleJob(rule, () => {
-      var count = 0;
-      updateFeatured(count);
-    });
+    // schedule.scheduleJob(rule, () => {
+    //   var count = 0;
+    //   updateFeatured(count);
+    // });
   })
   .catch((err) => {});
 var app = express();
@@ -98,6 +101,8 @@ urlPathsForImages.map((urlPath) => {
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
+app.use("/articles", articleRouter);
+app.use("/badges", badgeRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -56,6 +56,18 @@ var userSchema = new Schema({
       default: [],
     },
   },
+  points_earned: {
+    type: Number,
+    default: 0,
+  },
+  points_spent: {
+    type: Number,
+    default: 0,
+  },
+  admin: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 // adds support for username and password from passport-local-mongoose package

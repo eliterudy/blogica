@@ -2,11 +2,14 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
 const authenticate = require("../config/authenticate");
-const cors = require("./cors");
+const cors = require("../config/cors");
 const Article = require("../models/articles");
 const User = require("../models/users");
 const UploadFile = require("../components/UploadFile");
-
+const Badge = require("../models/badges");
+const Config = require("../config/config");
+const Users = require("../models/users");
+const { VIEW_COUNT_REWARD } = Config;
 var articleRouter = express.Router();
 articleRouter.use(bodyParser.json());
 
@@ -45,20 +48,27 @@ articleRouter
       .skip(req.query.offset)
       .then(
         (articles) => {
-          Article.count(filters).then(
-            (count) => {
-              res.statusCode = 200;
-              res.setHeader("Content-Type", "application/json");
+          if (articles) {
+            Article.count(filters).then(
+              (count) => {
+                res.statusCode = 200;
+                res.setHeader("Content-Type", "application/json");
 
-              res.json({
-                results: articles,
-                limit: Number(req.query.limit),
-                nextOffset: Number(req.query.offset) + Number(req.query.limit),
-                count,
-              });
-            },
-            (err) => next(err)
-          );
+                res.json({
+                  results: articles,
+                  limit: Number(req.query.limit),
+                  nextOffset:
+                    Number(req.query.offset) + Number(req.query.limit),
+                  count,
+                });
+              },
+              (err) => next(err)
+            );
+          } else {
+            err = new Error(`Articles not found`);
+            err.status = 404;
+            return next(err);
+          }
         },
         (err) => next(err)
       )
@@ -99,7 +109,15 @@ articleRouter
               })
               .catch((err) => next(err));
           },
-          (err) => next(err)
+          (err) => {
+            if (err.code == 11000) {
+              res.statusCode = 400;
+              res.setHeader("Content-Type", "application/json");
+              return res.json({ error: "Recipe duplicate found" });
+            }
+
+            next(err);
+          }
         )
         .catch((err) => next(err));
     }
@@ -115,9 +133,28 @@ articleRouter
     (req, res, next) => {
       Article.remove({})
         .then((resp) => {
-          res.statusCode = 200;
-          res.setHeader("Content-Type", "application/json");
-          res.json(resp);
+          User.updateMany(
+            {},
+            {
+              $set: {
+                published: { articles: [] },
+                recents: { articles: [] },
+                favorites: { articles: [] },
+                saved: { articles: [] },
+              },
+            },
+            {
+              multi: true,
+            },
+            function (err, result) {
+              if (err) {
+                return next(err);
+              }
+              res.statusCode = 200;
+              res.setHeader("Content-Type", "application/json");
+              res.json(resp);
+            }
+          );
         })
         .catch((err) => next(err));
     }
@@ -131,14 +168,56 @@ articleRouter
   })
   .get(cors.cors, (req, res, next) => {
     Article.findById(req.params.articleId)
-      .populate(["author"])
+      // .populate(["author"])
       .then(
-        (article) => {
-          res.statusCode = 200;
-          res.setHeader("Content-Type", "application/json");
-          res.json(article);
-          article.numberOfViews += 1;
-          article.save();
+        async (article) => {
+          if (article) {
+            article.numberOfViews += 1;
+            // article.numberOfViews = 0;
+            if (VIEW_COUNT_REWARD.includes(article.numberOfViews)) {
+              await Badge.findOne({
+                type: "view",
+                count: article.numberOfViews,
+              })
+                .then(async (badge) => {
+                  if (badge) {
+                    await User.findById(article.author)
+                      .then(async (author) => {
+                        if (author) {
+                          author.points_earned += badge.badge_value;
+
+                          const i = await author.badges.findIndex(
+                            (b) => b.badge.toString() == badge._id.toString()
+                          );
+                          console.log("here", i);
+
+                          if (i != -1) {
+                            author.badges[i].count += 1;
+                          } else {
+                            author.badges.push({ badge: badge._id, count: 1 });
+                          }
+
+                          // article.author = author;
+                          await author.save();
+                        }
+                      })
+                      .catch((err) => next(err));
+                  }
+                })
+                .catch((err) => next(err));
+            }
+            await article.save();
+            res.statusCode = 200;
+            res.setHeader("Content-Type", "application/json");
+            return res.json(article);
+          } else {
+            res.statusCode = 400;
+            res.setHeader("Content-Type", "application/json");
+            return res.json({
+              error:
+                "Article not found. It may have been deleted by the author",
+            });
+          }
         },
         (err) => next(err)
       )

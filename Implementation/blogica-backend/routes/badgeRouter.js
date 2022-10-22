@@ -16,7 +16,7 @@ badgeRouter.use(bodyParser.json());
 
 badgeRouter
   .route("/")
-  .options(cors.corsWithOptions, authenticate.verifyAdmin, (req, res) => {
+  .options(cors.corsWithOptions, (req, res) => {
     res.sendStatus(200);
   })
   .get(cors.cors, (req, res, next) => {
@@ -31,6 +31,7 @@ badgeRouter
   })
   .post(
     cors.corsWithOptions,
+    authenticate.verifyUser,
     authenticate.verifyAdmin,
     UploadFile.multerConfig().single("image"),
     async (req, res, next) => {
@@ -43,35 +44,69 @@ badgeRouter
         480,
         480
       );
-      console.log("body", req.body, User);
+      delete req.body.image;
       var badge = {
         ...req.body,
         image_url,
       };
-      delete badge[image];
+      console.log(badge);
+
       Badge.create(badge).then(
         (badge) => {
           res.statusCode = 200;
           res.setHeader("Content-Type", "application/json");
           res.json(badge);
         },
-        (err) => next(err)
+        (err) => {
+          // if (err.code == 11000) {
+          //   res.statusCode = 400;
+          //   res.setHeader("Content-Type", "application/json");
+          //   return res.json({ error: "Badge duplicate found" });
+          // }
+          next(err);
+        }
       );
     }
   )
-  .put(cors.corsWithOptions, authenticate.verifyAdmin, (req, res, next) => {
-    res.statusCode = 403;
-    res.end("Put operation not supported on /bagde");
-  })
-  .delete(cors.corsWithOptions, authenticate.verifyAdmin, (req, res, next) => {
-    Badge.remove({})
-      .then((resp) => {
-        res.statusCode = 200;
-        res.setHeader("Content-Type", "application/json");
-        res.json(resp);
-      })
-      .catch((err) => next(err));
-  });
+  .put(
+    cors.corsWithOptions,
+    authenticate.verifyUser,
+    authenticate.verifyAdmin,
+    (req, res, next) => {
+      res.statusCode = 403;
+      res.end("Put operation not supported on /bagde");
+    }
+  )
+  .delete(
+    cors.corsWithOptions,
+    authenticate.verifyUser,
+    authenticate.verifyAdmin,
+    (req, res, next) => {
+      Badge.remove({})
+        .then((resp) => {
+          User.updateMany(
+            {},
+            {
+              $set: {
+                badges: [],
+              },
+            },
+            {
+              multi: true,
+            },
+            function (err, result) {
+              if (err) {
+                return next(err);
+              }
+              res.statusCode = 200;
+              res.setHeader("Content-Type", "application/json");
+              res.json(resp);
+            }
+          );
+        })
+        .catch((err) => next(err));
+    }
+  );
 
 badgeRouter
   .route("/id/:badgeId")
