@@ -26,9 +26,6 @@ articleRouter
         $options: "i",
       },
     };
-    if (req.query.featured) {
-      filters = { ...filters, featured: req.query.featured };
-    }
 
     var sortBy = {};
     if (req.query.sort == "new") {
@@ -228,29 +225,30 @@ articleRouter
       "POST operation not supported on /articles/" + req.params.articleId
     );
   })
-  .put(
-    cors.corsWithOptions,
-    authenticate.verifyUser,
-    authenticate.verifyAdmin,
-    (req, res, next) => {
-      Article.findByIdAndUpdate(
-        req.params.articleId,
-        {
-          $set: req.body,
-        },
-        { new: true }
-      )
-        .then(
-          (article) => {
-            res.statusCode = 200;
-            res.setHeader("Content-Type", "application/json");
-            res.json(article);
-          },
-          (err) => next(err)
-        )
-        .catch((err) => next(err));
-    }
-  )
+  .put(cors.corsWithOptions, authenticate.verifyUser, (req, res, next) => {
+    Article.findById(req.params.articleId)
+      .then((article) => {
+        if (article.author === req.user._id || req.user.admin) {
+          Article.findByIdAndUpdate(
+            req.params.articleId,
+            {
+              $set: req.body,
+            },
+            { new: true }
+          )
+            .then(
+              (article) => {
+                res.statusCode = 200;
+                res.setHeader("Content-Type", "application/json");
+                res.json(article);
+              },
+              (err) => next(err)
+            )
+            .catch((err) => next(err));
+        }
+      })
+      .catch((err) => next(err));
+  })
   .delete(cors.corsWithOptions, authenticate.verifyUser, (req, res, next) => {
     Article.findById(req.params.articleId)
       .then((article) => {
@@ -263,7 +261,7 @@ articleRouter
             })
             .catch((err) => next(err));
         } else {
-          res.statusCode = 200;
+          res.statusCode = 403;
           res.end("Only the author of this article can delete this article");
         }
       })
