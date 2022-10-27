@@ -42,11 +42,37 @@ userRouter.get(
   authenticate.verifyUser,
   (req, res, next) => {
     User.findById(req.user._id)
+      .populate({
+        path: `published.articles`,
+      })
       .then(
         (user) => {
           res.statusCode = 200;
           res.setHeader("Content-Type", "application/json");
-          res.json(user);
+          const {
+            published,
+            _id,
+            firstname,
+            lastname,
+            fullname,
+            bio,
+            image_url,
+            username,
+            badges,
+          } = user;
+          var userDetails = {
+            _id,
+            firstname,
+            lastname,
+            fullname,
+            bio,
+            image_url,
+            username,
+            badges,
+            published,
+          };
+
+          res.json(userDetails);
         },
         (err) => next(err)
       )
