@@ -83,7 +83,6 @@ userRouter.get(
             badges,
           } = user;
 
-          console.log(req.query.hasToken && req.query.hasToken === "true");
           var userDetails =
             req.query.hasToken && req.query.hasToken == "true"
               ? {
@@ -283,7 +282,6 @@ userRouter
     }
   })
   .post(cors.corsWithOptions, authenticate.verifyUser, (req, res, next) => {
-    console.log(req.query.category, req.query.property);
     if (req.query.category == "favorites" && req.query.property == "articles") {
       Article.findById(req.body.id).then((article) => {
         article.numberOfLikes += 1;
