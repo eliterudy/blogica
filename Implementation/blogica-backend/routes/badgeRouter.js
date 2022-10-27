@@ -113,7 +113,7 @@ badgeRouter
     res.sendStatus(200);
   })
   .get(cors.cors, (req, res, next) => {
-    Recipe.findById(req.params.badgeId)
+    Article.findById(req.params.badgeId)
       .then(
         (badge) => {
           res.statusCode = 200;

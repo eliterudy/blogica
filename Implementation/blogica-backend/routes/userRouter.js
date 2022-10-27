@@ -2,7 +2,7 @@ var express = require("express");
 const bodyParser = require("body-parser");
 var passport = require("passport");
 var path = require("path");
-
+const Article = require("../models/articles");
 const User = require("../models/users");
 const authenticate = require("../config/authenticate");
 const cors = require("../config/cors");
@@ -42,15 +42,37 @@ userRouter.get(
   authenticate.verifyUser,
   (req, res, next) => {
     User.findById(req.user._id)
-      .populate({
-        path: `published.articles`,
-      })
+      .populate(
+        req.query.hasToken && req.query.hasToken == "true"
+          ? [
+              {
+                path: `published.articles`,
+              },
+              {
+                path: `recents.articles`,
+              },
+              {
+                path: `saved.articles`,
+              },
+              {
+                path: "badges.badge",
+              },
+            ]
+          : [
+              {
+                path: `published.articles`,
+              },
+            ]
+      )
       .then(
         (user) => {
           res.statusCode = 200;
           res.setHeader("Content-Type", "application/json");
           const {
             published,
+            recents,
+            favorites,
+            saved,
             _id,
             firstname,
             lastname,
@@ -60,17 +82,35 @@ userRouter.get(
             username,
             badges,
           } = user;
-          var userDetails = {
-            _id,
-            firstname,
-            lastname,
-            fullname,
-            bio,
-            image_url,
-            username,
-            badges,
-            published,
-          };
+
+          console.log(req.query.hasToken && req.query.hasToken === "true");
+          var userDetails =
+            req.query.hasToken && req.query.hasToken == "true"
+              ? {
+                  _id,
+                  firstname,
+                  lastname,
+                  fullname,
+                  bio,
+                  image_url,
+                  username,
+                  badges,
+                  published,
+                  recents,
+                  favorites,
+                  saved,
+                }
+              : {
+                  _id,
+                  firstname,
+                  lastname,
+                  fullname,
+                  bio,
+                  image_url,
+                  username,
+                  badges,
+                  published,
+                };
 
           res.json(userDetails);
         },
@@ -154,13 +194,38 @@ userRouter.post("/login", cors.corsWithOptions, (req, res, next) => {
         // .populate(["published.articles"])
         .then(
           (user) => {
+            const {
+              published,
+              saved,
+              favorites,
+              _id,
+              firstname,
+              lastname,
+              fullname,
+              bio,
+              image_url,
+              username,
+            } = user;
+            var userDetails = {
+              _id,
+              firstname,
+              lastname,
+              fullname,
+              bio,
+              image_url,
+              username,
+              badges,
+              published,
+              saved,
+              favorites,
+            };
             res.statusCode = 200;
             res.setHeader("Content-Type", "application/json");
             res.json({
               success: true,
               status: "Login Successful!",
               token: token,
-              user: user,
+              user: userDetails,
             });
           },
           (err) => next(err)
@@ -204,24 +269,28 @@ userRouter.get("/checkJWTtoken", cors.corsWithOptions, (req, res) => {
   })(req, res);
 });
 
+var categories = ["favorites", "saved", "recents", "published"];
+var properties = ["articles"];
+
 userRouter
   .route("/category")
   .options(cors.corsWithOptions, (req, res) => {
     res.sendStatus(200);
   })
   .get(cors.cors, authenticate.verifyUser, (req, res, next) => {
-    if (req.query.property == "recipes") {
+    if (req.query.property == "articles") {
       UserPropUpdate.getArticlesByProperty(req, res, next);
     }
   })
   .post(cors.corsWithOptions, authenticate.verifyUser, (req, res, next) => {
-    if (req.query.category == "favorites" && req.query.property == "recipes") {
-      Recipe.findById(req.body.id).then((recipe) => {
-        recipe.numberOfLikes += 1;
-        recipe.save();
+    console.log(req.query.category, req.query.property);
+    if (req.query.category == "favorites" && req.query.property == "articles") {
+      Article.findById(req.body.id).then((article) => {
+        article.numberOfLikes += 1;
+        article.save();
       });
     }
-    if (req.query.property == "recipes") {
+    if (req.query.property == "articles") {
       UserPropUpdate.addArticleToUser(req, res, next);
     }
   })
@@ -230,14 +299,28 @@ userRouter
     res.end("Put operation not supported on /users/category");
   })
   .delete(cors.corsWithOptions, authenticate.verifyUser, (req, res, next) => {
-    if (req.query.category == "favorites" && req.query.property == "recipes") {
-      Recipe.findById(req.body.id).then((recipe) => {
-        recipe.numberOfLikes -= 1;
-        recipe.save();
-      });
-    }
-    if (req.query.property == "recipes") {
-      UserPropUpdate.deleteArticlesFromUser(req, res, next);
+    if (
+      categories.includes(req.query.category) &&
+      properties.includes(req.query.property)
+    ) {
+      if (
+        req.query.category == "favorites" &&
+        req.query.property == "articles"
+      ) {
+        Article.findById(req.body.id).then((article) => {
+          article.numberOfLikes -= 1;
+          article.save();
+        });
+      }
+      if (req.query.property == "articles") {
+        UserPropUpdate.deleteArticlesFromUser(req, res, next);
+      }
+    } else {
+      err = new Error(
+        "Information about the category or the property does not exist in the system"
+      );
+      err.status = 404;
+      return next(err);
     }
   });
 

@@ -113,7 +113,7 @@ articleRouter
             if (err.code == 11000) {
               res.statusCode = 400;
               res.setHeader("Content-Type", "application/json");
-              return res.json({ error: "Recipe duplicate found" });
+              return res.json({ error: "Article duplicate found" });
             }
 
             next(err);
