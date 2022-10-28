@@ -7,6 +7,7 @@ const User = require("../models/users");
 const authenticate = require("../config/authenticate");
 const cors = require("../config/cors");
 const UserPropUpdate = require("../components/UserPropUpdate");
+const DataTrimmer = require("../components/DataTrimmer");
 const UploadFile = require("../components/UploadFile");
 
 var userRouter = express.Router();
@@ -43,29 +44,42 @@ userRouter.get(
   (req, res, next) => {
     User.findById(req.user._id)
       .populate(
-        req.query.hasToken && req.query.hasToken == "true"
-          ? [
-              {
-                path: `published.articles`,
-              },
-              {
-                path: `recents.articles`,
-              },
-              {
-                path: `saved.articles`,
-              },
-              {
-                path: "badges.badge",
-              },
-            ]
-          : [
-              {
-                path: `published.articles`,
-              },
-            ]
+        req.query.isProfile &&
+          req.query.isProfile == "true" && [
+            {
+              path: `published.articles`,
+              populate: [
+                {
+                  path: "author",
+                  model: "User",
+                },
+              ],
+            },
+            {
+              path: `recents.articles`,
+              populate: [
+                {
+                  path: "author",
+                  model: "User",
+                },
+              ],
+            },
+            {
+              path: `saved.articles`,
+              populate: [
+                {
+                  path: "author",
+                  model: "User",
+                },
+              ],
+            },
+            {
+              path: "badges.badge",
+            },
+          ]
       )
       .then(
-        (user) => {
+        async (user) => {
           res.statusCode = 200;
           res.setHeader("Content-Type", "application/json");
           const {
@@ -76,40 +90,33 @@ userRouter.get(
             _id,
             firstname,
             lastname,
-            fullname,
             bio,
             image_url,
             username,
             badges,
           } = user;
 
-          var userDetails =
-            req.query.hasToken && req.query.hasToken == "true"
-              ? {
-                  _id,
-                  firstname,
-                  lastname,
-                  fullname,
-                  bio,
-                  image_url,
-                  username,
-                  badges,
-                  published,
-                  recents,
-                  favorites,
-                  saved,
-                }
-              : {
-                  _id,
-                  firstname,
-                  lastname,
-                  fullname,
-                  bio,
-                  image_url,
-                  username,
-                  badges,
-                  published,
-                };
+          var userDetails = {
+            _id,
+            firstname,
+            lastname,
+            bio,
+            image_url,
+            username,
+          };
+
+          if (req.query.hasToken && req.query.isProfile == "true") {
+            userDetails = {
+              ...userDetails,
+              saved: DataTrimmer.trimArticleList(saved.articles, true),
+              favorites: DataTrimmer.trimArticleList(favorites.articles, true),
+              badges: DataTrimmer.trimBadgeList(badges),
+              recents: DataTrimmer.trimArticleList(recents.articles, true),
+              published: DataTrimmer.trimArticleList(published.articles, true),
+            };
+          } else {
+            userDetails = { ...userDetails, saved, favorites };
+          }
 
           res.json(userDetails);
         },
@@ -118,6 +125,56 @@ userRouter.get(
       .catch((err) => next(err));
   }
 );
+
+userRouter.get("/authorDetails", cors.cors, (req, res, next) => {
+  User.findById(req.query.author_id)
+    .populate([
+      {
+        path: `published.articles`,
+        populate: [
+          {
+            path: "author",
+            model: "User",
+          },
+        ],
+      },
+
+      {
+        path: "badges.badge",
+      },
+    ])
+    .then(
+      async (user) => {
+        const {
+          published,
+          _id,
+          firstname,
+          lastname,
+          bio,
+          image_url,
+          username,
+          badges,
+        } = user;
+
+        // console.log(published);
+
+        res.statusCode = 200;
+        res.setHeader("Content-Type", "application/json");
+        res.json({
+          _id,
+          firstname,
+          lastname,
+          bio,
+          image_url,
+          username,
+          published: DataTrimmer.trimArticleList(published.articles, true),
+          badges: DataTrimmer.trimBadgeList(badges),
+        });
+      },
+      (err) => next(err)
+    )
+    .catch((err) => next(err));
+});
 
 userRouter.post(
   "/signup",
@@ -143,7 +200,6 @@ userRouter.post(
         } else {
           user.firstname = req.body.firstname;
           user.lastname = req.body.lastname;
-          user.fullname = req.body.firstname + " " + req.body.lastname;
           user.email = req.body.email;
           user.image_url = image_url;
           user.save((err, user) => {
@@ -165,7 +221,7 @@ userRouter.post(
   }
 );
 
-userRouter.post("/login", cors.corsWithOptions, (req, res, next) => {
+userRouter.post("/signin", cors.corsWithOptions, (req, res, next) => {
   passport.authenticate("local", { session: false }, (err, user, info) => {
     if (err) return next(err);
     if (!user) {
@@ -200,7 +256,6 @@ userRouter.post("/login", cors.corsWithOptions, (req, res, next) => {
               _id,
               firstname,
               lastname,
-              fullname,
               bio,
               image_url,
               username,
@@ -209,11 +264,8 @@ userRouter.post("/login", cors.corsWithOptions, (req, res, next) => {
               _id,
               firstname,
               lastname,
-              fullname,
-              bio,
               image_url,
               username,
-              badges,
               published,
               saved,
               favorites,

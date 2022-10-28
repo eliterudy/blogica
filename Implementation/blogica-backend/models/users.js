@@ -16,10 +16,7 @@ var userSchema = new Schema({
     type: String,
     default: "",
   },
-  fullname: {
-    type: String,
-    default: "",
-  },
+
   bio: {
     type: String,
     default: "",

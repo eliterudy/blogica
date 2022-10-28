@@ -9,6 +9,8 @@ const UploadFile = require("../components/UploadFile");
 const Badge = require("../models/badges");
 const Config = require("../config/config");
 const Users = require("../models/users");
+const DataTrimmer = require("../components/DataTrimmer");
+
 const { VIEW_COUNT_REWARD } = Config;
 var articleRouter = express.Router();
 articleRouter.use(bodyParser.json());
@@ -36,10 +38,7 @@ articleRouter
       sortBy["numberOfLikes"] = -1;
     }
 
-    Article.find(
-      filters,
-      "_id title image_url description author updatedAt createdAt"
-    )
+    Article.find(filters)
       .sort(sortBy)
       .limit(req.query.limit)
       .skip(req.query.offset)
@@ -52,7 +51,7 @@ articleRouter
                 res.setHeader("Content-Type", "application/json");
 
                 res.json({
-                  results: articles,
+                  results: DataTrimmer.trimArticleList(articles, false),
                   limit: Number(req.query.limit),
                   nextOffset:
                     Number(req.query.offset) + Number(req.query.limit),
@@ -98,7 +97,7 @@ articleRouter
           (article) => {
             res.statusCode = 200;
             res.setHeader("Content-Type", "application/json");
-            res.json(article);
+            res.json(DataTrimmer.trimArticleWithoutAuthorPopulated(article));
             User.findById(req.user._id)
               .then(async (user) => {
                 user.published.articles.push(article._id);
@@ -205,6 +204,8 @@ articleRouter
             await article.save();
             res.statusCode = 200;
             res.setHeader("Content-Type", "application/json");
+            delete article._doc.createdAt;
+            delete article._doc.updatedAt;
             return res.json(article);
           } else {
             res.statusCode = 400;
@@ -240,6 +241,8 @@ articleRouter
               (article) => {
                 res.statusCode = 200;
                 res.setHeader("Content-Type", "application/json");
+                delete article._doc.createdAt;
+                delete article._doc.updatedAt;
                 res.json(article);
               },
               (err) => next(err)
