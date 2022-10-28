@@ -38,7 +38,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 /* helper imports */
 import { cssHover } from "../../../components/generic/hoverProps";
-import { Article, AuthorDetail, User } from "../../../config/types";
+import { Article, AuthorDetails, User } from "../../../config/types";
 import { icons, constants } from "../../../config/configuration";
 import Generic from "../../../components/generic/GenericComponents";
 import { toggler } from "../../../utils/generic";

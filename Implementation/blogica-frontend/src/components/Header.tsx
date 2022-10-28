@@ -80,15 +80,13 @@ const Header = ({ modalCallback }: any) => {
           )}
 
           {isTabletOrMobile && (
-            <div
-              className="col-8 col-md-2 m-md-0 p-md-0"
-              onClick={() => navigate("/")}
-            >
+            <div className="col-8 col-md-2 m-md-0 p-md-0">
               <div
                 className=" d-flex justify-content-center align-items-center"
                 style={{ margin: 0 }}
               >
                 <img
+                  onClick={() => navigate("/main")}
                   className=""
                   src={icons.app_logo}
                   height={60}
@@ -110,7 +108,7 @@ const Header = ({ modalCallback }: any) => {
           {/* Navigation */}
           <Nav navbar className=" col-sm-12 ">
             {!user && (
-              <NavItem className=" ms-sm-2 flex-grow-1 flex-shrink-1 d-sm-flex flex-column justify-content-center">
+              <NavItem className=" ms-1 ms-sm-2 my-1 my-md-0 flex-grow-1 flex-shrink-1 d-sm-flex flex-column justify-content-center align-items-center ">
                 <NavLink
                   tag={RRNavLink}
                   className={"nav-link "}
@@ -128,7 +126,7 @@ const Header = ({ modalCallback }: any) => {
               </NavItem>
             )}
             {user && (
-              <NavItem className=" ms-sm-2 flex-grow-1 flex-shrink-1 d-sm-flex flex-column justify-content-center">
+              <NavItem className=" ms-1 ms-sm-2 my-1 my-md-0 flex-grow-1 flex-shrink-1 d-sm-flex flex-column justify-content-center align-items-center ">
                 <NavLink
                   tag={RRNavLink}
                   className={"nav-link "}
@@ -141,7 +139,7 @@ const Header = ({ modalCallback }: any) => {
                 </NavLink>
               </NavItem>
             )}
-            <NavItem className=" ms-sm-2 flex-grow-1 flex-shrink-1 d-sm-flex flex-column justify-content-center">
+            <NavItem className=" ms-1 ms-sm-2 my-1 my-md-0 flex-grow-1 flex-shrink-1 d-sm-flex flex-column justify-content-center align-items-center ">
               <NavLink
                 tag={RRNavLink}
                 className={"nav-link "}
@@ -154,7 +152,7 @@ const Header = ({ modalCallback }: any) => {
               </NavLink>
             </NavItem>
             {!isTabletOrMobile && (
-              <NavItem className=" ms-sm-2 flex-grow-1 flex-shrink-1 d-sm-flex flex-column justify-content-center">
+              <NavItem className=" ms-1 ms-sm-2 my-1 my-md-0 flex-grow-1 flex-shrink-1 d-sm-flex flex-column justify-content-center align-items-center ">
                 {/* <NavLink
                     tag={RRNavLink}
                     className={"nav-link  "}
@@ -162,11 +160,11 @@ const Header = ({ modalCallback }: any) => {
 
                   > */}
                 <div
-                  onClick={() => navigate("/main")}
                   className=" d-flex justify-content-center"
                   style={{ marginLeft: 12 }}
                 >
                   <img
+                    onClick={() => navigate("/main")}
                     className=" col-auto mb-2"
                     src={icons.app_logo}
                     height={60}
@@ -178,7 +176,7 @@ const Header = ({ modalCallback }: any) => {
               </NavItem>
             )}
             {!user && (
-              <NavItem className=" ms-sm-2 flex-grow-1 flex-shrink-1 d-sm-flex flex-column justify-content-center">
+              <NavItem className=" ms-1 ms-sm-2 my-1 my-md-0 flex-grow-1 flex-shrink-1 d-sm-flex flex-column justify-content-center align-items-center ">
                 <NavLink
                   tag={RRNavLink}
                   className={"nav-link "}
@@ -195,7 +193,7 @@ const Header = ({ modalCallback }: any) => {
               </NavItem>
             )}
             {!user && (
-              <NavItem className=" ms-sm-2 flex-grow-1 flex-shrink-1 d-sm-flex flex-column justify-content-center">
+              <NavItem className=" ms-1 ms-sm-2 my-1 my-md-0 flex-grow-1 flex-shrink-1 d-sm-flex flex-column justify-content-center align-items-center ">
                 <NavLink
                   tag={RRNavLink}
                   className={"nav-link "}
@@ -214,7 +212,7 @@ const Header = ({ modalCallback }: any) => {
             )}
 
             {user && (
-              <NavItem className=" ms-sm-2 flex-grow-1 flex-shrink-1 d-sm-flex flex-column justify-content-center">
+              <NavItem className=" ms-1 ms-sm-2 my-1 my-md-0 flex-grow-1 flex-shrink-1 d-sm-flex flex-column justify-content-center align-items-center ">
                 <NavLink
                   tag={RRNavLink}
                   className={"nav-link "}
@@ -233,7 +231,7 @@ const Header = ({ modalCallback }: any) => {
             )}
 
             {user && !isTabletOrMobile && (
-              <div className=" ms-sm-2 flex-grow-1 flex-shrink-1 d-sm-flex flex-column justify-content-center">
+              <div className=" ms-sm-2 flex-grow-1 flex-shrink-1 d-sm-flex flex-column justify-content-center align-items-center">
                 <UserAvatar />
               </div>
             )}

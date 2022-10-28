@@ -11,7 +11,9 @@ export interface Article {
   updated?: string;
 }
 
-export interface ArticleDetail extends Article {
+export interface Author extends Person {}
+
+export interface ArticleDetails extends Article {
   numberOfLikes?: number;
   numberOfViews?: number;
   comments?: any;
@@ -34,36 +36,69 @@ export interface Person {
   lastname: string;
   fullname: string;
   username: string;
-  bio: string;
+  bio?: string;
   image_url: string;
   created: string;
   updated?: string;
 }
 
 export interface User extends Person {
-  bookmarks?: Bookmarks;
+  saved: Saved;
   published: Published;
-  recents?: Recents;
-  currency?: string;
-  currency_type?: string;
+  favorites: Favorites;
 }
 
-export interface Author extends Person {}
+export interface UserDetails extends Person {
+  badges: BadgeDetails[];
+  published: PublishedDetails;
+  saved: SavedDetails;
+  recents: RecentsDetails;
+}
 
-export interface AuthorDetail extends Person {
+export interface AuthorDetails extends Person {
+  badges: BadgeDetails[];
   published: Published;
 }
 
-export interface Bookmarks {
+export interface BadgeDetails {
+  _id: number;
+  badge: Badge;
+  count: number;
+}
+
+export interface Badge {
+  _id: number;
+  title: string;
+  image_url: string;
+  badge_value: number;
+  type: string;
+  count: number;
+}
+
+/* User Detail Interfaces */
+export interface SavedDetails {
+  articles: Article[];
+}
+export interface RecentsDetails {
+  articles: Article[];
+  // authors: string[];
+}
+export interface PublishedDetails {
+  articles: Article[];
+}
+
+/* User Interfaces */
+export interface Saved {
   articles: string[];
 }
-
 export interface Recents {
   articles: string[];
-  authors: string[];
+  // authors: string[];
 }
-
 export interface Published {
+  articles: string[];
+}
+export interface Favorites {
   articles: string[];
 }
 

@@ -38,7 +38,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 /* helper imports */
 import { cssHover } from "../../components/generic/hoverProps";
-import { Article, AuthorDetail } from "../../config/types";
+import { Article, AuthorDetails } from "../../config/types";
 import { icons } from "../../config/configuration";
 import Generic from "../../components/generic/GenericComponents";
 import { toggler } from "../../utils/generic";
@@ -311,7 +311,7 @@ const AuthorProfile = (props: any) => {
   const navigate = useNavigate();
   const isTabletOrMobile = useMediaQuery({ query: "(max-width: 767px)" });
 
-  const [author, updateAuthorDetails] = useState<null | AuthorDetail>({
+  const [author, updateAuthorDetails] = useState<null | AuthorDetails>({
     _id: 21,
     firstname: "Gavin",
     lastname: "D'mello",
@@ -325,6 +325,7 @@ const AuthorProfile = (props: any) => {
     published: {
       articles: [],
     },
+    badges: [],
   });
   const [articles, updateArticles] = useState<null | Article[]>(articleDataset);
   const [articlesCount, updateArticlesCount] = useState(0);
