@@ -39,7 +39,7 @@ const ArticleListCard = (cardProps: ArticleCardProps) => {
               >
                 <Generic.Avatar
                   image_url={article.author.image_url}
-                  fullname="Gavin D'mello"
+                  fullname={`${article.author.firstname} ${article.author.lastname}`}
                   size={25}
                 />
               </div>
@@ -52,7 +52,7 @@ const ArticleListCard = (cardProps: ArticleCardProps) => {
                 className=" ms-2 text-primary"
                 style={{ fontWeight: "bold", fontSize: 14 }}
               >
-                {article.author.fullname}
+                {`${article.author.firstname} ${article.author.lastname}`}
               </span>
             </div>
           )}
@@ -87,7 +87,7 @@ const ArticleListCard = (cardProps: ArticleCardProps) => {
           <div className="col-12 d-flex flex-row justify-content-between mt-1 ">
             <div>
               <span style={{ fontSize: 14, color: "#555" }}>
-                {moment(article.created, "YYYYMMDD").fromNow()}
+                {moment(article.createdAt, "YYYYMMDD").fromNow()}
               </span>
             </div>
             <div className="mt-1">

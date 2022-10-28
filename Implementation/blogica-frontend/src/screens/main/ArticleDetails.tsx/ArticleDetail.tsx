@@ -20,6 +20,7 @@ import actions from "../../../redux/actionReducers/index";
 import moment from "moment";
 import ArticleHead from "./ArticleHead";
 import ArticleBody from "./ArticleBody";
+import { ArticleDetails } from "../../../config/types";
 
 const ArticleDetail = (props: any) => {
   const navigate = useNavigate();
@@ -29,7 +30,7 @@ const ArticleDetail = (props: any) => {
   const { user } = state.userState;
 
   const [loading, isLoading] = useState(false);
-  const [article, updateArticleDetails] = useState({
+  const [article, updateArticleDetails] = useState<ArticleDetails>({
     _id: 1,
     title: "Biden on ‘60 Minutes’: ‘The pandemic is over’",
     image_url:
@@ -40,15 +41,11 @@ const ArticleDetail = (props: any) => {
       _id: 21,
       firstname: "Gavin",
       lastname: "D'mello",
-      fullname: "Gavin D'mello",
-      username: "gavin1040",
-      bio:
-        "Gavin D'mello is a content creator currently building an app called Blogica for his Masters degree",
       image_url:
         "https://phantom-marca.unidadeditorial.es/9adb565dcfc4dc3e9b1948c7cf5b8f01/resize/1320/f/jpg/assets/multimedia/imagenes/2022/02/21/16454391499069.jpg",
-      created: "2022-09-16T12:59-0500",
+
+      bio: "",
     },
-    created: "2022-09-16T12:59-0500",
   });
 
   useEffect(() => {}, []);

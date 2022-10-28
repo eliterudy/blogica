@@ -96,15 +96,11 @@ const articleDataset: Article[] = [
       _id: 21,
       firstname: "Gavin",
       lastname: "D'mello",
-      fullname: "Gavin D'mello",
-      username: "gavin1040",
       bio:
         "Gavin D'mello is a content creator currently building an app called Blogica for his Masters degree",
       image_url:
         "https://phantom-marca.unidadeditorial.es/9adb565dcfc4dc3e9b1948c7cf5b8f01/resize/1320/f/jpg/assets/multimedia/imagenes/2022/02/21/16454391499069.jpg",
-      created: "2022-09-16T12:59-0500",
     },
-    created: "2022-09-16T12:59-0500",
   },
   {
     _id: 2,
@@ -122,14 +118,10 @@ const articleDataset: Article[] = [
       _id: 21,
       firstname: "Gavin",
       lastname: "D'mello",
-      fullname: "Gavin D'mello",
-      username: "gavin1040",
       bio: "",
       image_url:
         "https://phantom-marca.unidadeditorial.es/9adb565dcfc4dc3e9b1948c7cf5b8f01/resize/1320/f/jpg/assets/multimedia/imagenes/2022/02/21/16454391499069.jpg",
-      created: "2022-09-16T12:59-0500",
     },
-    created: "2022-09-16T12:59-0500",
   },
   {
     _id: 3,
@@ -142,14 +134,10 @@ const articleDataset: Article[] = [
       _id: 21,
       firstname: "Gavin",
       lastname: "D'mello",
-      fullname: "Gavin D'mello",
-      username: "gavin1040",
       bio: "",
       image_url:
         "https://phantom-marca.unidadeditorial.es/9adb565dcfc4dc3e9b1948c7cf5b8f01/resize/1320/f/jpg/assets/multimedia/imagenes/2022/02/21/16454391499069.jpg",
-      created: "2022-09-16T12:59-0500",
     },
-    created: "2022-09-16T12:59-0500",
   },
   {
     _id: 4,
@@ -162,14 +150,10 @@ const articleDataset: Article[] = [
       _id: 21,
       firstname: "Gavin",
       lastname: "D'mello",
-      fullname: "Gavin D'mello",
-      username: "gavin1040",
       bio: "",
       image_url:
         "https://phantom-marca.unidadeditorial.es/9adb565dcfc4dc3e9b1948c7cf5b8f01/resize/1320/f/jpg/assets/multimedia/imagenes/2022/02/21/16454391499069.jpg",
-      created: "2022-09-16T12:59-0500",
     },
-    created: "2022-09-16T12:59-0500",
   },
   {
     _id: 5,
@@ -182,14 +166,10 @@ const articleDataset: Article[] = [
       _id: 21,
       firstname: "Gavin",
       lastname: "D'mello",
-      fullname: "Gavin D'mello",
-      username: "gavin1040",
       bio: "",
       image_url:
         "https://phantom-marca.unidadeditorial.es/9adb565dcfc4dc3e9b1948c7cf5b8f01/resize/1320/f/jpg/assets/multimedia/imagenes/2022/02/21/16454391499069.jpg",
-      created: "2022-09-16T12:59-0500",
     },
-    created: "2022-09-16T12:59-0500",
   },
   {
     _id: 6,
@@ -201,14 +181,10 @@ const articleDataset: Article[] = [
       _id: 21,
       firstname: "Gavin",
       lastname: "D'mello",
-      fullname: "Gavin D'mello",
-      username: "gavin1040",
       bio: "",
       image_url:
         "https://phantom-marca.unidadeditorial.es/9adb565dcfc4dc3e9b1948c7cf5b8f01/resize/1320/f/jpg/assets/multimedia/imagenes/2022/02/21/16454391499069.jpg",
-      created: "2022-09-16T12:59-0500",
     },
-    created: "2022-09-16T12:59-0500",
   },
   {
     _id: 7,
@@ -221,14 +197,10 @@ const articleDataset: Article[] = [
       _id: 21,
       firstname: "Gavin",
       lastname: "D'mello",
-      fullname: "Gavin D'mello",
-      username: "gavin1040",
       bio: "",
       image_url:
         "https://phantom-marca.unidadeditorial.es/9adb565dcfc4dc3e9b1948c7cf5b8f01/resize/1320/f/jpg/assets/multimedia/imagenes/2022/02/21/16454391499069.jpg",
-      created: "2022-09-16T12:59-0500",
     },
-    created: "2022-09-16T12:59-0500",
   },
   {
     _id: 8,
@@ -240,14 +212,10 @@ const articleDataset: Article[] = [
       _id: 21,
       firstname: "Gavin",
       lastname: "D'mello",
-      fullname: "Gavin D'mello",
-      username: "gavin1040",
       bio: "",
       image_url:
         "https://phantom-marca.unidadeditorial.es/9adb565dcfc4dc3e9b1948c7cf5b8f01/resize/1320/f/jpg/assets/multimedia/imagenes/2022/02/21/16454391499069.jpg",
-      created: "2022-09-16T12:59-0500",
     },
-    created: "2022-09-16T12:59-0500",
   },
   {
     _id: 9,
@@ -259,14 +227,10 @@ const articleDataset: Article[] = [
       _id: 21,
       firstname: "Gavin",
       lastname: "D'mello",
-      fullname: "Gavin D'mello",
-      username: "gavin1040",
       bio: "",
       image_url:
         "https://phantom-marca.unidadeditorial.es/9adb565dcfc4dc3e9b1948c7cf5b8f01/resize/1320/f/jpg/assets/multimedia/imagenes/2022/02/21/16454391499069.jpg",
-      created: "2022-09-16T12:59-0500",
     },
-    created: "2022-09-16T12:59-0500",
   },
   {
     _id: 10,
@@ -278,14 +242,10 @@ const articleDataset: Article[] = [
       _id: 21,
       firstname: "Gavin",
       lastname: "D'mello",
-      fullname: "Gavin D'mello",
-      username: "gavin1040",
       bio: "",
       image_url:
         "https://phantom-marca.unidadeditorial.es/9adb565dcfc4dc3e9b1948c7cf5b8f01/resize/1320/f/jpg/assets/multimedia/imagenes/2022/02/21/16454391499069.jpg",
-      created: "2022-09-16T12:59-0500",
     },
-    created: "2022-09-16T12:59-0500",
   },
   {
     _id: 11,
@@ -297,14 +257,10 @@ const articleDataset: Article[] = [
       _id: 21,
       firstname: "Gavin",
       lastname: "D'mello",
-      fullname: "Gavin D'mello",
-      username: "gavin1040",
       bio: "",
       image_url:
         "https://phantom-marca.unidadeditorial.es/9adb565dcfc4dc3e9b1948c7cf5b8f01/resize/1320/f/jpg/assets/multimedia/imagenes/2022/02/21/16454391499069.jpg",
-      created: "2022-09-16T12:59-0500",
     },
-    created: "2022-09-16T12:59-0500",
   },
 ];
 

@@ -65,18 +65,14 @@ const articleDataset: Article[] = [
       
       Nahal Toosi contributed to this report.`,
     author: {
+      bio: "",
       _id: 21,
       firstname: "Gavin",
       lastname: "D'mello",
-      fullname: "Gavin D'mello",
-      username: "gavin1040",
-      bio:
-        "Gavin D'mello is a content creator currently building an app called Blogica for his Masters degree",
+
       image_url:
         "https://phantom-marca.unidadeditorial.es/9adb565dcfc4dc3e9b1948c7cf5b8f01/resize/1320/f/jpg/assets/multimedia/imagenes/2022/02/21/16454391499069.jpg",
-      created: "2022-09-16T12:59-0500",
     },
-    created: "2022-09-16T12:59-0500",
   },
   {
     _id: 2,
@@ -91,17 +87,13 @@ const articleDataset: Article[] = [
       
       I am a bot, and this action was performed automatically. Please contact the moderators of this subreddit if you have any questions or concerns.`,
     author: {
+      bio: "",
       _id: 21,
       firstname: "Gavin",
       lastname: "D'mello",
-      fullname: "Gavin D'mello",
-      username: "gavin1040",
-      bio: "",
       image_url:
         "https://phantom-marca.unidadeditorial.es/9adb565dcfc4dc3e9b1948c7cf5b8f01/resize/1320/f/jpg/assets/multimedia/imagenes/2022/02/21/16454391499069.jpg",
-      created: "2022-09-16T12:59-0500",
     },
-    created: "2022-09-16T12:59-0500",
   },
   {
     _id: 3,
@@ -111,17 +103,13 @@ const articleDataset: Article[] = [
 
     It's not too many days without sleep, and a person can start to have mental illness concerns. https://www.bbc.com/future/article/20150220-how-long-can-we-stay-awake`,
     author: {
+      bio: "",
       _id: 21,
       firstname: "Gavin",
       lastname: "D'mello",
-      fullname: "Gavin D'mello",
-      username: "gavin1040",
-      bio: "",
       image_url:
         "https://phantom-marca.unidadeditorial.es/9adb565dcfc4dc3e9b1948c7cf5b8f01/resize/1320/f/jpg/assets/multimedia/imagenes/2022/02/21/16454391499069.jpg",
-      created: "2022-09-16T12:59-0500",
     },
-    created: "2022-09-16T12:59-0500",
   },
   {
     _id: 4,
@@ -131,17 +119,13 @@ const articleDataset: Article[] = [
     description:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. ",
     author: {
+      bio: "",
       _id: 21,
       firstname: "Gavin",
       lastname: "D'mello",
-      fullname: "Gavin D'mello",
-      username: "gavin1040",
-      bio: "",
       image_url:
         "https://phantom-marca.unidadeditorial.es/9adb565dcfc4dc3e9b1948c7cf5b8f01/resize/1320/f/jpg/assets/multimedia/imagenes/2022/02/21/16454391499069.jpg",
-      created: "2022-09-16T12:59-0500",
     },
-    created: "2022-09-16T12:59-0500",
   },
   {
     _id: 5,
@@ -151,17 +135,13 @@ const articleDataset: Article[] = [
     description:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. ",
     author: {
+      bio: "",
       _id: 21,
       firstname: "Gavin",
       lastname: "D'mello",
-      fullname: "Gavin D'mello",
-      username: "gavin1040",
-      bio: "",
       image_url:
         "https://phantom-marca.unidadeditorial.es/9adb565dcfc4dc3e9b1948c7cf5b8f01/resize/1320/f/jpg/assets/multimedia/imagenes/2022/02/21/16454391499069.jpg",
-      created: "2022-09-16T12:59-0500",
     },
-    created: "2022-09-16T12:59-0500",
   },
   {
     _id: 6,
@@ -170,17 +150,13 @@ const articleDataset: Article[] = [
     description:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. ",
     author: {
+      bio: "",
       _id: 21,
       firstname: "Gavin",
       lastname: "D'mello",
-      fullname: "Gavin D'mello",
-      username: "gavin1040",
-      bio: "",
       image_url:
         "https://phantom-marca.unidadeditorial.es/9adb565dcfc4dc3e9b1948c7cf5b8f01/resize/1320/f/jpg/assets/multimedia/imagenes/2022/02/21/16454391499069.jpg",
-      created: "2022-09-16T12:59-0500",
     },
-    created: "2022-09-16T12:59-0500",
   },
   {
     _id: 7,
@@ -190,17 +166,13 @@ const articleDataset: Article[] = [
     description:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. ",
     author: {
+      bio: "",
       _id: 21,
       firstname: "Gavin",
       lastname: "D'mello",
-      fullname: "Gavin D'mello",
-      username: "gavin1040",
-      bio: "",
       image_url:
         "https://phantom-marca.unidadeditorial.es/9adb565dcfc4dc3e9b1948c7cf5b8f01/resize/1320/f/jpg/assets/multimedia/imagenes/2022/02/21/16454391499069.jpg",
-      created: "2022-09-16T12:59-0500",
     },
-    created: "2022-09-16T12:59-0500",
   },
   {
     _id: 8,
@@ -209,17 +181,13 @@ const articleDataset: Article[] = [
     description:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. ",
     author: {
+      bio: "",
       _id: 21,
       firstname: "Gavin",
       lastname: "D'mello",
-      fullname: "Gavin D'mello",
-      username: "gavin1040",
-      bio: "",
       image_url:
         "https://phantom-marca.unidadeditorial.es/9adb565dcfc4dc3e9b1948c7cf5b8f01/resize/1320/f/jpg/assets/multimedia/imagenes/2022/02/21/16454391499069.jpg",
-      created: "2022-09-16T12:59-0500",
     },
-    created: "2022-09-16T12:59-0500",
   },
   {
     _id: 9,
@@ -228,17 +196,13 @@ const articleDataset: Article[] = [
     description:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. ",
     author: {
+      bio: "",
       _id: 21,
       firstname: "Gavin",
       lastname: "D'mello",
-      fullname: "Gavin D'mello",
-      username: "gavin1040",
-      bio: "",
       image_url:
         "https://phantom-marca.unidadeditorial.es/9adb565dcfc4dc3e9b1948c7cf5b8f01/resize/1320/f/jpg/assets/multimedia/imagenes/2022/02/21/16454391499069.jpg",
-      created: "2022-09-16T12:59-0500",
     },
-    created: "2022-09-16T12:59-0500",
   },
   {
     _id: 10,
@@ -247,17 +211,13 @@ const articleDataset: Article[] = [
     description:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. ",
     author: {
+      bio: "",
       _id: 21,
       firstname: "Gavin",
       lastname: "D'mello",
-      fullname: "Gavin D'mello",
-      username: "gavin1040",
-      bio: "",
       image_url:
         "https://phantom-marca.unidadeditorial.es/9adb565dcfc4dc3e9b1948c7cf5b8f01/resize/1320/f/jpg/assets/multimedia/imagenes/2022/02/21/16454391499069.jpg",
-      created: "2022-09-16T12:59-0500",
     },
-    created: "2022-09-16T12:59-0500",
   },
   {
     _id: 11,
@@ -266,17 +226,13 @@ const articleDataset: Article[] = [
     description:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. ",
     author: {
+      bio: "",
       _id: 21,
       firstname: "Gavin",
       lastname: "D'mello",
-      fullname: "Gavin D'mello",
-      username: "gavin1040",
-      bio: "",
       image_url:
         "https://phantom-marca.unidadeditorial.es/9adb565dcfc4dc3e9b1948c7cf5b8f01/resize/1320/f/jpg/assets/multimedia/imagenes/2022/02/21/16454391499069.jpg",
-      created: "2022-09-16T12:59-0500",
     },
-    created: "2022-09-16T12:59-0500",
   },
 ];
 

@@ -23,7 +23,7 @@ const apiDefault = {};
 const userApiList = {
   login: (payload: any) => {
     return ApiCaller({
-      url: `/users/login`,
+      url: `/users/signin`,
       method: "post",
       data: payload,
     });

@@ -7,8 +7,8 @@ export interface Article {
   description: string;
   author: Author;
   isBookmarked?: boolean;
-  created: string;
-  updated?: string;
+  createdAt?: string; // remove ?  later
+  updatedAt?: string; // remove ?  later
 }
 
 export interface Author extends Person {}
@@ -34,15 +34,12 @@ export interface Person {
   _id: number;
   firstname: string;
   lastname: string;
-  fullname: string;
-  username: string;
-  bio?: string;
   image_url: string;
-  created: string;
-  updated?: string;
+  bio: string;
 }
 
 export interface User extends Person {
+  username: string;
   saved: Saved;
   published: Published;
   favorites: Favorites;

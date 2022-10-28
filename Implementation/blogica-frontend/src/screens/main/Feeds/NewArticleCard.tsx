@@ -37,7 +37,7 @@ const NewArticleCard = (cardProps: any) => {
         <div className="me-2">
           <Generic.Avatar
             image_url={user.image_url}
-            fullname={user.fullname}
+            fullname={`${user.firstname} ${user.lastname}`}
             size={40}
           />
         </div>

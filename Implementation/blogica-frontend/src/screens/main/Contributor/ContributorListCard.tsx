@@ -27,7 +27,7 @@ const ContributorListCard = (cardProps: ContributorCardProps) => {
   const { user } = state.userState;
 
   const { contributor, index } = cardProps;
-  const { _id, fullname, created, updated, image_url, bio } = contributor;
+  const { _id, image_url, firstname, lastname, bio } = contributor;
   const cardHoverStlye = cssHover(
     {
       transform: "scale(1.05)",
@@ -93,7 +93,7 @@ const ContributorListCard = (cardProps: ContributorCardProps) => {
             </div>
             <div className="noselect p-4 pb-2">
               <CardTitle tag="h5" style={{ color: "black" }}>
-                {fullname}
+                {`${firstname} ${lastname}`}
               </CardTitle>
               <CardSubtitle
                 className="noselect mb-2 text-muted"

@@ -23,103 +23,71 @@ const contributorsDataset: Person[] = [
     _id: 21,
     firstname: "Robert",
     lastname: "Danny Jr.",
-    fullname: "Robert Danny Jr.",
     bio:
       "Robert Danny Jr. is a content creator currently building an app called Blogica for his Masters degree",
     image_url:
       "https://wellgroomedgentleman.com/media/images/Tony_Stark_Beard_with_Quiff_Hairstyle.width-800.jpg",
-
-    username: "tom1040",
-    created: "2022-09-16T12:59-0500",
   },
   {
     _id: 22,
     firstname: "Mike",
     lastname: "Ross",
-    fullname: "Mike Ross",
     bio:
       "Mike Ross is a content creator currently building an app called Blogica for his Masters degree",
     image_url:
       "https://www.tvinsider.com/wp-content/uploads/2019/07/Suits-Mike-1014x570.jpg",
-
-    username: "mike1040",
-    created: "2022-09-16T12:59-0500",
   },
   {
     _id: 23,
     firstname: "Harvey",
     lastname: "Spectre",
-    fullname: "Harvey Spectre",
     bio:
       "Harvey Spectre is a content creator currently building an app called Blogica for his Masters degree",
     image_url:
       "https://i.pinimg.com/474x/3f/d1/b8/3fd1b807b8425cb3f328fa06e5dcd63b--gabriel-macht-harvey-specter.jpg",
-
-    username: "harvey1040",
-    created: "2022-09-16T12:59-0500",
   },
   {
     _id: 24,
     firstname: "Gavin",
     lastname: "D'mello",
-    fullname: "Gavin D'mello",
     bio:
       "Gavin D'mello is a content creator currently building an app called Blogica for his Masters degree",
     image_url: "https://avatars.githubusercontent.com/u/54526769?v=4",
-
-    username: "gavin1040",
-    created: "2022-09-16T12:59-0500",
   },
   {
     _id: 25,
     firstname: "Robert",
     lastname: "Danny Jr.",
-    fullname: "Robert Danny Jr.",
     bio:
       "Robert Danny Jr. is a content creator currently building an app called Blogica for his Masters degree",
     image_url:
       "https://wellgroomedgentleman.com/media/images/Tony_Stark_Beard_with_Quiff_Hairstyle.width-800.jpg",
-
-    username: "tom1040",
-    created: "2022-09-16T12:59-0500",
   },
   {
     _id: 26,
     firstname: "Mike",
     lastname: "Ross",
-    fullname: "Mike Ross",
     bio:
       "Mike Ross is a content creator currently building an app called Blogica for his Masters degree",
     image_url:
       "https://www.tvinsider.com/wp-content/uploads/2019/07/Suits-Mike-1014x570.jpg",
-
-    username: "mike1040",
-    created: "2022-09-16T12:59-0500",
   },
   {
     _id: 27,
     firstname: "Harvey",
     lastname: "Spectre",
-    fullname: "Harvey Spectre",
     bio:
       "Harvey Spectre is a content creator currently building an app called Blogica for his Masters degree",
     image_url:
       "https://i.pinimg.com/474x/3f/d1/b8/3fd1b807b8425cb3f328fa06e5dcd63b--gabriel-macht-harvey-specter.jpg",
-
-    username: "harvey1040",
-    created: "2022-09-16T12:59-0500",
   },
   {
     _id: 28,
     firstname: "Gavin",
     lastname: "D'mello",
-    fullname: "Gavin D'mello",
     bio:
       "Gavin D'mello is a content creator currently building an app called Blogica for his Masters degree",
     image_url: "https://avatars.githubusercontent.com/u/54526769?v=4",
-
-    username: "gavin1040",
-    created: "2022-09-16T12:59-0500",
   },
 ];
 
