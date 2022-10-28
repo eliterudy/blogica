@@ -42,6 +42,7 @@ userRouter.get(
   cors.cors,
   authenticate.verifyUser,
   (req, res, next) => {
+    console.log(req.query.isProfile);
     User.findById(req.user._id)
       .populate(
         req.query.isProfile &&
@@ -105,7 +106,7 @@ userRouter.get(
             username,
           };
 
-          if (req.query.hasToken && req.query.isProfile == "true") {
+          if (req.query.isProfile && req.query.isProfile == "true") {
             userDetails = {
               ...userDetails,
               saved: DataTrimmer.trimArticleList(saved.articles, true),

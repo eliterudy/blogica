@@ -164,7 +164,7 @@ articleRouter
   })
   .get(cors.cors, (req, res, next) => {
     Article.findById(req.params.articleId)
-      // .populate(["author"])
+      .populate(["author"])
       .then(
         async (article) => {
           if (article) {
@@ -206,7 +206,10 @@ articleRouter
             res.setHeader("Content-Type", "application/json");
             delete article._doc.createdAt;
             delete article._doc.updatedAt;
-            return res.json(article);
+            return res.json({
+              ...article._doc,
+              author: DataTrimmer.trimAuthor(article._doc.author),
+            });
           } else {
             res.statusCode = 400;
             res.setHeader("Content-Type", "application/json");
