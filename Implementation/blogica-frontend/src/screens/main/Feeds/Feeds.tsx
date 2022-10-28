@@ -33,26 +33,37 @@ import classnames from "classnames";
 import { Dispatch } from "@reduxjs/toolkit";
 import { useMediaQuery } from "react-responsive";
 import InfiniteScroll from "react-infinite-scroll-component";
+import moment from "moment";
 
 /* component/screen inports */
 
 /* helper imports */
 import { cssHover } from "../../../components/generic/hoverProps";
-import { Article, User } from "../../../config/types";
+import {
+  Article,
+  PublishedDetails,
+  User,
+  UserDetails,
+  UserDetailSegment,
+} from "../../../config/types";
 import { icons, constants } from "../../../config/configuration";
 import Generic from "../../../components/generic/GenericComponents";
 import { toggler } from "../../../utils/generic";
 import actions from "../../../redux/actionReducers/index";
 import ArticleListCard from "../../../components/ArticleListCard";
-import moment from "moment";
 import ArticleListingByCategory from "./ArticleListingByCategory";
 import NewArticleCard from "./NewArticleCard";
+import apis from "../../../config/api";
 
-const tabs = ["My Articles", "Recently Viewed Articles"];
-const dict: { [key: string]: string[] } = {
-  "My Articles": [constants.MY_ARTICLES, "published"],
-  "Recently Viewed Articles": [constants.RECENTLY_VIEWED_ARTICLES, "recents"],
-};
+const tabs = [
+  { key: "published", title: "My Articles", message: constants.MY_ARTICLES },
+  {
+    key: "recents",
+    title: "Recently Viewed Articles",
+    message: constants.RECENTLY_VIEWED_ARTICLES,
+  },
+  { key: "saved", title: "Saved Articles", message: constants.MY_ARTICLES },
+];
 
 const Feeds = (props: any) => {
   const navigate = useNavigate();
@@ -62,13 +73,31 @@ const Feeds = (props: any) => {
       userState: state.userActionReducer,
     };
   });
-  const { user } = state.userState;
 
   const [activeTab, updateActiveTab] = useState(0);
-
+  const [user, updateUser] = useState<UserDetails | null>(null);
+  const [isLoading, updateLoading] = useState(false);
+  const [error, updateError] = useState("");
+  useEffect(() => {
+    updateLoading(true);
+    apis
+      .getUserDetails({ isProfile: true })
+      .then(({ data }) => {
+        console.log("data", data);
+        updateUser(data);
+        updateLoading(false);
+      })
+      .catch((err) => {
+        updateError(err.message.toString());
+        console.log(err);
+        if (err.response.status == "401") navigate("/main/home");
+        updateLoading(false);
+      });
+  }, []);
   return (
     <div>
-      {user ? (
+      {isLoading && <div className="vh-100 vw-100"></div>}
+      {!isLoading && user ? (
         <div className="col-12 d-flex flex-column  flex-grow-1">
           <div className="">
             <div className="col-12">
@@ -80,7 +109,7 @@ const Feeds = (props: any) => {
                       <div className="d-flex flex-column align-items-center pt-5 ">
                         <Generic.Avatar
                           image_url={user.image_url}
-                          fullname="Gavin D'mello"
+                          fullname={user.firstname + user.lastname}
                           size={150}
                         />
                         <h4
@@ -111,7 +140,7 @@ const Feeds = (props: any) => {
                         ></i>
 
                         <span>
-                          Joined in {moment(user.created).format("MMM, YYYY")}
+                          Joined in {moment(user.createdAt).format("MMM, YYYY")}
                         </span>
                       </Col>
                     </div>
@@ -146,9 +175,6 @@ const Feeds = (props: any) => {
                       >
                         {tabs &&
                           tabs.map((tab, index) => {
-                            if (tab === "My Recipes" && !user.isVerified) {
-                              return null;
-                            }
                             return (
                               <NavItem>
                                 <NavLink
@@ -163,7 +189,7 @@ const Feeds = (props: any) => {
                                     whiteSpace: "nowrap",
                                   }}
                                 >
-                                  <span className="px-3">{tab}</span>
+                                  <span className="px-3">{tab.title}</span>
                                 </NavLink>
                               </NavItem>
                             );
@@ -177,8 +203,12 @@ const Feeds = (props: any) => {
                           <TabPane tabId={index} className="flex-grow-1">
                             <ArticleListingByCategory
                               index={index}
-                              category={tab}
-                              tabMessage={dict[tab][0].toString()}
+                              data={
+                                user[tab.key as keyof UserDetailSegment][
+                                  "articles"
+                                ]
+                              }
+                              tabMessage={tab.message}
                             />
                           </TabPane>
                         );

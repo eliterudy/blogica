@@ -18,6 +18,7 @@
     "bootstrap": "^5.2.1",
     "bootstrap-social": "^5.1.1",
     "classnames": "^2.3.1",
+    "dotenv": "^16.0.3",
     "font-awesome": "^4.7.0",
     "jdenticon": "^3.2.0",
     "moment": "^2.29.4",

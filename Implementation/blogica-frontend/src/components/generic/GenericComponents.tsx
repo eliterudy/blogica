@@ -43,7 +43,7 @@ const Generic = {
     if (image_url)
       return (
         <img
-          src={image_url}
+          src={process.env.REACT_APP_API_URL + image_url}
           alt={fullname}
           style={{
             objectFit: "cover",

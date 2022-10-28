@@ -36,6 +36,7 @@ export interface Person {
   lastname: string;
   image_url: string;
   bio: string;
+  createdAt: string; // remove ?  later
 }
 
 export interface User extends Person {
@@ -45,11 +46,13 @@ export interface User extends Person {
   favorites: Favorites;
 }
 
-export interface UserDetails extends Person {
-  badges: BadgeDetails[];
+export interface UserDetailSegment {
   published: PublishedDetails;
   saved: SavedDetails;
   recents: RecentsDetails;
+}
+export interface UserDetails extends Person, UserDetailSegment {
+  badges: BadgeDetails[];
 }
 
 export interface AuthorDetails extends Person {

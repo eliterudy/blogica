@@ -2,14 +2,14 @@ import { createSlice } from "@reduxjs/toolkit";
 import { User } from "../../config/types";
 
 export interface initialStateUser {
-  isLoadingUser: boolean;
-  errMessUser: null | string;
+  // isLoadingUser: boolean;
+  // errMessUser: null | string;
   user: User | null;
 }
 
 const initialState: initialStateUser = {
-  isLoadingUser: true,
-  errMessUser: null,
+  // isLoadingUser: true,
+  // errMessUser: null,
   user: null,
 };
 export const userSlice = createSlice({

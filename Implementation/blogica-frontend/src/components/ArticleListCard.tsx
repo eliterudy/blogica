@@ -5,6 +5,7 @@ import Generic from "./generic/GenericComponents";
 import { constants } from "../config/configuration";
 import moment from "moment";
 import { Link, useNavigate } from "react-router-dom";
+import ReactQuill from "react-quill";
 
 // https://picsum.photos/seed/picsum/200/300)
 
@@ -27,7 +28,7 @@ const ArticleListCard = (cardProps: ArticleCardProps) => {
       style={{ textDecoration: "none", color: "black" }}
     >
       <div className=" d-flex mb-2">
-        <div className=" col-10 pe-4">
+        <div className=" col-10 pe-4 ">
           {showAuthorDetails && (
             <div className="d-flex flex-row align-items-center">
               <div
@@ -71,7 +72,18 @@ const ArticleListCard = (cardProps: ArticleCardProps) => {
           >
             {article.title}
           </h6>
-          <span
+          <div
+            className="cardDescription"
+            // style={{ height: 60, overflow: "hidden" }}
+          >
+            <ReactQuill
+              className=" mb-2  col-12"
+              readOnly={true}
+              theme="bubble"
+              value={article.description}
+            />
+          </div>
+          {/* <span
             className=" mb-2  col-12"
             style={{
               fontSize: 16,
@@ -83,7 +95,7 @@ const ArticleListCard = (cardProps: ArticleCardProps) => {
             }}
           >
             {article.description}
-          </span>
+          </span> */}
           <div className="col-12 d-flex flex-row justify-content-between mt-1 ">
             <div>
               <span style={{ fontSize: 14, color: "#555" }}>

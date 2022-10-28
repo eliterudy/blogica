@@ -35,11 +35,13 @@ const NewArticleCard = (cardProps: any) => {
 
       <div className="col-12 d-flex flex-row">
         <div className="me-2">
-          <Generic.Avatar
-            image_url={user.image_url}
-            fullname={`${user.firstname} ${user.lastname}`}
-            size={40}
-          />
+          {user && (
+            <Generic.Avatar
+              image_url={user.image_url}
+              fullname={`${user.firstname} ${user.lastname}`}
+              size={40}
+            />
+          )}
         </div>
         <div style={{ flex: 1 }} className="px-2">
           <Input

@@ -1,5 +1,5 @@
 import axios from "axios";
-export const baseURL = "http://127.0.0.1:3000 ";
+export const baseURL = process.env.REACT_APP_API_URL;
 
 const headers = {
   Accept: "application/json",
@@ -14,14 +14,15 @@ const ApiCaller = axios.create({
 });
 ApiCaller.interceptors.request.use(async function(config: any) {
   let token = await localStorage.getItem("token");
-  // config.headers.Authorization = token ? `bearer ${token}` : '';
+  config.headers.Authorization = token ? `bearer ${token}` : "";
   return config;
 });
 
 const apiDefault = {};
 
 const userApiList = {
-  login: (payload: any) => {
+  signin: (payload: any) => {
+    console.log(payload);
     return ApiCaller({
       url: `/users/signin`,
       method: "post",
@@ -45,10 +46,12 @@ const userApiList = {
     });
   },
 
-  getUserDetails: () => {
+  getUserDetails: (params?: { isProfile: boolean }) => {
+    console.log(params);
     return ApiCaller({
       url: `/users/userDetails`,
       method: "get",
+      params,
     });
   },
   getRecipesByCategory: (params: any) => {
@@ -86,4 +89,5 @@ const userApiList = {
 export default {
   ApiCaller,
   ...apiDefault,
+  ...userApiList,
 };

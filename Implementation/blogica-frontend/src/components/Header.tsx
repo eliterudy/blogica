@@ -98,7 +98,7 @@ const Header = ({ modalCallback }: any) => {
 
           {user && isTabletOrMobile && (
             <div className=" col-2 d-flex  justify-content-end  align-items-center ">
-              <UserAvatar />
+              <UserAvatar user={user} />
             </div>
           )}
 
@@ -232,7 +232,7 @@ const Header = ({ modalCallback }: any) => {
 
             {user && !isTabletOrMobile && (
               <div className=" ms-sm-2 flex-grow-1 flex-shrink-1 d-sm-flex flex-column justify-content-center align-items-center">
-                <UserAvatar />
+                <UserAvatar user={user} />
               </div>
             )}
           </Nav>
@@ -245,7 +245,7 @@ const Header = ({ modalCallback }: any) => {
 const UserAvatar = (props: any) => {
   const dispatch: Dispatch<any> = useDispatch();
   const navigate = useNavigate();
-
+  const { user } = props;
   const [isDropdownOpen, updateDropdown] = useState(false);
   const [myProfileDropdown, updateMyProfileDropdown] = useState(false);
   return (
@@ -256,7 +256,11 @@ const UserAvatar = (props: any) => {
       }}
     >
       <DropdownToggle style={{ backgroundColor: "white", border: "0px" }}>
-        <Generic.Avatar image_url="" fullname="Gavin D'mello" size={40} />
+        <Generic.Avatar
+          image_url={user.image_url}
+          fullname={`${user.firstname} ${user.lastname}`}
+          size={40}
+        />
       </DropdownToggle>
 
       <DropdownMenu style={{ marginTop: 14, marginRight: -15 }}>
@@ -314,7 +318,6 @@ const UserAvatar = (props: any) => {
         <DropdownItem
           onClick={() => {
             localStorage.setItem("token", "");
-
             dispatch(removeUser());
           }}
         >

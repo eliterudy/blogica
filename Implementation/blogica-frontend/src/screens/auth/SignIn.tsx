@@ -19,6 +19,7 @@ import actions from "../../redux/actionReducers/index";
 import apis from "../../config/api";
 import FormValidators from "../../utils/FormValidators";
 import { constants, icons } from "../../config/configuration";
+import { loadUser } from "../../redux/actionReducers/userReducer";
 
 // const {loadUser, removeUser} = actions;
 
@@ -95,6 +96,28 @@ const SignInComponent = () => {
       });
     } else {
       // api here
+      apis
+        .signin({
+          username: formValues.username,
+          password: formValues.password,
+        })
+        .then(({ data }) => {
+          if (data.success) {
+            localStorage.setItem("token", data.token);
+            dispatch(loadUser(data.user));
+            navigate("/");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          if (err && err.message && err.message === "Network Error") {
+            alert(
+              "This action cannot be performed at the moment because of no internet connection. Please connect to an internet connection and try again"
+            );
+          } else {
+            updateErrorVisible(true);
+          }
+        });
     }
   };
 
