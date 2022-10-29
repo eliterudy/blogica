@@ -62,7 +62,7 @@ const tabs = [
     title: "Recently Viewed Articles",
     message: constants.RECENTLY_VIEWED_ARTICLES,
   },
-  { key: "saved", title: "Saved Articles", message: constants.MY_ARTICLES },
+  { key: "saved", title: "Saved Articles", message: constants.SAVED_ARTICLES },
 ];
 
 const Feeds = (props: any) => {
@@ -83,13 +83,12 @@ const Feeds = (props: any) => {
     apis
       .getUserDetails({ isProfile: true })
       .then(({ data }) => {
-        console.log("data", data);
+        // console.log("data", data);
         updateUser(data);
         updateLoading(false);
       })
       .catch((err) => {
         updateError(err.message.toString());
-        console.log(err);
         if (err.response.status == "401") navigate("/main/home");
         updateLoading(false);
       });

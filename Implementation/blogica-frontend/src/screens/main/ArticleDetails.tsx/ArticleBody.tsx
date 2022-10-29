@@ -16,13 +16,18 @@ import actions from "../../../redux/actionReducers/index";
 import moment from "moment";
 
 const ArticleBody = ({ article }: any) => {
+  console.log(
+    "ARTICLE BODY",
+    process.env.REACT_APP_API_URL + article.image_url
+  );
   return (
     <div className="col-12 ">
       <span className="col-12 h1 fw-bold">{article.title}</span>
       <div
         className="img-fluid my-4"
         style={{
-          backgroundImage: `url(${article.image_url})`,
+          backgroundImage: `url(${process.env.REACT_APP_API_URL +
+            article.image_url})`,
           aspectRatio: "4/3",
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",

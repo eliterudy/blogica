@@ -51,14 +51,13 @@ const userApiList = {
   },
 
   getUserDetails: (params?: { isProfile: boolean }) => {
-    console.log(params);
     return ApiCaller({
       url: `/users/userDetails`,
       method: "get",
       params,
     });
   },
-  getRecipesByCategory: (params: any) => {
+  getArticlesByCategory: (params: any) => {
     return ApiCaller({
       url: `/users/category`,
       method: "get",
@@ -80,18 +79,51 @@ const userApiList = {
       data: payload,
     });
   },
+};
 
-  postVerifyUser: (payload: any) => {
+const articleApiList = {
+  getAllArticles: (params: any) => {
     return ApiCaller({
-      url: `/users/verifyUser`,
+      url: `/articles`,
+      method: "get",
+      params,
+    });
+  },
+
+  getArticle: (articleId: string) => {
+    return ApiCaller({
+      url: `/articles/id/${articleId}`,
+      method: "get",
+    });
+  },
+
+  postArticle: (payload: any) => {
+    return ApiCaller({
+      url: `/articles`,
       method: "post",
-      // data: payload,
+      data: payload,
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+  },
+
+  putArticle: (payload: any) => {
+    return ApiCaller({
+      url: `/articles`,
+      method: "put",
+      data: payload,
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
     });
   },
 };
+
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   ApiCaller,
   ...apiDefault,
   ...userApiList,
+  ...articleApiList,
 };

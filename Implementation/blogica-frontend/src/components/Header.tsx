@@ -63,7 +63,7 @@ const Header = ({ modalCallback }: any) => {
           className=" col-12  d-flex flex-row  d-md-none"
           style={{ margin: 0 }}
         >
-          {/* Toggle button to show/hide recipes list/elements */}
+          {/* Toggle button to show/hide articles list/elements */}
           {isTabletOrMobile && (
             <div className="col-2 d-flex justify-content-center align-items-center">
               <NavbarToggler

@@ -277,7 +277,7 @@ const AuthorProfile = (props: any) => {
   const [loading, updateArticleLoading] = useState(false);
   const [error, updateArticleError] = useState(null);
 
-  const tabs = ["My Recipes", "Recently Viewed", "Saved Recipes"];
+  const tabs = ["My Articles", "Recently Viewed", "Saved Articles"];
 
   useEffect(() => {
     // if (user) navigate("/main/feeds");

@@ -33,6 +33,7 @@ const constants: any = {
     "This tab displays the amazing articles you have written so far.",
   RECENTLY_VIEWED_ARTICLES:
     "This tab displays the most recently viewed articles by you.",
+  SAVED_ARTICLES: "This tab displays the articles that you saved.",
 };
 
 const svgs: any = {};

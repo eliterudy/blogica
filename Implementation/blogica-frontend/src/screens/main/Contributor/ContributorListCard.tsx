@@ -50,15 +50,15 @@ const ContributorListCard = (cardProps: ContributorCardProps) => {
           // apis
           //   .postToCategory({
           //     property: "recents",
-          //     category: "recipes",
+          //     category: "articles",
           //     id: data._id,
           //   })
           //   .then(({ data }) => {
-          //     dispatch(addRecipeToRecents(data._id));
+          //     dispatch(addArticleToRecents(data._id));
           //   })
           //   .catch((err) => {
           //     alert(
-          //       "Oops! Something went wrong. Could not add this recipe to recents"
+          //       "Oops! Something went wrong. Could not add this article to recents"
           //     );
           //   });
         }}

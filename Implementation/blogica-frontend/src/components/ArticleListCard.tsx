@@ -24,7 +24,7 @@ const ArticleListCard = (cardProps: ArticleCardProps) => {
   return (
     <Link
       to={`/main/article/id/${article._id}`}
-      state={{ recipeId: article._id }}
+      state={{ articleId: article._id }}
       style={{ textDecoration: "none", color: "black" }}
     >
       <div className=" d-flex mb-2">
@@ -81,7 +81,7 @@ const ArticleListCard = (cardProps: ArticleCardProps) => {
             <ReactQuill
               className=" mb-2  col-12"
               readOnly={true}
-              style={{ marginLeft: -12 }}
+              style={{}}
               theme="bubble"
               value={article.description}
             />
@@ -126,7 +126,8 @@ const ArticleListCard = (cardProps: ArticleCardProps) => {
             onClick={() => {}}
             className="img-fluid"
             style={{
-              backgroundImage: `url(${article.image_url})`,
+              backgroundImage: `url(${process.env.REACT_APP_API_URL +
+                article.image_url})`,
               aspectRatio: "1/1",
               backgroundRepeat: "no-repeat",
               backgroundSize: "cover",

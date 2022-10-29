@@ -98,6 +98,16 @@
 }
 
 
+.shareLinks .fa {
+  color: grey
+}
+
+.shareLinks .fa:hover {
+  color: black
+}
+
+
+
 
 @-webkit-keyframes k1 {
   0% {

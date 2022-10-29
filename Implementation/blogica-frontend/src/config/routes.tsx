@@ -146,7 +146,7 @@ const MainRouter = () => {
   return (
     <div className="">
       <Routes>
-        <Route path="/" element={<Navigate to="/main" replace />} />
+        {/* <Route path="/" element={<Navigate to="/main" replace />} /> */}
         <Route path={"main/*"} element={<MainRoutes />} />
         <Route path={"auth/*"} element={<AuthRoutes />} />
         <Route path={"not-found"} element={<NotFound />} />
