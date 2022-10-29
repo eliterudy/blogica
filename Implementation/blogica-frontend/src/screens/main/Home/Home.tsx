@@ -92,7 +92,11 @@ const articleDataset: Article[] = [
       The White House has often walked back such Biden comments, saying American policy has not changed.
       
       Nahal Toosi contributed to this report.`,
+    createdAt: "",
     author: {
+      username: "gavin10",
+
+      createdAt: "",
       _id: 21,
       firstname: "Gavin",
       lastname: "D'mello",
@@ -114,7 +118,11 @@ const articleDataset: Article[] = [
       You will be banned if you are homophobic, transphobic, racist, sexist or bigoted in any way.
       
       I am a bot, and this action was performed automatically. Please contact the moderators of this subreddit if you have any questions or concerns.`,
+    createdAt: "",
     author: {
+      username: "gavin10",
+
+      createdAt: "",
       _id: 21,
       firstname: "Gavin",
       lastname: "D'mello",
@@ -130,7 +138,11 @@ const articleDataset: Article[] = [
     description: `Sleep literally "cleans" your brain (at least, that is the commonly accepted understanding). https://www.health.harvard.edu/mind-and-mood/are-toxins-flushed-out-of-the-brain-during-sleep
 
     It's not too many days without sleep, and a person can start to have mental illness concerns. https://www.bbc.com/future/article/20150220-how-long-can-we-stay-awake`,
+    createdAt: "",
     author: {
+      username: "gavin10",
+
+      createdAt: "",
       _id: 21,
       firstname: "Gavin",
       lastname: "D'mello",
@@ -146,7 +158,11 @@ const articleDataset: Article[] = [
     image_url: "https://picsum.photos/400/400/?random=3",
     description:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. ",
+    createdAt: "",
     author: {
+      username: "gavin10",
+
+      createdAt: "",
       _id: 21,
       firstname: "Gavin",
       lastname: "D'mello",
@@ -162,7 +178,11 @@ const articleDataset: Article[] = [
     image_url: "https://picsum.photos/400/400/?random=4",
     description:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. ",
+    createdAt: "",
     author: {
+      username: "gavin10",
+
+      createdAt: "",
       _id: 21,
       firstname: "Gavin",
       lastname: "D'mello",
@@ -177,7 +197,11 @@ const articleDataset: Article[] = [
     image_url: "https://picsum.photos/400/400/?random=5",
     description:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. ",
+    createdAt: "",
     author: {
+      username: "gavin10",
+
+      createdAt: "",
       _id: 21,
       firstname: "Gavin",
       lastname: "D'mello",
@@ -193,7 +217,11 @@ const articleDataset: Article[] = [
     image_url: "https://picsum.photos/400/400/?random=6",
     description:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. ",
+    createdAt: "",
     author: {
+      username: "gavin10",
+
+      createdAt: "",
       _id: 21,
       firstname: "Gavin",
       lastname: "D'mello",
@@ -208,7 +236,11 @@ const articleDataset: Article[] = [
     image_url: "https://picsum.photos/400/400/?random=7",
     description:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. ",
+    createdAt: "",
     author: {
+      username: "gavin10",
+
+      createdAt: "",
       _id: 21,
       firstname: "Gavin",
       lastname: "D'mello",
@@ -223,7 +255,11 @@ const articleDataset: Article[] = [
     image_url: "https://picsum.photos/400/400/?random=8",
     description:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. ",
+    createdAt: "",
     author: {
+      username: "gavin10",
+
+      createdAt: "",
       _id: 21,
       firstname: "Gavin",
       lastname: "D'mello",
@@ -238,7 +274,11 @@ const articleDataset: Article[] = [
     image_url: "https://picsum.photos/400/400/?random=9",
     description:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. ",
+    createdAt: "",
     author: {
+      username: "gavin10",
+
+      createdAt: "",
       _id: 21,
       firstname: "Gavin",
       lastname: "D'mello",
@@ -253,7 +293,11 @@ const articleDataset: Article[] = [
     image_url: "https://picsum.photos/400/400/?random=9",
     description:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. ",
+    createdAt: "",
     author: {
+      username: "gavin10",
+
+      createdAt: "",
       _id: 21,
       firstname: "Gavin",
       lastname: "D'mello",

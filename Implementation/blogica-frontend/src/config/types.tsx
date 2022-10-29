@@ -36,11 +36,11 @@ export interface Person {
   lastname: string;
   image_url: string;
   bio: string;
+  username: string;
   createdAt: string; // remove ?  later
 }
 
 export interface User extends Person {
-  username: string;
   saved: Saved;
   published: Published;
   favorites: Favorites;
@@ -52,26 +52,20 @@ export interface UserDetailSegment {
   recents: RecentsDetails;
 }
 export interface UserDetails extends Person, UserDetailSegment {
-  badges: BadgeDetails[];
+  badges: Badge[];
+  points_earned: number;
+  points_spent: number;
 }
 
 export interface AuthorDetails extends Person {
-  badges: BadgeDetails[];
+  badges: Badge[];
   published: Published;
 }
 
-export interface BadgeDetails {
-  _id: number;
-  badge: Badge;
-  count: number;
-}
-
 export interface Badge {
-  _id: number;
   title: string;
   image_url: string;
-  badge_value: number;
-  type: string;
+  description: string;
   count: number;
 }
 

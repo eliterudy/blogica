@@ -39,7 +39,9 @@ const ArticleListCard = (cardProps: ArticleCardProps) => {
                 }}
               >
                 <Generic.Avatar
-                  image_url={article.author.image_url}
+                  image_url={
+                    process.env.REACT_APP_API_URL + article.author.image_url
+                  }
                   fullname={`${article.author.firstname} ${article.author.lastname}`}
                   size={25}
                 />
@@ -79,6 +81,7 @@ const ArticleListCard = (cardProps: ArticleCardProps) => {
             <ReactQuill
               className=" mb-2  col-12"
               readOnly={true}
+              style={{ marginLeft: -12 }}
               theme="bubble"
               value={article.description}
             />

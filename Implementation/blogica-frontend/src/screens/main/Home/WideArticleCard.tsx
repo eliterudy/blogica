@@ -28,7 +28,9 @@ const WideArticleCard = (cardProps: ArticleCardProps) => {
               }}
             >
               <Generic.Avatar
-                image_url={article.author.image_url}
+                image_url={
+                  process.env.REACT_APP_API_URL + article.author.image_url
+                }
                 fullname="Gavin D'mello"
                 size={25}
               />

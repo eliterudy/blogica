@@ -6,6 +6,7 @@ const icons: any = {
   search_white: require("../assets/icons/search_white.png"),
   app_logo: require("../assets/icons/app_logo.png"),
   app_icon: require("../assets/icons/app_icon.png"),
+  account_points: require("../assets/icons/account_points.png"),
 };
 
 const images: any = {

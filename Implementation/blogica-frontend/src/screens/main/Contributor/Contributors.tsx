@@ -21,8 +21,10 @@ import ContributorListCard from "./ContributorListCard";
 const contributorsDataset: Person[] = [
   {
     _id: 21,
+    username: "gavin10",
     firstname: "Robert",
     lastname: "Danny Jr.",
+    createdAt: "",
     bio:
       "Robert Danny Jr. is a content creator currently building an app called Blogica for his Masters degree",
     image_url:
@@ -30,8 +32,10 @@ const contributorsDataset: Person[] = [
   },
   {
     _id: 22,
+    username: "gavin10",
     firstname: "Mike",
     lastname: "Ross",
+    createdAt: "",
     bio:
       "Mike Ross is a content creator currently building an app called Blogica for his Masters degree",
     image_url:
@@ -39,8 +43,10 @@ const contributorsDataset: Person[] = [
   },
   {
     _id: 23,
+    username: "gavin10",
     firstname: "Harvey",
     lastname: "Spectre",
+    createdAt: "",
     bio:
       "Harvey Spectre is a content creator currently building an app called Blogica for his Masters degree",
     image_url:
@@ -48,16 +54,20 @@ const contributorsDataset: Person[] = [
   },
   {
     _id: 24,
+    username: "gavin10",
     firstname: "Gavin",
     lastname: "D'mello",
+    createdAt: "",
     bio:
       "Gavin D'mello is a content creator currently building an app called Blogica for his Masters degree",
     image_url: "https://avatars.githubusercontent.com/u/54526769?v=4",
   },
   {
     _id: 25,
+    username: "gavin10",
     firstname: "Robert",
     lastname: "Danny Jr.",
+    createdAt: "",
     bio:
       "Robert Danny Jr. is a content creator currently building an app called Blogica for his Masters degree",
     image_url:
@@ -65,8 +75,10 @@ const contributorsDataset: Person[] = [
   },
   {
     _id: 26,
+    username: "gavin10",
     firstname: "Mike",
     lastname: "Ross",
+    createdAt: "",
     bio:
       "Mike Ross is a content creator currently building an app called Blogica for his Masters degree",
     image_url:
@@ -74,8 +86,10 @@ const contributorsDataset: Person[] = [
   },
   {
     _id: 27,
+    username: "gavin10",
     firstname: "Harvey",
     lastname: "Spectre",
+    createdAt: "",
     bio:
       "Harvey Spectre is a content creator currently building an app called Blogica for his Masters degree",
     image_url:
@@ -83,8 +97,10 @@ const contributorsDataset: Person[] = [
   },
   {
     _id: 28,
+    username: "gavin10",
     firstname: "Gavin",
     lastname: "D'mello",
+    createdAt: "",
     bio:
       "Gavin D'mello is a content creator currently building an app called Blogica for his Masters degree",
     image_url: "https://avatars.githubusercontent.com/u/54526769?v=4",

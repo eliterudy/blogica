@@ -48,7 +48,7 @@ import {
 } from "../../../config/types";
 import { icons, constants } from "../../../config/configuration";
 import Generic from "../../../components/generic/GenericComponents";
-import { toggler } from "../../../utils/generic";
+import { numberToCurrencyRounder, toggler } from "../../../utils/generic";
 import actions from "../../../redux/actionReducers/index";
 import ArticleListCard from "../../../components/ArticleListCard";
 import ArticleListingByCategory from "./ArticleListingByCategory";
@@ -104,45 +104,108 @@ const Feeds = (props: any) => {
               <div>
                 <div className="noselect row col-12 m-0">
                   {/* Left section */}
-                  <div className="noselect  col-12 col-md-4 col-xl-3 border-end  px-4 bg-white  ">
-                    <div className="sticky-top" style={{ marginBottom: 50 }}>
-                      <div className="d-flex flex-column align-items-center pt-5 ">
+                  <div className="noselect  col-12 col-md-4 col-xl-3 border-end  px-4 ps-md-4 pe-md-3 bg-white  ">
+                    <div
+                      className="sticky-top pt-2"
+                      style={{ marginBottom: 20 }}
+                    >
+                      <div className=" d-flex justify-content-end mt-2 mb-3">
+                        <div
+                          style={{
+                            padding: 5,
+                            paddingLeft: 10,
+                            paddingRight: 10,
+                            backgroundColor: "#abd6a5",
+                            borderRadius: 8,
+                          }}
+                        >
+                          <img
+                            src={icons.account_points}
+                            style={{ width: 30 }}
+                            alt={"account_points"}
+                          />{" "}
+                          <span style={{ fontSize: 14 }}>
+                            {numberToCurrencyRounder(
+                              user.points_earned - user.points_spent
+                            )}{" "}
+                            points
+                          </span>
+                        </div>
+                      </div>
+                      <div className="d-flex flex-column align-items-center  ">
                         <Generic.Avatar
-                          image_url={user.image_url}
+                          image_url={
+                            process.env.REACT_APP_API_URL + user.image_url
+                          }
                           fullname={user.firstname + user.lastname}
-                          size={150}
+                          size={200}
                         />
                         <h4
                           style={{
-                            padding: 10,
+                            paddingTop: 10,
                             overflowWrap: "break-word",
+                            margin: 0,
                           }}
                         >{`${user.firstname} ${user.lastname}`}</h4>
+                        <span
+                          style={{
+                            paddingBottom: 10,
+                            overflowWrap: "break-word",
+                            color: "#777",
+                          }}
+                        >{` @${user.username}`}</span>
                       </div>
 
-                      <Col className="mt-2 ">
+                      <Col className="my-3 ">
                         <em>{user.bio} </em>
                       </Col>
-                      <Col className="mt-4">
-                        <i
-                          className="fa fa-file-text-o fa-lg me-2 "
-                          aria-hidden="true"
-                        ></i>
+                      <Col className="border-top py-3">
+                        <Col className="mt-1">
+                          <i
+                            className="fa fa-file-text-o fa-lg me-2 "
+                            aria-hidden="true"
+                          ></i>
 
-                        <span>
-                          {user.published.articles.length} Published Articles
-                        </span>
-                      </Col>
-                      <Col className="mt-2">
-                        <i
-                          className="fa fa-desktop fa-lg me-2 "
-                          aria-hidden="true"
-                        ></i>
+                          <span>
+                            {user.published.articles.length} Published Articles
+                          </span>
+                        </Col>
+                        <Col className="mt-1">
+                          <i
+                            className="fa fa-desktop fa-lg me-2 "
+                            aria-hidden="true"
+                          ></i>
 
-                        <span>
-                          Joined in {moment(user.createdAt).format("MMM, YYYY")}
-                        </span>
+                          <span>
+                            Joined in{" "}
+                            {moment(user.createdAt).format("MMM, YYYY")}
+                          </span>
+                        </Col>
                       </Col>
+                      {user && user.badges && user.badges.length > 0 && (
+                        <Row className=" border-top py-3">
+                          <h5
+                            style={{
+                              overflowWrap: "break-word",
+                              margin: 0,
+                            }}
+                          >
+                            Achievements
+                          </h5>
+                          <Col className="mt-1 d-flex flex-wrap">
+                            {user.badges.map((badge, index) => {
+                              return (
+                                <Generic.Badge
+                                  {...badge}
+                                  size={50}
+                                  key={index}
+                                  index={index}
+                                />
+                              );
+                            })}
+                          </Col>
+                        </Row>
+                      )}
                     </div>
                   </div>
 
@@ -176,7 +239,7 @@ const Feeds = (props: any) => {
                         {tabs &&
                           tabs.map((tab, index) => {
                             return (
-                              <NavItem>
+                              <NavItem key={index}>
                                 <NavLink
                                   className={classnames({
                                     active: activeTab === index,
@@ -200,7 +263,11 @@ const Feeds = (props: any) => {
                     <TabContent activeTab={activeTab} className="m-2 ">
                       {tabs.map((tab, index) => {
                         return (
-                          <TabPane tabId={index} className="flex-grow-1">
+                          <TabPane
+                            key={index}
+                            tabId={index}
+                            className="flex-grow-1"
+                          >
                             <ArticleListingByCategory
                               index={index}
                               data={

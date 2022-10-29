@@ -260,6 +260,9 @@ const AuthorProfile = (props: any) => {
     _id: 21,
     firstname: "Gavin",
     lastname: "D'mello",
+    createdAt: "",
+    username: "gavin10",
+
     bio:
       "Gavin D'mello is a content creator currently building an app called Blogica for his Masters degree",
     image_url:
@@ -325,7 +328,9 @@ const AuthorProfile = (props: any) => {
                   <div style={{ marginBottom: isTabletOrMobile ? 30 : 600 }}>
                     <div className="d-flex flex-column align-items-center pt-5">
                       <Generic.Avatar
-                        image_url={author.image_url}
+                        image_url={
+                          process.env.REACT_APP_API_URL + author.image_url
+                        }
                         fullname={`${author.firstname} ${author.lastname}`}
                         size={150}
                       />

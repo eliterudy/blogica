@@ -257,7 +257,7 @@ const UserAvatar = (props: any) => {
     >
       <DropdownToggle style={{ backgroundColor: "white", border: "0px" }}>
         <Generic.Avatar
-          image_url={user.image_url}
+          image_url={process.env.REACT_APP_API_URL + user.image_url}
           fullname={`${user.firstname} ${user.lastname}`}
           size={40}
         />

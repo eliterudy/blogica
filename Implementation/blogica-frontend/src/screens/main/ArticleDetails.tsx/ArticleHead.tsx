@@ -27,7 +27,7 @@ const ArticleHead = ({ article }: any) => {
           }}
         >
           <Generic.Avatar
-            image_url={article.author.image_url}
+            image_url={process.env.REACT_APP_API_URL + article.author.image_url}
             fullname={`${article.author.firstname} ${article.author.lastname}`}
             size={60}
           />

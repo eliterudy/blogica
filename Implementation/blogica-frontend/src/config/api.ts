@@ -31,10 +31,14 @@ const userApiList = {
   },
 
   signup: (payload: any) => {
+    console.log("payload", payload);
     return ApiCaller({
       url: `/users/signup`,
       method: "post",
       data: payload,
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
     });
   },
 

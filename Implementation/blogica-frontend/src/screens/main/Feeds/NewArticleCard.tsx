@@ -37,7 +37,7 @@ const NewArticleCard = (cardProps: any) => {
         <div className="me-2">
           {user && (
             <Generic.Avatar
-              image_url={user.image_url}
+              image_url={process.env.REACT_APP_API_URL + user.image_url}
               fullname={`${user.firstname} ${user.lastname}`}
               size={40}
             />
