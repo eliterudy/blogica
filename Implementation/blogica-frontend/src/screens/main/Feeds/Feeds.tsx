@@ -68,6 +68,7 @@ const tabs = [
 
 const Feeds = (props: any) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const isTabletOrMobile = useMediaQuery({ query: "(max-width: 767px)" });
   const state = useSelector((state: any) => {
     return {
@@ -80,6 +81,10 @@ const Feeds = (props: any) => {
   const [isLoading, updateLoading] = useState(false);
   const [error, updateError] = useState("");
   useEffect(() => {
+    if (location && location.state) {
+      const { tab } = location.state as any;
+      updateActiveTab(tab);
+    }
     updateLoading(true);
     apis
       .getUserDetails({ isProfile: true })
@@ -224,7 +229,6 @@ const Feeds = (props: any) => {
                                     active: activeTab === index,
                                   })}
                                   onClick={() => {
-                                    console.log("ClICKERD", index);
                                     updateActiveTab(index);
                                   }}
                                   style={{
@@ -255,6 +259,9 @@ const Feeds = (props: any) => {
                                 ]
                               }
                               tabMessage={tab.message}
+                              showAuthorDetails={
+                                tab.key === "published" ? false : true
+                              }
                             />
                           </TabPane>
                         );

@@ -142,3 +142,19 @@
     opacity: 0.8;
   }
 }
+
+
+@media (max-width: 480px){
+  
+  .cardDescription .ql-container .ql-editor {
+    padding: 0%;
+    font-size: 16px;
+    text-align: justify;
+    text-justify: inter-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+  }
+}

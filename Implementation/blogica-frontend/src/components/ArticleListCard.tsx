@@ -27,8 +27,8 @@ const ArticleListCard = (cardProps: ArticleCardProps) => {
       state={{ articleId: article._id }}
       style={{ textDecoration: "none", color: "black" }}
     >
-      <div className=" d-flex mb-2">
-        <div className=" col-10 pe-4 ">
+      <div className=" d-flex">
+        <div className=" col-8 col-sm-10 col-xl-11 pe-4 ">
           {showAuthorDetails && (
             <div className="d-flex flex-row align-items-center">
               <div
@@ -86,19 +86,7 @@ const ArticleListCard = (cardProps: ArticleCardProps) => {
               value={article.description}
             />
           </div>
-          {/* <span
-            className=" mb-2  col-12"
-            style={{
-              fontSize: 16,
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-              display: "-webkit-box",
-              WebkitLineClamp: "2",
-              WebkitBoxOrient: "vertical",
-            }}
-          >
-            {article.description}
-          </span> */}
+
           <div className="col-12 d-flex flex-row justify-content-between mt-1 ">
             <div>
               <span style={{ fontSize: 14, color: "#555" }}>
@@ -121,10 +109,12 @@ const ArticleListCard = (cardProps: ArticleCardProps) => {
             </div>
           </div>
         </div>
-        <div className="col-2 d-flex flex-column justify-content-center">
+        <div
+          className={`col-4 col-sm-2 col-xl-1  d-flex flex-column justify-content-center py-2`}
+        >
           <div
             onClick={() => {}}
-            className="img-fluid"
+            className="img-fluid "
             style={{
               backgroundImage: `url(${process.env.REACT_APP_API_URL +
                 article.image_url})`,

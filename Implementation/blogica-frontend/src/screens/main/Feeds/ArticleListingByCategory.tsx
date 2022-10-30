@@ -55,10 +55,12 @@ const ArticleListingByCategory = ({
   index,
   data,
   tabMessage,
+  showAuthorDetails,
 }: {
   index: number;
   data: Article[];
   tabMessage: string;
+  showAuthorDetails: boolean;
 }) => {
   const navigate = useNavigate();
   const isTabletOrMobile = useMediaQuery({ query: "(max-width: 767px)" });
@@ -80,7 +82,7 @@ const ArticleListingByCategory = ({
             {articles.map((article: Article, index: number) => (
               <div
                 key={index}
-                className={`col-12 py-4 px-2 px-0 ${
+                className={`col-12 py-2 px-2 px-0 ${
                   index == articlesCount - 1 ? "border-bottom" : "border-bottom"
                 }  `}
               >
@@ -126,7 +128,7 @@ const ArticleListingByCategory = ({
               flexWrap: "wrap",
             }}
           >
-            {loadArticles(articles)}
+            {loadArticles(articles, showAuthorDetails)}
           </div>
         </div>
       )}
