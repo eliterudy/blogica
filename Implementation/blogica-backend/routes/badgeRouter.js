@@ -124,36 +124,53 @@ badgeRouter
       )
       .catch((err) => next(err));
   })
-  .post(cors.corsWithOptions, authenticate.verifyAdmin, (req, res, next) => {
-    res.statusCode = 403;
-    res.end(`Post operation not supported on /bagde/${req.params.badgeId}`);
-  })
-  .put(cors.corsWithOptions, authenticate.verifyAdmin, (req, res, next) => {
-    Badge.findByIdAndUpdate(
-      req.params.badgeId,
-      {
-        $set: req.body,
-      },
-      { new: true }
-    )
-      .then(
-        (badge) => {
+  .post(
+    cors.corsWithOptions,
+    authenticate.verifyUser,
+    authenticate.verifyAdmin,
+    (req, res, next) => {
+      res.statusCode = 403;
+      res.end(`Post operation not supported on /bagde/${req.params.badgeId}`);
+    }
+  )
+  .put(
+    cors.corsWithOptions,
+    authenticate.verifyUser,
+    authenticate.verifyAdmin,
+    (req, res, next) => {
+      console.log(req.body);
+      Badge.findByIdAndUpdate(
+        req.params.badgeId,
+        {
+          $set: req.body,
+        },
+        { new: true }
+      )
+        .then(
+          (badge) => {
+            console.log(badge);
+            res.statusCode = 200;
+            res.setHeader("Content-Type", "application/json");
+            res.json(badge);
+          },
+          (err) => next(err)
+        )
+        .catch((err) => next(err));
+    }
+  )
+  .delete(
+    cors.corsWithOptions,
+    authenticate.verifyUser,
+    authenticate.verifyAdmin,
+    (req, res, next) => {
+      Badge.findByIdAndRemove(req.params.badgeId)
+        .then((resp) => {
           res.statusCode = 200;
           res.setHeader("Content-Type", "application/json");
-          res.json(badge);
-        },
-        (err) => next(err)
-      )
-      .catch((err) => next(err));
-  })
-  .delete(cors.corsWithOptions, authenticate.verifyAdmin, (req, res, next) => {
-    Badge.findByIdAndRemove(req.params.badgeId)
-      .then((resp) => {
-        res.statusCode = 200;
-        res.setHeader("Content-Type", "application/json");
-        res.json(resp);
-      })
-      .catch((err) => next(err));
-  });
+          res.json(resp);
+        })
+        .catch((err) => next(err));
+    }
+  );
 
 module.exports = badgeRouter;

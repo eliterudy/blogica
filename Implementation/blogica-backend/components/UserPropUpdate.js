@@ -40,10 +40,11 @@ const UserPropUpdate = {
               var tempArr = user[req.query.category][req.query.property].map(
                 (e) => e._id.toString()
               );
-              tempArr = [req.body.id, ...tempArr];
-              user[req.query.category][req.query.property] = [
-                ...new Set(tempArr),
-              ];
+              tempArr = [...new Set([req.body.id, ...tempArr])];
+              if (req.query.category === "recents") {
+                tempArr = tempArr.slice(0, 10);
+              }
+              user[req.query.category][req.query.property] = [...tempArr];
 
               user.save().then(
                 (user) => {

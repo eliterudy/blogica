@@ -10,6 +10,7 @@ const Badge = require("../models/badges");
 const Config = require("../config/config");
 const Users = require("../models/users");
 const DataTrimmer = require("../components/DataTrimmer");
+const UserPropUpdate = require("../components/UserPropUpdate");
 
 const { VIEW_COUNT_REWARD } = Config;
 var articleRouter = express.Router();
@@ -201,11 +202,32 @@ articleRouter
                 })
                 .catch((err) => next(err));
             }
+
             await article.save();
             res.statusCode = 200;
             res.setHeader("Content-Type", "application/json");
-            delete article._doc.createdAt;
-            delete article._doc.updatedAt;
+
+            if (req.query.user_id) {
+              User.findById(req.query.user_id).then(
+                (user) => {
+                  if (user) {
+                    var tempArr = (tempArr = [
+                      ...new Set([
+                        article.id,
+                        ...user["recents"]["articles"].map((e) =>
+                          e._id.toString()
+                        ),
+                      ]),
+                    ].slice(0, 10));
+                    user["recents"]["articles"] = [...tempArr];
+
+                    user.save();
+                  }
+                },
+                (err) => next(err)
+              );
+            }
+
             return res.json({
               ...article._doc,
               author: DataTrimmer.trimAuthor(article._doc.author),
@@ -244,8 +266,7 @@ articleRouter
               (article) => {
                 res.statusCode = 200;
                 res.setHeader("Content-Type", "application/json");
-                delete article._doc.createdAt;
-                delete article._doc.updatedAt;
+
                 res.json(article);
               },
               (err) => next(err)

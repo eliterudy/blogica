@@ -83,6 +83,7 @@ userRouter.get(
         async (user) => {
           res.statusCode = 200;
           res.setHeader("Content-Type", "application/json");
+          console.log(user);
           const {
             published,
             recents,
@@ -95,6 +96,10 @@ userRouter.get(
             image_url,
             username,
             badges,
+            createdAt,
+            updatedAt,
+            points_earned,
+            points_spent,
           } = user;
 
           var userDetails = {
@@ -104,19 +109,31 @@ userRouter.get(
             bio,
             image_url,
             username,
+            createdAt,
+            updatedAt,
           };
 
           if (req.query.isProfile && req.query.isProfile == "true") {
             userDetails = {
               ...userDetails,
-              saved: DataTrimmer.trimArticleList(saved.articles, true),
-              favorites: DataTrimmer.trimArticleList(favorites.articles, true),
+              points_earned,
+              points_spent,
+              saved: {
+                articles: DataTrimmer.trimArticleList(saved.articles, true),
+              },
+              favorites: {
+                articles: DataTrimmer.trimArticleList(favorites.articles, true),
+              },
               badges: DataTrimmer.trimBadgeList(badges),
-              recents: DataTrimmer.trimArticleList(recents.articles, true),
-              published: DataTrimmer.trimArticleList(published.articles, true),
+              recents: {
+                articles: DataTrimmer.trimArticleList(recents.articles, true),
+              },
+              published: {
+                articles: DataTrimmer.trimArticleList(published.articles, true),
+              },
             };
           } else {
-            userDetails = { ...userDetails, saved, favorites };
+            userDetails = { ...userDetails, saved, favorites, published };
           }
 
           res.json(userDetails);
@@ -128,58 +145,70 @@ userRouter.get(
 );
 
 userRouter.get("/authorDetails", cors.cors, (req, res, next) => {
-  User.findById(req.query.author_id)
-    .populate([
-      {
-        path: `published.articles`,
-        populate: [
-          {
-            path: "author",
-            model: "User",
-          },
-        ],
-      },
+  if (req.query.author_id) {
+    User.findById(req.query.author_id)
+      .populate([
+        {
+          path: `published.articles`,
+          populate: [
+            {
+              path: "author",
+              model: "User",
+            },
+          ],
+        },
 
-      {
-        path: "badges.badge",
-      },
-    ])
-    .then(
-      async (user) => {
-        const {
-          published,
-          _id,
-          firstname,
-          lastname,
-          bio,
-          image_url,
-          username,
-          badges,
-        } = user;
+        {
+          path: "badges.badge",
+        },
+      ])
+      .then(
+        async (user) => {
+          const {
+            published,
+            _id,
+            firstname,
+            lastname,
+            bio,
+            image_url,
+            username,
+            badges,
+            createdAt,
+            updatedAt,
+          } = user;
 
-        // console.log(published);
+          console.log(user);
 
-        res.statusCode = 200;
-        res.setHeader("Content-Type", "application/json");
-        res.json({
-          _id,
-          firstname,
-          lastname,
-          bio,
-          image_url,
-          username,
-          published: DataTrimmer.trimArticleList(published.articles, true),
-          badges: DataTrimmer.trimBadgeList(badges),
-        });
-      },
-      (err) => next(err)
-    )
-    .catch((err) => next(err));
+          res.statusCode = 200;
+          res.setHeader("Content-Type", "application/json");
+          res.json({
+            _id,
+            firstname,
+            lastname,
+            bio,
+            image_url,
+            username,
+            published: {
+              articles: DataTrimmer.trimArticleList(published.articles, true),
+            },
+            badges: DataTrimmer.trimBadgeList(badges),
+            createdAt,
+            updatedAt,
+          });
+        },
+        (err) => next(err)
+      )
+      .catch((err) => next(err));
+  } else {
+    res.statusCode = 401;
+    res.setHeader("Content-Type", "application/json");
+    next(new Error("Author Id missing"));
+  }
 });
 
 userRouter.post(
   "/signup",
-  cors.corsWithOptions,
+  cors.cors,
   UploadFile.multerConfig().single("image"),
   async (req, res, next) => {
     if (!req.file) {
@@ -203,6 +232,7 @@ userRouter.post(
           user.lastname = req.body.lastname;
           user.email = req.body.email;
           user.image_url = image_url;
+          user.bio = req.body.bio;
           user.save((err, user) => {
             if (err) {
               res.statusCode = 500;
@@ -260,6 +290,7 @@ userRouter.post("/signin", cors.corsWithOptions, (req, res, next) => {
               bio,
               image_url,
               username,
+              createdAt,
             } = user;
             var userDetails = {
               _id,
@@ -270,6 +301,7 @@ userRouter.post("/signin", cors.corsWithOptions, (req, res, next) => {
               published,
               saved,
               favorites,
+              createdAt,
             };
             res.statusCode = 200;
             res.setHeader("Content-Type", "application/json");
@@ -342,7 +374,7 @@ userRouter
       });
     }
     if (req.query.property == "articles") {
-      UserPropUpdate.addArticleToUser(req, res, next);
+      UserPropUpdate.addArticleToUser(req, res, next, true);
     }
   })
   .put(cors.corsWithOptions, authenticate.verifyUser, (req, res, next) => {
