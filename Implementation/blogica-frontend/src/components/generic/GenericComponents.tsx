@@ -70,7 +70,7 @@ const Generic = {
         </div>
       );
   },
-  Badge: ({
+  Achievement: ({
     image_url,
     title,
     description,

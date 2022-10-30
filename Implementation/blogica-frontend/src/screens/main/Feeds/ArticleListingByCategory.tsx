@@ -125,11 +125,6 @@ const ArticleListingByCategory = ({
               flexDirection: "row",
               flexWrap: "wrap",
             }}
-            // endMessage={
-            //   <p className="col-12 mt-4" style={{ textAlign: "center" }}>
-            //     <b>Yay! You have seen it all</b>
-            //   </p>
-            // }
           >
             {loadArticles(articles)}
           </div>

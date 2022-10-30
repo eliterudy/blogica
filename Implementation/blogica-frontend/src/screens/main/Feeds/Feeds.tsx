@@ -54,6 +54,7 @@ import ArticleListCard from "../../../components/ArticleListCard";
 import ArticleListingByCategory from "./ArticleListingByCategory";
 import NewArticleCard from "./NewArticleCard";
 import apis from "../../../config/api";
+import Achievements from "../../../components/generic/Achievements";
 
 const tabs = [
   { key: "published", title: "My Articles", message: constants.MY_ARTICLES },
@@ -182,28 +183,7 @@ const Feeds = (props: any) => {
                         </Col>
                       </Col>
                       {user && user.badges && user.badges.length > 0 && (
-                        <Row className=" border-top py-3">
-                          <h5
-                            style={{
-                              overflowWrap: "break-word",
-                              margin: 0,
-                            }}
-                          >
-                            Achievements
-                          </h5>
-                          <Col className="mt-1 d-flex flex-wrap">
-                            {user.badges.map((badge, index) => {
-                              return (
-                                <Generic.Badge
-                                  {...badge}
-                                  size={50}
-                                  key={index}
-                                  index={index}
-                                />
-                              );
-                            })}
-                          </Col>
-                        </Row>
+                        <Achievements badges={user.badges} />
                       )}
                     </div>
                   </div>

@@ -37,7 +37,8 @@ export interface Person {
   image_url: string;
   bio: string;
   username: string;
-  createdAt: string; // remove ?  later
+  createdAt: string;
+  updatedAt?: string;
 }
 
 export interface User extends Person {
@@ -52,17 +53,17 @@ export interface UserDetailSegment {
   recents: RecentsDetails;
 }
 export interface UserDetails extends Person, UserDetailSegment {
-  badges: Badge[];
+  badges: Award[];
   points_earned: number;
   points_spent: number;
 }
 
 export interface AuthorDetails extends Person {
-  badges: Badge[];
-  published: Published;
+  badges: Award[];
+  published: PublishedDetails;
 }
 
-export interface Badge {
+export interface Award {
   title: string;
   image_url: string;
   description: string;

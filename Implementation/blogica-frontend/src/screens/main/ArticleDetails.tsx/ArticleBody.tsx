@@ -16,10 +16,6 @@ import actions from "../../../redux/actionReducers/index";
 import moment from "moment";
 
 const ArticleBody = ({ article }: any) => {
-  console.log(
-    "ARTICLE BODY",
-    process.env.REACT_APP_API_URL + article.image_url
-  );
   return (
     <div className="col-12 ">
       <span className="col-12 h1 fw-bold">{article.title}</span>
