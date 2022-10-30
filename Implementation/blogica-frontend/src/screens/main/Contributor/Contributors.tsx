@@ -15,97 +15,97 @@ import { icons } from "../../../config/configuration";
 import Generic from "../../../components/generic/GenericComponents";
 import { toggler } from "../../../utils/generic";
 import actions from "../../../redux/actionReducers/index";
-import { Person } from "../../../config/types";
+import { Author, Person } from "../../../config/types";
 import ContributorListCard from "./ContributorListCard";
-
-const contributorsDataset: Person[] = [
-  {
-    _id: 21,
-    username: "gavin10",
-    firstname: "Robert",
-    lastname: "Danny Jr.",
-    createdAt: "",
-    bio:
-      "Robert Danny Jr. is a content creator currently building an app called Blogica for his Masters degree",
-    image_url:
-      "https://wellgroomedgentleman.com/media/images/Tony_Stark_Beard_with_Quiff_Hairstyle.width-800.jpg",
-  },
-  {
-    _id: 22,
-    username: "gavin10",
-    firstname: "Mike",
-    lastname: "Ross",
-    createdAt: "",
-    bio:
-      "Mike Ross is a content creator currently building an app called Blogica for his Masters degree",
-    image_url:
-      "https://www.tvinsider.com/wp-content/uploads/2019/07/Suits-Mike-1014x570.jpg",
-  },
-  {
-    _id: 23,
-    username: "gavin10",
-    firstname: "Harvey",
-    lastname: "Spectre",
-    createdAt: "",
-    bio:
-      "Harvey Spectre is a content creator currently building an app called Blogica for his Masters degree",
-    image_url:
-      "https://i.pinimg.com/474x/3f/d1/b8/3fd1b807b8425cb3f328fa06e5dcd63b--gabriel-macht-harvey-specter.jpg",
-  },
-  {
-    _id: 24,
-    username: "gavin10",
-    firstname: "Gavin",
-    lastname: "D'mello",
-    createdAt: "",
-    bio:
-      "Gavin D'mello is a content creator currently building an app called Blogica for his Masters degree",
-    image_url: "https://avatars.githubusercontent.com/u/54526769?v=4",
-  },
-  {
-    _id: 25,
-    username: "gavin10",
-    firstname: "Robert",
-    lastname: "Danny Jr.",
-    createdAt: "",
-    bio:
-      "Robert Danny Jr. is a content creator currently building an app called Blogica for his Masters degree",
-    image_url:
-      "https://wellgroomedgentleman.com/media/images/Tony_Stark_Beard_with_Quiff_Hairstyle.width-800.jpg",
-  },
-  {
-    _id: 26,
-    username: "gavin10",
-    firstname: "Mike",
-    lastname: "Ross",
-    createdAt: "",
-    bio:
-      "Mike Ross is a content creator currently building an app called Blogica for his Masters degree",
-    image_url:
-      "https://www.tvinsider.com/wp-content/uploads/2019/07/Suits-Mike-1014x570.jpg",
-  },
-  {
-    _id: 27,
-    username: "gavin10",
-    firstname: "Harvey",
-    lastname: "Spectre",
-    createdAt: "",
-    bio:
-      "Harvey Spectre is a content creator currently building an app called Blogica for his Masters degree",
-    image_url:
-      "https://i.pinimg.com/474x/3f/d1/b8/3fd1b807b8425cb3f328fa06e5dcd63b--gabriel-macht-harvey-specter.jpg",
-  },
-  {
-    _id: 28,
-    username: "gavin10",
-    firstname: "Gavin",
-    lastname: "D'mello",
-    createdAt: "",
-    bio:
-      "Gavin D'mello is a content creator currently building an app called Blogica for his Masters degree",
-    image_url: "https://avatars.githubusercontent.com/u/54526769?v=4",
-  },
-];
+import apis from "../../../config/api";
+// const contributorsDataset: Person[] = [
+//   {
+//     _id: 21,
+//     username: "gavin10",
+//     firstname: "Robert",
+//     lastname: "Danny Jr.",
+//     createdAt: "",
+//     bio:
+//       "Robert Danny Jr. is a content creator currently building an app called Blogica for his Masters degree",
+//     image_url:
+//       "https://wellgroomedgentleman.com/media/images/Tony_Stark_Beard_with_Quiff_Hairstyle.width-800.jpg",
+//   },
+//   {
+//     _id: 22,
+//     username: "gavin10",
+//     firstname: "Mike",
+//     lastname: "Ross",
+//     createdAt: "",
+//     bio:
+//       "Mike Ross is a content creator currently building an app called Blogica for his Masters degree",
+//     image_url:
+//       "https://www.tvinsider.com/wp-content/uploads/2019/07/Suits-Mike-1014x570.jpg",
+//   },
+//   {
+//     _id: 23,
+//     username: "gavin10",
+//     firstname: "Harvey",
+//     lastname: "Spectre",
+//     createdAt: "",
+//     bio:
+//       "Harvey Spectre is a content creator currently building an app called Blogica for his Masters degree",
+//     image_url:
+//       "https://i.pinimg.com/474x/3f/d1/b8/3fd1b807b8425cb3f328fa06e5dcd63b--gabriel-macht-harvey-specter.jpg",
+//   },
+//   {
+//     _id: 24,
+//     username: "gavin10",
+//     firstname: "Gavin",
+//     lastname: "D'mello",
+//     createdAt: "",
+//     bio:
+//       "Gavin D'mello is a content creator currently building an app called Blogica for his Masters degree",
+//     image_url: "https://avatars.githubusercontent.com/u/54526769?v=4",
+//   },
+//   {
+//     _id: 25,
+//     username: "gavin10",
+//     firstname: "Robert",
+//     lastname: "Danny Jr.",
+//     createdAt: "",
+//     bio:
+//       "Robert Danny Jr. is a content creator currently building an app called Blogica for his Masters degree",
+//     image_url:
+//       "https://wellgroomedgentleman.com/media/images/Tony_Stark_Beard_with_Quiff_Hairstyle.width-800.jpg",
+//   },
+//   {
+//     _id: 26,
+//     username: "gavin10",
+//     firstname: "Mike",
+//     lastname: "Ross",
+//     createdAt: "",
+//     bio:
+//       "Mike Ross is a content creator currently building an app called Blogica for his Masters degree",
+//     image_url:
+//       "https://www.tvinsider.com/wp-content/uploads/2019/07/Suits-Mike-1014x570.jpg",
+//   },
+//   {
+//     _id: 27,
+//     username: "gavin10",
+//     firstname: "Harvey",
+//     lastname: "Spectre",
+//     createdAt: "",
+//     bio:
+//       "Harvey Spectre is a content creator currently building an app called Blogica for his Masters degree",
+//     image_url:
+//       "https://i.pinimg.com/474x/3f/d1/b8/3fd1b807b8425cb3f328fa06e5dcd63b--gabriel-macht-harvey-specter.jpg",
+//   },
+//   {
+//     _id: 28,
+//     username: "gavin10",
+//     firstname: "Gavin",
+//     lastname: "D'mello",
+//     createdAt: "",
+//     bio:
+//       "Gavin D'mello is a content creator currently building an app called Blogica for his Masters degree",
+//     image_url: "https://avatars.githubusercontent.com/u/54526769?v=4",
+//   },
+// ];
 
 const Contributors = (props: any) => {
   const navigate = useNavigate();
@@ -114,9 +114,7 @@ const Contributors = (props: any) => {
   const locationParams = useLocation();
   // state hooks
   const [search, updateSearch] = useState("");
-  const [contributors, updateContributors] = useState<null | Person[]>(
-    contributorsDataset
-  );
+  const [contributors, updateContributors] = useState<null | Author[]>(null);
   const [offset, updateOffset] = useState(0);
   const [loading, updateLoading] = useState(false);
   const [error, updateError] = useState(null);
@@ -131,19 +129,54 @@ const Contributors = (props: any) => {
   const { user } = state.userState;
 
   // useEffects
-  useEffect(() => {}, []);
+  useEffect(() => {
+    getContributorsFromApi();
+  }, [callerCounter]);
 
   // functions/callbacks
   const searchUpdateCallback = async (value: string) => {
-    // updateOffset(0);
-    // updateContributor(null);
-    // updateContributorLoading(true);
+    console.log("VALUE, callback");
+    updateOffset(0);
+    updateContributors(null);
+    updateLoading(true);
     await updateSearch(value);
-    // await updateCallerCounter(callerCounter + 1);
+    await updateCallerCounter(callerCounter + 1);
   };
 
-  const getContributorsFromApi = () => {};
+  const getContributorsFromApi = () => {
+    updateLoading(true);
 
+    apis
+      .getAllAuthors({
+        search,
+        limit: 9,
+        offset,
+      })
+      .then(async ({ data }) => {
+        var authors = data.results;
+
+        updateListCount(data.count);
+        updateOffset(data.nextOffset);
+
+        if (contributors) {
+          updateContributors([...contributors, ...authors]);
+        } else {
+          updateContributors([...authors]);
+        }
+        updateLoading(false);
+      })
+
+      .catch((err) => {
+        if (err && err.message && err.message === "Network Error") {
+          alert(
+            "This action cannot be performed at the moment because of no internet connection. Please connect to an internet connection and try again"
+          );
+        } else {
+          updateError(err);
+          updateLoading(false);
+        }
+      });
+  };
   // component conditional render
   const loadContributors = (contributorList: Person[]) => {
     return contributorList.map((contributor: Person, index: number) => (
@@ -198,7 +231,14 @@ const Contributors = (props: any) => {
               loader={<h4 className="col-12 text-center">Fetching more...</h4>}
               endMessage={
                 <p className="col-12" style={{ textAlign: "center" }}>
-                  <b>Yay! You have seen it all</b>
+                  <b>
+                    {contributors.length === 0
+                      ? search.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "").length >
+                        2
+                        ? "No match found! Please try a different search"
+                        : "There are no contributors to our website yet."
+                      : "Yay! You have seen it all"}
+                  </b>
                 </p>
               }
             >

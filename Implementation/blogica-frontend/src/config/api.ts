@@ -58,6 +58,13 @@ const userApiList = {
     });
   },
 
+  getAllAuthors: (params: any) => {
+    return ApiCaller({
+      url: `/users`,
+      method: "get",
+      params,
+    });
+  },
   getAuthorDetails: (params?: { author_id: string }) => {
     return ApiCaller({
       url: `/users/authorDetails`,

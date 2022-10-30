@@ -73,7 +73,8 @@ const ContributorListCard = (cardProps: ContributorCardProps) => {
                 borderTopLeftRadius: 4,
                 aspectRatio: "1/1",
                 objectFit: "cover",
-                backgroundImage: `url(${image_url})`,
+                backgroundImage: `url(${process.env.REACT_APP_API_URL +
+                  image_url})`,
                 backgroundRepeat: "no-repeat",
                 backgroundSize: "cover",
                 backgroundPosition: "center",

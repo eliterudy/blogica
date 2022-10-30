@@ -152,7 +152,7 @@ const Generic = {
   },
   SearchBar: (props: any) => {
     const { apiCallback, searchFor } = props;
-    const [search, updateSearch] = useState("");
+    // const [search, updateSearch] = useState("");
     return (
       <InputGroup className="col-12 border-bottom border-bottom-4 border-dark ps-2 pb-1 align-items-center">
         <img
@@ -169,7 +169,8 @@ const Generic = {
           style={{ outline: "none" }}
           placeholder={`Search ${searchFor}...`}
           onChange={async (e: any) => {
-            updateSearch(e.target.value);
+            console.log(e.target.value);
+            // updateSearch(e.target.value);
             apiCallback(e.target.value);
           }}
         />
