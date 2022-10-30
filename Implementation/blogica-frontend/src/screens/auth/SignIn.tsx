@@ -109,7 +109,6 @@ const SignInComponent = () => {
           }
         })
         .catch((err) => {
-          console.log(err);
           if (err && err.message && err.message === "Network Error") {
             alert(
               "This action cannot be performed at the moment because of no internet connection. Please connect to an internet connection and try again"

@@ -75,8 +75,11 @@ const Feeds = (props: any) => {
       userState: state.userActionReducer,
     };
   });
+  var selectedFeedsTab = window.sessionStorage.getItem("feedsTab");
 
-  const [activeTab, updateActiveTab] = useState(0);
+  const [activeTab, updateActiveTab] = useState(
+    selectedFeedsTab ? JSON.parse(selectedFeedsTab).activeTab : 0
+  );
   const [user, updateUser] = useState<UserDetails | null>(null);
   const [isLoading, updateLoading] = useState(false);
   const [error, updateError] = useState("");
@@ -84,12 +87,16 @@ const Feeds = (props: any) => {
     if (location && location.state) {
       const { tab } = location.state as any;
       updateActiveTab(tab);
+      console.log("tab", tab);
+      window.sessionStorage.setItem(
+        "feedsTab",
+        JSON.stringify({ activeTab: tab })
+      );
     }
     updateLoading(true);
     apis
       .getUserDetails({ isProfile: true })
       .then(({ data }) => {
-        // console.log("data", data);
         updateUser(data);
         updateLoading(false);
       })
@@ -230,6 +237,11 @@ const Feeds = (props: any) => {
                                   })}
                                   onClick={() => {
                                     updateActiveTab(index);
+                                    console.log(index);
+                                    window.sessionStorage.setItem(
+                                      "feedsTab",
+                                      JSON.stringify({ activeTab: index })
+                                    );
                                   }}
                                   style={{
                                     whiteSpace: "nowrap",

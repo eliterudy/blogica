@@ -23,7 +23,7 @@ const gifs: any = {
 const constants: any = {
   APP_NAME: "Blogica",
   TEXT_SHIMMER_FILLER: "text shimmer",
-  FILTER_ARTICLE_NOTES: "View articles based on the filter categories.",
+  SORT_ARTICLE_NOTES: "View articles based on the selected sorting categories.",
   NEW_ARTICLE_NOTES:
     "What's the first thought that pops in your head. Is it informative and interesting. If so, why wait? Write it down and share it with everyone!",
   INTRO_BANNER_TITLE: "Stay Curious & Get a Read",

@@ -169,7 +169,6 @@ const Generic = {
           style={{ outline: "none" }}
           placeholder={`Search ${searchFor}...`}
           onChange={async (e: any) => {
-            console.log(e.target.value);
             // updateSearch(e.target.value);
             apiCallback(e.target.value);
           }}

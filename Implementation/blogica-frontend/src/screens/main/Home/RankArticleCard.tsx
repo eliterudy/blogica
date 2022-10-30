@@ -19,7 +19,7 @@ const RankArticleCard = (cardProps: ArticleCardProps) => {
       style={{ textDecoration: "none", color: "black" }}
     >
       <h2 className=" pe-3 " style={{ color: "#999", fontWeight: "bold" }}>
-        {index + 6}
+        {index + 7}
       </h2>
       <div className="">
         <div className="mt-1 col-12 ">
@@ -66,7 +66,7 @@ const RankArticleCard = (cardProps: ArticleCardProps) => {
           {article.title}
         </h6>
         <span className=" mb-3  col-12" style={{ fontSize: 14, color: "#555" }}>
-          {moment(article.createdAt, "YYYYMMDD").fromNow()}
+          {moment(article.createdAt).fromNow()}
         </span>
       </div>
     </Link>

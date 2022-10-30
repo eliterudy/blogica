@@ -33,8 +33,6 @@ const LargeArticleCard = (cardProps: ArticleCardProps) => {
   const { article, index } = cardProps;
   const navigate = useNavigate();
 
-  // console.log("article?.image_url", article?.image_url);
-
   return (
     <Link
       to={`/main/article/id/${article._id}`}
@@ -48,7 +46,8 @@ const LargeArticleCard = (cardProps: ArticleCardProps) => {
             borderTopRightRadius: 4,
             borderTopLeftRadius: 4,
             objectFit: "cover",
-            backgroundImage: `url(${article.image_url})`,
+            backgroundImage: `url(${process.env.REACT_APP_API_URL +
+              article.image_url})`,
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
             backgroundPosition: "center",
@@ -98,7 +97,7 @@ const LargeArticleCard = (cardProps: ArticleCardProps) => {
           {article.title}
         </h3>
         <span className=" mb-3  col-12" style={{ fontSize: 14, color: "#555" }}>
-          {moment(article.createdAt, "YYYYMMDD").fromNow()}
+          {moment(article.createdAt).fromNow()}{" "}
         </span>
       </div>
     </Link>

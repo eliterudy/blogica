@@ -39,7 +39,7 @@ const MainRouter = () => {
   const dispatch = useDispatch();
   const MainRoutes = () => {
     const [isModalOpen, updateModalOpen] = useState(false);
-    const [loading, updateLoading] = useState(false);
+    const [loading, updateLoading] = useState(true);
     const toggleModal = () => {
       updateModalOpen(!isModalOpen);
     };
@@ -51,7 +51,6 @@ const MainRouter = () => {
     const { user } = state.userState;
 
     useEffect(() => {
-      updateLoading(true);
       var userToken = localStorage.getItem("token");
       userToken && userToken.length > 0
         ? apis

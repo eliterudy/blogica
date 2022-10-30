@@ -64,7 +64,7 @@ const WideArticleCard = (cardProps: ArticleCardProps) => {
             className=" mb-3  col-12"
             style={{ fontSize: 14, color: "#555" }}
           >
-            {moment(article.createdAt, "YYYYMMDD").fromNow()}
+            {moment(article.createdAt).fromNow()}
           </span>
         </div>
         <div className="col-4 row align-items-center justify-content-center">
@@ -72,7 +72,8 @@ const WideArticleCard = (cardProps: ArticleCardProps) => {
             onClick={() => {}}
             className="img-fluid"
             style={{
-              backgroundImage: `url(${article.image_url})`,
+              backgroundImage: `url(${process.env.REACT_APP_API_URL +
+                article.image_url})`,
               aspectRatio: "1/1",
               backgroundRepeat: "no-repeat",
               backgroundSize: "cover",

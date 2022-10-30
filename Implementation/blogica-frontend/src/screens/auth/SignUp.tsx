@@ -320,7 +320,6 @@ const SignUpComponent = () => {
                       accept="image/*"
                       onChange={(e) => {
                         var file = e.target.files;
-                        console.log(file);
 
                         if (file && file.length > 0) {
                           updateFormValues({

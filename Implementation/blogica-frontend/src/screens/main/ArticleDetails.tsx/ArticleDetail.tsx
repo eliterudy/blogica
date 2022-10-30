@@ -38,19 +38,16 @@ const ArticleDetail = (props: any) => {
   useEffect(() => {
     const locationSplit = location.pathname.split("/");
     const articleId = locationSplit[locationSplit.length - 1];
-    console.log(articleId);
 
     updateLoading(true);
     apis
-      .getArticle(articleId)
+      .getArticle(articleId, { user_id: user ? user._id : null })
       .then(({ data }) => {
-        console.log("data", data);
         updateArticleDetails(data);
         updateLoading(false);
       })
       .catch((err) => {
         updateError(err.message.toString());
-        console.log(err);
         if (err.response.status == "401") navigate("/main/home");
         updateLoading(false);
       });

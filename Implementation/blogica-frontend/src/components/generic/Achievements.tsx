@@ -50,7 +50,6 @@ import { icons, constants } from "../../config/configuration";
 import Generic from "../../components/generic/GenericComponents";
 
 const Achievements = ({ badges }: any) => {
-  console.log("BADGES", badges);
   return (
     <Row className=" border-top py-3">
       <h5
@@ -63,7 +62,6 @@ const Achievements = ({ badges }: any) => {
       </h5>
       <Col className="mt-1 d-flex flex-wrap">
         {badges.map((badge: Award, index: number) => {
-          console.log("BADGE", badge.title);
           return (
             <Generic.Achievement
               {...badge}

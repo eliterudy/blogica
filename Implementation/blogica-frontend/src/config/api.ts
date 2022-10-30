@@ -22,7 +22,6 @@ const apiDefault = {};
 
 const userApiList = {
   signin: (payload: any) => {
-    console.log(payload);
     return ApiCaller({
       url: `/users/signin`,
       method: "post",
@@ -31,7 +30,6 @@ const userApiList = {
   },
 
   signup: (payload: any) => {
-    console.log("payload", payload);
     return ApiCaller({
       url: `/users/signup`,
       method: "post",
@@ -106,10 +104,11 @@ const articleApiList = {
     });
   },
 
-  getArticle: (articleId: string) => {
+  getArticle: (articleId: string, params: any) => {
     return ApiCaller({
       url: `/articles/id/${articleId}`,
       method: "get",
+      params,
     });
   },
 

@@ -63,7 +63,6 @@ const AuthorProfile = (props: any) => {
     apis
       .getAuthorDetails({ author_id: authorId })
       .then(({ data }) => {
-        console.log(data);
         updateAuthorDetails(data);
         updateLoading(false);
       })
@@ -107,7 +106,6 @@ const AuthorProfile = (props: any) => {
     return response;
   };
 
-  console.log(author, error);
   return (
     <div className="col-12 d-flex flex-column  flex-grow-1">
       {loading && <Generic.Loader message="Loading" />}

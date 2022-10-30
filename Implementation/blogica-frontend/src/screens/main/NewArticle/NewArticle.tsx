@@ -59,8 +59,6 @@ const NewArticle = (props: any) => {
   });
   const { user } = state.userState;
 
-  console.log(formValues.description);
-
   return (
     <div className="col-12 d-flex flex-column flex-grow-1 p-4 container-fluid">
       <div className="col-12 row mb-5 ms-1">
@@ -107,7 +105,6 @@ const NewArticle = (props: any) => {
         <FileUploader
           image={formValues.image}
           handleFile={(callback: any) => {
-            console.log(callback);
             updateFormValues({ ...formValues, image: callback });
           }}
         />
@@ -152,9 +149,7 @@ const FileUploader = (props: any) => {
   // Call a function (passed as a prop from the parent component)
   // to handle the user-selected file
   const handleChange = (event: any) => {
-    console.log(event.target.files);
     if (event.target.files.length > 0) {
-      console.log("here,");
       const fileUploaded = event.target.files[0];
       props.handleFile(fileUploaded);
     }

@@ -90,7 +90,7 @@ const ArticleListCard = (cardProps: ArticleCardProps) => {
           <div className="col-12 d-flex flex-row justify-content-between mt-1 ">
             <div>
               <span style={{ fontSize: 14, color: "#555" }}>
-                {moment(article.createdAt, "YYYYMMDD").fromNow()}
+                {moment(article.createdAt).fromNow()}
               </span>
             </div>
             <div className="mt-1">

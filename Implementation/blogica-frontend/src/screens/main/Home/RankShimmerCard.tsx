@@ -8,7 +8,7 @@ const RankShimmerCard = ({ index }: { index: number }) => {
       style={{ textDecoration: "none", color: "black" }}
     >
       <h2 className=" pe-3 " style={{ color: "#999", fontWeight: "bold" }}>
-        {index + 6}
+        {index + 7}
       </h2>
       <div className="">
         <div className=" d-flex align-items-center">
