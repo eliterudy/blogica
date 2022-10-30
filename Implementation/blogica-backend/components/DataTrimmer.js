@@ -3,9 +3,26 @@ const trimBadge = (badge) => {
   return { title, image_url, description };
 };
 const trimAuthor = (author) => {
-  const { _id, username, image_url, firstname, lastname, bio, createdAt } =
-    author;
-  return { _id, username, image_url, firstname, lastname, bio, createdAt };
+  const {
+    _id,
+    username,
+    image_url,
+    firstname,
+    lastname,
+    bio,
+    createdAt,
+    updatedAt,
+  } = author;
+  return {
+    _id,
+    username,
+    image_url,
+    firstname,
+    lastname,
+    bio,
+    createdAt,
+    updatedAt,
+  };
 };
 const trimArticleWithAuthorPopulated = (article) => {
   const { _id, title, description, image_url, author, createdAt, updatedAt } =
@@ -34,6 +51,12 @@ const trimArticleWithoutAuthorPopulated = (article) => {
   };
 };
 
+const trimAuthorList = (authors) => {
+  return authors.map((author) => {
+    return trimAuthor(author);
+  });
+};
+
 const trimArticleList = (articles, isAuthorPopulated) => {
   return articles.map((article) => {
     return isAuthorPopulated
@@ -52,6 +75,7 @@ const trimBadgeList = (badges) => {
 module.exports = {
   trimBadgeList,
   trimArticleList,
+  trimAuthorList,
   trimArticleWithoutAuthorPopulated,
   trimArticleWithAuthorPopulated,
   trimAuthor,

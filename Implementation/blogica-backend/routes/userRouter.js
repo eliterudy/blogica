@@ -21,15 +21,61 @@ userRouter.options("*", cors.corsWithOptions, (req, res) => {
 userRouter.get(
   "/",
   cors.corsWithOptions,
-  authenticate.verifyUser,
-  authenticate.verifyAdmin,
+
   (req, res, next) => {
-    User.find({})
+    // text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "")
+    var filters = {
+      $or: [
+        {
+          firstname: {
+            $regex: req.query.search
+              ? req.query.search.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "")
+              : "",
+            $options: "i",
+          },
+        },
+        {
+          lastname: {
+            $regex: req.query.search
+              ? req.query.search.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "")
+              : "",
+            $options: "i",
+          },
+        },
+      ],
+      // multi_match: {
+      //   fields: ["firstname", "lastname"],
+      //   query: req.query.search ? req.query.search : "",
+      //   // $regex: req.query.search ? req.query.search : "",
+      //   // $options: "i",
+      //   // fuzziness: "AUTO",
+      // },
+
+      admin: false,
+    };
+
+    User.find(filters)
+      .sort({ points_earned: -1 })
+      .limit(req.query.limit)
+      .skip(req.query.offset)
       .then(
         (users) => {
-          res.statusCode = 200;
-          res.setHeader("Content-Type", "application/json");
-          res.json(users);
+          if (users) {
+            User.count(filters).then(
+              (count) => {
+                res.statusCode = 200;
+                res.setHeader("Content-Type", "application/json");
+                res.json({
+                  results: DataTrimmer.trimAuthorList(users),
+                  limit: Number(req.query.limit),
+                  nextOffset:
+                    Number(req.query.offset) + Number(req.query.limit),
+                  count,
+                });
+              },
+              (err) => next(err)
+            );
+          }
         },
         (err) => next(err)
       )

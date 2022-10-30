@@ -32,7 +32,7 @@ articleRouter
 
     var sortBy = {};
     if (req.query.sort == "new") {
-      sortBy["updatedAt"] = -1;
+      sortBy["createdAt"] = -1;
     }
 
     if (req.query.sort == "top") {
