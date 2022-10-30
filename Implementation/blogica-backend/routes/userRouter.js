@@ -43,15 +43,8 @@ userRouter.get(
           },
         },
       ],
-      // multi_match: {
-      //   fields: ["firstname", "lastname"],
-      //   query: req.query.search ? req.query.search : "",
-      //   // $regex: req.query.search ? req.query.search : "",
-      //   // $options: "i",
-      //   // fuzziness: "AUTO",
-      // },
-
       admin: false,
+      "published.articles.0": { $exists: true },
     };
 
     User.find(filters)
