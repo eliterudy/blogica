@@ -70,7 +70,7 @@ const ArticleHead = ({ article, url }: any) => {
           </span>
         </div>
       </div>
-      <div className=" shareLinks col-12 pt-2 pt-md-0 col-md-6 d-flex flex-row align-items-center justify-content-start justify-content-md-end">
+      <div className=" faCustomIcons col-12 pt-2 pt-md-0 col-md-6 d-flex flex-row align-items-center justify-content-start justify-content-md-end">
         <EmailShareButton
           children={<i className="fa fa-envelope fa-lg mx-2" />}
           url={url}

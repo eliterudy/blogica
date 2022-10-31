@@ -55,7 +55,7 @@
 
 .ql-container .ql-editor {
   font-size: 18px;
-  text-align: justify;
+  
   text-justify: inter-word;
   /* line-height: 40px; */
 }
@@ -63,7 +63,7 @@
 .cardDescription .ql-container .ql-editor {
   padding: 0%;
   font-size: 16px;
-  text-align: justify;
+  
   text-justify: inter-word;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -98,11 +98,13 @@
 }
 
 
-.shareLinks .fa {
+
+
+.faCustomIcons .fa {
   color: grey
 }
 
-.shareLinks .fa:hover {
+.faCustomIcons .fa:hover {
   color: black
 }
 
@@ -149,7 +151,7 @@
   .cardDescription .ql-container .ql-editor {
     padding: 0%;
     font-size: 16px;
-    text-align: justify;
+    
     text-justify: inter-word;
     overflow: hidden;
     text-overflow: ellipsis;

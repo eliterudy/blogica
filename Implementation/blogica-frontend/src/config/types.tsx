@@ -40,6 +40,7 @@ export interface UserArticleSegment {
   saved: string[];
   published: string[];
   favorites: string[];
+  drafts: string[];
 }
 
 export interface Author extends Person {}
