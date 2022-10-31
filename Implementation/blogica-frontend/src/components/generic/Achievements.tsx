@@ -44,7 +44,7 @@ import {
   PublishedDetails,
   User,
   UserDetails,
-  UserDetailSegment,
+  UserDetailArticleSegment,
 } from "../../config/types";
 import { icons, constants } from "../../config/configuration";
 import Generic from "../../components/generic/GenericComponents";

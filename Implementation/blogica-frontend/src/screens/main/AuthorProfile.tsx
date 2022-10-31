@@ -63,6 +63,7 @@ const AuthorProfile = (props: any) => {
     apis
       .getAuthorDetails({ author_id: authorId })
       .then(({ data }) => {
+        console.log("data", data);
         updateAuthorDetails(data);
         updateLoading(false);
       })
@@ -153,7 +154,7 @@ const AuthorProfile = (props: any) => {
                         ></i>
 
                         <span>
-                          {author.published.articles.length} Published Articles
+                          {author.articles.published.length} Published Articles
                         </span>
                       </Col>
                       <Col className="mt-1">
@@ -176,7 +177,7 @@ const AuthorProfile = (props: any) => {
 
                 {/* Right Section */}
                 <div className="noselect  col-12 col-md-8 col-xl-9  p-2">
-                  {author.published && author.published.articles && (
+                  {author.articles && author.articles.published && (
                     <div>
                       <div className="bg-dark py-4 px-2 ">
                         <h1
@@ -196,7 +197,7 @@ const AuthorProfile = (props: any) => {
                           flexWrap: "wrap",
                         }}
                       >
-                        {loadAuthorArticles(author.published.articles)}
+                        {loadAuthorArticles(author.articles.published)}
                       </div>
                     </div>
                   )}

@@ -43,8 +43,8 @@ import {
   Article,
   PublishedDetails,
   User,
+  UserDetailArticleSegment,
   UserDetails,
-  UserDetailSegment,
 } from "../../../config/types";
 import { icons, constants } from "../../../config/configuration";
 import Generic from "../../../components/generic/GenericComponents";
@@ -179,7 +179,7 @@ const Feeds = (props: any) => {
                           ></i>
 
                           <span>
-                            {user.published.articles.length} Published Articles
+                            {user.articles.published.length} Published Articles
                           </span>
                         </Col>
                         <Col className="mt-1">
@@ -266,8 +266,8 @@ const Feeds = (props: any) => {
                             <ArticleListingByCategory
                               index={index}
                               data={
-                                user[tab.key as keyof UserDetailSegment][
-                                  "articles"
+                                user["articles"][
+                                  tab.key as keyof UserDetailArticleSegment
                                 ]
                               }
                               tabMessage={tab.message}

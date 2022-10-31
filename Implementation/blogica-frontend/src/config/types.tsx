@@ -6,16 +6,12 @@ export interface Article {
   image_url: string;
   description: string;
   author: Author;
-  isBookmarked?: boolean;
   createdAt?: string; // remove ?  later
-  updatedAt?: string; // remove ?  later
 }
 
-export interface Author extends Person {}
-
 export interface ArticleDetails extends Article {
-  numberOfLikes?: number;
-  numberOfViews?: number;
+  numberOfLikes: number;
+  numberOfViews: number;
   comments?: any;
 }
 
@@ -38,29 +34,43 @@ export interface Person {
   bio: string;
   username: string;
   createdAt: string;
-  updatedAt?: string;
 }
+
+export interface UserArticleSegment {
+  saved: string[];
+  published: string[];
+  favorites: string[];
+}
+
+export interface Author extends Person {}
 
 export interface User extends Person {
-  saved: Saved;
-  published: Published;
-  favorites: Favorites;
+  articles: UserArticleSegment;
 }
 
-export interface UserDetailSegment {
-  published: PublishedDetails;
-  saved: SavedDetails;
-  recents: RecentsDetails;
+export interface PersonDetailArticleSegment {
+  published: Article[];
 }
-export interface UserDetails extends Person, UserDetailSegment {
+
+export interface AuthorDetailArticleSegment
+  extends PersonDetailArticleSegment {}
+
+export interface UserDetailArticleSegment extends PersonDetailArticleSegment {
+  saved: Article[];
+  recents: Article[];
+  drafts: Article[];
+}
+
+export interface UserDetails extends Person {
   badges: Award[];
   points_earned: number;
   points_spent: number;
+  articles: UserDetailArticleSegment;
 }
 
 export interface AuthorDetails extends Person {
   badges: Award[];
-  published: PublishedDetails;
+  articles: AuthorDetailArticleSegment;
 }
 
 export interface Award {
@@ -80,21 +90,6 @@ export interface RecentsDetails {
 }
 export interface PublishedDetails {
   articles: Article[];
-}
-
-/* User Interfaces */
-export interface Saved {
-  articles: string[];
-}
-export interface Recents {
-  articles: string[];
-  // authors: string[];
-}
-export interface Published {
-  articles: string[];
-}
-export interface Favorites {
-  articles: string[];
 }
 
 // Others
