@@ -29,8 +29,10 @@ const constants: any = {
   INTRO_BANNER_TITLE: "Stay Curious & Get a Read",
   INTRO_BANNER_MESSAGE:
     "Discover stories, thinking, and expertise from writers on any topic.",
-  MY_ARTICLES:
+  PUBLISHED_ARTICLES:
     "This tab displays the amazing articles you have written so far.",
+  ARTICLES_DRAFTS:
+    "This tab displays the amazing articles are currently working on.",
   RECENTLY_VIEWED_ARTICLES:
     "This tab displays the most recently viewed articles by you.",
   SAVED_ARTICLES: "This tab displays the articles that you saved.",

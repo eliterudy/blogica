@@ -91,7 +91,7 @@ const Contributors = (props: any) => {
   // component conditional render
   const loadContributors = (contributorList: Person[]) => {
     return contributorList.map((contributor: Person, index: number) => (
-      <div key={index} className={`col-12 col-sm-6 col-lg-3 mb-5  px-4`}>
+      <div key={index} className={`col-12 col-sm-6 col-lg-3 mb-5 `}>
         <ContributorListCard contributor={contributor} index={index} />
       </div>
     ));
@@ -115,7 +115,7 @@ const Contributors = (props: any) => {
       {!loading && contributors && (
         <div className="noselect  col-12   pt-1">
           <div className="container p-0">
-            <div className="d-flex flex-column align-items-end pt-3 pe-4">
+            <div className="d-flex flex-column align-items-end pt-3 px-4">
               <em
                 className="px-2 pt-1"
                 style={{
@@ -128,7 +128,7 @@ const Contributors = (props: any) => {
               </em>
             </div>
             <InfiniteScroll
-              className="pt-4"
+              className="pt-4 px-4"
               dataLength={contributors ? contributors.length : 0} //This is important field to render the next data
               next={() => {
                 getContributorsFromApi();
@@ -141,15 +141,15 @@ const Contributors = (props: any) => {
               }}
               loader={<h4 className="col-12 text-center">Fetching more...</h4>}
               endMessage={
-                <p className="col-12" style={{ textAlign: "center" }}>
-                  <b>
+                <p className="col-12 mt-4" style={{ textAlign: "center" }}>
+                  <em>
                     {contributors.length === 0
                       ? search.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "").length >
                         0
                         ? "No match found! Please try a different search"
                         : "There are no contributors to our website yet."
                       : "Yay! You have seen it all"}
-                  </b>
+                  </em>
                 </p>
               }
             >

@@ -78,7 +78,7 @@ const AuthorProfile = (props: any) => {
 
     if (articles.length > 0) {
       response = (
-        <div className="noselect col-12 d-flex flex-row flex-wrap px-2  ">
+        <div className="noselect col-12 d-flex flex-row flex-wrap px-4  ">
           {articles.map((article: Article, index: number) => (
             <div key={index} className={`col-12  px-2 py-4 border-bottom `}>
               <ArticleListCard
@@ -143,8 +143,13 @@ const AuthorProfile = (props: any) => {
                       >{` @${author.username}`}</span>
                     </div>
 
-                    <Col className="my-3 ">
-                      <em>{author.bio} </em>
+                    <Col className="my-3  text-justify">
+                      <p
+                        className="text-justify"
+                        style={{ textAlign: "justify" }}
+                      >
+                        <em>{author.bio}</em>
+                      </p>
                     </Col>
                     <Col className="border-top py-3">
                       <Col className="mt-1">
@@ -176,13 +181,13 @@ const AuthorProfile = (props: any) => {
                 </div>
 
                 {/* Right Section */}
-                <div className="noselect  col-12 col-md-8 col-xl-9  p-2">
+                <div className="noselect  col-12 col-md-8 col-xl-9  p-0">
                   {author.articles && author.articles.published && (
                     <div>
-                      <div className="bg-dark py-4 px-2 ">
+                      <div className="bg-dark py-5 py-md-4 px-4 ">
                         <h1
                           className="text-white text-center"
-                          style={{ fontSize: 40 }}
+                          style={{ fontSize: 30 }}
                         >
                           <em>
                             {`Articles by ${author.firstname} ${author.lastname} `}

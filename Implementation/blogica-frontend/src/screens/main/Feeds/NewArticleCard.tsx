@@ -21,7 +21,7 @@ const NewArticleCard = (cardProps: any) => {
   return (
     <Link
       to={`/main/article/new`}
-      className=" d-flex flex-column align-items-center m-2 mt-3 p-3"
+      className=" d-flex flex-column align-items-center  mt-3 p-4"
       style={{
         textDecoration: "none",
         color: "black",

@@ -78,11 +78,11 @@ const ArticleListingByCategory = ({
     if (articles.length > 0) {
       response = (
         <div>
-          <div className="noselect  col-12  d-flex flex-row flex-wrap pt-0">
+          <div className="noselect  col-12  d-flex flex-row flex-wrap">
             {articles.map((article: Article, index: number) => (
               <div
                 key={index}
-                className={`col-12 py-2 px-2 px-0 ${
+                className={`col-12 py-3  px-0 ${
                   index == articlesCount - 1 ? "border-bottom" : "border-bottom"
                 }  `}
               >

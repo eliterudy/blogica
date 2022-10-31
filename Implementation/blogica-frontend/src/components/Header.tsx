@@ -301,12 +301,21 @@ const UserAvatar = (props: any) => {
                 });
               }}
             >
-              Recent Viewed
+              My Article Drafts
             </DropdownItem>
             <DropdownItem
               onClick={() => {
                 navigate("/main/feeds/", {
                   state: { tab: 2 },
+                });
+              }}
+            >
+              Recent Viewed Articles
+            </DropdownItem>
+            <DropdownItem
+              onClick={() => {
+                navigate("/main/feeds/", {
+                  state: { tab: 3 },
                 });
               }}
             >

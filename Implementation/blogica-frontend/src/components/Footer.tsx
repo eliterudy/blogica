@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <div className="col col-12 p-5 pb-3 footer">
+    <div className="col col-12 p-4 pb-3 footer">
       <div className=" row col-12">
         <div className=" col-12 col-md-4 pb-4  ">
           <span className="text-white" style={{ fontWeight: "bold" }}>
