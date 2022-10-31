@@ -16,13 +16,17 @@ var articleSchema = new Schema(
       type: String,
       default: "",
     },
-    numberOfLikes: {
+    number_of_likes: {
       type: Number,
       default: 0,
     },
-    numberOfViews: {
+    number_of_views: {
       type: Number,
       default: 0,
+    },
+    is_published: {
+      type: Boolean,
+      default: false,
     },
     author: {
       type: mongoose.Schema.Types.ObjectId,

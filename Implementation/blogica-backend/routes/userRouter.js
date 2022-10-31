@@ -114,15 +114,25 @@ userRouter.get(
               ],
             },
             {
+              path: `articles.drafts`,
+              populate: [
+                {
+                  path: "author",
+                  model: "User",
+                },
+              ],
+            },
+
+            {
               path: "badges.badge",
             },
           ]
       )
       .then(
         async (user) => {
+          console.log(user);
           res.statusCode = 200;
           res.setHeader("Content-Type", "application/json");
-          console.log(user);
           const {
             _id,
             firstname,
@@ -135,7 +145,6 @@ userRouter.get(
             points_earned,
             points_spent,
             createdAt,
-            updatedAt,
           } = user;
 
           var userDetails = {
@@ -215,6 +224,7 @@ userRouter.get("/authorDetails", cors.cors, (req, res, next) => {
             image_url,
             username,
             badges,
+            articles,
             createdAt,
           } = user;
 
@@ -232,7 +242,6 @@ userRouter.get("/authorDetails", cors.cors, (req, res, next) => {
             },
             badges: DataTrimmer.trimBadgeList(badges),
             createdAt,
-            updatedAt,
           });
         },
         (err) => next(err)
@@ -295,7 +304,7 @@ userRouter.post("/signin", cors.corsWithOptions, (req, res, next) => {
   passport.authenticate("local", { session: false }, (err, user, info) => {
     if (err) return next(err);
     if (!user) {
-      res.statusCode = 401;
+      res.statusCode = 200;
       res.setHeader("Content-Type", "application/json");
       return res.json({
         success: false,
@@ -392,7 +401,7 @@ userRouter.get("/checkJWTtoken", cors.corsWithOptions, (req, res) => {
   })(req, res);
 });
 
-var categories = ["favorites", "saved", "recents", "published"];
+var categories = ["favorites", "saved", "recents", "published", "drafts"];
 var properties = ["articles"];
 
 userRouter
@@ -408,7 +417,7 @@ userRouter
   .post(cors.corsWithOptions, authenticate.verifyUser, (req, res, next) => {
     if (req.query.category == "favorites" && req.query.property == "articles") {
       Article.findById(req.body.id).then((article) => {
-        article.numberOfLikes += 1;
+        article.number_of_likes += 1;
         article.save();
       });
     }
@@ -421,6 +430,11 @@ userRouter
     res.end("Put operation not supported on /users/category");
   })
   .delete(cors.corsWithOptions, authenticate.verifyUser, (req, res, next) => {
+    console.log(
+      req.query.category,
+      categories,
+      categories.includes(req.query.category)
+    );
     if (
       categories.includes(req.query.category) &&
       properties.includes(req.query.property)
@@ -430,7 +444,7 @@ userRouter
         req.query.property == "articles"
       ) {
         Article.findById(req.body.id).then((article) => {
-          article.numberOfLikes -= 1;
+          article.number_of_likes -= 1;
           article.save();
         });
       }

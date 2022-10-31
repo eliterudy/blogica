@@ -3,16 +3,8 @@ const trimBadge = (badge) => {
   return { title, image_url, description };
 };
 const trimAuthor = (author) => {
-  const {
-    _id,
-    username,
-    image_url,
-    firstname,
-    lastname,
-    bio,
-    createdAt,
-    updatedAt,
-  } = author;
+  const { _id, username, image_url, firstname, lastname, bio, createdAt } =
+    author;
   return {
     _id,
     username,
@@ -21,7 +13,6 @@ const trimAuthor = (author) => {
     lastname,
     bio,
     createdAt,
-    updatedAt,
   };
 };
 const trimArticleWithAuthorPopulated = (article) => {

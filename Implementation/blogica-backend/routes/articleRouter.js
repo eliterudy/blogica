@@ -28,24 +28,23 @@ articleRouter
         $regex: req.query.search ? req.query.search : "",
         $options: "i",
       },
+      // is_published: true,
     };
 
     var sortBy = {};
     if (req.query.sort == "new") {
       sortBy = {
         createdAt: -1,
-        numberOfViews: -1,
+        number_of_views: -1,
       };
     }
 
     if (req.query.sort == "top") {
       sortBy = {
-        numberOfViews: -1,
+        number_of_views: -1,
         createdAt: 1,
       };
     }
-
-    console.log(filters, sortBy);
 
     Article.find(filters)
       .sort(sortBy)
@@ -99,7 +98,7 @@ articleRouter
         description: req.body.description,
         image_url: image_url,
         author: req.user._id,
-        featured: false,
+        is_published: req.body.is_published,
       };
 
       Article.create(article)
@@ -110,7 +109,14 @@ articleRouter
             res.json(DataTrimmer.trimArticleWithoutAuthorPopulated(article));
             User.findById(req.user._id)
               .then(async (user) => {
-                user.published.articles.push(article._id);
+                if (req.body.is_published === true) {
+                  user.articles.published = [
+                    article._id,
+                    ...user.articles.published,
+                  ];
+                } else {
+                  user.articles.drafts = [article._id, ...user.articles.drafts];
+                }
                 await user.save();
               })
               .catch((err) => next(err));
@@ -143,10 +149,12 @@ articleRouter
             {},
             {
               $set: {
-                published: { articles: [] },
-                recents: { articles: [] },
-                favorites: { articles: [] },
-                saved: { articles: [] },
+                articles: {
+                  published: [],
+                  recents: [],
+                  favorites: [],
+                  saved: [],
+                },
               },
             },
             {
@@ -178,12 +186,12 @@ articleRouter
       .then(
         async (article) => {
           if (article) {
-            article.numberOfViews += 1;
-            // article.numberOfViews = 0;
-            if (VIEW_COUNT_REWARD.includes(article.numberOfViews)) {
+            article.number_of_views += 1;
+            // article.number_of_views = 0;
+            if (VIEW_COUNT_REWARD.includes(article.number_of_views)) {
               await Badge.findOne({
                 type: "view",
-                count: article.numberOfViews,
+                count: article.number_of_views,
               })
                 .then(async (badge) => {
                   if (badge) {
@@ -221,15 +229,15 @@ articleRouter
               User.findById(req.query.user_id).then(
                 (user) => {
                   if (user) {
-                    var tempArr = (tempArr = [
+                    var tempArr = [
                       ...new Set([
                         article.id,
-                        ...user["recents"]["articles"].map((e) =>
+                        ...user["articles"]["recents"].map((e) =>
                           e._id.toString()
                         ),
                       ]),
-                    ].slice(0, 10));
-                    user["recents"]["articles"] = [...tempArr];
+                    ].slice(0, 10);
+                    user["articles"]["recents"] = [...tempArr];
 
                     user.save();
                   }
@@ -263,8 +271,12 @@ articleRouter
   })
   .put(cors.corsWithOptions, authenticate.verifyUser, (req, res, next) => {
     Article.findById(req.params.articleId)
-      .then((article) => {
-        if (article.author === req.user._id || req.user.admin) {
+      .then((articleOld) => {
+        if (
+          articleOld &&
+          (articleOld.author.toString() === req.user._id.toString() ||
+            req.user.admin)
+        ) {
           Article.findByIdAndUpdate(
             req.params.articleId,
             {
@@ -273,15 +285,119 @@ articleRouter
             { new: true }
           )
             .then(
-              (article) => {
-                res.statusCode = 200;
-                res.setHeader("Content-Type", "application/json");
+              (articleNew) => {
+                if (!articleNew) {
+                  return next(new Error("Article doesn't exist"));
+                }
+                console.log("ReQ.body", req.body, articleOld.is_published);
 
-                res.json(article);
+                if (req.body.hasOwnProperty("is_published")) {
+                  console.log("HEINDIQEWJNDIJ");
+                  if (
+                    req.body.is_published === true &&
+                    articleOld.is_published == false
+                  ) {
+                    User.findById(articleNew.author._id)
+                      .then(
+                        (user) => {
+                          if (!user) {
+                            return next(new Error("User doesn't exist"));
+                          }
+
+                          var indexInDrafts = user.articles.drafts.indexOf(
+                            articleNew._id
+                          );
+                          if (indexInDrafts != -1) {
+                            user.articles.drafts.splice(
+                              user.articles.drafts.indexOf(articleNew._id),
+                              1
+                            );
+                          }
+                          user.articles.published = [
+                            ...new Set([
+                              articleNew._id,
+                              ...user.articles.published,
+                            ]),
+                          ];
+                          user.save().then((user) => {
+                            if (!user) {
+                              return next(new Error("User doesn't exist"));
+                            } else {
+                              res.statusCode = 200;
+                              res.setHeader("Content-Type", "application/json");
+                              return res.json(articleNew);
+                            }
+                          });
+                        },
+                        (err) => next(err)
+                      )
+                      .catch((err) => next(err));
+                  } else if (
+                    req.body.is_published === false &&
+                    articleOld.is_published == true
+                  ) {
+                    console.log("Here 2");
+
+                    User.findById(articleNew.author._id)
+                      .then(
+                        (user) => {
+                          if (!user) {
+                            return next(new Error("User doesn't exist"));
+                          }
+                          var indexInPublished =
+                            user.articles.published.indexOf(articleNew._id);
+                          if (indexInPublished != -1) {
+                            user.articles.published.splice(
+                              user.articles.published.indexOf(articleNew._id),
+                              1
+                            );
+                          }
+                          user.articles.drafts = [
+                            ...new Set([
+                              articleNew._id,
+                              ...user.articles.drafts,
+                            ]),
+                          ];
+                          user.save().then(
+                            (user) => {
+                              if (!user) {
+                                return next(new Error("User doesn't exist"));
+                              } else {
+                                res.statusCode = 200;
+                                res.setHeader(
+                                  "Content-Type",
+                                  "application/json"
+                                );
+                                return res.json(articleNew);
+                              }
+                            },
+                            (err) => next(err)
+                          );
+                        },
+                        (err) => next(err)
+                      )
+                      .catch((err) => next(err));
+                  } else {
+                    res.statusCode = 200;
+                    res.setHeader("Content-Type", "application/json");
+                    return res.json(articleNew);
+                  }
+                } else {
+                  res.statusCode = 200;
+                  res.setHeader("Content-Type", "application/json");
+                  return res.json(articleNew);
+                }
               },
               (err) => next(err)
             )
             .catch((err) => next(err));
+        } else {
+          res.statusCode = 403;
+          return next(
+            new Error(
+              "Only the author of this article or the admin are authorized to update this article"
+            )
+          );
         }
       })
       .catch((err) => next(err));
@@ -289,17 +405,51 @@ articleRouter
   .delete(cors.corsWithOptions, authenticate.verifyUser, (req, res, next) => {
     Article.findById(req.params.articleId)
       .then((article) => {
+        if (!article) return next(new Error("Article doesn't exist"));
+
         if (article.author === req.user._id || req.user.admin) {
           Article.findByIdAndRemove(req.params.articleId)
             .then((resp) => {
-              res.statusCode = 200;
-              res.setHeader("Content-Type", "application/json");
-              res.json(resp);
+              User.findById(req.user._id).then(
+                (user) => {
+                  if (!user) return next(new Error("User doesn't exist"));
+
+                  if (user.articles.drafts.includes(req.params.articleId)) {
+                    user.articles.drafts.splice(
+                      user.articles.drafts.indexOf(req.params.articleId),
+                      1
+                    );
+                  }
+
+                  if (user.articles.drafts.includes(req.params.articleId)) {
+                    user.articles.drafts.splice(
+                      user.articles.drafts.indexOf(req.params.articleId),
+                      1
+                    );
+                  }
+
+                  user.save().then(
+                    (user) => {
+                      if (!user) return next(new Error("User doesn't exist"));
+
+                      res.statusCode = 200;
+                      res.setHeader("Content-Type", "application/json");
+                      return res.json(resp);
+                    },
+                    (err) => next(err)
+                  );
+                },
+                (err) => next(err)
+              );
             })
             .catch((err) => next(err));
         } else {
           res.statusCode = 403;
-          res.end("Only the author of this article can delete this article");
+          return next(
+            new Error(
+              "Only the author of this article or the admin are authorized to delete this article"
+            )
+          );
         }
       })
       .catch((err) => next(err));
