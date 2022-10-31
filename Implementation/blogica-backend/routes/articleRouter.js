@@ -28,7 +28,7 @@ articleRouter
         $regex: req.query.search ? req.query.search : "",
         $options: "i",
       },
-      // is_published: true,
+      is_published: true,
     };
 
     var sortBy = {};
@@ -221,35 +221,33 @@ articleRouter
             }
 
             await article.save();
-            res.statusCode = 200;
-            res.setHeader("Content-Type", "application/json");
 
             // add to users recents
-            if (req.query.user_id) {
-              User.findById(req.query.user_id).then(
-                (user) => {
-                  if (user) {
-                    var tempArr = [
-                      ...new Set([
-                        article.id,
-                        ...user["articles"]["recents"].map((e) =>
-                          e._id.toString()
-                        ),
-                      ]),
-                    ].slice(0, 10);
-                    user["articles"]["recents"] = [...tempArr];
+            // if (req.query.user_id) {
+            //   User.findById(req.query.user_id).then(
+            //     (user) => {
+            //       if (user) {
+            //         var tempArr = [
+            //           ...new Set([
+            //             article.id,
+            //             ...user["articles"]["recents"].map((e) =>
+            //               e._id.toString()
+            //             ),
+            //           ]),
+            //         ].slice(0, 10);
+            //         user["articles"]["recents"] = [...tempArr];
 
-                    user.save();
-                  }
-                },
-                (err) => next(err)
-              );
-            }
-
-            return res.json({
-              ...article._doc,
-              author: DataTrimmer.trimAuthor(article._doc.author),
-            });
+            //         user.save();
+            //       }
+            //     },
+            //     (err) => next(err)
+            //   );
+            // }
+            res.statusCode = 200;
+            res.setHeader("Content-Type", "application/json");
+            return res.json(
+              DataTrimmer.trimArticleWithAuthorPopulated(article._doc)
+            );
           } else {
             res.statusCode = 400;
             res.setHeader("Content-Type", "application/json");

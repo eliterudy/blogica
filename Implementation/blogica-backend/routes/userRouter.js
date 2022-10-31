@@ -184,6 +184,7 @@ userRouter.get(
                 saved: articles.saved,
                 published: articles.published,
                 recents: articles.recents,
+                drafts: articles.drafts,
               },
             };
           }
@@ -329,16 +330,13 @@ userRouter.post("/signin", cors.corsWithOptions, (req, res, next) => {
         .then(
           (user) => {
             const {
-              published,
-              saved,
-              favorites,
               _id,
               firstname,
               lastname,
-              bio,
               image_url,
               username,
               createdAt,
+              articles,
             } = user;
             var userDetails = {
               _id,
@@ -346,10 +344,13 @@ userRouter.post("/signin", cors.corsWithOptions, (req, res, next) => {
               lastname,
               image_url,
               username,
-              published,
-              saved,
-              favorites,
               createdAt,
+              articles: {
+                saved: articles.saved,
+                published: articles.published,
+                recents: articles.recents,
+                drafts: articles.drafts,
+              },
             };
             res.statusCode = 200;
             res.setHeader("Content-Type", "application/json");
