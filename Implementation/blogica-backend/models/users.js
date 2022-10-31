@@ -30,30 +30,30 @@ var userSchema = new Schema(
       type: [badgeUserSchema],
       default: [],
     },
-    saved: {
-      articles: {
+
+    articles: {
+      favorites: {
+        type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Article" }],
+        default: [],
+      },
+      published: {
+        type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Article" }],
+        default: [],
+      },
+      recents: {
+        type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Article" }],
+        default: [],
+      },
+      saved: {
+        type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Article" }],
+        default: [],
+      },
+      drafts: {
         type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Article" }],
         default: [],
       },
     },
-    favorites: {
-      articles: {
-        type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Article" }],
-        default: [],
-      },
-    },
-    published: {
-      articles: {
-        type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Article" }],
-        default: [],
-      },
-    },
-    recents: {
-      articles: {
-        type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Article" }],
-        default: [],
-      },
-    },
+
     points_earned: {
       type: Number,
       default: 0,

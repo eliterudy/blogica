@@ -6,14 +6,14 @@ const UserPropUpdate = {
   getArticlesByProperty: (req, res, next) => {
     User.findById(req.user._id)
       // .populate({
-      //   path: `${req.query.category}.${req.query.property}`,
+      //   path: `${req.query.property}.${req.query.category}`,
       // })
       .then(
         (user) => {
           if (user != null) {
             res.statusCode = 200;
             res.setHeader("Content-Type", "application/json");
-            res.json(user[req.query.category][req.query.property]);
+            res.json(user[req.query.property][req.query.category]);
           } else {
             err = new Error(`User not found`);
             err.status = 404;
@@ -37,20 +37,20 @@ const UserPropUpdate = {
               return next(err);
             }
             if (article) {
-              var tempArr = user[req.query.category][req.query.property].map(
+              var tempArr = user[req.query.property][req.query.category].map(
                 (e) => e._id.toString()
               );
               tempArr = [...new Set([req.body.id, ...tempArr])];
               if (req.query.category === "recents") {
                 tempArr = tempArr.slice(0, 10);
               }
-              user[req.query.category][req.query.property] = [...tempArr];
+              user[req.query.property][req.query.category] = [...tempArr];
 
               user.save().then(
                 (user) => {
                   res.statusCode = 200;
                   res.setHeader("Content-Type", "application/json");
-                  res.json(user[req.query.category][req.query.property]);
+                  res.json(user[req.query.property][req.query.category]);
                 },
                 (err) => next(err)
               );
@@ -67,10 +67,10 @@ const UserPropUpdate = {
     User.findById(req.user._id)
       .then((user) => {
         if (
-          user[req.query.category][req.query.property].includes(req.body.id)
+          user[req.query.property][req.query.category].includes(req.body.id)
         ) {
-          user[req.query.category][req.query.property].splice(
-            user[req.query.category][req.query.property].indexOf(req.body.id),
+          user[req.query.property][req.query.category].splice(
+            user[req.query.property][req.query.category].indexOf(req.body.id),
             1
           );
         }
@@ -78,7 +78,7 @@ const UserPropUpdate = {
           (user) => {
             res.statusCode = 200;
             res.setHeader("Content-Type", "application/json");
-            res.json(user[req.query.category][req.query.property]);
+            res.json(user[req.query.property][req.query.category]);
           },
           (err) => next(err)
         );

@@ -87,7 +87,7 @@ userRouter.get(
         req.query.isProfile &&
           req.query.isProfile == "true" && [
             {
-              path: `published.articles`,
+              path: `articles.published`,
               populate: [
                 {
                   path: "author",
@@ -96,7 +96,7 @@ userRouter.get(
               ],
             },
             {
-              path: `recents.articles`,
+              path: `articles.recents`,
               populate: [
                 {
                   path: "author",
@@ -105,7 +105,7 @@ userRouter.get(
               ],
             },
             {
-              path: `saved.articles`,
+              path: `articles.saved`,
               populate: [
                 {
                   path: "author",
@@ -124,10 +124,6 @@ userRouter.get(
           res.setHeader("Content-Type", "application/json");
           console.log(user);
           const {
-            published,
-            recents,
-            favorites,
-            saved,
             _id,
             firstname,
             lastname,
@@ -135,10 +131,11 @@ userRouter.get(
             image_url,
             username,
             badges,
-            createdAt,
-            updatedAt,
+            articles,
             points_earned,
             points_spent,
+            createdAt,
+            updatedAt,
           } = user;
 
           var userDetails = {
@@ -149,7 +146,6 @@ userRouter.get(
             image_url,
             username,
             createdAt,
-            updatedAt,
           };
 
           if (req.query.isProfile && req.query.isProfile == "true") {
@@ -157,22 +153,30 @@ userRouter.get(
               ...userDetails,
               points_earned,
               points_spent,
-              saved: {
-                articles: DataTrimmer.trimArticleList(saved.articles, true),
-              },
-              favorites: {
-                articles: DataTrimmer.trimArticleList(favorites.articles, true),
+              articles: {
+                saved: DataTrimmer.trimArticleList(articles.saved, true),
+                favorites: DataTrimmer.trimArticleList(
+                  articles.favorites,
+                  true
+                ),
+                recents: DataTrimmer.trimArticleList(articles.recents, true),
+                published: DataTrimmer.trimArticleList(
+                  articles.published,
+                  true
+                ),
+                drafts: DataTrimmer.trimArticleList(articles.drafts, true),
               },
               badges: DataTrimmer.trimBadgeList(badges),
-              recents: {
-                articles: DataTrimmer.trimArticleList(recents.articles, true),
-              },
-              published: {
-                articles: DataTrimmer.trimArticleList(published.articles, true),
-              },
             };
           } else {
-            userDetails = { ...userDetails, saved, favorites, published };
+            userDetails = {
+              ...userDetails,
+              articles: {
+                saved: articles.saved,
+                published: articles.published,
+                recents: articles.recents,
+              },
+            };
           }
 
           res.json(userDetails);
@@ -188,7 +192,7 @@ userRouter.get("/authorDetails", cors.cors, (req, res, next) => {
     User.findById(req.query.author_id)
       .populate([
         {
-          path: `published.articles`,
+          path: `articles.published`,
           populate: [
             {
               path: "author",
@@ -204,7 +208,6 @@ userRouter.get("/authorDetails", cors.cors, (req, res, next) => {
       .then(
         async (user) => {
           const {
-            published,
             _id,
             firstname,
             lastname,
@@ -213,10 +216,7 @@ userRouter.get("/authorDetails", cors.cors, (req, res, next) => {
             username,
             badges,
             createdAt,
-            updatedAt,
           } = user;
-
-          console.log(user);
 
           res.statusCode = 200;
           res.setHeader("Content-Type", "application/json");
@@ -227,8 +227,8 @@ userRouter.get("/authorDetails", cors.cors, (req, res, next) => {
             bio,
             image_url,
             username,
-            published: {
-              articles: DataTrimmer.trimArticleList(published.articles, true),
+            articles: {
+              published: DataTrimmer.trimArticleList(articles.published, true),
             },
             badges: DataTrimmer.trimBadgeList(badges),
             createdAt,
