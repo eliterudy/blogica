@@ -38,15 +38,15 @@ import moment from "moment";
 /* component/screen inports */
 
 /* helper imports */
-import { cssHover } from "../../components/generic/hoverProps";
-import { Article, AuthorDetails } from "../../config/types";
-import { icons } from "../../config/configuration";
-import Generic from "../../components/generic/GenericComponents";
-import { toggler } from "../../utils/generic";
-import actions from "../../redux/actionReducers/index";
-import ArticleListCard from "../../components/ArticleListCard";
-import apis from "../../config/api";
-import Achievements from "../../components/generic/Achievements";
+import { cssHover } from "../../../components/generic/hoverProps";
+import { Article, AuthorDetails } from "../../../config/types";
+import { icons } from "../../../config/configuration";
+import Generic from "../../../components/generic/GenericComponents";
+import { toggler } from "../../../utils/generic";
+import actions from "../../../redux/actionReducers/index";
+import ArticleListCard from "../../../components/ArticleListCard";
+import apis from "../../../config/api";
+import Achievements from "../../../components/generic/Achievements";
 
 const AuthorProfile = (props: any) => {
   const navigate = useNavigate();

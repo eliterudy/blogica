@@ -133,6 +133,13 @@ const articleApiList = {
       },
     });
   },
+
+  deleteArticle: (articleId: number) => {
+    return ApiCaller({
+      url: `/articles/id/${articleId}`,
+      method: "delete",
+    });
+  },
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export

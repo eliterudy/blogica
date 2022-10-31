@@ -38,11 +38,7 @@ const MainRouter = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const MainRoutes = () => {
-    const [isModalOpen, updateModalOpen] = useState(false);
     const [loading, updateLoading] = useState(true);
-    const toggleModal = () => {
-      updateModalOpen(!isModalOpen);
-    };
 
     const state = useSelector((state: any) => {
       // eslint-disable-next-line no-labels, no-label-var
@@ -82,9 +78,7 @@ const MainRouter = () => {
     } else {
       return (
         <div className="vh-100 col-12 d-flex flex-column">
-          {location.pathname != "/main/article/new" && (
-            <Header modalCallback={() => toggleModal()} />
-          )}
+          {location.pathname != "/main/article/new" && <Header />}
           <Routes>
             <Route
               path="/"

@@ -22,9 +22,14 @@ export const userSlice = createSlice({
     removeUser: (state) => {
       state.user = null;
     },
+    addArticlesToArticleCategory: (state, action) => {},
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { loadUser, removeUser } = userSlice.actions;
+export const {
+  loadUser,
+  removeUser,
+  addArticlesToArticleCategory,
+} = userSlice.actions;
 export default userSlice.reducer;

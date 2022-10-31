@@ -52,15 +52,16 @@ import ArticleListCard from "../../../components/ArticleListCard";
 import moment from "moment";
 
 const ArticleListingByCategory = ({
-  index,
   data,
   tabMessage,
   showAuthorDetails,
+  deleteCallack,
 }: {
   index: number;
   data: Article[];
   tabMessage: string;
   showAuthorDetails: boolean;
+  deleteCallack: any;
 }) => {
   const navigate = useNavigate();
   const isTabletOrMobile = useMediaQuery({ query: "(max-width: 767px)" });
@@ -90,6 +91,7 @@ const ArticleListingByCategory = ({
                   article={article}
                   index={index}
                   showAuthorDetails={showAuthorDetails}
+                  deleteCallack={(index: number) => deleteCallack(index)}
                 />
               </div>
             ))}
@@ -106,7 +108,9 @@ const ArticleListingByCategory = ({
           className="noselect  col-12  d-flex flex-row flex-wrap pt-5 pe-3"
           style={{ marginBottom: isTabletOrMobile ? 500 : 600 }}
         >
-          <span className="col-12 text-center">{`No articles`}</span>
+          <p className="col-12 text-center">
+            <em>There are no articles under this category/tab at the moment</em>
+          </p>
         </div>
       );
     }

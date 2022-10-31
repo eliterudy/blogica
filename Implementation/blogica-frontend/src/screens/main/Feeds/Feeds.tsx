@@ -289,8 +289,19 @@ const Feeds = (props: any) => {
                             ]
                           }
                           tabMessage={tab.message}
+                          deleteCallack={(index: number) => {
+                            console.log("deleteCallack", index);
+                            const drafts = user.articles.drafts;
+                            drafts.splice(index, 1);
+                            var userDetails = user;
+                            userDetails.articles.drafts = drafts;
+                            console.log(drafts, userDetails);
+                            updateUser({ ...userDetails });
+                          }}
                           showAuthorDetails={
-                            tab.key === "published" ? false : true
+                            tab.key === "published" || tab.key === "drafts"
+                              ? false
+                              : true
                           }
                         />
                       </TabPane>
