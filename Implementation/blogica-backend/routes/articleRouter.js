@@ -32,17 +32,26 @@ articleRouter
 
     var sortBy = {};
     if (req.query.sort == "new") {
-      sortBy["createdAt"] = -1;
+      sortBy = {
+        createdAt: -1,
+        numberOfViews: -1,
+      };
     }
 
     if (req.query.sort == "top") {
-      sortBy["numberOfLikes"] = -1;
+      sortBy = {
+        numberOfViews: -1,
+        createdAt: 1,
+      };
     }
+
+    console.log(filters, sortBy);
 
     Article.find(filters)
       .sort(sortBy)
       .limit(req.query.limit)
       .skip(req.query.offset)
+      .populate(["author"])
       .then(
         (articles) => {
           if (articles) {
@@ -52,7 +61,7 @@ articleRouter
                 res.setHeader("Content-Type", "application/json");
 
                 res.json({
-                  results: DataTrimmer.trimArticleList(articles, false),
+                  results: DataTrimmer.trimArticleList(articles, true),
                   limit: Number(req.query.limit),
                   nextOffset:
                     Number(req.query.offset) + Number(req.query.limit),
@@ -207,6 +216,7 @@ articleRouter
             res.statusCode = 200;
             res.setHeader("Content-Type", "application/json");
 
+            // add to users recents
             if (req.query.user_id) {
               User.findById(req.query.user_id).then(
                 (user) => {
