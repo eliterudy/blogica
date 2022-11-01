@@ -138,7 +138,6 @@ badgeRouter
     authenticate.verifyUser,
     authenticate.verifyAdmin,
     (req, res, next) => {
-      console.log(req.body);
       Badge.findByIdAndUpdate(
         req.params.badgeId,
         {
@@ -148,7 +147,6 @@ badgeRouter
       )
         .then(
           (badge) => {
-            console.log(badge);
             res.statusCode = 200;
             res.setHeader("Content-Type", "application/json");
             res.json(badge);
