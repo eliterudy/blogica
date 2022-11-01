@@ -14,16 +14,24 @@ import { constants } from "../config/configuration";
 import moment from "moment";
 import { Link, useNavigate } from "react-router-dom";
 import ReactQuill from "react-quill";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import apis from "../config/api";
+import { Dispatch } from "@reduxjs/toolkit";
+import {
+  addArticlesToArticleCategory,
+  deleteArticlesFromArticleCategory,
+} from "../redux/actionReducers/userReducer";
 // https://picsum.photos/seed/picsum/200/300)
 
 const ArticleListCard = (cardProps: ArticleCardProps) => {
+  const dispatch: Dispatch<any> = useDispatch();
+
   const {
     article,
     index,
     showAuthorDetails = true,
-    deleteCallack = () => {},
+    deleteCallback = () => {},
+    addCallback = () => {},
   } = cardProps;
   const navigate = useNavigate();
   const [saveTooltipStatus, updateSaveTooltipStatus] = useState(false);
@@ -217,7 +225,37 @@ const ArticleListCard = (cardProps: ArticleCardProps) => {
                   onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
-                    // navigate(`/main/author/id/${article.author._id}`);
+                    !user.articles.saved.includes(article._id)
+                      ? apis
+                          .postToCategory(
+                            { property: "articles", category: "saved" },
+                            { id: article._id }
+                          )
+                          .then(({ data }) => {
+                            dispatch(
+                              addArticlesToArticleCategory({
+                                articleCategory: "saved",
+                                articleId: article._id,
+                              })
+                            );
+                            addCallback(article, "saved");
+                          })
+                          .catch((error) => {})
+                      : apis
+                          .deleteFromCategory(
+                            { property: "articles", category: "saved" },
+                            { id: article._id }
+                          )
+                          .then(({ data }) => {
+                            dispatch(
+                              deleteArticlesFromArticleCategory({
+                                articleCategory: "saved",
+                                articleId: article._id,
+                              })
+                            );
+                            deleteCallback(index, "saved");
+                          })
+                          .catch((error) => {});
                   }}
                 >
                   {user.articles.saved.includes(article._id) ? (
@@ -280,7 +318,7 @@ const ArticleListCard = (cardProps: ArticleCardProps) => {
               apis
                 .deleteArticle(article._id)
                 .then(({ data }) => {
-                  deleteCallack(index);
+                  deleteCallback(index, "drafts");
                   updateDeleteArticleLoading(false);
                   toggleModal();
                 })

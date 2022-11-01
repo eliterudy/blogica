@@ -25,7 +25,8 @@ export interface ArticleCardProps {
   article: Article;
   index: number;
   showAuthorDetails?: boolean;
-  deleteCallack?: any;
+  deleteCallback?: any;
+  addCallback?: any;
 }
 
 export interface Person {

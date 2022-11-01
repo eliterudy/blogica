@@ -55,13 +55,15 @@ const ArticleListingByCategory = ({
   data,
   tabMessage,
   showAuthorDetails,
-  deleteCallack,
+  deleteCallback,
+  addCallback,
 }: {
   index: number;
   data: Article[];
   tabMessage: string;
   showAuthorDetails: boolean;
-  deleteCallack: any;
+  deleteCallback: any;
+  addCallback: any;
 }) => {
   const navigate = useNavigate();
   const isTabletOrMobile = useMediaQuery({ query: "(max-width: 767px)" });
@@ -91,7 +93,12 @@ const ArticleListingByCategory = ({
                   article={article}
                   index={index}
                   showAuthorDetails={showAuthorDetails}
-                  deleteCallack={(index: number) => deleteCallack(index)}
+                  deleteCallback={(index: number, articleCategory: string) =>
+                    deleteCallback(index, articleCategory)
+                  }
+                  addCallback={(article: Article, articleCategory: string) =>
+                    addCallback(article, articleCategory)
+                  }
                 />
               </div>
             ))}

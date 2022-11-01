@@ -87,11 +87,12 @@ const userApiList = {
     });
   },
 
-  deleteFromCategory: (payload: any) => {
+  deleteFromCategory: (params: any, payload: any) => {
     return ApiCaller({
       url: `/users/category`,
       method: "delete",
       data: payload,
+      params,
     });
   },
 };

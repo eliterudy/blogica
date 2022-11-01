@@ -43,6 +43,7 @@ import {
   Article,
   PublishedDetails,
   User,
+  UserArticleSegment,
   UserDetailArticleSegment,
   UserDetails,
 } from "../../../config/types";
@@ -50,7 +51,6 @@ import { icons, constants } from "../../../config/configuration";
 import Generic from "../../../components/generic/GenericComponents";
 import { numberToCurrencyRounder, toggler } from "../../../utils/generic";
 import actions from "../../../redux/actionReducers/index";
-import ArticleListCard from "../../../components/ArticleListCard";
 import ArticleListingByCategory from "./ArticleListingByCategory";
 import NewArticleCard from "./NewArticleCard";
 import apis from "../../../config/api";
@@ -90,7 +90,7 @@ const Feeds = (props: any) => {
   const [activeTab, updateActiveTab] = useState(
     selectedFeedsTab ? JSON.parse(selectedFeedsTab).activeTab : 0
   );
-  const [user, updateUser] = useState<UserDetails | null>(null);
+  const [userData, updateUser] = useState<UserDetails | null>(null);
   const [isLoading, updateLoading] = useState(false);
   const [error, updateError] = useState("");
   useEffect(() => {
@@ -119,7 +119,7 @@ const Feeds = (props: any) => {
   return (
     <div>
       {isLoading && <div className="vh-100 vw-100"></div>}
-      {!isLoading && user ? (
+      {!isLoading && userData ? (
         <div className="col-12 d-flex flex-column  flex-grow-1">
           <div className="col-12 ">
             <div className="noselect row col-12 m-0">
@@ -143,7 +143,7 @@ const Feeds = (props: any) => {
                       />{" "}
                       <span style={{ fontSize: 14 }}>
                         {numberToCurrencyRounder(
-                          user.points_earned - user.points_spent
+                          userData.points_earned - userData.points_spent
                         )}{" "}
                         points
                       </span>
@@ -151,8 +151,10 @@ const Feeds = (props: any) => {
                   </div>
                   <div className="d-flex flex-column align-items-center  ">
                     <Generic.Avatar
-                      image_url={process.env.REACT_APP_API_URL + user.image_url}
-                      fullname={user.firstname + user.lastname}
+                      image_url={
+                        process.env.REACT_APP_API_URL + userData.image_url
+                      }
+                      fullname={userData.firstname + userData.lastname}
                       size={200}
                     />
                     <h4
@@ -161,14 +163,14 @@ const Feeds = (props: any) => {
                         overflowWrap: "break-word",
                         margin: 0,
                       }}
-                    >{`${user.firstname} ${user.lastname}`}</h4>
+                    >{`${userData.firstname} ${userData.lastname}`}</h4>
                     <span
                       style={{
                         paddingBottom: 10,
                         overflowWrap: "break-word",
                         color: "#777",
                       }}
-                    >{` @${user.username}`}</span>
+                    >{` @${userData.username}`}</span>
                   </div>
                   <div className="">
                     <Col className="my-3  text-justify">
@@ -176,7 +178,7 @@ const Feeds = (props: any) => {
                         className="text-justify"
                         style={{ textAlign: "justify", fontSize: 14 }}
                       >
-                        <em>{user.bio}</em>
+                        <em>{userData.bio}</em>
                       </p>
                     </Col>
                     <Col className="border-top py-3">
@@ -187,7 +189,8 @@ const Feeds = (props: any) => {
                         ></i>
 
                         <span>
-                          {user.articles.published.length} Published Articles
+                          {userData.articles.published.length} Published
+                          Articles
                         </span>
                       </Col>
                       <Col className="mt-1">
@@ -197,13 +200,16 @@ const Feeds = (props: any) => {
                         ></i>
 
                         <span>
-                          Joined in {moment(user.createdAt).format("MMM, YYYY")}
+                          Joined in{" "}
+                          {moment(userData.createdAt).format("MMM, YYYY")}
                         </span>
                       </Col>
                     </Col>
-                    {user && user.badges && user.badges.length > 0 && (
-                      <Achievements badges={user.badges} />
-                    )}
+                    {userData &&
+                      userData.badges &&
+                      userData.badges.length > 0 && (
+                        <Achievements badges={userData.badges} />
+                      )}
                   </div>
                 </div>
               </div>
@@ -284,19 +290,43 @@ const Feeds = (props: any) => {
                         <ArticleListingByCategory
                           index={index}
                           data={
-                            user["articles"][
+                            userData["articles"][
                               tab.key as keyof UserDetailArticleSegment
                             ]
                           }
                           tabMessage={tab.message}
-                          deleteCallack={(index: number) => {
-                            console.log("deleteCallack", index);
-                            const drafts = user.articles.drafts;
-                            drafts.splice(index, 1);
-                            var userDetails = user;
-                            userDetails.articles.drafts = drafts;
-                            console.log(drafts, userDetails);
+                          deleteCallback={(
+                            index: number,
+                            articleCategoryProps: string
+                          ) => {
+                            var articleCategory =
+                              userData.articles[
+                                articleCategoryProps as keyof UserDetailArticleSegment
+                              ];
+                            articleCategory.splice(index, 1);
+                            var userDetails = userData;
+                            userDetails.articles[
+                              articleCategoryProps as keyof UserDetailArticleSegment
+                            ] = articleCategory;
                             updateUser({ ...userDetails });
+                          }}
+                          addCallback={(
+                            article: Article,
+                            articleCategoryProps: string
+                          ) => {
+                            var articleCategory =
+                              userData.articles[
+                                articleCategoryProps as keyof UserDetailArticleSegment
+                              ];
+                            // articleCategory = [article, ...articleCategory];
+                            articleCategory.unshift(article);
+                            var userDetails = userData;
+                            userDetails.articles[
+                              articleCategoryProps as keyof UserDetailArticleSegment
+                            ] = articleCategory;
+                            console.log("articleCategory", userDetails);
+                            updateUser({ ...userDetails });
+                            // updateUser({ ...userDetails });
                           }}
                           showAuthorDetails={
                             tab.key === "published" || tab.key === "drafts"
