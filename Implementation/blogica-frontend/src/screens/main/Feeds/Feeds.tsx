@@ -326,7 +326,6 @@ const Feeds = (props: any) => {
                             ] = articleCategory;
                             console.log("articleCategory", userDetails);
                             updateUser({ ...userDetails });
-                            // updateUser({ ...userDetails });
                           }}
                           showAuthorDetails={
                             tab.key === "published" || tab.key === "drafts"
