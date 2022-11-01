@@ -187,7 +187,6 @@ articleRouter
         async (article) => {
           if (article) {
             article.number_of_views += 1;
-            // article.number_of_views = 0;
             if (VIEW_COUNT_REWARD.includes(article.number_of_views)) {
               await Badge.findOne({
                 type: "view",
@@ -222,27 +221,6 @@ articleRouter
 
             await article.save();
 
-            // add to users recents
-            // if (req.query.user_id) {
-            //   User.findById(req.query.user_id).then(
-            //     (user) => {
-            //       if (user) {
-            //         var tempArr = [
-            //           ...new Set([
-            //             article.id,
-            //             ...user["articles"]["recents"].map((e) =>
-            //               e._id.toString()
-            //             ),
-            //           ]),
-            //         ].slice(0, 10);
-            //         user["articles"]["recents"] = [...tempArr];
-
-            //         user.save();
-            //       }
-            //     },
-            //     (err) => next(err)
-            //   );
-            // }
             res.statusCode = 200;
             res.setHeader("Content-Type", "application/json");
             return res.json(
@@ -417,9 +395,9 @@ articleRouter
                     );
                   }
 
-                  if (user.articles.drafts.includes(req.params.articleId)) {
-                    user.articles.drafts.splice(
-                      user.articles.drafts.indexOf(req.params.articleId),
+                  if (user.articles.published.includes(req.params.articleId)) {
+                    user.articles.published.splice(
+                      user.articles.published.indexOf(req.params.articleId),
                       1
                     );
                   }
@@ -433,6 +411,55 @@ articleRouter
                       return res.json(resp);
                     },
                     (err) => next(err)
+                  );
+
+                  User.find({ admin: false }).then(
+                    (users) => {
+                      if (users) {
+                        users.map((user) => {
+                          if (
+                            user.articles.recents.includes(req.params.articleId)
+                          ) {
+                            user.articles.recents.splice(
+                              user.articles.recents.indexOf(
+                                req.params.articleId
+                              ),
+                              1
+                            );
+                          }
+                          if (
+                            user.articles.saved.includes(req.params.articleId)
+                          ) {
+                            user.articles.saved.splice(
+                              user.articles.saved.indexOf(req.params.articleId),
+                              1
+                            );
+                          }
+
+                          if (
+                            user.articles.favorites.includes(
+                              req.params.articleId
+                            )
+                          ) {
+                            user.articles.favorites.splice(
+                              user.articles.favorites.indexOf(
+                                req.params.articleId
+                              ),
+                              1
+                            );
+                          }
+
+                          User.findByIdAndUpdate(
+                            user._id,
+                            {
+                              $set: { articles: user.articles },
+                            },
+                            { new: true }
+                          );
+                        });
+                      }
+                    },
+                    (err) => {}
                   );
                 },
                 (err) => next(err)
