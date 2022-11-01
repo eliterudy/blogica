@@ -66,11 +66,6 @@ const UserPropUpdate = {
   deleteArticlesFromUser: (req, res, next) => {
     User.findById(req.user._id)
       .then((user) => {
-        console.log(
-          user[req.query.property][req.query.category],
-          req.body.id,
-          user[req.query.property][req.query.category].includes(req.body.id)
-        );
         if (
           user[req.query.property][req.query.category].includes(req.body.id)
         ) {
