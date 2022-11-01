@@ -16,18 +16,35 @@ const trimAuthor = (author) => {
   };
 };
 const trimArticleWithAuthorPopulated = (article) => {
-  const { _id, title, description, image_url, author, createdAt } = article;
+  const {
+    _id,
+    title,
+    description,
+    image_url,
+    author,
+    createdAt,
+    is_published,
+  } = article;
   return {
     _id,
     title,
     description,
     image_url,
     author: trimAuthor(author),
+    is_published,
     createdAt,
   };
 };
 const trimArticleWithoutAuthorPopulated = (article) => {
-  const { _id, title, description, image_url, author, createdAt } = article;
+  const {
+    _id,
+    title,
+    description,
+    image_url,
+    author,
+    createdAt,
+    is_published,
+  } = article;
   return {
     _id,
     title,
@@ -35,6 +52,7 @@ const trimArticleWithoutAuthorPopulated = (article) => {
     image_url,
     author,
     createdAt,
+    is_published,
   };
 };
 

@@ -81,7 +81,6 @@ userRouter.get(
   cors.cors,
   authenticate.verifyUser,
   (req, res, next) => {
-    console.log(req.query.isProfile);
     User.findById(req.user._id)
       .populate(
         req.query.isProfile &&
@@ -130,7 +129,6 @@ userRouter.get(
       )
       .then(
         async (user) => {
-          console.log(user);
           res.statusCode = 200;
           res.setHeader("Content-Type", "application/json");
           const {
@@ -431,11 +429,6 @@ userRouter
     res.end("Put operation not supported on /users/category");
   })
   .delete(cors.corsWithOptions, authenticate.verifyUser, (req, res, next) => {
-    console.log(
-      req.query.category,
-      categories,
-      categories.includes(req.query.category)
-    );
     if (
       categories.includes(req.query.category) &&
       properties.includes(req.query.property)

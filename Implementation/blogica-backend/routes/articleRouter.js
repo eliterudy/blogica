@@ -109,7 +109,11 @@ articleRouter
             res.json(DataTrimmer.trimArticleWithoutAuthorPopulated(article));
             User.findById(req.user._id)
               .then(async (user) => {
-                if (req.body.is_published === true) {
+                console.log(
+                  req.body.is_published,
+                  req.body.is_published == "true"
+                );
+                if (req.body.is_published === "true") {
                   user.articles.published = [
                     article._id,
                     ...user.articles.published,
@@ -290,7 +294,6 @@ articleRouter
                 console.log("ReQ.body", req.body, articleOld.is_published);
 
                 if (req.body.hasOwnProperty("is_published")) {
-                  console.log("HEINDIQEWJNDIJ");
                   if (
                     req.body.is_published === true &&
                     articleOld.is_published == false
@@ -404,8 +407,11 @@ articleRouter
     Article.findById(req.params.articleId)
       .then((article) => {
         if (!article) return next(new Error("Article doesn't exist"));
-
-        if (article.author === req.user._id || req.user.admin) {
+        console.log();
+        if (
+          article.author.toString() === req.user._id.toString() ||
+          req.user.admin
+        ) {
           Article.findByIdAndRemove(req.params.articleId)
             .then((resp) => {
               User.findById(req.user._id).then(
