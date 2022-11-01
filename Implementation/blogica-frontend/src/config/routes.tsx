@@ -78,7 +78,8 @@ const MainRouter = () => {
     } else {
       return (
         <div className="vh-100 col-12 d-flex flex-column">
-          {location.pathname != "/main/article/new" && <Header />}
+          {location.pathname != "/main/article/new" &&
+            location.pathname != "/main/article/edit" && <Header />}
           <Routes>
             <Route
               path="/"
@@ -92,6 +93,14 @@ const MainRouter = () => {
             <Route path="/articles" element={<ArticleList />} />
             <Route
               path="/article/new"
+              element={
+                <ScrollToTop>
+                  <NewArticle />
+                </ScrollToTop>
+              }
+            />
+            <Route
+              path="/article/edit"
               element={
                 <ScrollToTop>
                   <NewArticle />
@@ -117,7 +126,8 @@ const MainRouter = () => {
             {/* default route */}
             <Route path="*" element={<Navigate to="/not-found" replace />} />
           </Routes>
-          {location.pathname != "/main/article/new" && <Footer />}
+          {location.pathname != "/main/article/new" &&
+            location.pathname != "/main/article/edit" && <Footer />}
         </div>
       );
     }

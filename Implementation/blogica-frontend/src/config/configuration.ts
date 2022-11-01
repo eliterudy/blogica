@@ -36,6 +36,8 @@ const constants: any = {
   RECENTLY_VIEWED_ARTICLES:
     "This tab displays the most recently viewed articles by you.",
   SAVED_ARTICLES: "This tab displays the articles that you saved.",
+  UPLOAD_ARTICLE_POSTER_WARNING:
+    "Please note: Once you save this article as a draft or publish it, you wont be able to update the article poster.",
 };
 
 const svgs: any = {};

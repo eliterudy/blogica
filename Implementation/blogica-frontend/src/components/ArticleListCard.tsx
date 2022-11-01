@@ -50,6 +50,19 @@ const ArticleListCard = (cardProps: ArticleCardProps) => {
       className=" d-flex"
       style={{ textDecoration: "none" }}
       onClick={() => {
+        if (user && user._id && user._id !== article.author._id) {
+          apis
+            .postToCategory(
+              { category: "recents", property: "articles" },
+              { id: article._id }
+            )
+            .then(({ data }) => {
+              console.log("CATGORY", data);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }
         navigate(`/main/article/id/${article._id}`, {
           state: { articleId: article._id },
         });
@@ -117,7 +130,7 @@ const ArticleListCard = (cardProps: ArticleCardProps) => {
         </div>
 
         <div className="col-12 d-flex flex-row justify-content-between flex-wrap pt-1 ">
-          <div className="col-12 col-sm-5 d-flex flex-wrap">
+          <div className="col-12 col-sm-7 d-flex flex-wrap py-1">
             <span style={{ fontSize: 14, color: "#555" }}>
               {moment(article.createdAt).fromNow()}
             </span>
@@ -139,7 +152,7 @@ const ArticleListCard = (cardProps: ArticleCardProps) => {
             )}
           </div>
           {user && (
-            <div className=" faCustomIcons d-flex align-items-center justify-content-end col-12 col-sm-7">
+            <div className=" faCustomIcons d-flex align-items-center justify-content-start justify-content-sm-end col-12 col-sm-5 py-1">
               {(user.articles.drafts.includes(article._id) ||
                 user.articles.published.includes(article._id)) && (
                 <div
@@ -148,7 +161,16 @@ const ArticleListCard = (cardProps: ArticleCardProps) => {
                   onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
-                    // navigate(`/main/author/id/${article.author._id}`);
+                    navigate(`/main/article/edit`, {
+                      state: {
+                        formData: {
+                          title: article.title,
+                          description: article.description,
+                        },
+                        is_published: article.is_published,
+                        _id: article._id,
+                      },
+                    });
                   }}
                 >
                   <i
@@ -188,29 +210,31 @@ const ArticleListCard = (cardProps: ArticleCardProps) => {
                   </Tooltip>
                 </div>
               )}
-              <div
-                className="ps-2"
-                id="save"
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  // navigate(`/main/author/id/${article.author._id}`);
-                }}
-              >
-                {user.articles.saved.includes(article._id) ? (
-                  <i className="fa fa-bookmark fa-lg" />
-                ) : (
-                  <i className="fa fa-bookmark-o fa-lg" />
-                )}
-                <Tooltip
-                  placement={"top"}
-                  isOpen={saveTooltipStatus}
-                  target={"save"}
-                  toggle={toggleSaveTooltip}
+              {user && user._id && user._id !== article.author._id ? (
+                <div
+                  className="ps-2"
+                  id="save"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    // navigate(`/main/author/id/${article.author._id}`);
+                  }}
                 >
-                  Save
-                </Tooltip>
-              </div>
+                  {user.articles.saved.includes(article._id) ? (
+                    <i className="fa fa-bookmark fa-lg" />
+                  ) : (
+                    <i className="fa fa-bookmark-o fa-lg" />
+                  )}
+                  <Tooltip
+                    placement={"top"}
+                    isOpen={saveTooltipStatus}
+                    target={"save"}
+                    toggle={toggleSaveTooltip}
+                  >
+                    Save
+                  </Tooltip>
+                </div>
+              ) : null}
             </div>
           )}
         </div>
@@ -250,7 +274,7 @@ const ArticleListCard = (cardProps: ArticleCardProps) => {
         </ModalBody>
         <ModalFooter>
           <Button
-            style={{ backgroundColor: "red" }}
+            className="bg-danger"
             onClick={() => {
               updateDeleteArticleLoading(true);
               apis

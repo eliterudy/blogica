@@ -78,11 +78,12 @@ const userApiList = {
       params,
     });
   },
-  postToCategory: (payload: any) => {
+  postToCategory: (params: any, payload: any) => {
     return ApiCaller({
       url: `/users/category`,
       method: "post",
       data: payload,
+      params,
     });
   },
 
@@ -123,14 +124,11 @@ const articleApiList = {
     });
   },
 
-  putArticle: (payload: any) => {
+  putArticle: (articleId: string, payload: any) => {
     return ApiCaller({
-      url: `/articles`,
+      url: `/articles/id/${articleId}`,
       method: "put",
       data: payload,
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
     });
   },
 

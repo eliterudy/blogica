@@ -6,7 +6,8 @@ export interface Article {
   image_url: string;
   description: string;
   author: Author;
-  createdAt?: string; // remove ?  later
+  createdAt: string;
+  is_published: boolean;
 }
 
 export interface ArticleDetails extends Article {

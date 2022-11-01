@@ -123,17 +123,17 @@ const ArticleListingByCategory = ({
     >
       <span className="subMessages">{tabMessage}</span>
       {articles && (
-        <div>
-          <div
-            className=""
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              flexWrap: "wrap",
-            }}
-          >
-            {loadArticles(articles, showAuthorDetails)}
-          </div>
+        <div
+          className="col-12"
+          style={
+            {
+              // display: "flex",
+              // flexDirection: "row",
+              // flexWrap: "wrap",
+            }
+          }
+        >
+          {loadArticles(articles, showAuthorDetails)}
         </div>
       )}
     </div>

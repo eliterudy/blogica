@@ -53,17 +53,26 @@
   color: red
 }
 
+.new-article.input::placeholder {
+  color: #aaa;
+
+}
+
 .ql-container .ql-editor {
   font-size: 18px;
-  
+padding: 14px;
   text-justify: inter-word;
   /* line-height: 40px; */
+}
+
+.quill > .ql-container > .ql-editor.ql-blank::before{
+  font-style: normal;
+  
 }
 
 .cardDescription .ql-container .ql-editor {
   padding: 0%;
   font-size: 16px;
-  
   text-justify: inter-word;
   overflow: hidden;
   text-overflow: ellipsis;
