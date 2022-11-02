@@ -60,7 +60,10 @@ badgeRouter
           if (err.code == 11000) {
             res.statusCode = 400;
             res.setHeader("Content-Type", "application/json");
-            return res.json({ error: "Badge duplicate found" });
+            return res.json({
+              error:
+                "There is another badge with the same title. We cannot have duplicate ",
+            });
           }
           next(err);
         }
