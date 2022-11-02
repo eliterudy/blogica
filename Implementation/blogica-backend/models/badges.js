@@ -1,24 +1,39 @@
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
-var passportLocalMongoose = require("passport-local-mongoose");
 
-var badgeSchema = new Schema({
-  title: {
-    type: String,
-    default: "",
-  },
-  image_url: {
-    type: String,
-    default: "",
-  },
-  count: {
-    type: Number,
-    default: "",
-  },
-});
+var badgeSchema = new Schema(
+  {
+    title: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    image_url: {
+      type: String,
+      required: true,
+    },
+    description: {
+      type: String,
+      required: true,
+    },
+    badge_value: {
+      type: Number,
+      required: true,
+    },
 
-// adds support for username and password from passport-local-mongoose package
-badgeSchema.plugin(passportLocalMongoose);
+    type: {
+      type: String,
+      required: true,
+    },
+    count: {
+      type: Number,
+      required: true,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
 
 var Badges = mongoose.model("Badge", badgeSchema);
 module.exports = Badges;

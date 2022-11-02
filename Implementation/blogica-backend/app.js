@@ -1,25 +1,27 @@
-const createError = require("http-errors");
-const express = require("express");
-const path = require("path");
-const cookieParser = require("cookie-parser");
-const logger = require("morgan");
-const passport = require("passport");
-const authenticate = require("./config/authenticate");
-const config = require("./config/config");
-const mongoose = require("mongoose");
-const indexRouter = require("./routes/index");
-const usersRouter = require("./routes/users");
-const schedule = require("node-schedule");
+var createError = require("http-errors");
+var express = require("express");
+var path = require("path");
+var cookieParser = require("cookie-parser");
+var logger = require("morgan");
+var passport = require("passport");
+var schedule = require("node-schedule");
 
-const mongoUrl = config.mongoUrl;
-const connect = mongoose.connect(mongoUrl, {
+var authenticate = require("./config/authenticate");
+var config = require("./config/config");
+var mongoose = require("mongoose");
+var indexRouter = require("./routes/index");
+var usersRouter = require("./routes/userRouter");
+var articleRouter = require("./routes/articleRouter");
+var badgeRouter = require("./routes/badgeRouter");
+
+var mongoUrl = config.DB_CONNECT;
+var connect = mongoose.connect(mongoUrl, {
   useUnifiedTopology: true,
   useNewUrlParser: true,
   autoIndex: true, //make this also true
 });
 
-const updateFeatured = (count) => {
-  console.log("updateFeatured");
+var updateFeatured = (count) => {
   if (count < 5) {
     count = count + 1;
     Article.updateMany({ featured: true }, { $set: { featured: false } })
@@ -47,32 +49,45 @@ const updateFeatured = (count) => {
       .catch((err) => updateFeatured(count));
   }
 };
-const rule = new schedule.RecurrenceRule();
+var rule = new schedule.RecurrenceRule();
 rule.hour = 00;
 rule.tz = "Etc/UTC";
 
-connect
-  .then((db) => {
-    schedule.scheduleJob(rule, () => {
-      var count = 0;
-      updateFeatured(count);
-    });
-  })
-  .catch((err) => {});
-const app = express();
+connect.then((db) => {}).catch((err) => {});
+var app = express();
+
+// middleware to redirect to secureServer
+app.all("*", (req, res, next) => {
+  return next();
+});
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "jade");
 
 app.use(logger("dev"));
-app.use(express.json());
+app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(passport.initialize());
+
+// app.use(passport.session());
 app.use(express.static(path.join(__dirname, "public")));
+var urlPathsForImages = [
+  { path: "/images/articles", location: "articles" },
+  { path: "/images/users", location: "users" },
+];
+
+urlPathsForImages.map((urlPath) => {
+  app.use(
+    urlPath.path,
+    express.static(path.join(__dirname, `public/images/${urlPath.location}`))
+  );
+});
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
+app.use("/articles", articleRouter);
+app.use("/badges", badgeRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
