@@ -250,6 +250,7 @@ const UserAvatar = (props: any) => {
   const [myProfileDropdown, updateMyProfileDropdown] = useState(false);
   return (
     <Dropdown
+      style={{ position: "absolute", zIndex: 1200 }}
       isOpen={isDropdownOpen}
       toggle={() => {
         updateDropdown(!isDropdownOpen);
@@ -263,7 +264,13 @@ const UserAvatar = (props: any) => {
         />
       </DropdownToggle>
 
-      <DropdownMenu style={{ marginTop: 14, marginRight: -15 }}>
+      <DropdownMenu
+        style={{
+          marginTop: 10,
+          marginRight: -2,
+          boxShadow: "2px 2px 10px 2px rgba(0, 0, 255, .2)",
+        }}
+      >
         <div
           className="mx-3 mt-1 mb-2"
           onClick={() => updateMyProfileDropdown(!myProfileDropdown)}

@@ -169,7 +169,7 @@ const SignUpComponent = () => {
                 <div className="d-flex flex-row justify-content-center mt-4">
                   {imagePreview ? (
                     <Generic.Avatar
-                      image_url={process.env.REACT_APP_API_URL + imagePreview}
+                      image_url={imagePreview}
                       fullname={
                         formValues.firstname + " " + formValues.lastname
                       }

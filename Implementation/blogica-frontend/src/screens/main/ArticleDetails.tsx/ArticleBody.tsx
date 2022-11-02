@@ -56,7 +56,7 @@ const ArticleBody = ({ article, url, updateArticle }: any) => {
   const toggleModal = () => updateModalOpen(!isModalOpen);
 
   var likeIcon = <img src={icons.like_unselected} />;
-  if (!user.articles.favorites.includes(article._id)) {
+  if (user && user.articles && !user.articles.favorites.includes(article._id)) {
     likeIcon = (
       <img style={{ width: 31, marginTop: 2 }} src={icons.like_unselected} />
     );
@@ -74,6 +74,8 @@ const ArticleBody = ({ article, url, updateArticle }: any) => {
         <span className="flex-1 h1 fw-bold">{article.title}</span>
         <div>
           {user &&
+            article &&
+            article.author &&
             user._id.toString() !== article.author._id.toString() &&
             article.is_published &&
             user.articles &&
@@ -120,28 +122,34 @@ const ArticleBody = ({ article, url, updateArticle }: any) => {
               </Button>
             )}
 
-          {user._id === article.author._id && (
-            <Button
-              className=" rounded-pill  px-4 bg-primary border-0 "
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                navigate(`/main/article/edit`, {
-                  state: {
-                    formData: {
-                      title: article.title,
-                      description: article.description,
+          {user &&
+            article &&
+            article.author &&
+            user._id === article.author._id && (
+              <Button
+                className=" rounded-pill  px-4 bg-primary border-0 "
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  navigate(`/main/article/edit`, {
+                    state: {
+                      formData: {
+                        title: article.title,
+                        description: article.description,
+                      },
+                      is_published: article.is_published,
+                      _id: article._id,
                     },
-                    is_published: article.is_published,
-                    _id: article._id,
-                  },
-                });
-              }}
-            >
-              <i className="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>{" "}
-              <span>Edit Article</span>
-            </Button>
-          )}
+                  });
+                }}
+              >
+                <i
+                  className="fa fa-pencil-square-o fa-lg"
+                  aria-hidden="true"
+                ></i>{" "}
+                <span>Edit Article</span>
+              </Button>
+            )}
           {user &&
             user._id.toString() == article.author._id.toString() &&
             article.is_published === false &&
@@ -151,7 +159,7 @@ const ArticleBody = ({ article, url, updateArticle }: any) => {
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
-                  // toggleModal();
+                  toggleModal();
                 }}
               >
                 <i className="fa fa-trash-o fa-lg" aria-hidden="true"></i>{" "}
@@ -178,122 +186,128 @@ const ArticleBody = ({ article, url, updateArticle }: any) => {
         value={article.description}
       />
 
-      <div className="col-12 row mx-0  my-4 p-0 align-items-end ">
-        <div className="col-12 col-md-6 px-0 d-flex flex-row align-items-center justify-content-between">
-          <div className="flex-1 d-flex flex-row align-items-end">
-            <Button
-              className="border-0 bg-transparent p-0"
-              disabled={isAnimationPlaying}
-              style={{ width: 40, height: 40 }}
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                if (!user.articles.favorites.includes(article._id)) {
-                  updateAnimationPlaying(true);
-                  setTimeout(() => {
-                    updateAnimationPlaying(false);
-                  }, 2000);
+      {user && user.articles && article.is_published && (
+        <div className="col-12 row mx-0  my-4 p-0 align-items-end ">
+          <div className="col-12 col-md-6 px-0 d-flex flex-row align-items-center justify-content-between">
+            <div className="flex-1 d-flex flex-row align-items-end">
+              <Button
+                className="border-0 bg-transparent p-0"
+                disabled={isAnimationPlaying}
+                style={{ width: 40, height: 40 }}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  if (
+                    user &&
+                    user.articles &&
+                    !user.articles.favorites.includes(article._id)
+                  ) {
+                    updateAnimationPlaying(true);
+                    setTimeout(() => {
+                      updateAnimationPlaying(false);
+                    }, 2000);
 
-                  apis
-                    .postToCategory(
-                      { property: "articles", category: "favorites" },
-                      { id: article._id }
-                    )
-                    .then(({ data }) => {
-                      dispatch(
-                        addArticlesToArticleCategory({
-                          articleCategory: "favorites",
-                          articleId: article._id,
-                        })
-                      );
-                      updateArticle({
-                        ...article,
-                        number_of_likes: article.number_of_likes + 1,
-                      });
-                    })
-                    .catch((error) => {});
-                } else {
-                  apis
-                    .deleteFromCategory(
-                      { property: "articles", category: "favorites" },
-                      { id: article._id }
-                    )
-                    .then(({ data }) => {
-                      dispatch(
-                        deleteArticlesFromArticleCategory({
-                          articleCategory: "favorites",
-                          articleId: article._id,
-                        })
-                      );
-                      updateArticle({
-                        ...article,
-                        number_of_likes: article.number_of_likes - 1,
-                      });
-                    })
-                    .catch((error) => {});
-                }
-              }}
-            >
-              {isAnimationPlaying ? likeAnimation : likeIcon}
-            </Button>
-
-            <span
-              className=" ms-2 text-secondary pb-1"
-              style={{ fontWeight: "normal" }}
-            >
-              {`${article.number_of_likes} ${
-                article.number_of_likes == 1 ? "like" : "likes"
-              }`}
-            </span>
-          </div>
-        </div>
-        <div className=" faCustomIcons col-12 px-0 pt-2 pt-md-0 col-md-6 d-flex flex-row align-items-end justify-content-start justify-content-md-end pb-1">
-          <span className="text-secondary">Share with: </span>{" "}
-          <EmailShareButton
-            children={<i className="fa fa-envelope fa-lg mx-2" />}
-            url={url}
-            subject={"Check this amazing article published on Blogica"}
-            body={`I read this amazing article on Blogica about ${article.title}. 
-      I think this article will interest you, so give it a read!`}
-          />
-          <FacebookShareButton
-            children={<i className="fa fa-facebook fa-lg mx-2" />}
-            url={url}
-          />
-          <TwitterShareButton
-            children={<i className="fa fa-twitter fa-lg mx-2" />}
-            url={url}
-            title={article.title}
-          />
-          <LinkedinShareButton
-            children={<i className="fa fa-linkedin-square fa-lg mx-2 " />}
-            url={url}
-            title={article.title}
-            summary={`I read this amazing article on Blogica about ${article.title}. 
-      I think this article will interest you, so give it a read!`}
-          />
-          <div style={{ position: "relative" }}>
-            <div className="position-absolute" style={{ top: 30, right: 0 }}>
-              <Toast
-                style={{ backgroundColor: "black" }}
-                isOpen={isLinkToastOpen}
+                    apis
+                      .postToCategory(
+                        { property: "articles", category: "favorites" },
+                        { id: article._id }
+                      )
+                      .then(({ data }) => {
+                        dispatch(
+                          addArticlesToArticleCategory({
+                            articleCategory: "favorites",
+                            articleId: article._id,
+                          })
+                        );
+                        updateArticle({
+                          ...article,
+                          number_of_likes: article.number_of_likes + 1,
+                        });
+                      })
+                      .catch((error) => {});
+                  } else {
+                    apis
+                      .deleteFromCategory(
+                        { property: "articles", category: "favorites" },
+                        { id: article._id }
+                      )
+                      .then(({ data }) => {
+                        dispatch(
+                          deleteArticlesFromArticleCategory({
+                            articleCategory: "favorites",
+                            articleId: article._id,
+                          })
+                        );
+                        updateArticle({
+                          ...article,
+                          number_of_likes: article.number_of_likes - 1,
+                        });
+                      })
+                      .catch((error) => {});
+                  }
+                }}
               >
-                <ToastBody style={{ color: "white" }}>Link Copied</ToastBody>
-              </Toast>
+                {isAnimationPlaying ? likeAnimation : likeIcon}
+              </Button>
+
+              <span
+                className=" ms-2 text-secondary pb-1"
+                style={{ fontWeight: "normal" }}
+              >
+                {`${article.number_of_likes} ${
+                  article.number_of_likes == 1 ? "like" : "likes"
+                }`}
+              </span>
             </div>
-            <i
-              className=" fa fa-link fa-lg mx-2"
-              onClick={() => {
-                navigator.clipboard.writeText(url);
-                updateLinkToastOpen(true);
-                setTimeout(() => {
-                  updateLinkToastOpen(false);
-                }, 2000);
-              }}
+          </div>
+          <div className=" faCustomIcons col-12 px-0 pt-2 pt-md-0 col-md-6 d-flex flex-row align-items-end justify-content-start justify-content-md-end pb-1">
+            <span className="text-secondary">Share with: </span>{" "}
+            <EmailShareButton
+              children={<i className="fa fa-envelope fa-lg mx-2" />}
+              url={url}
+              subject={"Check this amazing article published on Blogica"}
+              body={`I read this amazing article on Blogica about ${article.title}. 
+      I think this article will interest you, so give it a read!`}
             />
+            <FacebookShareButton
+              children={<i className="fa fa-facebook fa-lg mx-2" />}
+              url={url}
+            />
+            <TwitterShareButton
+              children={<i className="fa fa-twitter fa-lg mx-2" />}
+              url={url}
+              title={article.title}
+            />
+            <LinkedinShareButton
+              children={<i className="fa fa-linkedin-square fa-lg mx-2 " />}
+              url={url}
+              title={article.title}
+              summary={`I read this amazing article on Blogica about ${article.title}. 
+      I think this article will interest you, so give it a read!`}
+            />
+            <div style={{ position: "relative" }}>
+              <div className="position-absolute" style={{ top: 30, right: 0 }}>
+                <Toast
+                  style={{ backgroundColor: "black" }}
+                  isOpen={isLinkToastOpen}
+                >
+                  <ToastBody style={{ color: "white" }}>Link Copied</ToastBody>
+                </Toast>
+              </div>
+              <i
+                className=" fa fa-link fa-lg mx-2"
+                onClick={() => {
+                  navigator.clipboard.writeText(url);
+                  updateLinkToastOpen(true);
+                  setTimeout(() => {
+                    updateLinkToastOpen(false);
+                  }, 2000);
+                }}
+              />
+            </div>
           </div>
         </div>
-      </div>
+      )}
       <Modal
         style={{
           paddingTop: 50,

@@ -70,12 +70,14 @@ const ArticleDetail = (props: any) => {
               />
             </div>
           </div>
-          <div
-            className="col-12 d-flex flex-column align-items-center "
-            style={{ backgroundColor: "#eee" }}
-          >
-            <AuthorInfo article={article} />
-          </div>
+          {article.is_published && (
+            <div
+              className="col-12 d-flex flex-column align-items-center "
+              style={{ backgroundColor: "#eee" }}
+            >
+              <AuthorInfo article={article} />
+            </div>
+          )}
         </div>
       )}
     </div>
