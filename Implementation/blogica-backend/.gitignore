@@ -1,7 +1,8 @@
 node_modules
 .DS_Store
-q*.env
+*.env
 .env
+.env.*
 # *.csr
 # *.pem
 # *.key
