@@ -127,6 +127,15 @@ articleRouter
               .catch((err) => next(err));
           },
           (err) => {
+            // if (err.code == 11000) {
+            //   res.statusCode = 400;
+            //   res.setHeader("Content-Type", "application/json");
+            //   return res.json({
+            //     error:
+            //       "There is another article with the same title. We cannot have duplicate ",
+            //   });
+            // }
+
             next(err);
           }
         )

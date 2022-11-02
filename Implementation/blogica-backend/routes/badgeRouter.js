@@ -62,7 +62,7 @@ badgeRouter
             res.setHeader("Content-Type", "application/json");
             return res.json({
               error:
-                "There is another badge with the same title. We cannot have duplicate ",
+                "There is another badgeq with the same title. We cannot have duplicate ",
             });
           }
           next(err);
