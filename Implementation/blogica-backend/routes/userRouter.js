@@ -321,21 +321,15 @@ userRouter.post("/signin", cors.corsWithOptions, (req, res, next) => {
   passport.authenticate("local", { session: false }, (err, user, info) => {
     if (err) return next(err);
     if (!user) {
-      res.statusCode = 200;
+      res.statusCode = 404;
       res.setHeader("Content-Type", "application/json");
-      return res.json({
-        success: false,
-        status: "Login Unsuccessful!",
-        err: info,
-      });
+      return res.json(info);
     }
     req.logIn(user, { session: false }, (err) => {
       if (err) {
         res.statusCode = 401;
         res.setHeader("Content-Type", "application/json");
         return res.json({
-          success: false,
-          status: "Login Unsuccessful!",
           err: "Could not log in user!",
         });
       }
@@ -370,8 +364,6 @@ userRouter.post("/signin", cors.corsWithOptions, (req, res, next) => {
             res.statusCode = 200;
             res.setHeader("Content-Type", "application/json");
             res.json({
-              success: true,
-              status: "Login Successful!",
               token: token,
               user: userDetails,
             });
