@@ -48,7 +48,13 @@ const Articles = (props: any) => {
   const { user } = state.userState;
 
   // useEffects
+
   useEffect(() => {
+    document.title =
+      selectFilter && selectFilter == "Top"
+        ? "Trending Articles"
+        : "Latest Articles";
+
     getArticlesFromApi();
   }, [callerCounter]);
 

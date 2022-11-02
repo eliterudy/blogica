@@ -53,6 +53,7 @@ interface filterBy {
   New: string;
 }
 
+// document.title = "Home";
 const Home = (props: any) => {
   const navigate = useNavigate();
   const filterBy: filterBy = {
@@ -80,6 +81,10 @@ const Home = (props: any) => {
   const refToSpecialsUsingSmoothScroll = useRef() as React.MutableRefObject<
     HTMLInputElement
   >;
+
+  useEffect(() => {
+    document.title = "Home";
+  }, []);
 
   useEffect(() => {
     fetchArticles();

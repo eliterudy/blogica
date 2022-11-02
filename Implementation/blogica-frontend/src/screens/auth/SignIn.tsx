@@ -84,6 +84,9 @@ const SignInComponent = () => {
       width: "100%",
     }
   );
+  useEffect(() => {
+    document.title = `Sign In with ${constants.APP_NAME}`;
+  }, []);
 
   const submitLoginDetailsToApi = () => {
     // alert('Either username or password is not entered');

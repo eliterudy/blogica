@@ -38,11 +38,12 @@ const ArticleDetail = (props: any) => {
   useEffect(() => {
     const locationSplit = location.pathname.split("/");
     const articleId = locationSplit[locationSplit.length - 1];
-
     updateLoading(true);
     apis
       .getArticle(articleId, { user_id: user ? user._id : null })
       .then(({ data }) => {
+        document.title = data.title;
+
         updateArticleDetails(data);
         updateLoading(false);
       })

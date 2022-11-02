@@ -42,6 +42,10 @@ const Contributors = (props: any) => {
 
   // useEffects
   useEffect(() => {
+    document.title = "Contributors";
+  }, []);
+
+  useEffect(() => {
     getContributorsFromApi();
   }, [callerCounter]);
 

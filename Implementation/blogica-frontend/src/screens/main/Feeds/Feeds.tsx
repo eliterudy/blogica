@@ -93,6 +93,11 @@ const Feeds = (props: any) => {
   const [userData, updateUser] = useState<UserDetails | null>(null);
   const [isLoading, updateLoading] = useState(false);
   const [error, updateError] = useState("");
+
+  useEffect(() => {
+    document.title = "My Feeds";
+  }, []);
+
   useEffect(() => {
     if (location && location.state) {
       const { tab } = location.state as any;
@@ -106,7 +111,6 @@ const Feeds = (props: any) => {
     apis
       .getUserDetails({ isProfile: true })
       .then(({ data }) => {
-        console.log("FEEDS", data);
         updateUser(data);
         updateLoading(false);
       })

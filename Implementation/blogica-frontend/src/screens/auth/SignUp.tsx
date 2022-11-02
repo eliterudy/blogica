@@ -92,6 +92,10 @@ const SignUpComponent = () => {
   const [isLoading, updateLoading] = useState(false);
 
   useEffect(() => {
+    document.title = `Sign Up with ${constants.APP_NAME}`;
+  }, []);
+
+  useEffect(() => {
     if (!formValues.image) {
       updateImagePreview(undefined);
       return;

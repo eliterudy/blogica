@@ -74,6 +74,8 @@ const NewArticle = (props: any) => {
   useEffect(() => {
     if (!isNew && location.state == null) {
       navigate("/");
+    } else {
+      document.title = isNew ? "New Article" : "Editting Article";
     }
   }, []);
 
