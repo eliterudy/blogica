@@ -129,9 +129,11 @@ userRouter.get(
       .then(
         async (user) => {
           if (!user) {
-            err = new Error(`User not found`);
-            err.status = 404;
-            return next(err);
+            res.statusCode = 404;
+            res.setHeader("Content-Type", "application/json");
+            return res.json({
+              error: `User not found`,
+            });
           }
           res.statusCode = 200;
           res.setHeader("Content-Type", "application/json");
@@ -261,9 +263,11 @@ userRouter.get("/authorDetails", cors.cors, (req, res, next) => {
       )
       .catch((err) => next(err));
   } else {
-    err = new Error(`Author id missing`);
-    err.status = 500;
-    return next(err);
+    res.statusCode = 500;
+    res.setHeader("Content-Type", "application/json");
+    return res.json({
+      error: `Author id is missing`,
+    });
   }
 });
 
@@ -463,11 +467,12 @@ userRouter
         UserPropUpdate.deleteArticlesFromUser(req, res, next);
       }
     } else {
-      err = new Error(
-        "Information about the category or the property does not exist in the system"
-      );
-      err.status = 404;
-      return next(err);
+      res.statusCode = 404;
+      res.setHeader("Content-Type", "application/json");
+      return res.json({
+        error:
+          "Information about the category or the property does not exist in the system",
+      });
     }
   });
 

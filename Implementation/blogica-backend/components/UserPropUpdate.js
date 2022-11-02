@@ -10,11 +10,11 @@ const UserPropUpdate = {
           if (user != null) {
             res.statusCode = 200;
             res.setHeader("Content-Type", "application/json");
-            res.json(user[req.query.property][req.query.category]);
+            return res.json(user[req.query.property][req.query.category]);
           } else {
-            err = new Error(`User not found`);
-            err.status = 404;
-            return next(err);
+            res.statusCode = 404;
+            res.setHeader("Content-Type", "application/json");
+            return res.json({ error: "User not found" });
           }
         },
         (err) => next(err)
@@ -27,11 +27,11 @@ const UserPropUpdate = {
         (user) => {
           Article.findById(req.body.id, (err, article) => {
             if (err) {
-              err = new Error(
-                `Article doesn't exist, hence it cannot be added to your ${req.body.category}`
-              );
-              err.status = 404;
-              return next(err);
+              res.statusCode = 404;
+              res.setHeader("Content-Type", "application/json");
+              return res.json({
+                error: `Article doesn't exist, hence it cannot be added to your ${req.body.category}`,
+              });
             }
             if (article) {
               var tempArr = user[req.query.property][req.query.category].map(
