@@ -7,6 +7,8 @@ const icons: any = {
   app_logo: require("../assets/icons/app_logo.png"),
   app_icon: require("../assets/icons/app_icon.png"),
   account_points: require("../assets/icons/account_points.png"),
+  like_selected: require("../assets/icons/like_selected.png"),
+  like_unselected: require("../assets/icons/like_unselected.png"),
 };
 
 const images: any = {
@@ -18,6 +20,7 @@ const images: any = {
 
 const gifs: any = {
   loader: require("../assets/gifs/loader.gif"),
+  like: require("../assets/gifs/like.gif"),
 };
 
 const constants: any = {

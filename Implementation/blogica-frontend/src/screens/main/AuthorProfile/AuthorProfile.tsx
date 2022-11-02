@@ -63,7 +63,6 @@ const AuthorProfile = (props: any) => {
     apis
       .getAuthorDetails({ author_id: authorId })
       .then(({ data }) => {
-        console.log("data", data);
         updateAuthorDetails(data);
         updateLoading(false);
       })

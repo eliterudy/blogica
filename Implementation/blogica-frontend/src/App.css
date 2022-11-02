@@ -60,8 +60,12 @@
 
 .ql-container .ql-editor {
   font-size: 18px;
-padding: 14px;
+  padding: 14px;
+  /* padding-left: 0px;
+  padding-right: 0px;
+  padding-bottom: 14px; */
   text-justify: inter-word;
+  text-align: justify;
   /* line-height: 40px; */
 }
 
@@ -115,6 +119,15 @@ padding: 14px;
 
 .faCustomIcons .fa:hover {
   color: black
+}
+
+
+.faDeleteIcon .fa {
+  color: rgb(241, 86, 86)
+}
+
+.faDeleteIcon .fa:hover {
+  color: rgb(231, 15, 15)
 }
 
 Button {
@@ -176,4 +189,20 @@ Button:hover {
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
   }
+
+.faCustomIcons .fa {
+  color: black
+}
+
+.faCustomIcons .fa:hover {
+  color: black
+}
+
+.faDeleteIcon .fa {
+  color: rgb(231, 15, 15)
+}
+
+.faDeleteIcon .fa:hover {
+  color: rgb(231, 15, 15)
+}
 }

@@ -246,8 +246,8 @@ const NewArticle = (props: any) => {
 
   return (
     <div className="col-12 d-flex flex-column flex-grow-1 p-4 container-fluid new-article">
-      <div className="col-12 position-relative ">
-        <div className="col-12 ">
+      <div className="col-12 d-flex justify-content-between align-items-center">
+        <div className=" flex-1 ">
           <h1
             className=" text-center text-md-center mb-0 "
             style={{ fontSize: 36, color: "#666" }}
@@ -256,8 +256,7 @@ const NewArticle = (props: any) => {
           </h1>
         </div>
         <Button
-          className="rounded-pill bg-danger position-absolute"
-          style={{ top: 2, right: 0 }}
+          className="rounded-pill bg-danger "
           onClick={() => toggleModal()}
         >
           <b>X</b>

@@ -91,7 +91,7 @@ const Contributors = (props: any) => {
   // component conditional render
   const loadContributors = (contributorList: Person[]) => {
     return contributorList.map((contributor: Person, index: number) => (
-      <div key={index} className={`col-12 col-sm-6 col-lg-3 mb-5 `}>
+      <div key={index} className={`col-12 col-sm-6 col-lg-3 p-3 `}>
         <ContributorListCard contributor={contributor} index={index} />
       </div>
     ));
@@ -128,7 +128,7 @@ const Contributors = (props: any) => {
               </em>
             </div>
             <InfiniteScroll
-              className="pt-4 px-4"
+              className="pt-4 px-2"
               dataLength={contributors ? contributors.length : 0} //This is important field to render the next data
               next={() => {
                 getContributorsFromApi();

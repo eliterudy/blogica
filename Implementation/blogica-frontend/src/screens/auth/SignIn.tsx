@@ -102,7 +102,6 @@ const SignInComponent = () => {
           password: formValues.password,
         })
         .then(({ data }) => {
-          console.log(data);
           if (data.success) {
             localStorage.setItem("token", data.token);
             dispatch(loadUser(data.user));

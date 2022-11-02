@@ -59,9 +59,15 @@ const ArticleDetail = (props: any) => {
       {!loading && article && (
         <div className="col-12">
           <div className="col-12 d-flex flex-column align-items-center ">
-            <div className="col-12 col-md-8 px-4 px-md-0 py-5 ">
+            <div className="col-12 col-md-8 p-4 px-md-0  ">
               <ArticleHead article={article} url={window.location.href} />
-              <ArticleBody article={article} />
+              <ArticleBody
+                article={article}
+                url={window.location.href}
+                updateArticle={(article: ArticleDetails) =>
+                  updateArticleDetails({ ...article })
+                }
+              />
             </div>
           </div>
           <div

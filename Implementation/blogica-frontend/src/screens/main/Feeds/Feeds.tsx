@@ -97,7 +97,6 @@ const Feeds = (props: any) => {
     if (location && location.state) {
       const { tab } = location.state as any;
       updateActiveTab(tab);
-      console.log("tab", tab);
       window.sessionStorage.setItem(
         "feedsTab",
         JSON.stringify({ activeTab: tab })
@@ -107,10 +106,13 @@ const Feeds = (props: any) => {
     apis
       .getUserDetails({ isProfile: true })
       .then(({ data }) => {
+        console.log("FEEDS", data);
         updateUser(data);
         updateLoading(false);
       })
       .catch((err) => {
+        console.log("FEEDS ERR", err);
+
         updateError(err.message.toString());
         if (err.response.status == "401") navigate("/main/home");
         updateLoading(false);
@@ -232,7 +234,7 @@ const Feeds = (props: any) => {
                   <Nav
                     id="feedtabs"
                     tabs
-                    className="my-2 mx-1"
+                    className="my-2"
                     style={{
                       display: "flex",
                       flex: 1,

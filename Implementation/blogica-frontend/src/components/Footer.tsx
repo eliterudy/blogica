@@ -3,25 +3,25 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <div className="col col-12 p-4 pb-3 footer">
-      <div className=" row col-12">
+    <div className="col col-12 p-4  pb-3 footer">
+      <div className=" row col-12 px-0 px-sm-5">
         <div className=" col-12 col-md-4 pb-4  ">
           <span className="text-white" style={{ fontWeight: "bold" }}>
             Quick Links
           </span>
           <ul className=" list-unstyled d-flex flex-column col-12 justify-content-start align-items-start mb-0  ">
             <li className=" me-2">
-              <Link to="/">Home</Link>
+              <Link to="/">Home/Feeds</Link>
             </li>
             <li className=" me-2">
-              <Link to="/main/my-profile">Articles</Link>
+              <Link to="/main/articles">Articles</Link>
             </li>
             <li className=" me-2">
-              <Link to="/main/my-profile">Contributors</Link>
+              <Link to="/main/contributors">Contributors</Link>
             </li>
           </ul>
         </div>
-        <div className=" col-12 col-md-4 pb-4 ">
+        <div className=" col-12 col-md-4 pb-4  ">
           <span className="text-white" style={{ fontWeight: "bold" }}>
             About this project
           </span>
@@ -34,12 +34,12 @@ const Footer = () => {
         </div>
         <div className=" col-12 col-md-4  d-flex flex-column  mt-sm-0 pb-4">
           <span
-            className="text-white text-start text-md-center col-12"
+            className="text-white text-start text-sm-end col-12"
             style={{ fontWeight: "bold" }}
           >
             Share with friends
           </span>
-          <div className="col-12 d-flex flex-row justify-content-start justify-content-md-center mt-2">
+          <div className="col-12 d-flex flex-row justify-content-start justify-content-sm-end mt-2">
             <a
               className=" me-1 btn btn-social-icon btn-facebook"
               href="http://www.facebook.com/profile.php?id="

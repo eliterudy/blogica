@@ -64,12 +64,8 @@ const ArticleListCard = (cardProps: ArticleCardProps) => {
               { category: "recents", property: "articles" },
               { id: article._id }
             )
-            .then(({ data }) => {
-              console.log("CATGORY", data);
-            })
-            .catch((error) => {
-              console.log(error);
-            });
+            .then(({ data }) => {})
+            .catch((error) => {});
         }
         navigate(`/main/article/id/${article._id}`, {
           state: { articleId: article._id },
@@ -160,11 +156,11 @@ const ArticleListCard = (cardProps: ArticleCardProps) => {
             )}
           </div>
           {user && (
-            <div className=" faCustomIcons d-flex align-items-center justify-content-start justify-content-sm-end col-12 col-sm-5 py-1">
+            <div className="  d-flex align-items-center justify-content-start justify-content-sm-end col-12 col-sm-5 py-1">
               {(user.articles.drafts.includes(article._id) ||
                 user.articles.published.includes(article._id)) && (
                 <div
-                  className="pe-2"
+                  className="pe-3 pe-sm-0 ps-sm-3 faCustomIcons"
                   id="edit"
                   onClick={(e) => {
                     e.preventDefault();
@@ -192,13 +188,13 @@ const ArticleListCard = (cardProps: ArticleCardProps) => {
                     target={"edit"}
                     toggle={toggleEditTooltip}
                   >
-                    Edit
+                    Edit Article
                   </Tooltip>
                 </div>
               )}
               {user.articles.drafts.includes(article._id) && (
                 <div
-                  className="px-1"
+                  className="pe-3 pe-sm-0 ps-sm-3 faDeleteIcon"
                   id="delete"
                   onClick={(e) => {
                     e.preventDefault();
@@ -214,13 +210,13 @@ const ArticleListCard = (cardProps: ArticleCardProps) => {
                     target={"delete"}
                     toggle={toggleDeleteTooltip}
                   >
-                    Trash
+                    Delete Article
                   </Tooltip>
                 </div>
               )}
               {user && user._id && user._id !== article.author._id ? (
                 <div
-                  className="ps-2"
+                  className="pe-3 pe-sm-0 ps-sm-3"
                   id="save"
                   onClick={(e) => {
                     e.preventDefault();
@@ -269,7 +265,7 @@ const ArticleListCard = (cardProps: ArticleCardProps) => {
                     target={"save"}
                     toggle={toggleSaveTooltip}
                   >
-                    Save
+                    Save Article
                   </Tooltip>
                 </div>
               ) : null}
