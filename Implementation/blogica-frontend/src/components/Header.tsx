@@ -106,9 +106,9 @@ const Header = ({ modalCallback }: any) => {
         </div>
         <Collapse className=" " isOpen={isNavOpen} navbar>
           {/* Navigation */}
-          <Nav navbar className=" col-sm-12 ">
+          <Nav navbar className=" col-sm-12 pt-3 ">
             {!user && (
-              <NavItem className=" ms-1 ms-sm-2 my-1 my-md-0 flex-grow-1 flex-shrink-1 d-sm-flex flex-column justify-content-center align-items-center ">
+              <NavItem className=" ms-2 ms-sm-4 ps-0 ps-sm-2 ps-md-0 ms-md-0  flex-grow-1 flex-shrink-1 d-sm-flex flex-column justify-content-center align-items-start align-items-md-center  ">
                 <NavLink
                   tag={RRNavLink}
                   className={"nav-link "}
@@ -126,7 +126,7 @@ const Header = ({ modalCallback }: any) => {
               </NavItem>
             )}
             {user && (
-              <NavItem className=" ms-1 ms-sm-2 my-1 my-md-0 flex-grow-1 flex-shrink-1 d-sm-flex flex-column justify-content-center align-items-center ">
+              <NavItem className=" ms-2 ms-sm-4 ps-0 ps-sm-2 ps-md-0 ms-md-0  flex-grow-1 flex-shrink-1 d-sm-flex flex-column justify-content-center align-items-start align-items-md-center  ">
                 <NavLink
                   tag={RRNavLink}
                   className={"nav-link "}
@@ -139,7 +139,7 @@ const Header = ({ modalCallback }: any) => {
                 </NavLink>
               </NavItem>
             )}
-            <NavItem className=" ms-1 ms-sm-2 my-1 my-md-0 flex-grow-1 flex-shrink-1 d-sm-flex flex-column justify-content-center align-items-center ">
+            <NavItem className=" ms-2 ms-sm-4 ps-0 ps-sm-2 ps-md-0 ms-md-0  flex-grow-1 flex-shrink-1 d-sm-flex flex-column justify-content-center align-items-start align-items-md-center  ">
               <NavLink
                 tag={RRNavLink}
                 className={"nav-link "}
@@ -152,7 +152,7 @@ const Header = ({ modalCallback }: any) => {
               </NavLink>
             </NavItem>
             {!isTabletOrMobile && (
-              <NavItem className=" ms-1 ms-sm-2 my-1 my-md-0 flex-grow-1 flex-shrink-1 d-sm-flex flex-column justify-content-center align-items-center ">
+              <NavItem className=" ms-2 ms-sm-4 ps-0 ps-sm-2 ps-md-0 ms-md-0  flex-grow-1 flex-shrink-1 d-sm-flex flex-column justify-content-center align-items-start align-items-md-center  ">
                 {/* <NavLink
                     tag={RRNavLink}
                     className={"nav-link  "}
@@ -176,7 +176,7 @@ const Header = ({ modalCallback }: any) => {
               </NavItem>
             )}
             {!user && (
-              <NavItem className=" ms-1 ms-sm-2 my-1 my-md-0 flex-grow-1 flex-shrink-1 d-sm-flex flex-column justify-content-center align-items-center ">
+              <NavItem className=" ms-2 ms-sm-4 ps-0 ps-sm-2 ps-md-0 ms-md-0  flex-grow-1 flex-shrink-1 d-sm-flex flex-column justify-content-center align-items-start align-items-md-center  ">
                 <NavLink
                   tag={RRNavLink}
                   className={"nav-link "}
@@ -193,7 +193,7 @@ const Header = ({ modalCallback }: any) => {
               </NavItem>
             )}
             {!user && (
-              <NavItem className=" ms-1 ms-sm-2 my-1 my-md-0 flex-grow-1 flex-shrink-1 d-sm-flex flex-column justify-content-center align-items-center ">
+              <NavItem className=" ms-2 ms-sm-4 ps-0 ps-sm-2 ps-md-0 ms-md-0  flex-grow-1 flex-shrink-1 d-sm-flex flex-column justify-content-center align-items-start align-items-md-center  ">
                 <NavLink
                   tag={RRNavLink}
                   className={"nav-link "}
@@ -212,7 +212,7 @@ const Header = ({ modalCallback }: any) => {
             )}
 
             {user && (
-              <NavItem className=" ms-1 ms-sm-2 my-1 my-md-0 flex-grow-1 flex-shrink-1 d-sm-flex flex-column justify-content-center align-items-center ">
+              <NavItem className=" ms-2 ms-sm-4 ps-0 ps-sm-2 ps-md-0 ms-md-0  flex-grow-1 flex-shrink-1 d-sm-flex flex-column justify-content-center align-items-start align-items-md-center  ">
                 <NavLink
                   tag={RRNavLink}
                   className={"nav-link "}

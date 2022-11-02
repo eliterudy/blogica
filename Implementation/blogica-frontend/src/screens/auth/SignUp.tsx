@@ -89,6 +89,8 @@ const SignUpComponent = () => {
     false
   );
 
+  const [isLoading, updateLoading] = useState(false);
+
   useEffect(() => {
     if (!formValues.image) {
       updateImagePreview(undefined);
@@ -544,13 +546,15 @@ const SignUpComponent = () => {
                         };
                         delete tempSubmit["confirmPassword"];
                         // add api call here to signup user
-
+                        updateLoading(true);
                         apis
                           .signup(formValues)
                           .then(({ data }) => {
                             alert(
                               "Account sucessfully created! Redirecting to Login"
                             );
+                            updateLoading(false);
+
                             navigate("/auth/signin");
                           })
                           .catch((err) => {
@@ -564,11 +568,13 @@ const SignUpComponent = () => {
                               );
                             } else {
                             }
+                            updateLoading(false);
+                            alert(err.message);
                           });
                       }
                     }}
                   >
-                    Sign Up
+                    {isLoading ? <Spinner size={"sm"} /> : <span>Sign Up</span>}
                   </Button>
                 </Form>
               </div>

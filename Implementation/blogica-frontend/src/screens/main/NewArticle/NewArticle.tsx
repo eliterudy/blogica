@@ -151,7 +151,9 @@ const NewArticle = (props: any) => {
                   updateUpdateDraftLoading(false);
                   navigate(-1);
                 })
-                .catch((error) => {
+                .catch(({ response }) => {
+                  const { data } = response || {};
+                  alert(data.error);
                   updateUpdateDraftLoading(false);
                 })
             : location.state &&
@@ -169,9 +171,18 @@ const NewArticle = (props: any) => {
                 });
         }}
       >
-        <span>
-          <b>{isNew ? "Save as Draft" : "Save Updated Draft"}</b>
-        </span>
+        {updateDraftLoading ? (
+          <div className="d-flex flex-row align-items-center">
+            <Spinner color="light" size={"sm"} />{" "}
+            <span className="ms-2">
+              <b>Uploading Draft</b>
+            </span>{" "}
+          </div>
+        ) : (
+          <span>
+            <b>{isNew ? "Save as Draft" : "Save Updated Draft"}</b>
+          </span>
+        )}
       </Button>
     );
   };
@@ -213,16 +224,25 @@ const NewArticle = (props: any) => {
                 });
         }}
       >
-        <span>
-          <b>
-            {location.state &&
-            (location.state as PassedProps).is_published === true
-              ? "Update Published Article"
-              : isNew
-              ? "Publish Article"
-              : "Publish Saved Draft"}
-          </b>
-        </span>
+        {publishDraftLoading ? (
+          <div className="d-flex flex-row align-items-center">
+            <Spinner color="light" size={"sm"} />{" "}
+            <span className="ms-2">
+              <b>Publishing Article</b>
+            </span>{" "}
+          </div>
+        ) : (
+          <span>
+            <b>
+              {location.state &&
+              (location.state as PassedProps).is_published === true
+                ? "Update Published Article"
+                : isNew
+                ? "Publish Article"
+                : "Publish Saved Draft"}
+            </b>
+          </span>
+        )}
       </Button>
     );
   };

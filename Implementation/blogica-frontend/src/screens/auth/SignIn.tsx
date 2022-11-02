@@ -9,6 +9,7 @@ import {
   FormText,
   FormFeedback,
   Button,
+  Spinner,
 } from "reactstrap";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -20,6 +21,7 @@ import apis from "../../config/api";
 import FormValidators from "../../utils/FormValidators";
 import { constants, icons } from "../../config/configuration";
 import { loadUser } from "../../redux/actionReducers/userReducer";
+import { update } from "jdenticon";
 
 // const {loadUser, removeUser} = actions;
 
@@ -37,6 +39,8 @@ const SignInComponent = () => {
     username: "",
     password: "",
   });
+  const [isLoading, updateLoading] = useState(false);
+  const [responseError, updateError] = useState("");
 
   const state = useSelector((state: any) => {
     // eslint-disable-next-line no-labels, no-label-var
@@ -96,26 +100,44 @@ const SignInComponent = () => {
       });
     } else {
       // api here
+      updateLoading(true);
       apis
         .signin({
           username: formValues.username,
           password: formValues.password,
         })
         .then(({ data }) => {
-          if (data.success) {
+          console.log(data);
+          if (data.token) {
             localStorage.setItem("token", data.token);
             dispatch(loadUser(data.user));
+            updateLoading(false);
             navigate("/");
           } else {
+            updateLoading(false);
             updateErrorVisible(true);
           }
         })
-        .catch((err) => {
-          if (err && err.message && err.message === "Network Error") {
-            alert(
-              "This action cannot be performed at the moment because of no internet connection. Please connect to an internet connection and try again"
-            );
-          } else {
+        .catch(({ response }) => {
+          updateLoading(false);
+
+          if (response && response.data) {
+            if (
+              response.data.message &&
+              response.data.message === "Network Error"
+            ) {
+              alert(
+                "This action cannot be performed at the moment because of no internet connection. Please connect to an internet connection and try again"
+              );
+            } else if (
+              response.data.message &&
+              response.data.name === "IncorrectUsernameError"
+            ) {
+              updateError("User does not exist.");
+            } else {
+              updateError("Incorrect username or password");
+            }
+
             updateErrorVisible(true);
           }
         });
@@ -157,7 +179,7 @@ const SignInComponent = () => {
                   }}
                 >
                   <span style={{ fontSize: 14, color: "#c41400" }}>
-                    Incorrect username or password
+                    {responseError}
                   </span>
                   <i
                     className="fa fa-close "
@@ -217,7 +239,7 @@ const SignInComponent = () => {
                     submitLoginDetailsToApi();
                   }}
                 >
-                  Sign In
+                  {isLoading ? <Spinner size={"sm"} /> : <span>Sign In</span>}
                 </Button>
               </Form>
             </div>
