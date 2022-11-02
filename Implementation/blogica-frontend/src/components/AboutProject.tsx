@@ -30,8 +30,6 @@ import { Link, useNavigate } from "react-router-dom";
 // https://picsum.photos/seed/picsum/200/300)
 
 const AboutProjectCard = () => {
-  // console.log("article?.image_url", article?.image_url);
-
   return (
     <div
       className="p-4  "

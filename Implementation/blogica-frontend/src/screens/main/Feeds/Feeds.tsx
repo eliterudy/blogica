@@ -33,209 +33,316 @@ import classnames from "classnames";
 import { Dispatch } from "@reduxjs/toolkit";
 import { useMediaQuery } from "react-responsive";
 import InfiniteScroll from "react-infinite-scroll-component";
+import moment from "moment";
 
 /* component/screen inports */
 
 /* helper imports */
 import { cssHover } from "../../../components/generic/hoverProps";
-import { Article, AuthorDetail, User } from "../../../config/types";
+import {
+  Article,
+  PublishedDetails,
+  User,
+  UserArticleSegment,
+  UserDetailArticleSegment,
+  UserDetails,
+} from "../../../config/types";
 import { icons, constants } from "../../../config/configuration";
 import Generic from "../../../components/generic/GenericComponents";
-import { toggler } from "../../../utils/generic";
+import { numberToCurrencyRounder, toggler } from "../../../utils/generic";
 import actions from "../../../redux/actionReducers/index";
-import ArticleListCard from "../../../components/ArticleListCard";
-import moment from "moment";
 import ArticleListingByCategory from "./ArticleListingByCategory";
 import NewArticleCard from "./NewArticleCard";
+import apis from "../../../config/api";
+import Achievements from "../../../components/generic/Achievements";
 
-const tabs = ["My Articles", "Recently Viewed Articles"];
-const dict: { [key: string]: string[] } = {
-  "My Articles": [constants.MY_ARTICLES, "published"],
-  "Recently Viewed Articles": [constants.RECENTLY_VIEWED_ARTICLES, "recents"],
-};
+const tabs = [
+  {
+    key: "published",
+    title: "My Published Articles",
+    message: constants.PUBLISHED_ARTICLES,
+  },
+  {
+    key: "drafts",
+    title: "My Article Drafts",
+    message: constants.ARTICLES_DRAFTS,
+  },
+
+  {
+    key: "recents",
+    title: "Recently Viewed Articles",
+    message: constants.RECENTLY_VIEWED_ARTICLES,
+  },
+  { key: "saved", title: "Saved Articles", message: constants.SAVED_ARTICLES },
+];
 
 const Feeds = (props: any) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const isTabletOrMobile = useMediaQuery({ query: "(max-width: 767px)" });
   const state = useSelector((state: any) => {
     return {
       userState: state.userActionReducer,
     };
   });
-  const { user } = state.userState;
+  var selectedFeedsTab = window.sessionStorage.getItem("feedsTab");
 
-  const [activeTab, updateActiveTab] = useState(0);
+  const [activeTab, updateActiveTab] = useState(
+    selectedFeedsTab ? JSON.parse(selectedFeedsTab).activeTab : 0
+  );
+  const [userData, updateUser] = useState<UserDetails | null>(null);
+  const [isLoading, updateLoading] = useState(false);
+  const [error, updateError] = useState("");
 
+  useEffect(() => {
+    document.title = "My Feeds";
+  }, []);
+
+  useEffect(() => {
+    if (location && location.state) {
+      const { tab } = location.state as any;
+      updateActiveTab(tab);
+      window.sessionStorage.setItem(
+        "feedsTab",
+        JSON.stringify({ activeTab: tab })
+      );
+    }
+    updateLoading(true);
+    apis
+      .getUserDetails({ isProfile: true })
+      .then(({ data }) => {
+        updateUser(data);
+        updateLoading(false);
+      })
+      .catch((err) => {
+        console.log("FEEDS ERR", err);
+
+        updateError(err.message.toString());
+        if (err.response.status == "401") navigate("/main/home");
+        updateLoading(false);
+      });
+  }, []);
   return (
     <div>
-      {user ? (
+      {isLoading && <div className="vh-100 vw-100"></div>}
+      {!isLoading && userData ? (
         <div className="col-12 d-flex flex-column  flex-grow-1">
-          <div className="">
-            <div className="col-12">
-              <div>
-                <div className="noselect row col-12 m-0">
-                  {/* Left section */}
-                  <div className="noselect  col-12 col-md-4 col-xl-3 border-end  px-4 bg-white  ">
-                    <div className="sticky-top" style={{ marginBottom: 50 }}>
-                      <div className="d-flex flex-column align-items-center pt-5 ">
-                        <Generic.Avatar
-                          image_url={user.image_url}
-                          fullname="Gavin D'mello"
-                          size={150}
-                        />
-                        <h4
-                          style={{
-                            padding: 10,
-                            overflowWrap: "break-word",
-                          }}
-                        >{`${user.firstname} ${user.lastname}`}</h4>
-                      </div>
-
-                      <Col className="mt-2 ">
-                        <em>{user.bio} </em>
-                      </Col>
-                      <Col className="mt-4">
+          <div className="col-12 ">
+            <div className="noselect row col-12 m-0">
+              {/* Left section */}
+              <div className="noselect  col-12 col-md-4 col-xl-3 border-end  px-4 px-md-4  bg-white  ">
+                <div className="sticky-top pt-2" style={{ marginBottom: 20 }}>
+                  <div className=" d-flex justify-content-end mt-2 mb-3">
+                    <div
+                      style={{
+                        padding: 5,
+                        paddingLeft: 10,
+                        paddingRight: 10,
+                        backgroundColor: "#abd6a5",
+                        borderRadius: 8,
+                      }}
+                    >
+                      <img
+                        src={icons.account_points}
+                        style={{ width: 30 }}
+                        alt={"account_points"}
+                      />{" "}
+                      <span style={{ fontSize: 14 }}>
+                        {numberToCurrencyRounder(
+                          userData.points_earned - userData.points_spent
+                        )}{" "}
+                        points
+                      </span>
+                    </div>
+                  </div>
+                  <div className="d-flex flex-column align-items-center  ">
+                    <Generic.Avatar
+                      image_url={
+                        process.env.REACT_APP_API_URL + userData.image_url
+                      }
+                      fullname={userData.firstname + userData.lastname}
+                      size={200}
+                    />
+                    <h4
+                      style={{
+                        paddingTop: 10,
+                        overflowWrap: "break-word",
+                        margin: 0,
+                      }}
+                    >{`${userData.firstname} ${userData.lastname}`}</h4>
+                    <span
+                      style={{
+                        paddingBottom: 10,
+                        overflowWrap: "break-word",
+                        color: "#777",
+                      }}
+                    >{` @${userData.username}`}</span>
+                  </div>
+                  <div className="">
+                    <Col className="my-3  text-justify">
+                      <p
+                        className="text-justify"
+                        style={{ textAlign: "justify", fontSize: 14 }}
+                      >
+                        <em>{userData.bio}</em>
+                      </p>
+                    </Col>
+                    <Col className="border-top py-3">
+                      <Col className="mt-1">
                         <i
                           className="fa fa-file-text-o fa-lg me-2 "
                           aria-hidden="true"
                         ></i>
 
                         <span>
-                          {user.published.articles.length} Published Articles
+                          {userData.articles.published.length} Published
+                          Articles
                         </span>
                       </Col>
-                      <Col className="mt-2">
+                      <Col className="mt-1">
                         <i
                           className="fa fa-desktop fa-lg me-2 "
                           aria-hidden="true"
                         ></i>
 
                         <span>
-                          Joined in {moment(user.created).format("MMM, YYYY")}
+                          Joined in{" "}
+                          {moment(userData.createdAt).format("MMM, YYYY")}
                         </span>
                       </Col>
-                      {/* For v2 */}
-                      {/* <Button
-                  className="col-12 mb-5"
-                  {...editProfileButtonStyle}
-                  outline>
-                  Edit Profile
-                </Button> */}
-                      {/* <Col className="col-12 ">
-                  {!user.isVerified && (
-                    <div className="py-4" {...verifyCardHoverStyle}>
-                      <p style={{color: '#ECDBBA', marginBottom: 20}}>
-                        If you love cooking like we do and wish to contribute to
-                        our website with you marvelous recipes, click on the
-                        link below to become a verified contributor
-                      </p>
-                      <Button
-                        {...getVerifiedButtonStyle}
-                        className="col-12 "
-                        onClick={() => {
-                          apis
-                            .postVerifyUser({})
-                            .then(({data}) => {
-                              dispatch(verifyUser(true));
-                              // updateActiveTab(0);
-                            })
-                            .catch(err => {
-                              if (
-                                err &&
-                                err.message &&
-                                err.message === 'Network Error'
-                              ) {
-                                if (navigator.onLine) {
-            navigate('/server-down', {
-              state: {redirectPath: '/main/my-profile/'},
-            });
-          } else {
-            alert(
-              'This action cannot be performed at the moment because of no internet connection. Please connect to an internet connection and try again',
-            );
-          }
-                              } else {
-                                alert('Oops! Something went wrong');
-                              }
-                            });
-                        }}>
-                        <span>Get Verified</span>
-                      </Button>
-                    </div>
-                  )}
-                </Col> */}
-                    </div>
-                  </div>
-
-                  {/* Right section */}
-                  <div className="noselect d-flex flex-column flex-grow-1 col-12 col-md-8 col-xl-9 px-2 ">
-                    <NewArticleCard />
-                    <div className="d-flex flex-row align-items-center">
-                      {/* <i
-                          className="fa fa-arrow-circle-left fa-lg"
-                          onClick={() => {
-                            if (scrollElement && scrollElement.current) {
-                              console.log(scrollElement.current);
-                              // scrollElement.current.scroll = 50;
-                            }
-                          }}
-                        ></i> */}
-
-                      <Nav
-                        id="feedtabs"
-                        tabs
-                        className="m-2 "
-                        style={{
-                          display: "flex",
-                          flex: 1,
-                          flexDirection: "row",
-                          overflowX: "auto",
-                          overflowY: "hidden",
-                          flexWrap: "nowrap",
-                        }}
-                      >
-                        {tabs &&
-                          tabs.map((tab, index) => {
-                            if (tab === "My Recipes" && !user.isVerified) {
-                              return null;
-                            }
-                            return (
-                              <NavItem>
-                                <NavLink
-                                  className={classnames({
-                                    active: activeTab === index,
-                                  })}
-                                  onClick={() => {
-                                    console.log("ClICKERD", index);
-                                    updateActiveTab(index);
-                                  }}
-                                  style={{
-                                    whiteSpace: "nowrap",
-                                  }}
-                                >
-                                  <span className="px-3">{tab}</span>
-                                </NavLink>
-                              </NavItem>
-                            );
-                          })}
-                      </Nav>
-                      {/* <div></div> */}
-                    </div>
-                    <TabContent activeTab={activeTab} className="m-2 ">
-                      {tabs.map((tab, index) => {
-                        return (
-                          <TabPane tabId={index} className="flex-grow-1">
-                            <ArticleListingByCategory
-                              index={index}
-                              category={tab}
-                              tabMessage={dict[tab][0].toString()}
-                            />
-                          </TabPane>
-                        );
-                      })}
-                    </TabContent>
+                    </Col>
+                    {userData &&
+                      userData.badges &&
+                      userData.badges.length > 0 && (
+                        <Achievements badges={userData.badges} />
+                      )}
                   </div>
                 </div>
+              </div>
+
+              {/* Right section */}
+              <div className="noselect d-flex flex-column flex-grow-1 col-12 col-md-8 col-xl-9 px-4 ">
+                <NewArticleCard />
+                <div className="d-flex flex-row align-items-center mx-2">
+                  {/* Left arrow for navtab */}
+                  {/* <div
+                        className=" d-block  d-lg-none bg-primary text-white px-3 py-2"
+                        style={{
+                          borderTopLeftRadius: 5,
+                          borderBottomLeftRadius: 5,
+                        }}
+                      >
+                        <b>{"◀️"}</b>
+                      </div> */}
+
+                  <Nav
+                    id="feedtabs"
+                    tabs
+                    className="my-2"
+                    style={{
+                      display: "flex",
+                      flex: 1,
+                      flexDirection: "row",
+                      overflowX: "auto",
+                      overflowY: "hidden",
+                      flexWrap: "nowrap",
+                    }}
+                  >
+                    {tabs &&
+                      tabs.map((tab, index) => {
+                        return (
+                          <NavItem key={index}>
+                            <NavLink
+                              className={classnames({
+                                active: activeTab === index,
+                              })}
+                              onClick={() => {
+                                updateActiveTab(index);
+                                window.sessionStorage.setItem(
+                                  "feedsTab",
+                                  JSON.stringify({ activeTab: index })
+                                );
+                              }}
+                              style={{
+                                whiteSpace: "nowrap",
+                              }}
+                            >
+                              <span className="px-1">{tab.title}</span>
+                            </NavLink>
+                          </NavItem>
+                        );
+                      })}
+                  </Nav>
+
+                  {/* Right arrow for navtab */}
+                  {/* <div
+                        className=" d-block  d-lg-none bg-primary text-white px-3 py-2"
+                        style={{
+                          borderTopRightRadius: 5,
+                          borderBottomRightRadius: 5,
+                        }}
+                      >
+                        <b>{"▶️"}</b>
+                      </div> */}
+                </div>
+                <TabContent activeTab={activeTab} className="my-2 ">
+                  {tabs.map((tab, index) => {
+                    return (
+                      <TabPane
+                        key={index}
+                        tabId={index}
+                        className="flex-grow-1"
+                      >
+                        <ArticleListingByCategory
+                          index={index}
+                          data={
+                            userData["articles"][
+                              tab.key as keyof UserDetailArticleSegment
+                            ]
+                          }
+                          tabMessage={tab.message}
+                          deleteCallback={(
+                            index: number,
+                            articleCategoryProps: string
+                          ) => {
+                            var articleCategory =
+                              userData.articles[
+                                articleCategoryProps as keyof UserDetailArticleSegment
+                              ];
+                            articleCategory.splice(index, 1);
+                            var userDetails = userData;
+                            userDetails.articles[
+                              articleCategoryProps as keyof UserDetailArticleSegment
+                            ] = articleCategory;
+                            updateUser({ ...userDetails });
+                          }}
+                          addCallback={(
+                            article: Article,
+                            articleCategoryProps: string
+                          ) => {
+                            var articleCategory =
+                              userData.articles[
+                                articleCategoryProps as keyof UserDetailArticleSegment
+                              ];
+                            // articleCategory = [article, ...articleCategory];
+                            articleCategory.unshift(article);
+                            var userDetails = userData;
+                            userDetails.articles[
+                              articleCategoryProps as keyof UserDetailArticleSegment
+                            ] = articleCategory;
+                            console.log("articleCategory", userDetails);
+                            updateUser({ ...userDetails });
+                          }}
+                          showAuthorDetails={
+                            tab.key === "published" || tab.key === "drafts"
+                              ? false
+                              : true
+                          }
+                        />
+                      </TabPane>
+                    );
+                  })}
+                </TabContent>
               </div>
             </div>
           </div>

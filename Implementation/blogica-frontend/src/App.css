@@ -53,13 +53,37 @@
   color: red
 }
 
+.new-article.input::placeholder {
+  color: #aaa;
+
+}
+
 .ql-container .ql-editor {
   font-size: 18px;
-  text-align: justify;
+  padding: 14px;
+  /* padding-left: 0px;
+  padding-right: 0px;
+  padding-bottom: 14px; */
   text-justify: inter-word;
+  text-align: justify;
   /* line-height: 40px; */
 }
 
+.quill > .ql-container > .ql-editor.ql-blank::before{
+  font-style: normal;
+  
+}
+
+.cardDescription .ql-container .ql-editor {
+  padding: 0%;
+  font-size: 16px;
+  text-justify: inter-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
 
 
 #feedtabs::-webkit-scrollbar { 
@@ -85,6 +109,35 @@
   font-style: italic;
   font-size: 13px;
 }
+
+
+
+
+.faCustomIcons .fa {
+  color: grey
+}
+
+.faCustomIcons .fa:hover {
+  color: black
+}
+
+
+.faDeleteIcon .fa {
+  color: rgb(241, 86, 86)
+}
+
+.faDeleteIcon .fa:hover {
+  color: rgb(231, 15, 15)
+}
+
+Button {
+  opacity: 0.8;
+}
+
+Button:hover {
+  opacity: 1;
+}
+
 
 
 
@@ -120,4 +173,36 @@
   100% {
     opacity: 0.8;
   }
+}
+
+
+@media (max-width: 480px){
+  
+  .cardDescription .ql-container .ql-editor {
+    padding: 0%;
+    font-size: 16px;
+    
+    text-justify: inter-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+  }
+
+.faCustomIcons .fa {
+  color: black
+}
+
+.faCustomIcons .fa:hover {
+  color: black
+}
+
+.faDeleteIcon .fa {
+  color: rgb(231, 15, 15)
+}
+
+.faDeleteIcon .fa:hover {
+  color: rgb(231, 15, 15)
+}
 }

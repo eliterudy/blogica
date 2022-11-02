@@ -26,41 +26,19 @@ import {
   NewArticle,
 } from "../screens/index";
 import ScrollToTop from "../components/generic/scrollToTop";
-
+import apis from "../config/api";
 /* helper imports */
 import reduxApiCallers from "../redux/thunks/reduxApiCallers";
 import actions from "../redux/actionReducers/index";
 import Footer from "../components/Footer";
 const { loadUser, removeUser } = actions;
 
-const userDetails = {
-  _id: 21,
-  firstname: "Gavin",
-  lastname: "D'mello",
-  fullname: "Gavin D'mello",
-  username: "gavin1040",
-  bio:
-    "Gavin D'mello is a content creator currently building an app called Blogica for his Masters degree",
-  image_url:
-    "https://phantom-marca.unidadeditorial.es/9adb565dcfc4dc3e9b1948c7cf5b8f01/resize/1320/f/jpg/assets/multimedia/imagenes/2022/02/21/16454391499069.jpg",
-  created: "2022-09-16T12:59-0500",
-  published: {
-    articles: [],
-  },
-  bookmarks: {
-    articles: [],
-  },
-};
-
 const MainRouter = () => {
   let location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const MainRoutes = () => {
-    const [isModalOpen, updateModalOpen] = useState(false);
-    const toggleModal = () => {
-      updateModalOpen(!isModalOpen);
-    };
+    const [loading, updateLoading] = useState(true);
 
     const state = useSelector((state: any) => {
       // eslint-disable-next-line no-labels, no-label-var
@@ -69,27 +47,21 @@ const MainRouter = () => {
     const { user } = state.userState;
 
     useEffect(() => {
-      console.log("HERE");
-
-      // var userToken = localStorage.getItem("token");
-      // userToken &&
-      //   userToken.length > 0 &&
-      // apis
-      //   .getUserDetails()
-      //   .then(({ data }) => {
-      dispatch(loadUser(userDetails));
-      // })
-      // .catch((err) => {
-      //   // alert('failed to load user. Please login');
-      //   // dispatch(removeUser());
-      //   if (err && err.message && err.message === "Network Error") {
-      //     if (navigator.onLine) {
-      //       navigate("/server-down", { state: { redirectPath: "/" } });
-      //     } else {
-      //       navigate("/no-internet", { state: { redirectPath: "/" } });
-      //     }
-      //   }
-      // });
+      var userToken = localStorage.getItem("token");
+      userToken && userToken.length > 0
+        ? apis
+            .getUserDetails()
+            .then(({ data }) => {
+              dispatch(loadUser(data));
+              updateLoading(false);
+            })
+            .catch((err) => {
+              alert("failed to load user. Please login");
+              dispatch(removeUser());
+              navigate("/auth/signin");
+              updateLoading(false);
+            })
+        : updateLoading(false);
     }, []);
 
     useEffect(() => {
@@ -99,53 +71,66 @@ const MainRouter = () => {
         navigate("/main/home");
       }
     }, [location.pathname, user]);
-
-    return (
-      <div className="vh-100 col-12 d-flex flex-column">
-        {location.pathname != "/main/article/new" && (
-          <Header modalCallback={() => toggleModal()} />
-        )}
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <Navigate to={user ? "/main/feeds" : "/main/home"} replace />
-            }
-          />
-          <Route path="/home" element={<Home />} />
-          <Route path="/feeds" element={<Feeds />} />
-          <Route path="/contributors" element={<ContributorList />} />
-          <Route path="/articles" element={<ArticleList />} />
-          <Route
-            path="/article/new"
-            element={
-              <ScrollToTop>
-                <NewArticle />
-              </ScrollToTop>
-            }
-          />
-          <Route
-            path="/article/id/:articleId"
-            element={
-              <ScrollToTop>
-                <ArticleDetail />
-              </ScrollToTop>
-            }
-          />
-          <Route
-            path="/author/id/:authorId"
-            element={
-              <ScrollToTop>
-                <AuthorProfile />
-              </ScrollToTop>
-            }
-          />
-          {/* default route */}
-          <Route path="*" element={<Navigate to="/not-found" replace />} />
-        </Routes>
-        {location.pathname != "/main/article/new" && <Footer />}
-      </div>
-    );
+    if (loading) {
+      return (
+        <div className="vh-100 col-12 d-flex flex-column justify-content-between align-items-center"></div>
+      );
+    } else {
+      return (
+        <div className="vh-100 col-12 d-flex flex-column">
+          {location.pathname != "/main/article/new" &&
+            location.pathname != "/main/article/edit" && <Header />}
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Navigate to={user ? "/main/feeds" : "/main/home"} replace />
+              }
+            />
+            <Route path="/home" element={<Home />} />
+            <Route path="/feeds" element={<Feeds />} />
+            <Route path="/contributors" element={<ContributorList />} />
+            <Route path="/articles" element={<ArticleList />} />
+            <Route
+              path="/article/new"
+              element={
+                <ScrollToTop>
+                  <NewArticle />
+                </ScrollToTop>
+              }
+            />
+            <Route
+              path="/article/edit"
+              element={
+                <ScrollToTop>
+                  <NewArticle />
+                </ScrollToTop>
+              }
+            />
+            <Route
+              path="/article/id/:articleId"
+              element={
+                <ScrollToTop>
+                  <ArticleDetail />
+                </ScrollToTop>
+              }
+            />
+            <Route
+              path="/author/id/:authorId"
+              element={
+                <ScrollToTop>
+                  <AuthorProfile />
+                </ScrollToTop>
+              }
+            />
+            {/* default route */}
+            <Route path="*" element={<Navigate to="/not-found" replace />} />
+          </Routes>
+          {location.pathname != "/main/article/new" &&
+            location.pathname != "/main/article/edit" && <Footer />}
+        </div>
+      );
+    }
   };
 
   const AuthRoutes = () => {

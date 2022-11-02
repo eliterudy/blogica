@@ -6,6 +6,9 @@ const icons: any = {
   search_white: require("../assets/icons/search_white.png"),
   app_logo: require("../assets/icons/app_logo.png"),
   app_icon: require("../assets/icons/app_icon.png"),
+  account_points: require("../assets/icons/account_points.png"),
+  like_selected: require("../assets/icons/like_selected.png"),
+  like_unselected: require("../assets/icons/like_unselected.png"),
 };
 
 const images: any = {
@@ -17,21 +20,27 @@ const images: any = {
 
 const gifs: any = {
   loader: require("../assets/gifs/loader.gif"),
+  like: require("../assets/gifs/like.gif"),
 };
 
 const constants: any = {
   APP_NAME: "Blogica",
   TEXT_SHIMMER_FILLER: "text shimmer",
-  FILTER_ARTICLE_NOTES: "View articles based on the filter categories.",
+  SORT_ARTICLE_NOTES: "View articles based on the selected sorting categories.",
   NEW_ARTICLE_NOTES:
     "What's the first thought that pops in your head. Is it informative and interesting. If so, why wait? Write it down and share it with everyone!",
   INTRO_BANNER_TITLE: "Stay Curious & Get a Read",
   INTRO_BANNER_MESSAGE:
     "Discover stories, thinking, and expertise from writers on any topic.",
-  MY_ARTICLES:
+  PUBLISHED_ARTICLES:
     "This tab displays the amazing articles you have written so far.",
+  ARTICLES_DRAFTS:
+    "This tab displays the amazing articles are currently working on.",
   RECENTLY_VIEWED_ARTICLES:
     "This tab displays the most recently viewed articles by you.",
+  SAVED_ARTICLES: "This tab displays the articles that you saved.",
+  UPLOAD_ARTICLE_POSTER_WARNING:
+    "Please note: Once you save this article as a draft or publish it, you wont be able to update the article poster.",
 };
 
 const svgs: any = {};

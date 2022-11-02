@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Dispatch } from "@reduxjs/toolkit";
 import { useMediaQuery } from "react-responsive";
 import { DebounceInput } from "react-debounce-input";
-import { InputGroup, Button, Row, Col } from "reactstrap";
+import { InputGroup, Button, Row, Col, Tooltip } from "reactstrap";
 /* component/screen inports */
 
 /* helper imports */
@@ -70,9 +70,89 @@ const Generic = {
         </div>
       );
   },
+  Achievement: ({
+    image_url,
+    title,
+    description,
+    size,
+    count,
+    index,
+  }: {
+    image_url: string;
+    title: string;
+    description: string;
+    size: number;
+    count: number;
+    index: number;
+  }) => {
+    const [tooltipOpen, setTooltipOpen] = useState(false);
+    const toggle = () => setTooltipOpen(!tooltipOpen);
+    // count = 1000000;
+    var countString = "";
+    if (count > 1 && count < 100) {
+      countString += count;
+    } else if (count >= 100) {
+      countString += "99+";
+    }
+    return (
+      <div className="py-2 pe-3 d-flex flex-column justify-content-center align-items-center">
+        <div style={{ position: "relative" }}>
+          <img
+            id={`Tooltip${index}`}
+            src={process.env.REACT_APP_API_URL + image_url}
+            alt={title}
+            style={{
+              objectFit: "cover",
+              width: size,
+              height: size,
+            }}
+          />
+
+          {count > 1 && (
+            <div
+              style={{
+                position: "absolute",
+                bottom: 5,
+                right: -10,
+                paddingLeft: 5,
+                paddingRight: 5,
+                paddingTop: 2,
+                paddingBottom: 2,
+                backgroundColor: "#f9bfa7",
+                borderRadius: 30,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <span
+                style={{ fontSize: 10, textAlign: "center" }}
+              >{`x${countString}`}</span>
+            </div>
+          )}
+        </div>
+        <Tooltip
+          placement={"top"}
+          isOpen={tooltipOpen}
+          target={`Tooltip${index}`}
+          toggle={toggle}
+          style={{
+            opacity: 1,
+            backgroundColor: "white",
+            border: "solid #ddd 0.5px",
+            padding: 10,
+            color: "black",
+          }}
+        >
+          <h5 className="border-bottom ">{title}</h5>
+          <p>{description}</p>
+        </Tooltip>
+      </div>
+    );
+  },
   SearchBar: (props: any) => {
     const { apiCallback, searchFor } = props;
-    const [search, updateSearch] = useState("");
+    // const [search, updateSearch] = useState("");
     return (
       <InputGroup className="col-12 border-bottom border-bottom-4 border-dark ps-2 pb-1 align-items-center">
         <img
@@ -89,7 +169,7 @@ const Generic = {
           style={{ outline: "none" }}
           placeholder={`Search ${searchFor}...`}
           onChange={async (e: any) => {
-            updateSearch(e.target.value);
+            // updateSearch(e.target.value);
             apiCallback(e.target.value);
           }}
         />

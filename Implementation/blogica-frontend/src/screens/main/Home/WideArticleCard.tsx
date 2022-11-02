@@ -28,7 +28,9 @@ const WideArticleCard = (cardProps: ArticleCardProps) => {
               }}
             >
               <Generic.Avatar
-                image_url={article.author.image_url}
+                image_url={
+                  process.env.REACT_APP_API_URL + article.author.image_url
+                }
                 fullname="Gavin D'mello"
                 size={25}
               />
@@ -42,7 +44,7 @@ const WideArticleCard = (cardProps: ArticleCardProps) => {
               className=" ms-2 text-primary"
               style={{ fontWeight: "bold", fontSize: 14 }}
             >
-              {article.author.fullname}
+              {`${article.author.firstname} ${article.author.lastname}`}
             </span>
           </div>
           <h6
@@ -62,7 +64,7 @@ const WideArticleCard = (cardProps: ArticleCardProps) => {
             className=" mb-3  col-12"
             style={{ fontSize: 14, color: "#555" }}
           >
-            {moment(article.created, "YYYYMMDD").fromNow()}
+            {moment(article.createdAt).fromNow()}
           </span>
         </div>
         <div className="col-4 row align-items-center justify-content-center">
@@ -70,7 +72,8 @@ const WideArticleCard = (cardProps: ArticleCardProps) => {
             onClick={() => {}}
             className="img-fluid"
             style={{
-              backgroundImage: `url(${article.image_url})`,
+              backgroundImage: `url(${process.env.REACT_APP_API_URL +
+                article.image_url})`,
               aspectRatio: "1/1",
               backgroundRepeat: "no-repeat",
               backgroundSize: "cover",

@@ -27,7 +27,7 @@ const ContributorListCard = (cardProps: ContributorCardProps) => {
   const { user } = state.userState;
 
   const { contributor, index } = cardProps;
-  const { _id, fullname, created, updated, image_url, bio } = contributor;
+  const { _id, image_url, firstname, lastname, bio } = contributor;
   const cardHoverStlye = cssHover(
     {
       transform: "scale(1.05)",
@@ -50,15 +50,15 @@ const ContributorListCard = (cardProps: ContributorCardProps) => {
           // apis
           //   .postToCategory({
           //     property: "recents",
-          //     category: "recipes",
+          //     category: "articles",
           //     id: data._id,
           //   })
           //   .then(({ data }) => {
-          //     dispatch(addRecipeToRecents(data._id));
+          //     dispatch(addArticleToRecents(data._id));
           //   })
           //   .catch((err) => {
           //     alert(
-          //       "Oops! Something went wrong. Could not add this recipe to recents"
+          //       "Oops! Something went wrong. Could not add this article to recents"
           //     );
           //   });
         }}
@@ -73,7 +73,8 @@ const ContributorListCard = (cardProps: ContributorCardProps) => {
                 borderTopLeftRadius: 4,
                 aspectRatio: "1/1",
                 objectFit: "cover",
-                backgroundImage: `url(${image_url})`,
+                backgroundImage: `url(${process.env.REACT_APP_API_URL +
+                  image_url})`,
                 backgroundRepeat: "no-repeat",
                 backgroundSize: "cover",
                 backgroundPosition: "center",
@@ -93,7 +94,7 @@ const ContributorListCard = (cardProps: ContributorCardProps) => {
             </div>
             <div className="noselect p-4 pb-2">
               <CardTitle tag="h5" style={{ color: "black" }}>
-                {fullname}
+                {`${firstname} ${lastname}`}
               </CardTitle>
               <CardSubtitle
                 className="noselect mb-2 text-muted"

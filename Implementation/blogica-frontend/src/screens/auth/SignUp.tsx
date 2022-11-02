@@ -30,6 +30,7 @@ interface SignupFormValues {
   image: null | File;
   password: string;
   confirmPassword: string;
+  bio: string;
 }
 const SignUpComponent = () => {
   const isTabletOrMobile = useMediaQuery({ query: "(max-width: 767px)" });
@@ -53,10 +54,8 @@ const SignUpComponent = () => {
     }
   );
   const state = useSelector((state: any) => {
-    // eslint-disable-next-line no-labels, no-label-var
     return { userState: state.userActionReducer };
   });
-  const { user } = state.userState;
 
   const [imagePreview, updateImagePreview] = useState<undefined | string>(
     undefined
@@ -69,6 +68,7 @@ const SignUpComponent = () => {
     image: null,
     password: "",
     confirmPassword: "",
+    bio: "",
   });
   const [formErrors, updateFormErrors] = useState({
     username: "",
@@ -78,6 +78,7 @@ const SignUpComponent = () => {
     image: "",
     password: "",
     confirmPassword: "",
+    bio: "",
   });
 
   const [usernameAvailableMessage, updateUsernameAvailableMessage] = useState(
@@ -87,14 +88,12 @@ const SignUpComponent = () => {
   const [usernameAvailableStatus, updateUsernameAvailableStatus] = useState(
     false
   );
-  const [crop, setCrop] = useState({ x: 0, y: 0 });
-  const [zoom, setZoom] = useState(1);
-  const onCropComplete = useCallback(
-    (croppedArea: any, croppedAreaPixels: any) => {
-      console.log(croppedArea, croppedAreaPixels);
-    },
-    []
-  );
+
+  const [isLoading, updateLoading] = useState(false);
+
+  useEffect(() => {
+    document.title = `Sign Up with ${constants.APP_NAME}`;
+  }, []);
 
   useEffect(() => {
     if (!formValues.image) {
@@ -112,7 +111,37 @@ const SignUpComponent = () => {
   useEffect(() => {
     if (!textValidator(formValues.username, 5, 20)[1]) {
       updateUsernameAvailableMessage("");
-      // make api call to check username
+      apis
+        .usernameCheck({
+          username: formValues.username,
+        })
+        .then(({ data }) => {
+          if (data.status === "failed") {
+            updateUsernameAvailableStatus(false);
+            updateUsernameAvailableMessage(data.message);
+          } else {
+            if (data.status === "success") {
+              updateUsernameAvailableStatus(true);
+
+              updateUsernameAvailableMessage(data.message);
+            }
+          }
+        })
+        .catch((err) => {
+          if (err && err.message && err.message === "Network Error") {
+            if (navigator.onLine) {
+              navigate("/server-down", {
+                state: { redirectPath: "/auth/signup" },
+              });
+            } else {
+              alert(
+                "This action cannot be performed at the moment because of no internet connection. Please connect to an internet connection and try again"
+              );
+            }
+          } else {
+            updateUsernameAvailableMessage("data.message");
+          }
+        });
     }
   }, [formValues.username]);
   const {
@@ -297,7 +326,6 @@ const SignUpComponent = () => {
                       accept="image/*"
                       onChange={(e) => {
                         var file = e.target.files;
-                        console.log(file);
 
                         if (file && file.length > 0) {
                           updateFormValues({
@@ -320,7 +348,40 @@ const SignUpComponent = () => {
                         }
                       }}
                     />
-                    <FormFeedback>{formErrors.password}</FormFeedback>
+                    <FormFeedback>{formErrors.image}</FormFeedback>
+                  </FormGroup>
+
+                  {/* Bio */}
+                  <FormGroup className="mb-4">
+                    <Label for="bio">
+                      About me<span style={{ color: "red" }}>*</span>
+                    </Label>
+                    <Input
+                      invalid={formErrors.bio.length > 0}
+                      type="textarea"
+                      name="bio"
+                      id="bio"
+                      placeholder="John"
+                      value={formValues.bio}
+                      onChange={({ target }) => {
+                        updateFormValues({
+                          ...formValues,
+                          bio: target.value,
+                        });
+                        updateFormErrors({
+                          ...formErrors,
+                          bio: textValidator(target.value, 10, 1000)[0],
+                        });
+                      }}
+                      onBlur={({ target }) => {
+                        updateFormErrors({
+                          ...formErrors,
+                          bio: textValidator(target.value, 10, 200)[0],
+                        });
+                      }}
+                    />
+                    <FormText>{`${formValues.bio.length} / 200`}</FormText>
+                    <FormFeedback>{formErrors.bio}</FormFeedback>
                   </FormGroup>
 
                   {/* Email */}
@@ -443,6 +504,7 @@ const SignUpComponent = () => {
                         password,
                         confirmPassword,
                         image,
+                        bio,
                       } = formValues;
                       const {
                         textValidator,
@@ -456,6 +518,7 @@ const SignUpComponent = () => {
                         textValidator(firstname, 4, 20)[1] ||
                         textValidator(lastname, 4, 20)[1] ||
                         image == null ||
+                        textValidator(bio, 10, 1000)[0] ||
                         emailValidator(email)[1] ||
                         passwordValidator(password, 6, 20)[1] ||
                         confirmPasswordValidator(
@@ -479,19 +542,43 @@ const SignUpComponent = () => {
                             20,
                             password
                           )[0],
+                          bio: textValidator(bio, 10, 1000)[0],
                         });
                       } else {
                         var tempSubmit: any = {
                           ...formValues,
-                          fullname:
-                            formValues.firstname + " " + formValues.lastname,
                         };
                         delete tempSubmit["confirmPassword"];
                         // add api call here to signup user
+                        updateLoading(true);
+                        apis
+                          .signup(formValues)
+                          .then(({ data }) => {
+                            alert(
+                              "Account sucessfully created! Redirecting to Login"
+                            );
+                            updateLoading(false);
+
+                            navigate("/auth/signin");
+                          })
+                          .catch((err) => {
+                            if (
+                              err &&
+                              err.message &&
+                              err.message === "Network Error"
+                            ) {
+                              alert(
+                                "This action cannot be performed at the moment because of no internet connection. Please connect to an internet connection and try again"
+                              );
+                            } else {
+                            }
+                            updateLoading(false);
+                            alert(err.message);
+                          });
                       }
                     }}
                   >
-                    Sign Up
+                    {isLoading ? <Spinner size={"sm"} /> : <span>Sign Up</span>}
                   </Button>
                 </Form>
               </div>

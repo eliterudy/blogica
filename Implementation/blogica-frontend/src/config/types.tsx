@@ -6,14 +6,13 @@ export interface Article {
   image_url: string;
   description: string;
   author: Author;
-  isBookmarked?: boolean;
-  created: string;
-  updated?: string;
+  createdAt: string;
+  is_published: boolean;
 }
 
-export interface ArticleDetail extends Article {
-  numberOfLikes?: number;
-  numberOfViews?: number;
+export interface ArticleDetails extends Article {
+  numberOfLikes: number;
+  numberOfViews: number;
   comments?: any;
 }
 
@@ -26,45 +25,75 @@ export interface ArticleCardProps {
   article: Article;
   index: number;
   showAuthorDetails?: boolean;
+  deleteCallback?: any;
+  addCallback?: any;
 }
 
 export interface Person {
   _id: number;
   firstname: string;
   lastname: string;
-  fullname: string;
-  username: string;
-  bio: string;
   image_url: string;
-  created: string;
-  updated?: string;
+  bio: string;
+  username: string;
+  createdAt: string;
 }
 
-export interface User extends Person {
-  bookmarks?: Bookmarks;
-  published: Published;
-  recents?: Recents;
-  currency?: string;
-  currency_type?: string;
+export interface UserArticleSegment {
+  saved: string[];
+  published: string[];
+  favorites: string[];
+  drafts: string[];
 }
 
 export interface Author extends Person {}
 
-export interface AuthorDetail extends Person {
-  published: Published;
+export interface User extends Person {
+  articles: UserArticleSegment;
 }
 
-export interface Bookmarks {
-  articles: string[];
+export interface PersonDetailArticleSegment {
+  published: Article[];
 }
 
-export interface Recents {
-  articles: string[];
-  authors: string[];
+export interface AuthorDetailArticleSegment
+  extends PersonDetailArticleSegment {}
+
+export interface UserDetailArticleSegment extends PersonDetailArticleSegment {
+  saved: Article[];
+  recents: Article[];
+  drafts: Article[];
 }
 
-export interface Published {
-  articles: string[];
+export interface UserDetails extends Person {
+  badges: Award[];
+  points_earned: number;
+  points_spent: number;
+  articles: UserDetailArticleSegment;
+}
+
+export interface AuthorDetails extends Person {
+  badges: Award[];
+  articles: AuthorDetailArticleSegment;
+}
+
+export interface Award {
+  title: string;
+  image_url: string;
+  description: string;
+  count: number;
+}
+
+/* User Detail Interfaces */
+export interface SavedDetails {
+  articles: Article[];
+}
+export interface RecentsDetails {
+  articles: Article[];
+  // authors: string[];
+}
+export interface PublishedDetails {
+  articles: Article[];
 }
 
 // Others

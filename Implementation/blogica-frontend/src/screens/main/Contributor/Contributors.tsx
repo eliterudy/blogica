@@ -15,113 +15,9 @@ import { icons } from "../../../config/configuration";
 import Generic from "../../../components/generic/GenericComponents";
 import { toggler } from "../../../utils/generic";
 import actions from "../../../redux/actionReducers/index";
-import { Person } from "../../../config/types";
+import { Author, Person } from "../../../config/types";
 import ContributorListCard from "./ContributorListCard";
-
-const contributorsDataset: Person[] = [
-  {
-    _id: 21,
-    firstname: "Robert",
-    lastname: "Danny Jr.",
-    fullname: "Robert Danny Jr.",
-    bio:
-      "Robert Danny Jr. is a content creator currently building an app called Blogica for his Masters degree",
-    image_url:
-      "https://wellgroomedgentleman.com/media/images/Tony_Stark_Beard_with_Quiff_Hairstyle.width-800.jpg",
-
-    username: "tom1040",
-    created: "2022-09-16T12:59-0500",
-  },
-  {
-    _id: 22,
-    firstname: "Mike",
-    lastname: "Ross",
-    fullname: "Mike Ross",
-    bio:
-      "Mike Ross is a content creator currently building an app called Blogica for his Masters degree",
-    image_url:
-      "https://www.tvinsider.com/wp-content/uploads/2019/07/Suits-Mike-1014x570.jpg",
-
-    username: "mike1040",
-    created: "2022-09-16T12:59-0500",
-  },
-  {
-    _id: 23,
-    firstname: "Harvey",
-    lastname: "Spectre",
-    fullname: "Harvey Spectre",
-    bio:
-      "Harvey Spectre is a content creator currently building an app called Blogica for his Masters degree",
-    image_url:
-      "https://i.pinimg.com/474x/3f/d1/b8/3fd1b807b8425cb3f328fa06e5dcd63b--gabriel-macht-harvey-specter.jpg",
-
-    username: "harvey1040",
-    created: "2022-09-16T12:59-0500",
-  },
-  {
-    _id: 24,
-    firstname: "Gavin",
-    lastname: "D'mello",
-    fullname: "Gavin D'mello",
-    bio:
-      "Gavin D'mello is a content creator currently building an app called Blogica for his Masters degree",
-    image_url: "https://avatars.githubusercontent.com/u/54526769?v=4",
-
-    username: "gavin1040",
-    created: "2022-09-16T12:59-0500",
-  },
-  {
-    _id: 25,
-    firstname: "Robert",
-    lastname: "Danny Jr.",
-    fullname: "Robert Danny Jr.",
-    bio:
-      "Robert Danny Jr. is a content creator currently building an app called Blogica for his Masters degree",
-    image_url:
-      "https://wellgroomedgentleman.com/media/images/Tony_Stark_Beard_with_Quiff_Hairstyle.width-800.jpg",
-
-    username: "tom1040",
-    created: "2022-09-16T12:59-0500",
-  },
-  {
-    _id: 26,
-    firstname: "Mike",
-    lastname: "Ross",
-    fullname: "Mike Ross",
-    bio:
-      "Mike Ross is a content creator currently building an app called Blogica for his Masters degree",
-    image_url:
-      "https://www.tvinsider.com/wp-content/uploads/2019/07/Suits-Mike-1014x570.jpg",
-
-    username: "mike1040",
-    created: "2022-09-16T12:59-0500",
-  },
-  {
-    _id: 27,
-    firstname: "Harvey",
-    lastname: "Spectre",
-    fullname: "Harvey Spectre",
-    bio:
-      "Harvey Spectre is a content creator currently building an app called Blogica for his Masters degree",
-    image_url:
-      "https://i.pinimg.com/474x/3f/d1/b8/3fd1b807b8425cb3f328fa06e5dcd63b--gabriel-macht-harvey-specter.jpg",
-
-    username: "harvey1040",
-    created: "2022-09-16T12:59-0500",
-  },
-  {
-    _id: 28,
-    firstname: "Gavin",
-    lastname: "D'mello",
-    fullname: "Gavin D'mello",
-    bio:
-      "Gavin D'mello is a content creator currently building an app called Blogica for his Masters degree",
-    image_url: "https://avatars.githubusercontent.com/u/54526769?v=4",
-
-    username: "gavin1040",
-    created: "2022-09-16T12:59-0500",
-  },
-];
+import apis from "../../../config/api";
 
 const Contributors = (props: any) => {
   const navigate = useNavigate();
@@ -130,9 +26,7 @@ const Contributors = (props: any) => {
   const locationParams = useLocation();
   // state hooks
   const [search, updateSearch] = useState("");
-  const [contributors, updateContributors] = useState<null | Person[]>(
-    contributorsDataset
-  );
+  const [contributors, updateContributors] = useState<null | Author[]>(null);
   const [offset, updateOffset] = useState(0);
   const [loading, updateLoading] = useState(false);
   const [error, updateError] = useState(null);
@@ -147,23 +41,61 @@ const Contributors = (props: any) => {
   const { user } = state.userState;
 
   // useEffects
-  useEffect(() => {}, []);
+  useEffect(() => {
+    document.title = "Contributors";
+  }, []);
+
+  useEffect(() => {
+    getContributorsFromApi();
+  }, [callerCounter]);
 
   // functions/callbacks
   const searchUpdateCallback = async (value: string) => {
-    // updateOffset(0);
-    // updateContributor(null);
-    // updateContributorLoading(true);
+    updateOffset(0);
+    updateContributors(null);
+    updateLoading(true);
     await updateSearch(value);
-    // await updateCallerCounter(callerCounter + 1);
+    await updateCallerCounter(callerCounter + 1);
   };
 
-  const getContributorsFromApi = () => {};
+  const getContributorsFromApi = () => {
+    updateLoading(true);
+
+    apis
+      .getAllAuthors({
+        search,
+        limit: 8,
+        offset,
+      })
+      .then(async ({ data }) => {
+        var authors = data.results;
+        updateListCount(data.count);
+        updateOffset(data.nextOffset);
+
+        if (contributors) {
+          updateContributors([...contributors, ...authors]);
+        } else {
+          updateContributors([...authors]);
+        }
+        updateLoading(false);
+      })
+
+      .catch((err) => {
+        if (err && err.message && err.message === "Network Error") {
+          alert(
+            "This action cannot be performed at the moment because of no internet connection. Please connect to an internet connection and try again"
+          );
+        } else {
+          updateError(err);
+          updateLoading(false);
+        }
+      });
+  };
 
   // component conditional render
   const loadContributors = (contributorList: Person[]) => {
     return contributorList.map((contributor: Person, index: number) => (
-      <div key={index} className={`col-12 col-sm-6 col-lg-3 mb-5  px-4`}>
+      <div key={index} className={`col-12 col-sm-6 col-lg-3 p-3 `}>
         <ContributorListCard contributor={contributor} index={index} />
       </div>
     ));
@@ -187,7 +119,7 @@ const Contributors = (props: any) => {
       {!loading && contributors && (
         <div className="noselect  col-12   pt-1">
           <div className="container p-0">
-            <div className="d-flex flex-column align-items-end pt-3 pe-4">
+            <div className="d-flex flex-column align-items-end pt-3 px-4">
               <em
                 className="px-2 pt-1"
                 style={{
@@ -200,7 +132,7 @@ const Contributors = (props: any) => {
               </em>
             </div>
             <InfiniteScroll
-              className="pt-4"
+              className="pt-4 px-2"
               dataLength={contributors ? contributors.length : 0} //This is important field to render the next data
               next={() => {
                 getContributorsFromApi();
@@ -213,8 +145,15 @@ const Contributors = (props: any) => {
               }}
               loader={<h4 className="col-12 text-center">Fetching more...</h4>}
               endMessage={
-                <p className="col-12" style={{ textAlign: "center" }}>
-                  <b>Yay! You have seen it all</b>
+                <p className="col-12 mt-4" style={{ textAlign: "center" }}>
+                  <em>
+                    {contributors.length === 0
+                      ? search.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "").length >
+                        0
+                        ? "No match found! Please try a different search"
+                        : "There are no contributors to our website yet."
+                      : "Yay! You have seen it all"}
+                  </em>
                 </p>
               }
             >
