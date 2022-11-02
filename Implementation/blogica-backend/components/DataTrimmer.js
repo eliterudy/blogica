@@ -15,7 +15,7 @@ const trimAuthor = (author) => {
     createdAt,
   };
 };
-const trimArticleWithAuthorPopulated = (article) => {
+const trimArticleWithAuthorPopulated = (article, isForDetailedView) => {
   const {
     _id,
     title,
@@ -24,8 +24,11 @@ const trimArticleWithAuthorPopulated = (article) => {
     author,
     createdAt,
     is_published,
+    number_of_likes,
+    number_of_views,
   } = article;
-  return {
+
+  var response = {
     _id,
     title,
     description,
@@ -34,8 +37,11 @@ const trimArticleWithAuthorPopulated = (article) => {
     is_published,
     createdAt,
   };
+  return isForDetailedView
+    ? { ...response, number_of_likes, number_of_views }
+    : { ...response };
 };
-const trimArticleWithoutAuthorPopulated = (article) => {
+const trimArticleWithoutAuthorPopulated = (article, isForDetailedView) => {
   const {
     _id,
     title,
@@ -44,16 +50,21 @@ const trimArticleWithoutAuthorPopulated = (article) => {
     author,
     createdAt,
     is_published,
+    number_of_likes,
+    number_of_views,
   } = article;
-  return {
+  var response = {
     _id,
     title,
     description,
     image_url,
     author,
-    createdAt,
     is_published,
+    createdAt,
   };
+  return isForDetailedView
+    ? { ...response, number_of_likes, number_of_views }
+    : { ...response };
 };
 
 const trimAuthorList = (authors) => {
@@ -62,11 +73,11 @@ const trimAuthorList = (authors) => {
   });
 };
 
-const trimArticleList = (articles, isAuthorPopulated) => {
+const trimArticleList = (articles, isAuthorPopulated, isForDetailedView) => {
   return articles.map((article) => {
     return isAuthorPopulated
-      ? trimArticleWithAuthorPopulated(article)
-      : trimArticleWithoutAuthorPopulated(article);
+      ? trimArticleWithAuthorPopulated(article, isForDetailedView)
+      : trimArticleWithoutAuthorPopulated(article, isForDetailedView);
   });
 };
 

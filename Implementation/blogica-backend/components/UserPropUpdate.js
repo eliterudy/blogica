@@ -1,13 +1,10 @@
 const Article = require("../models/articles");
 const User = require("../models/users");
-var mongoose = require("mongoose");
 
 const UserPropUpdate = {
   getArticlesByProperty: (req, res, next) => {
     User.findById(req.user._id)
-      // .populate({
-      //   path: `${req.query.property}.${req.query.category}`,
-      // })
+
       .then(
         (user) => {
           if (user != null) {

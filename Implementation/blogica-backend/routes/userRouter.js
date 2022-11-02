@@ -23,7 +23,6 @@ userRouter.get(
   cors.corsWithOptions,
 
   (req, res, next) => {
-    // text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "")
     var filters = {
       $or: [
         {
@@ -129,6 +128,11 @@ userRouter.get(
       )
       .then(
         async (user) => {
+          if (!user) {
+            err = new Error(`User not found`);
+            err.status = 404;
+            return next(err);
+          }
           res.statusCode = 200;
           res.setHeader("Content-Type", "application/json");
           const {
@@ -161,17 +165,23 @@ userRouter.get(
               points_earned,
               points_spent,
               articles: {
-                saved: DataTrimmer.trimArticleList(articles.saved, true),
-                favorites: DataTrimmer.trimArticleList(
-                  articles.favorites,
-                  true
+                saved: DataTrimmer.trimArticleList(articles.saved, true, false),
+
+                recents: DataTrimmer.trimArticleList(
+                  articles.recents,
+                  true,
+                  false
                 ),
-                recents: DataTrimmer.trimArticleList(articles.recents, true),
                 published: DataTrimmer.trimArticleList(
                   articles.published,
-                  true
+                  true,
+                  false
                 ),
-                drafts: DataTrimmer.trimArticleList(articles.drafts, true),
+                drafts: DataTrimmer.trimArticleList(
+                  articles.drafts,
+                  true,
+                  false
+                ),
               },
               badges: DataTrimmer.trimBadgeList(badges),
             };
@@ -181,7 +191,7 @@ userRouter.get(
               articles: {
                 saved: articles.saved,
                 published: articles.published,
-                recents: articles.recents,
+                favorites: articles.favorites,
                 drafts: articles.drafts,
               },
             };
@@ -237,7 +247,11 @@ userRouter.get("/authorDetails", cors.cors, (req, res, next) => {
             image_url,
             username,
             articles: {
-              published: DataTrimmer.trimArticleList(articles.published, true),
+              published: DataTrimmer.trimArticleList(
+                articles.published,
+                true,
+                false
+              ),
             },
             badges: DataTrimmer.trimBadgeList(badges),
             createdAt,
@@ -247,9 +261,9 @@ userRouter.get("/authorDetails", cors.cors, (req, res, next) => {
       )
       .catch((err) => next(err));
   } else {
-    res.statusCode = 401;
-    res.setHeader("Content-Type", "application/json");
-    next(new Error("Author Id missing"));
+    err = new Error(`Author id missing`);
+    err.status = 500;
+    return next(err);
   }
 });
 
@@ -324,7 +338,6 @@ userRouter.post("/signin", cors.corsWithOptions, (req, res, next) => {
 
       var token = authenticate.getToken({ _id: req.user._id });
       User.findById(req.user._id)
-        // .populate(["published.articles"])
         .then(
           (user) => {
             const {
@@ -416,8 +429,10 @@ userRouter
   .post(cors.corsWithOptions, authenticate.verifyUser, (req, res, next) => {
     if (req.query.category == "favorites" && req.query.property == "articles") {
       Article.findById(req.body.id).then((article) => {
-        article.number_of_likes += 1;
-        article.save();
+        if (article) {
+          article.number_of_likes += 1;
+          article.save();
+        }
       });
     }
     if (req.query.property == "articles") {
@@ -438,8 +453,10 @@ userRouter
         req.query.property == "articles"
       ) {
         Article.findById(req.body.id).then((article) => {
-          article.number_of_likes -= 1;
-          article.save();
+          if (article) {
+            article.number_of_likes -= 1;
+            article.save();
+          }
         });
       }
       if (req.query.property == "articles") {

@@ -60,7 +60,7 @@ articleRouter
                 res.setHeader("Content-Type", "application/json");
 
                 res.json({
-                  results: DataTrimmer.trimArticleList(articles, true),
+                  results: DataTrimmer.trimArticleList(articles, true, false),
                   limit: Number(req.query.limit),
                   nextOffset:
                     Number(req.query.offset) + Number(req.query.limit),
@@ -106,7 +106,9 @@ articleRouter
           (article) => {
             res.statusCode = 200;
             res.setHeader("Content-Type", "application/json");
-            res.json(DataTrimmer.trimArticleWithoutAuthorPopulated(article));
+            res.json(
+              DataTrimmer.trimArticleWithoutAuthorPopulated(article, true)
+            );
             User.findById(req.user._id)
               .then(async (user) => {
                 if (req.body.is_published === "true") {
@@ -209,7 +211,6 @@ articleRouter
                             author.badges.push({ badge: badge._id, count: 1 });
                           }
 
-                          // article.author = author;
                           await author.save();
                         }
                       })
@@ -224,7 +225,7 @@ articleRouter
             res.statusCode = 200;
             res.setHeader("Content-Type", "application/json");
             return res.json(
-              DataTrimmer.trimArticleWithAuthorPopulated(article._doc)
+              DataTrimmer.trimArticleWithAuthorPopulated(article._doc, true)
             );
           } else {
             res.statusCode = 400;
@@ -263,7 +264,9 @@ articleRouter
             .then(
               (articleNew) => {
                 if (!articleNew) {
-                  return next(new Error("Article doesn't exist"));
+                  err = new Error(`Article not found`);
+                  err.status = 404;
+                  return next(err);
                 }
 
                 if (req.body.hasOwnProperty("is_published")) {
@@ -275,7 +278,9 @@ articleRouter
                       .then(
                         (user) => {
                           if (!user) {
-                            return next(new Error("User doesn't exist"));
+                            err = new Error(`User not found`);
+                            err.status = 404;
+                            return next(err);
                           }
 
                           var indexInDrafts = user.articles.drafts.indexOf(
@@ -295,7 +300,9 @@ articleRouter
                           ];
                           user.save().then((user) => {
                             if (!user) {
-                              return next(new Error("User doesn't exist"));
+                              err = new Error(`User not found`);
+                              err.status = 404;
+                              return next(err);
                             } else {
                               res.statusCode = 200;
                               res.setHeader("Content-Type", "application/json");
@@ -314,7 +321,9 @@ articleRouter
                       .then(
                         (user) => {
                           if (!user) {
-                            return next(new Error("User doesn't exist"));
+                            err = new Error(`User not found`);
+                            err.status = 404;
+                            return next(err);
                           }
                           var indexInPublished =
                             user.articles.published.indexOf(articleNew._id);
@@ -333,7 +342,9 @@ articleRouter
                           user.save().then(
                             (user) => {
                               if (!user) {
-                                return next(new Error("User doesn't exist"));
+                                err = new Error(`User not found`);
+                                err.status = 404;
+                                return next(err);
                               } else {
                                 res.statusCode = 200;
                                 res.setHeader(
@@ -364,12 +375,11 @@ articleRouter
             )
             .catch((err) => next(err));
         } else {
-          res.statusCode = 403;
-          return next(
-            new Error(
-              "Only the author of this article or the admin are authorized to update this article"
-            )
+          err = new Error(
+            `Only the author of this article or the admin are authorized to update this article`
           );
+          err.status = 403;
+          return next(err);
         }
       })
       .catch((err) => next(err));
@@ -377,7 +387,13 @@ articleRouter
   .delete(cors.corsWithOptions, authenticate.verifyUser, (req, res, next) => {
     Article.findById(req.params.articleId)
       .then((article) => {
-        if (!article) return next(new Error("Article doesn't exist"));
+        if (!article) {
+          err = new Error(
+            `Only the author of this article or the admin are authorized to delete this article`
+          );
+          err.status = 403;
+          return next(err);
+        }
         if (
           article.author.toString() === req.user._id.toString() ||
           req.user.admin
@@ -386,7 +402,11 @@ articleRouter
             .then((resp) => {
               User.findById(req.user._id).then(
                 (user) => {
-                  if (!user) return next(new Error("User doesn't exist"));
+                  if (!user) {
+                    err = new Error(`User not found`);
+                    err.status = 404;
+                    return next(err);
+                  }
 
                   if (user.articles.drafts.includes(req.params.articleId)) {
                     user.articles.drafts.splice(
@@ -404,7 +424,11 @@ articleRouter
 
                   user.save().then(
                     (user) => {
-                      if (!user) return next(new Error("User doesn't exist"));
+                      if (!user) {
+                        err = new Error(`User not found`);
+                        err.status = 404;
+                        return next(err);
+                      }
 
                       res.statusCode = 200;
                       res.setHeader("Content-Type", "application/json");
@@ -467,12 +491,11 @@ articleRouter
             })
             .catch((err) => next(err));
         } else {
-          res.statusCode = 403;
-          return next(
-            new Error(
-              "Only the author of this article or the admin are authorized to delete this article"
-            )
+          err = new Error(
+            "Only the author of this article or the admin are authorized to delete this article"
           );
+          err.status = 403;
+          return next(err);
         }
       })
       .catch((err) => next(err));

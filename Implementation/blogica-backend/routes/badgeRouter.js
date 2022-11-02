@@ -57,11 +57,6 @@ badgeRouter
           res.json(badge);
         },
         (err) => {
-          // if (err.code == 11000) {
-          //   res.statusCode = 400;
-          //   res.setHeader("Content-Type", "application/json");
-          //   return res.json({ error: "Badge duplicate found" });
-          // }
           next(err);
         }
       );

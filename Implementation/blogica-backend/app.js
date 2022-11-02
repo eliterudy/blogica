@@ -53,27 +53,12 @@ var rule = new schedule.RecurrenceRule();
 rule.hour = 00;
 rule.tz = "Etc/UTC";
 
-connect
-  .then((db) => {
-    // schedule.scheduleJob(rule, () => {
-    //   var count = 0;
-    //   updateFeatured(count);
-    // });
-  })
-  .catch((err) => {});
+connect.then((db) => {}).catch((err) => {});
 var app = express();
 
 // middleware to redirect to secureServer
 app.all("*", (req, res, next) => {
   return next();
-  // if (req.secure) {
-  //   return next();
-  // } else {
-  //    // redirecting to secure server
-  //   res.redirect(
-  //     307,
-  //     "https://" + req.hostname + ":" + app.get("secPort") + req.url
-  //   );
 });
 
 // view engine setup
@@ -84,6 +69,7 @@ app.use(logger("dev"));
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: false }));
 app.use(passport.initialize());
+
 // app.use(passport.session());
 app.use(express.static(path.join(__dirname, "public")));
 var urlPathsForImages = [
