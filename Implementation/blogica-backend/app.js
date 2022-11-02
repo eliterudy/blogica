@@ -75,6 +75,7 @@ app.use(express.static(path.join(__dirname, "public")));
 var urlPathsForImages = [
   { path: "/images/articles", location: "articles" },
   { path: "/images/users", location: "users" },
+  { path: "/images/badges", location: "badges" },
 ];
 
 urlPathsForImages.map((urlPath) => {
