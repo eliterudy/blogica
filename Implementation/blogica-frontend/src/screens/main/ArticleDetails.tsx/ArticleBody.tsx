@@ -25,7 +25,7 @@ import moment from "moment";
 import { cssHover } from "../../../components/generic/hoverProps";
 import actions from "../../../redux/actionReducers/index";
 import apis from "../../../config/api";
-import { gifs, icons } from "../../../config/configuration";
+import { constants, gifs, icons } from "../../../config/configuration";
 import {
   addArticlesToArticleCategory,
   deleteArticlesFromArticleCategory,
@@ -99,7 +99,9 @@ const ArticleBody = ({ article, url, updateArticle }: any) => {
                             })
                           );
                         })
-                        .catch((error) => {})
+                        .catch((error) => {
+                          alert(constants.OOPS_MESSAGE);
+                        })
                     : apis
                         .deleteFromCategory(
                           { property: "articles", category: "saved" },
@@ -113,7 +115,9 @@ const ArticleBody = ({ article, url, updateArticle }: any) => {
                             })
                           );
                         })
-                        .catch((error) => {});
+                        .catch((error) => {
+                          alert(constants.OOPS_MESSAGE);
+                        });
                 }}
               >
                 {user.articles.saved.includes(article._id)
@@ -224,7 +228,9 @@ const ArticleBody = ({ article, url, updateArticle }: any) => {
                           number_of_likes: article.number_of_likes + 1,
                         });
                       })
-                      .catch((error) => {});
+                      .catch((error) => {
+                        alert(constants.OOPS_MESSAGE);
+                      });
                   } else {
                     apis
                       .deleteFromCategory(
@@ -243,7 +249,9 @@ const ArticleBody = ({ article, url, updateArticle }: any) => {
                           number_of_likes: article.number_of_likes - 1,
                         });
                       })
-                      .catch((error) => {});
+                      .catch((error) => {
+                        alert(constants.OOPS_MESSAGE);
+                      });
                   }
                 }}
               >
@@ -339,6 +347,8 @@ const ArticleBody = ({ article, url, updateArticle }: any) => {
                   navigate(-1);
                 })
                 .catch((error) => {
+                  alert(constants.OOPS_MESSAGE);
+
                   updateDeleteArticleLoading(false);
                   toggleModal();
                 });

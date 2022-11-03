@@ -116,24 +116,17 @@ const SignUpComponent = () => {
           username: formValues.username,
         })
         .then(({ data }) => {
-          if (data.status === "failed") {
-            updateUsernameAvailableStatus(false);
-            updateUsernameAvailableMessage(data.message);
-          } else {
-            if (data.status === "success") {
-              updateUsernameAvailableStatus(true);
-
-              updateUsernameAvailableMessage(data.message);
-            }
-          }
+          updateUsernameAvailableStatus(true);
+          updateUsernameAvailableMessage(data.message);
         })
-        .catch((err) => {
-          if (err && err.message && err.message === "Network Error") {
-            alert(
-              "This action cannot be performed at the moment because of no internet connection. Please connect to an internet connection and try again"
-            );
+        .catch(({ response, message }) => {
+          if (message && message === "Network Error") {
+            alert(constants.NO_INTERNET_ALERT_MESSAGE);
           } else {
-            updateUsernameAvailableMessage("data.message");
+            if (response && response.data && response.data.error) {
+              updateUsernameAvailableStatus(false);
+              updateUsernameAvailableMessage(response.data.error);
+            }
           }
         });
     }

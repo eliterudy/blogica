@@ -2,19 +2,10 @@ import React, { useState } from "react";
 import { Card, CardBody, CardTitle, CardSubtitle } from "reactstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { cssHover } from "../../../components/generic/hoverProps";
-import { ArticleCardProps, ContributorCardProps } from "../../../config/types";
-import { icons } from "../../../config/configuration";
+import { ContributorCardProps } from "../../../config/types";
 import { useSelector, useDispatch } from "react-redux";
 import { Dispatch } from "@reduxjs/toolkit";
-import actions from "../../../redux/actionReducers/index";
-import apis from "../../../config/api";
-import { gifs } from "../../../config/configuration";
-
-// const {
-//   addArticleToFavorites,
-//   deleteArticleFromFavorites,
-//   addArticleToRecents,
-// } = actions;
+import { constants } from "../../../config/configuration";
 
 const ContributorListCard = (cardProps: ContributorCardProps) => {
   const dispatch: Dispatch<any> = useDispatch();
@@ -43,26 +34,7 @@ const ContributorListCard = (cardProps: ContributorCardProps) => {
       state={{ authorId: _id }}
       style={{ textDecoration: "none", color: "black" }}
     >
-      <div
-        {...cardHoverStlye}
-        onClick={() => {
-          // user &&
-          // apis
-          //   .postToCategory({
-          //     property: "recents",
-          //     category: "articles",
-          //     id: data._id,
-          //   })
-          //   .then(({ data }) => {
-          //     dispatch(addArticleToRecents(data._id));
-          //   })
-          //   .catch((err) => {
-          //     alert(
-          //       "Oops! Something went wrong. Could not add this article to recents"
-          //     );
-          //   });
-        }}
-      >
+      <div {...cardHoverStlye}>
         <Card className="noselect  col-12 col-sm-12 ">
           <CardBody className="noselect p-0">
             {/* eslint-disable-next-line jsx-a11y/img-redundant-alt */}

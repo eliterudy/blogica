@@ -84,8 +84,11 @@ const Contributors = (props: any) => {
         if (message && message === "Network Error") {
           alert(constants.NO_INTERNET_ALERT_MESSAGE);
         } else {
-          if (response && response.data && response.data.error)
+          if (response && response.data && response.data.error) {
             updateError(response.data.error);
+          } else {
+            alert(constants.OOPS_MESSAGE);
+          }
         }
       });
   };

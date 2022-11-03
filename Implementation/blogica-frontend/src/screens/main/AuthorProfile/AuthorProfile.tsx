@@ -75,8 +75,11 @@ const AuthorProfile = (props: any) => {
           alert(constants.NO_INTERNET_ALERT_MESSAGE);
         } else {
           console.log(error);
-          if (response && response.data && response.data.error)
+          if (response && response.data && response.data.error) {
             updateError(response.data.error);
+          } else {
+            alert(constants.OOPS_MESSAGE);
+          }
         }
         updateLoading(false);
       });

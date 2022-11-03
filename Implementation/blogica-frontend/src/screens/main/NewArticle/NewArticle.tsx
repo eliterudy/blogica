@@ -153,9 +153,19 @@ const NewArticle = (props: any) => {
                   updateUpdateDraftLoading(false);
                   navigate(-1);
                 })
-                .catch(({ response }) => {
-                  const { data } = response || {};
-                  alert(data.error);
+                .catch(({ response, message }) => {
+                  if (message && message === "Network Error") {
+                    alert(
+                      "This action cannot be performed at the moment because of no internet connection. Please connect to an internet connection and try again"
+                    );
+                  } else {
+                    if (response && response.data && response.data.error) {
+                      alert(response.data.error);
+                    } else {
+                      alert(constants.OOPS_MESSAGE);
+                    }
+                  }
+
                   updateUpdateDraftLoading(false);
                 })
             : location.state &&
@@ -168,7 +178,18 @@ const NewArticle = (props: any) => {
                   updateUpdateDraftLoading(false);
                   navigate(-1);
                 })
-                .catch((error) => {
+                .catch(({ message, response }) => {
+                  if (message && message === "Network Error") {
+                    alert(
+                      "This action cannot be performed at the moment because of no internet connection. Please connect to an internet connection and try again"
+                    );
+                  } else {
+                    if (response && response.data && response.data.error) {
+                      alert(response.data.error);
+                    } else {
+                      alert(constants.OOPS_MESSAGE);
+                    }
+                  }
                   updateUpdateDraftLoading(false);
                 });
         }}
@@ -208,7 +229,18 @@ const NewArticle = (props: any) => {
                   updatePublishDraftLoading(false);
                   navigate(-1);
                 })
-                .catch((error) => {
+                .catch(({ message, response }) => {
+                  if (message && message === "Network Error") {
+                    alert(
+                      "This action cannot be performed at the moment because of no internet connection. Please connect to an internet connection and try again"
+                    );
+                  } else {
+                    if (response && response.data && response.data.error) {
+                      alert(response.data.error);
+                    } else {
+                      alert(constants.OOPS_MESSAGE);
+                    }
+                  }
                   updatePublishDraftLoading(false);
                 })
             : location.state &&
@@ -221,7 +253,18 @@ const NewArticle = (props: any) => {
                   updateUpdateDraftLoading(false);
                   navigate(-1);
                 })
-                .catch((error) => {
+                .catch(({ response, message }) => {
+                  if (message && message === "Network Error") {
+                    alert(
+                      "This action cannot be performed at the moment because of no internet connection. Please connect to an internet connection and try again"
+                    );
+                  } else {
+                    if (response && response.data && response.data.error) {
+                      alert(response.data.error);
+                    } else {
+                      alert(constants.OOPS_MESSAGE);
+                    }
+                  }
                   updateUpdateDraftLoading(false);
                 });
         }}
@@ -354,45 +397,7 @@ const NewArticle = (props: any) => {
           {renderDiscardButton()}
         </div>
       ) : null}
-      {/* <div className="d-flex flex-row justify-content-center align-items-center">
-        <Button
-          className={" bg-primary px-4 "}
-          style={{ borderRadius: 40, height: 40 }}
-          onClick={() => {}}
-        >
-          <span>Scroll to top</span>
-        </Button>
-      </div> */}
-      {/* {isNew && (
-        <Tooltip
-          placement={"top"}
-          isOpen={draftTooltipStatus}
-          target={"draftButton"}
-          toggle={toggleDraftTooltip}
-        >
-          Button disabled
-        </Tooltip>
-      )}
-      {isNew && (
-        <Tooltip
-          placement={"top"}
-          isOpen={publishTooltipStatus}
-          target={"publishButton"}
-          toggle={togglePublishTooltip}
-        >
-          Button disabled
-        </Tooltip>
-      )}
-      {!isNew && (
-        <Tooltip
-          placement={"top"}
-          isOpen={updateTooltipStatus}
-          target={"updateButton"}
-          toggle={toggleUpdateTooltip}
-        >
-          Button disabled
-        </Tooltip>
-      )} */}
+
       <Modal
         style={{
           paddingTop: 50,

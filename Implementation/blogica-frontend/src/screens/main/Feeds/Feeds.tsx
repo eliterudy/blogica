@@ -124,8 +124,11 @@ const Feeds = (props: any) => {
             "This action cannot be performed at the moment because of no internet connection. Please connect to an internet connection and try again"
           );
         } else {
-          if (response && response.data && response.data.error)
+          if (response && response.data && response.data.error) {
             updateError(response.data.error);
+          } else {
+            alert(constants.OOPS_MESSAGE);
+          }
         }
         if (response.status == "401") navigate("/main/home");
         updateLoading(false);

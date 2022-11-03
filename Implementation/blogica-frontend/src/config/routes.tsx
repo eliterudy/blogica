@@ -31,6 +31,7 @@ import apis from "../config/api";
 import reduxApiCallers from "../redux/thunks/reduxApiCallers";
 import actions from "../redux/actionReducers/index";
 import Footer from "../components/Footer";
+import { constants } from "./configuration";
 const { loadUser, removeUser } = actions;
 
 const MainRouter = () => {
@@ -55,11 +56,19 @@ const MainRouter = () => {
               dispatch(loadUser(data));
               updateLoading(false);
             })
-            .catch((err) => {
-              alert("failed to load user. Please login");
-              dispatch(removeUser());
-              navigate("/auth/signin");
-              updateLoading(false);
+            .catch(({ response, message }) => {
+              if (message && message === "Network Error") {
+                alert(constants.NO_INTERNET_ALERT_MESSAGE);
+              } else {
+                if (response && response.data && response.data.error) {
+                  alert(response.data.error);
+                } else {
+                  alert("failed to load user. Please login");
+                }
+                dispatch(removeUser());
+                navigate("/auth/signin");
+                updateLoading(false);
+              }
             })
         : updateLoading(false);
     }, []);

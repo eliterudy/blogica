@@ -3,40 +3,21 @@ import React, { useState, useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Dispatch } from "@reduxjs/toolkit";
-import { useMediaQuery } from "react-responsive";
 import {
   EmailShareButton,
   FacebookShareButton,
   LinkedinShareButton,
-  InstapaperShareButton,
-  PinterestShareButton,
-  RedditShareButton,
   TwitterShareButton,
-  WhatsappShareButton,
 } from "react-share";
 import moment from "moment";
-import {
-  Toast,
-  ToastHeader,
-  ToastBody,
-  Tooltip,
-  Spinner,
-  Button,
-  Modal,
-  ModalBody,
-  ModalFooter,
-  ModalHeader,
-} from "reactstrap";
+import { Toast, ToastBody } from "reactstrap";
 
 /* component/screen inports */
+import Generic from "../../../components/generic/GenericComponents";
 
 /* helper imports */
-import { cssHover } from "../../../components/generic/hoverProps";
-import Generic from "../../../components/generic/GenericComponents";
-import { toggler } from "../../../utils/generic";
-import actions from "../../../redux/actionReducers/index";
-import apis from "../../../config/api";
 import { constants } from "../../../config/configuration";
+
 const ArticleHead = ({ article, url }: any) => {
   const navigate = useNavigate();
   const location = useLocation();

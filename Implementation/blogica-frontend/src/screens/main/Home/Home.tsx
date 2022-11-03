@@ -67,7 +67,7 @@ const Home = (props: any) => {
   const { user } = state.userState;
   var selectedFeedsFilter = window.sessionStorage.getItem("homeFilter");
 
-  const [loading, isLoading] = useState(false);
+  const [isLoading, updateLoading] = useState(false);
   const [headerTitle, updateHeaderTitle] = useState(
     selectedFeedsFilter
       ? filterBy[JSON.parse(selectedFeedsFilter).filter as keyof filterBy]
@@ -93,7 +93,7 @@ const Home = (props: any) => {
   const onChange = async (e: ChangeEvent<HTMLInputElement>) => {
     await updateSelectFilter(e.target.value);
     await updateArticles(null);
-    await isLoading(true);
+    await updateLoading(true);
     await updateCallerCounter(callerCounter + 1);
     window.sessionStorage.setItem(
       "homeFilter",
@@ -111,10 +111,18 @@ const Home = (props: any) => {
       .then(({ data }) => {
         updateArticles(data.results);
         updateHeaderTitle(filterBy[selectFilter as keyof filterBy]);
-        isLoading(false);
+        updateLoading(false);
       })
-      .catch((err) => {
-        isLoading(false);
+      .catch(({ response, message }) => {
+        if (message && message === "Network Error") {
+          alert(
+            "This action cannot be performed at the moment because of no internet connection. Please connect to an internet connection and try again"
+          );
+        } else {
+          alert(constants.OOPS_MESSAGE);
+        }
+        if (response.status == "401") navigate("/main/home");
+        updateLoading(false);
       });
   };
   const scrollTo = (ref: any) => {
@@ -178,12 +186,12 @@ const Home = (props: any) => {
           {headerTitle.toUpperCase()} ARTICLES
         </h1>
         <div className=" row col-12 py-2 m-0 ">
-          {/* {loading && <Generic.Loader message="Loading" />} */}
+          {/* {isLoading && <Generic.Loader message="Loading" />} */}
 
           <div className="col col-12  col-lg-9 p-0  ">
             <div className="row col-12  m-0">
               <div className="col-12 col-md-7 p-4 p-md-2 ">
-                {articles && articles.length > 0 && !loading ? (
+                {articles && articles.length > 0 && !isLoading ? (
                   <LargeArticleCard
                     article={articles && articles[0]}
                     index={0}
@@ -193,7 +201,7 @@ const Home = (props: any) => {
                 )}
               </div>
               <div className="col-12 col-md-5 p-4 p-md-2 px-md-3 col ">
-                {articles && !loading
+                {articles && !isLoading
                   ? articles
                       .slice(1, 6)
                       .map((article: Article, index: number) => (
@@ -246,7 +254,7 @@ const Home = (props: any) => {
             </h6>
           </div>
           <div className="row col-12 m-0 p-4 p-md-3">
-            {articles && !loading
+            {articles && !isLoading
               ? articles.slice(6, 13).map((article: Article, index: number) => (
                   <div className=" d-flex  col-12 col-md-6 col-lg-4">
                     <RankArticleCard
