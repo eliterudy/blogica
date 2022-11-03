@@ -1,1 +1,0 @@
-# Blogica (built in React)
