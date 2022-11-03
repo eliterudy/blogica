@@ -36,7 +36,7 @@ import apis from "../../../config/api";
 
 var toolbarOptions = [
   ["bold", "italic", "underline", "strike"], // toggled buttons
-  ["blockquote", "code-block"],
+  ["blockquote", "code-block", "link"],
   [{ list: "ordered" }, { list: "bullet" }],
   [{ script: "sub" }, { script: "super" }], // superscript/subscript
   [{ header: [1, 2, 3, 4, 5, 6, false] }],
@@ -320,7 +320,10 @@ const NewArticle = (props: any) => {
         style={{ flex: 1, backgroundColor: "#eee" }}
         theme="bubble"
         value={formValues.description}
-        onChange={(e) => updateFormValues({ ...formValues, description: e })}
+        onChange={(e) => {
+          console.log(e);
+          updateFormValues({ ...formValues, description: e });
+        }}
         modules={{ toolbar: toolbarOptions }}
         placeholder={"Write what is on your mind"}
       />
