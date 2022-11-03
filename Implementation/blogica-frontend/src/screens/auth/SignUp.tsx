@@ -129,15 +129,9 @@ const SignUpComponent = () => {
         })
         .catch((err) => {
           if (err && err.message && err.message === "Network Error") {
-            if (navigator.onLine) {
-              navigate("/server-down", {
-                state: { redirectPath: "/auth/signup" },
-              });
-            } else {
-              alert(
-                "This action cannot be performed at the moment because of no internet connection. Please connect to an internet connection and try again"
-              );
-            }
+            alert(
+              "This action cannot be performed at the moment because of no internet connection. Please connect to an internet connection and try again"
+            );
           } else {
             updateUsernameAvailableMessage("data.message");
           }
