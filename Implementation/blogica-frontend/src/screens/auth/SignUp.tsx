@@ -261,13 +261,13 @@ const SignUpComponent = () => {
                         });
                         updateFormErrors({
                           ...formErrors,
-                          firstname: textValidator(target.value, 4, 20)[0],
+                          firstname: textValidator(target.value, 2, 20)[0],
                         });
                       }}
                       onBlur={({ target }) => {
                         updateFormErrors({
                           ...formErrors,
-                          firstname: textValidator(target.value, 4, 20)[0],
+                          firstname: textValidator(target.value, 2, 20)[0],
                         });
                       }}
                     />
@@ -293,13 +293,13 @@ const SignUpComponent = () => {
                         });
                         updateFormErrors({
                           ...formErrors,
-                          lastname: textValidator(target.value, 4, 20)[0],
+                          lastname: textValidator(target.value, 2, 20)[0],
                         });
                       }}
                       onBlur={({ target }) => {
                         updateFormErrors({
                           ...formErrors,
-                          lastname: textValidator(target.value, 4, 20)[0],
+                          lastname: textValidator(target.value, 2, 20)[0],
                         });
                       }}
                     />
@@ -509,8 +509,8 @@ const SignUpComponent = () => {
 
                       if (
                         textValidator(username, 5, 20)[1] ||
-                        textValidator(firstname, 4, 20)[1] ||
-                        textValidator(lastname, 4, 20)[1] ||
+                        textValidator(firstname, 2, 20)[1] ||
+                        textValidator(lastname, 2, 20)[1] ||
                         image == null ||
                         textValidator(bio, 10, 1000)[0] ||
                         emailValidator(email)[1] ||
@@ -525,8 +525,8 @@ const SignUpComponent = () => {
                         updateFormErrors({
                           ...formErrors,
                           username: textValidator(username, 5, 20)[0],
-                          firstname: textValidator(firstname, 4, 20)[0],
-                          lastname: textValidator(lastname, 4, 20)[0],
+                          firstname: textValidator(firstname, 2, 20)[0],
+                          lastname: textValidator(lastname, 2, 20)[0],
                           email: emailValidator(email)[0],
                           image: image ? "" : "Please upload profile picture",
                           password: passwordValidator(password, 6, 20)[0],
@@ -561,9 +561,7 @@ const SignUpComponent = () => {
                               err.message &&
                               err.message === "Network Error"
                             ) {
-                              alert(
-                                "This action cannot be performed at the moment because of no internet connection. Please connect to an internet connection and try again"
-                              );
+                              alert(constants.NO_INTERNET_ALERT_MESSAGE);
                             } else {
                             }
                             updateLoading(false);

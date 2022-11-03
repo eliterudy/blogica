@@ -99,15 +99,14 @@ const Articles = (props: any) => {
         updateLoading(false);
       })
 
-      .catch((err) => {
-        if (err && err.message && err.message === "Network Error") {
-          alert(
-            "This action cannot be performed at the moment because of no internet connection. Please connect to an internet connection and try again"
-          );
+      .catch(({ response, message }) => {
+        if (message && message === "Network Error") {
+          alert(constants.NO_INTERNET_ALERT_MESSAGE);
         } else {
-          updateError(err);
-          updateLoading(false);
+          if (response && response.data && response.data.error)
+            updateError(response.data.error);
         }
+        updateLoading(false);
       });
   };
 
@@ -216,9 +215,9 @@ const Articles = (props: any) => {
                           {articles.length === 0
                             ? search.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "")
                                 .length > 0
-                              ? "No match found! Please try a different search"
-                              : "No articles have emeen written yet! Hopefully someone will be writing something soon. "
-                            : "Yay! You have seen it all"}
+                              ? constants.NO_SEARCH_RESULT_MATCH
+                              : constants.NO_PUBLISHED_ARTICLES
+                            : constants.SEEN_ALL}
                         </em>
                       </p>
                     }

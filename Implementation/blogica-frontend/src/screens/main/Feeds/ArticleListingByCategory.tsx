@@ -116,7 +116,7 @@ const ArticleListingByCategory = ({
           style={{ marginBottom: isTabletOrMobile ? 500 : 600 }}
         >
           <p className="col-12 text-center">
-            <em>There are no articles under this category/tab at the moment</em>
+            <em>{constants.NO_ARTICLES_UNDER_TAB}</em>
           </p>
         </div>
       );
@@ -130,16 +130,7 @@ const ArticleListingByCategory = ({
     >
       <span className="subMessages">{tabMessage}</span>
       {articles && (
-        <div
-          className="col-12"
-          style={
-            {
-              // display: "flex",
-              // flexDirection: "row",
-              // flexWrap: "wrap",
-            }
-          }
-        >
+        <div className="col-12" style={{}}>
           {loadArticles(articles, showAuthorDetails)}
         </div>
       )}

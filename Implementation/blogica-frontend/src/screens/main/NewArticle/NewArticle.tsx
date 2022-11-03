@@ -321,7 +321,6 @@ const NewArticle = (props: any) => {
         theme="bubble"
         value={formValues.description}
         onChange={(e) => {
-          console.log(e);
           updateFormValues({ ...formValues, description: e });
         }}
         modules={{ toolbar: toolbarOptions }}

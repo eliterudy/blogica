@@ -60,20 +60,24 @@ const tabs = [
   {
     key: "published",
     title: "My Published Articles",
-    message: constants.PUBLISHED_ARTICLES,
+    message: constants.TAB_MESSAGE_PUBLISHED_ARTICLES,
   },
   {
     key: "drafts",
     title: "My Article Drafts",
-    message: constants.ARTICLES_DRAFTS,
+    message: constants.TAB_MESSAGE_ARTICLES_DRAFTS,
   },
 
   {
     key: "recents",
     title: "Recently Viewed Articles",
-    message: constants.RECENTLY_VIEWED_ARTICLES,
+    message: constants.TAB_MESSAGE_RECENTLY_VIEWED_ARTICLES,
   },
-  { key: "saved", title: "Saved Articles", message: constants.SAVED_ARTICLES },
+  {
+    key: "saved",
+    title: "Saved Articles",
+    message: constants.TAB_MESSAGE_SAVED_ARTICLES,
+  },
 ];
 
 const Feeds = (props: any) => {
@@ -114,11 +118,16 @@ const Feeds = (props: any) => {
         updateUser(data);
         updateLoading(false);
       })
-      .catch((err) => {
-        console.log("FEEDS ERR", err);
-
-        updateError(err.message.toString());
-        if (err.response.status == "401") navigate("/main/home");
+      .catch(({ response, message }) => {
+        if (message && message === "Network Error") {
+          alert(
+            "This action cannot be performed at the moment because of no internet connection. Please connect to an internet connection and try again"
+          );
+        } else {
+          if (response && response.data && response.data.error)
+            updateError(response.data.error);
+        }
+        if (response.status == "401") navigate("/main/home");
         updateLoading(false);
       });
   }, []);
@@ -330,7 +339,6 @@ const Feeds = (props: any) => {
                             userDetails.articles[
                               articleCategoryProps as keyof UserDetailArticleSegment
                             ] = articleCategory;
-                            console.log("articleCategory", userDetails);
                             updateUser({ ...userDetails });
                           }}
                           showAuthorDetails={

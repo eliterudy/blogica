@@ -36,7 +36,7 @@ import Generic from "../../../components/generic/GenericComponents";
 import { toggler } from "../../../utils/generic";
 import actions from "../../../redux/actionReducers/index";
 import apis from "../../../config/api";
-
+import { constants } from "../../../config/configuration";
 const ArticleHead = ({ article, url }: any) => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -105,7 +105,7 @@ const ArticleHead = ({ article, url }: any) => {
             children={<i className="fa fa-envelope fa-lg mx-2" />}
             url={url}
             subject={"Check this amazing article published on Blogica"}
-            body={`I read this amazing article on Blogica about ${article.title}. 
+            body={`I read this amazing article on ${constants.APP_NAME} about ${article.title}. 
           I think this article will interest you, so give it a read!`}
           />
           <FacebookShareButton

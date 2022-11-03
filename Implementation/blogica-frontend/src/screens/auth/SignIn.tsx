@@ -110,7 +110,6 @@ const SignInComponent = () => {
           password: formValues.password,
         })
         .then(({ data }) => {
-          console.log(data);
           if (data.token) {
             localStorage.setItem("token", data.token);
             dispatch(loadUser(data.user));
@@ -121,27 +120,23 @@ const SignInComponent = () => {
             updateErrorVisible(true);
           }
         })
-        .catch(({ response }) => {
+        .catch(({ response, message }) => {
           updateLoading(false);
+          if (message && message === "Network Error") {
+            alert(constants.NO_INTERNET_ALERT_MESSAGE);
+          } else {
+            if (response && response.data) {
+              if (
+                response.data.message &&
+                response.data.name === "IncorrectUsernameError"
+              ) {
+                updateError(constants.USER_NOT_FOUND);
+              } else {
+                updateError(constants.INCORRECT_USERNAME_PASSWORD);
+              }
 
-          if (response && response.data) {
-            if (
-              response.data.message &&
-              response.data.message === "Network Error"
-            ) {
-              alert(
-                "This action cannot be performed at the moment because of no internet connection. Please connect to an internet connection and try again"
-              );
-            } else if (
-              response.data.message &&
-              response.data.name === "IncorrectUsernameError"
-            ) {
-              updateError("User does not exist.");
-            } else {
-              updateError("Incorrect username or password");
+              updateErrorVisible(true);
             }
-
-            updateErrorVisible(true);
           }
         });
     }

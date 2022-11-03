@@ -11,7 +11,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 /* helper imports */
 import { cssHover } from "../../../components/generic/hoverProps";
-import { icons } from "../../../config/configuration";
+import { icons, constants } from "../../../config/configuration";
 import Generic from "../../../components/generic/GenericComponents";
 import { toggler } from "../../../utils/generic";
 import actions from "../../../redux/actionReducers/index";
@@ -80,14 +80,12 @@ const Contributors = (props: any) => {
         updateLoading(false);
       })
 
-      .catch((err) => {
-        if (err && err.message && err.message === "Network Error") {
-          alert(
-            "This action cannot be performed at the moment because of no internet connection. Please connect to an internet connection and try again"
-          );
+      .catch(({ response, message }) => {
+        if (message && message === "Network Error") {
+          alert(constants.NO_INTERNET_ALERT_MESSAGE);
         } else {
-          updateError(err);
-          updateLoading(false);
+          if (response && response.data && response.data.error)
+            updateError(response.data.error);
         }
       });
   };
@@ -150,9 +148,9 @@ const Contributors = (props: any) => {
                     {contributors.length === 0
                       ? search.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "").length >
                         0
-                        ? "No match found! Please try a different search"
-                        : "There are no contributors to our website yet."
-                      : "Yay! You have seen it all"}
+                        ? constants.NO_SEARCH_RESULT_MATCH
+                        : constants.NO_CONTRIBUTORS
+                      : constants.SEEN_ALL}
                   </em>
                 </p>
               }

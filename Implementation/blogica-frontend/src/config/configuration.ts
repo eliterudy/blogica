@@ -25,6 +25,9 @@ const gifs: any = {
 
 const constants: any = {
   APP_NAME: "Blogica",
+  USER_NOT_FOUND: "User not found",
+  ARTICLE_NOT_FOUND: "Article not found",
+  INCORRECT_USERNAME_PASSWORD: "Incorrect username or password",
   TEXT_SHIMMER_FILLER: "text shimmer",
   SORT_ARTICLE_NOTES: "View articles based on the selected sorting categories.",
   NEW_ARTICLE_NOTES:
@@ -32,15 +35,26 @@ const constants: any = {
   INTRO_BANNER_TITLE: "Stay Curious & Get a Read",
   INTRO_BANNER_MESSAGE:
     "Discover stories, thinking, and expertise from writers on any topic.",
-  PUBLISHED_ARTICLES:
+  TAB_MESSAGE_PUBLISHED_ARTICLES:
     "This tab displays the amazing articles you have written so far.",
-  ARTICLES_DRAFTS:
+  TAB_MESSAGE_ARTICLES_DRAFTS:
     "This tab displays the amazing articles are currently working on.",
-  RECENTLY_VIEWED_ARTICLES:
+  TAB_MESSAGE_RECENTLY_VIEWED_ARTICLES:
     "This tab displays the most recently viewed articles by you.",
-  SAVED_ARTICLES: "This tab displays the articles that you saved.",
+  TAB_MESSAGE_SAVED_ARTICLES: "This tab displays the articles that you saved.",
   UPLOAD_ARTICLE_POSTER_WARNING:
     "Please note: Once you save this article as a draft or publish it, you wont be able to update the article poster.",
+  NO_INTERNET_ALERT_MESSAGE:
+    "This action cannot be performed at the moment because of no internet connection. Please connect to an internet connection and try again",
+  HAVE_NOT_SIGNED_UP_INVITE_MESSAGE:
+    "If you haven't signed up with us yet and wish to access premium features, sign up today",
+  NO_SEARCH_RESULT_MATCH: "No match found! Please try a different search",
+  SEEN_ALL: "Yay! You have seen it all",
+  NO_CONTRIBUTORS: "There are no contributors to our website yet.",
+  NO_PUBLISHED_ARTICLES:
+    "No articles have been published yet! Hopefully someone will be writing something soon.",
+  NO_ARTICLES_UNDER_TAB:
+    "There are no articles under this category/tab at the moment",
 };
 
 const svgs: any = {};

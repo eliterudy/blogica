@@ -12,7 +12,7 @@ import ReactQuill from "react-quill";
 
 /* helper imports */
 import { cssHover } from "../../../components/generic/hoverProps";
-import { icons } from "../../../config/configuration";
+import { icons, constants } from "../../../config/configuration";
 import Generic from "../../../components/generic/GenericComponents";
 import { toggler } from "../../../utils/generic";
 import actions from "../../../redux/actionReducers/index";
@@ -49,9 +49,14 @@ const ArticleDetail = (props: any) => {
         updateArticleDetails(data);
         updateLoading(false);
       })
-      .catch((err) => {
-        updateError(err.message.toString());
-        if (err.response.status == "401") navigate("/main/home");
+      .catch(({ response, message }) => {
+        if (message && message === "Network Error") {
+          alert(constants.NO_INTERNET_ALERT_MESSAGE);
+        } else {
+          if (response && response.data && response.data.error)
+            updateError(response.data.error);
+        }
+        if (response.status == "401") navigate("/main/home");
         updateLoading(false);
       });
   }, []);

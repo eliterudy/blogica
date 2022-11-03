@@ -236,7 +236,18 @@ const ArticleListCard = (cardProps: ArticleCardProps) => {
                             );
                             addCallback(article, "saved");
                           })
-                          .catch((error) => {})
+                          .catch(({ response, message }) => {
+                            if (message && message === "Network Error") {
+                              alert(constants.NO_INTERNET_ALERT_MESSAGE);
+                            } else {
+                              if (
+                                response &&
+                                response.data &&
+                                response.data.error
+                              )
+                                alert(response.data.error);
+                            }
+                          })
                       : apis
                           .deleteFromCategory(
                             { property: "articles", category: "saved" },
@@ -251,7 +262,18 @@ const ArticleListCard = (cardProps: ArticleCardProps) => {
                             );
                             deleteCallback(index, "saved");
                           })
-                          .catch((error) => {});
+                          .catch(({ response, message }) => {
+                            if (message && message === "Network Error") {
+                              alert(constants.NO_INTERNET_ALERT_MESSAGE);
+                            } else {
+                              if (
+                                response &&
+                                response.data &&
+                                response.data.error
+                              )
+                                alert(response.data.error);
+                            }
+                          });
                   }}
                 >
                   {user.articles.saved.includes(article._id) ? (
@@ -318,7 +340,13 @@ const ArticleListCard = (cardProps: ArticleCardProps) => {
                   updateDeleteArticleLoading(false);
                   toggleModal();
                 })
-                .catch((error) => {
+                .catch(({ response, message }) => {
+                  if (message && message === "Network Error") {
+                    alert(constants.NO_INTERNET_ALERT_MESSAGE);
+                  } else {
+                    if (response && response.data && response.data.error)
+                      alert(response.data.error);
+                  }
                   updateDeleteArticleLoading(false);
                   toggleModal();
                 });

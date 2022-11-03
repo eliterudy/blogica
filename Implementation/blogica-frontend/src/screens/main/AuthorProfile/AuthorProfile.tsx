@@ -40,7 +40,7 @@ import moment from "moment";
 /* helper imports */
 import { cssHover } from "../../../components/generic/hoverProps";
 import { Article, AuthorDetails } from "../../../config/types";
-import { icons } from "../../../config/configuration";
+import { constants, icons } from "../../../config/configuration";
 import Generic from "../../../components/generic/GenericComponents";
 import { toggler } from "../../../utils/generic";
 import actions from "../../../redux/actionReducers/index";
@@ -50,6 +50,7 @@ import Achievements from "../../../components/generic/Achievements";
 
 const AuthorProfile = (props: any) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const isTabletOrMobile = useMediaQuery({ query: "(max-width: 767px)" });
 
   const [author, updateAuthorDetails] = useState<null | AuthorDetails>(null);
@@ -65,12 +66,18 @@ const AuthorProfile = (props: any) => {
     apis
       .getAuthorDetails({ author_id: authorId })
       .then(({ data }) => {
-        document.title = data.firstname + data.lastname;
+        document.title = `${constants.APP_NAME} Author - ${data.firstname} ${data.lastname}`;
         updateAuthorDetails(data);
         updateLoading(false);
       })
-      .catch((error) => {
-        updateError(error);
+      .catch(({ response, message }) => {
+        if (message && message === "Network Error") {
+          alert(constants.NO_INTERNET_ALERT_MESSAGE);
+        } else {
+          console.log(error);
+          if (response && response.data && response.data.error)
+            updateError(response.data.error);
+        }
         updateLoading(false);
       });
   }, []);
