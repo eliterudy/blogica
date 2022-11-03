@@ -57,6 +57,8 @@ const AuthorProfile = (props: any) => {
   const [error, updateError] = useState(null);
 
   useEffect(() => {
+    document.title = "Author Profile";
+
     updateLoading(true);
     const locationSplit = location.pathname.split("/");
     const authorId = locationSplit[locationSplit.length - 1];

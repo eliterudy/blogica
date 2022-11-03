@@ -4,7 +4,7 @@ export const baseURL = process.env.REACT_APP_API_URL;
 const headers = {
   Accept: "application/json",
   "Content-Type": "application/json",
-  // Origin: baseURL,
+  Origin: baseURL as string,
 };
 
 const ApiCaller = axios.create({

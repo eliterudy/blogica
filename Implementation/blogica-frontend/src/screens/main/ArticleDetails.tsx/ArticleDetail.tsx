@@ -36,6 +36,8 @@ const ArticleDetail = (props: any) => {
   const [error, updateError] = useState("");
 
   useEffect(() => {
+    document.title = "Article Details";
+
     const locationSplit = location.pathname.split("/");
     const articleId = locationSplit[locationSplit.length - 1];
     updateLoading(true);
