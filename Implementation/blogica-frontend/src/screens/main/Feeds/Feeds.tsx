@@ -1,11 +1,9 @@
 /* package inports */
 
-import React, { useState, useRef, useEffect, LegacyRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Nav, NavItem, NavLink, TabContent, TabPane, Col } from "reactstrap";
 import classnames from "classnames";
-import { useMediaQuery } from "react-responsive";
 import moment from "moment";
 
 /* component/screen inports */

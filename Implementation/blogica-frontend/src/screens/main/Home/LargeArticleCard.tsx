@@ -1,33 +1,8 @@
 import React from "react";
 import { ArticleCardProps } from "../../../config/types";
 import Generic from "../../../components/generic/GenericComponents";
-import { constants } from "../../../config/configuration";
 import moment from "moment";
-import {
-  Navbar,
-  NavbarBrand,
-  Nav,
-  NavbarToggler,
-  Collapse,
-  NavItem,
-  Button,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  Row,
-  Card,
-  CardBody,
-  CardTitle,
-  CardSubtitle,
-  CardText,
-} from "reactstrap";
 import { Link, useNavigate } from "react-router-dom";
-
-// https://picsum.photos/seed/picsum/200/300)
 
 const LargeArticleCard = (cardProps: ArticleCardProps) => {
   const { article, index } = cardProps;

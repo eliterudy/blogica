@@ -1,15 +1,11 @@
 /* package inports */
 
-import React, { useState, useRef, useEffect, LegacyRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
-  FormGroup,
   Input,
-  Label,
   Button,
-  Alert,
-  Tooltip,
   Modal,
   ModalBody,
   ModalFooter,
@@ -17,8 +13,6 @@ import {
   Spinner,
 } from "reactstrap";
 
-import { Dispatch } from "@reduxjs/toolkit";
-import { useMediaQuery } from "react-responsive";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.bubble.css";
 import "react-quill/dist/quill.snow.css";
@@ -29,9 +23,6 @@ import "react-quill/dist/quill.snow.css";
 import { cssHover } from "../../../components/generic/hoverProps";
 
 import { constants, icons } from "../../../config/configuration";
-import Generic from "../../../components/generic/GenericComponents";
-import { toggler } from "../../../utils/generic";
-import actions from "../../../redux/actionReducers/index";
 import apis from "../../../config/api";
 
 var toolbarOptions = [
