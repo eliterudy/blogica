@@ -5,6 +5,7 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 var passport = require("passport");
 var schedule = require("node-schedule");
+var ImageKit = require("imagekit");
 
 var authenticate = require("./config/authenticate");
 var config = require("./config/config");

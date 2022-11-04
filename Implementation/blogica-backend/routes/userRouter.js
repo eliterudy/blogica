@@ -279,41 +279,52 @@ userRouter.post(
     if (!req.file) {
       return res.status(401).json({ error: "Please provide an image" });
     }
-    var image_url = await UploadFile.uploadPhoto(req.file, "users", 720, 720);
-
-    // register is a passport method
-    User.register(
-      new User({
-        username: req.body.username,
-      }),
-      req.body.password,
-      (err, user) => {
-        if (err) {
-          res.statusCode = 500;
-          res.setHeader("Content-Type", "application/json");
-          res.json({ err: err });
-        } else {
-          user.firstname = req.body.firstname;
-          user.lastname = req.body.lastname;
-          user.email = req.body.email;
-          user.image_url = image_url;
-          user.bio = req.body.bio;
-          user.save((err, user) => {
-            if (err) {
-              res.statusCode = 500;
-              res.setHeader("Content-Type", "application/json");
-              res.json({ err: err });
-              return;
-            }
-            passport.authenticate("local")(req, res, () => {
-              res.statusCode = 200;
-              res.setHeader("Content-Type", "application/json");
-              res.json({ success: true, status: "Registration Successful!" });
-            });
-          });
-        }
-      }
+    var uploadResponse = await UploadFile.uploadPhoto(
+      req.file,
+      "users",
+      720,
+      720
     );
+    if (uploadResponse.success) {
+      // register is a passport method
+      User.register(
+        new User({
+          username: req.body.username,
+        }),
+        req.body.password,
+        (err, user) => {
+          if (err) {
+            res.statusCode = 500;
+            res.setHeader("Content-Type", "application/json");
+            res.json({ err: err });
+          } else {
+            user.firstname = req.body.firstname;
+            user.lastname = req.body.lastname;
+            user.email = req.body.email;
+            user.image_url = uploadResponse.url;
+            user.bio = req.body.bio;
+            user.save((err, user) => {
+              if (err) {
+                res.statusCode = 500;
+                res.setHeader("Content-Type", "application/json");
+                res.json({ error: err });
+                return;
+              }
+              passport.authenticate("local")(req, res, () => {
+                res.statusCode = 200;
+                res.setHeader("Content-Type", "application/json");
+                res.json({ success: true, status: "Registration Successful!" });
+              });
+            });
+          }
+        }
+      );
+    } else {
+      res.statusCode = 500;
+      res.setHeader("Content-Type", "application/json");
+      res.json({ error: "Image could not be saved/uploaded" });
+      return;
+    }
   }
 );
 
