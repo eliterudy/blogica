@@ -90,56 +90,67 @@ articleRouter
       if (!req.file) {
         return res.status(401).json({ error: "Please provide an image" });
       }
-      var image_url = await UploadFile.uploadPhoto(
+      var uploadResponse = await UploadFile.uploadPhoto(
         req.file,
         "articles",
-        1080,
-        1080
+        720,
+        720
       );
-      var article = {
-        title: req.body.title,
-        description: req.body.description,
-        image_url: image_url,
-        author: req.user._id,
-        is_published: req.body.is_published,
-      };
 
-      Article.create(article)
-        .then(
-          (article) => {
-            res.statusCode = 200;
-            res.setHeader("Content-Type", "application/json");
-            res.json(
-              DataTrimmer.trimArticleWithoutAuthorPopulated(article, true)
-            );
-            User.findById(req.user._id)
-              .then(async (user) => {
-                if (req.body.is_published === "true") {
-                  user.articles.published = [
-                    article._id,
-                    ...user.articles.published,
-                  ];
-                } else {
-                  user.articles.drafts = [article._id, ...user.articles.drafts];
-                }
-                await user.save();
-              })
-              .catch((err) => next(err));
-          },
-          (err) => {
-            // if (err.code == 11000) {
-            //   res.statusCode = 400;
-            //   res.setHeader("Content-Type", "application/json");
-            //   return res.json({
-            //     error:
-            //       "There is another article with the same title. We cannot have duplicate ",
-            //   });
-            // }
+      if (uploadResponse.success) {
+        var article = {
+          title: req.body.title,
+          description: req.body.description,
+          image_url: uploadResponse.url,
+          author: req.user._id,
+          is_published: req.body.is_published,
+        };
 
-            next(err);
-          }
-        )
-        .catch((err) => next(err));
+        Article.create(article)
+          .then(
+            (article) => {
+              res.statusCode = 200;
+              res.setHeader("Content-Type", "application/json");
+              res.json(
+                DataTrimmer.trimArticleWithoutAuthorPopulated(article, true)
+              );
+              User.findById(req.user._id)
+                .then(async (user) => {
+                  if (req.body.is_published === "true") {
+                    user.articles.published = [
+                      article._id,
+                      ...user.articles.published,
+                    ];
+                  } else {
+                    user.articles.drafts = [
+                      article._id,
+                      ...user.articles.drafts,
+                    ];
+                  }
+                  await user.save();
+                })
+                .catch((err) => next(err));
+            },
+            (err) => {
+              if (err.code == 11000) {
+                res.statusCode = 400;
+                res.setHeader("Content-Type", "application/json");
+                return res.json({
+                  error:
+                    "There is another article with the same title. We cannot have duplicate ",
+                });
+              }
+
+              next(err);
+            }
+          )
+          .catch((err) => next(err));
+      } else {
+        res.statusCode = 500;
+        res.setHeader("Content-Type", "application/json");
+        res.json({ error: "Image could not be saved/uploaded" });
+        return;
+      }
     }
   )
   .put(cors.corsWithOptions, authenticate.verifyUser, (req, res, next) => {

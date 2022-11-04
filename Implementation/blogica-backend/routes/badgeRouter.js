@@ -10,6 +10,7 @@ const cors = require("../config/cors");
 const UserPropUpdate = require("../components/UserPropUpdate");
 const UploadFile = require("../components/UploadFile");
 const Badge = require("../models/badges");
+const config = require("../config/config");
 
 var badgeRouter = express.Router();
 badgeRouter.use(bodyParser.json());
@@ -38,36 +39,43 @@ badgeRouter
       if (!req.file) {
         return res.status(401).json({ error: "Please provide an image" });
       }
-      var image_url = await UploadFile.uploadPhoto(
+      var uploadResponse = await UploadFile.uploadPhoto(
         req.file,
         "badges",
         480,
         480
       );
       delete req.body.image;
-      var badge = {
-        ...req.body,
-        image_url,
-      };
+      if (uploadResponse.success) {
+        var badge = {
+          ...req.body,
+          image_url: uploadResponse.url,
+        };
 
-      Badge.create(badge).then(
-        (badge) => {
-          res.statusCode = 200;
-          res.setHeader("Content-Type", "application/json");
-          res.json(badge);
-        },
-        (err) => {
-          if (err.code == 11000) {
-            res.statusCode = 400;
+        Badge.create(badge).then(
+          (badge) => {
+            res.statusCode = 200;
             res.setHeader("Content-Type", "application/json");
-            return res.json({
-              error:
-                "There is another badgeq with the same title. We cannot have duplicate ",
-            });
+            res.json(badge);
+          },
+          (err) => {
+            if (err.code == 11000) {
+              res.statusCode = 400;
+              res.setHeader("Content-Type", "application/json");
+              return res.json({
+                error:
+                  "There is another badge with the same title. We cannot have duplicate ",
+              });
+            }
+            next(err);
           }
-          next(err);
-        }
-      );
+        );
+      } else {
+        res.statusCode = 500;
+        res.setHeader("Content-Type", "application/json");
+        res.json({ error: "Image could not be saved/uploaded" });
+        return;
+      }
     }
   )
   .put(
