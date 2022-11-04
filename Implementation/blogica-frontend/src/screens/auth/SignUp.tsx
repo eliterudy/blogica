@@ -1,7 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import {
-  Navbar,
-  InputGroup,
   Input,
   Label,
   Form,
@@ -35,7 +33,6 @@ interface SignupFormValues {
 const SignUpComponent = () => {
   const isTabletOrMobile = useMediaQuery({ query: "(max-width: 767px)" });
 
-  const dispatch: Dispatch<any> = useDispatch();
   const navigate = useNavigate();
   const signUpButtonStyle = cssHover(
     {
@@ -53,9 +50,6 @@ const SignUpComponent = () => {
       borderColor: "#2b59a1",
     }
   );
-  const state = useSelector((state: any) => {
-    return { userState: state.userActionReducer };
-  });
 
   const [imagePreview, updateImagePreview] = useState<undefined | string>(
     undefined
@@ -153,7 +147,7 @@ const SignUpComponent = () => {
         >
           <div className=" noselect col-12 col-md-7">
             <div className=" noselect col-12  p-2 ">
-              <div className=" noselect      mx-5 mt-3 d-flex flex-column align-items-center">
+              <div className=" noselect mx-5 mt-3 d-flex flex-column align-items-center">
                 <img
                   className=" noselect     m-auto"
                   src={icons.app_logo}
@@ -181,7 +175,7 @@ const SignUpComponent = () => {
                       style={{ width: 140, height: 140, borderRadius: 140 }}
                     >
                       <i
-                        className=" noselect      img-fluid fa fa-user fa-lg "
+                        className=" noselect img-fluid fa fa-user fa-lg "
                         style={{ fontSize: 120, color: "white" }}
                       />
                     </div>
@@ -599,7 +593,7 @@ const SignUpComponent = () => {
                     style={{ width: 200, height: 200, borderRadius: 200 }}
                   >
                     <i
-                      className=" noselect      img-fluid fa fa-user fa-lg "
+                      className=" noselect img-fluid fa fa-user fa-lg "
                       style={{ fontSize: 140, color: "white" }}
                     />
                   </div>

@@ -1,22 +1,14 @@
 /* package inports */
 
-import React, { useState, useRef, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Col, Button } from "reactstrap";
-import { Dispatch } from "@reduxjs/toolkit";
-import { useMediaQuery } from "react-responsive";
-import ReactQuill from "react-quill";
 
 /* component/screen inports */
 
 /* helper imports */
-import { cssHover } from "../../../components/generic/hoverProps";
-import { icons, constants } from "../../../config/configuration";
+import { constants } from "../../../config/configuration";
 import Generic from "../../../components/generic/GenericComponents";
-import { toggler } from "../../../utils/generic";
-import actions from "../../../redux/actionReducers/index";
-import moment from "moment";
 import ArticleHead from "./ArticleHead";
 import ArticleBody from "./ArticleBody";
 import { ArticleDetails } from "../../../config/types";

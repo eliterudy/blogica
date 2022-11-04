@@ -1,12 +1,9 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
-  Navbar,
-  InputGroup,
   Input,
   Label,
   Form,
   FormGroup,
-  FormText,
   FormFeedback,
   Button,
   Spinner,
@@ -16,14 +13,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { Dispatch } from "@reduxjs/toolkit";
 import { cssHover } from "../../components/generic/hoverProps";
 import { useMediaQuery } from "react-responsive";
-import actions from "../../redux/actionReducers/index";
 import apis from "../../config/api";
 import FormValidators from "../../utils/FormValidators";
 import { constants, icons } from "../../config/configuration";
 import { loadUser } from "../../redux/actionReducers/userReducer";
-import { update } from "jdenticon";
-
-// const {loadUser, removeUser} = actions;
 
 const SignInComponent = () => {
   const isTabletOrMobile = useMediaQuery({ query: "(max-width: 767px)" });
@@ -151,7 +144,7 @@ const SignInComponent = () => {
             className=" noselect col-12  p-4"
             style={isTabletOrMobile ? {} : { border: "1px solid #eee" }}
           >
-            <div className=" noselect      mx-5 d-flex flex-column align-items-center">
+            <div className=" noselect mx-5 d-flex flex-column align-items-center">
               <img
                 className=" noselect     m-auto"
                 src={icons.app_logo}

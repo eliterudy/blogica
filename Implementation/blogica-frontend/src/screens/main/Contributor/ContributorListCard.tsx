@@ -1,23 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import { Card, CardBody, CardTitle, CardSubtitle } from "reactstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { cssHover } from "../../../components/generic/hoverProps";
 import { ContributorCardProps } from "../../../config/types";
 import { useSelector, useDispatch } from "react-redux";
 import { Dispatch } from "@reduxjs/toolkit";
-import { constants } from "../../../config/configuration";
 
 const ContributorListCard = (cardProps: ContributorCardProps) => {
-  const dispatch: Dispatch<any> = useDispatch();
-  const navigate = useNavigate();
-
-  const state = useSelector((state: any) => {
-    // eslint-disable-next-line no-labels, no-label-var
-    return { userState: state.userActionReducer };
-  });
-  const { user } = state.userState;
-
-  const { contributor, index } = cardProps;
+  const { contributor } = cardProps;
   const { _id, image_url, firstname, lastname, bio } = contributor;
   const cardHoverStlye = cssHover(
     {
@@ -35,7 +25,7 @@ const ContributorListCard = (cardProps: ContributorCardProps) => {
       style={{ textDecoration: "none", color: "black" }}
     >
       <div {...cardHoverStlye}>
-        <Card className=" noselect      col-12 col-sm-12 ">
+        <Card className=" noselect col-12 col-sm-12 ">
           <CardBody className=" noselect     p-0">
             {/* eslint-disable-next-line jsx-a11y/img-redundant-alt */}
             <div

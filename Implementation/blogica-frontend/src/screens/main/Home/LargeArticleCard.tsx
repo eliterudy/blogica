@@ -41,7 +41,7 @@ const LargeArticleCard = (cardProps: ArticleCardProps) => {
     >
       <div className=" noselect col-12">
         <div
-          className=" noselect      w-100 img-fluid center"
+          className=" noselect w-100 img-fluid center"
           style={{
             borderTopRightRadius: 4,
             borderTopLeftRadius: 4,
@@ -53,7 +53,7 @@ const LargeArticleCard = (cardProps: ArticleCardProps) => {
             aspectRatio: "1/1",
           }}
         ></div>
-        <div className=" noselect      mt-3 d-flex align-items-center">
+        <div className=" noselect mt-3 d-flex align-items-center">
           <div
             onClick={(e) => {
               e.preventDefault();
@@ -73,14 +73,14 @@ const LargeArticleCard = (cardProps: ArticleCardProps) => {
               e.stopPropagation();
               navigate(`/main/author/id/${article.author._id}`);
             }}
-            className=" noselect      ms-2 text-primary"
+            className=" noselect ms-2 text-primary"
             style={{ fontWeight: "bold", fontSize: 14 }}
           >
             {`${article.author.firstname} ${article.author.lastname}`}
           </span>
         </div>
         <h3
-          className=" noselect      mt-2 col-12 "
+          className=" noselect mt-2 col-12 "
           style={{
             fontSize: 32,
             fontWeight: "bold",
@@ -94,7 +94,7 @@ const LargeArticleCard = (cardProps: ArticleCardProps) => {
           {article.title}
         </h3>
         <span
-          className=" noselect      mb-3  col-12"
+          className=" noselect mb-3  col-12"
           style={{ fontSize: 14, color: "#555" }}
         >
           {moment(article.createdAt).fromNow()}{" "}

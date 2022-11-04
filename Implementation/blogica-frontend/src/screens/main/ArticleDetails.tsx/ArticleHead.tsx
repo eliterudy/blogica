@@ -1,5 +1,5 @@
 /* package inports */
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Dispatch } from "@reduxjs/toolkit";
@@ -20,15 +20,7 @@ import { constants } from "../../../config/configuration";
 
 const ArticleHead = ({ article, url }: any) => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const dispatch: Dispatch<any> = useDispatch();
   const [editTooltipStatus, updateEditTooltipStatus] = useState(false);
-  const toggleEditTooltip = () => updateEditTooltipStatus(!editTooltipStatus);
-
-  const state = useSelector((state: any) => {
-    return { userState: state.userActionReducer };
-  });
-  const { user } = state.userState;
 
   if (article.is_published) {
     const [isLinkToastOpen, updateLinkToastOpen] = useState(false);
@@ -63,13 +55,13 @@ const ArticleHead = ({ article, url }: any) => {
               >
                 {`${article.author.firstname} ${article.author.lastname}`}
               </span>
-              <span className=" noselect      ms-2 " style={{ fontSize: 14 }}>
+              <span className=" noselect ms-2 " style={{ fontSize: 14 }}>
                 {` ${moment(article.created).format("MMM DD, YYYY")} `}
               </span>
             </div>
           </div>
         </div>
-        <div className=" noselect      faCustomIcons col-12 px-0 pt-2 pt-md-0 col-md-6 d-flex flex-row align-items-center justify-content-start justify-content-md-end">
+        <div className=" noselect faCustomIcons col-12 px-0 pt-2 pt-md-0 col-md-6 d-flex flex-row align-items-center justify-content-start justify-content-md-end">
           <span className=" noselect text-secondary">Share with: </span>{" "}
           <EmailShareButton
             children={<i className=" noselect fa fa-envelope fa-lg mx-2" />}
@@ -109,7 +101,7 @@ const ArticleHead = ({ article, url }: any) => {
               </Toast>
             </div>
             <i
-              className=" noselect      fa fa-link fa-lg mx-2"
+              className=" noselect fa fa-link fa-lg mx-2"
               onClick={() => {
                 navigator.clipboard.writeText(url);
                 updateLinkToastOpen(true);

@@ -6,26 +6,18 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Dispatch } from "@reduxjs/toolkit";
 import { useMediaQuery } from "react-responsive";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { Input, Button } from "reactstrap";
+import { Input } from "reactstrap";
 
 /* component/screen inports */
 
 /* helper imports */
-import { cssHover } from "../../../components/generic/hoverProps";
 import { constants, icons } from "../../../config/configuration";
 import Generic from "../../../components/generic/GenericComponents";
-import { toggler } from "../../../utils/generic";
-import actions from "../../../redux/actionReducers/index";
-import { ArticleFilters, Article } from "../../../config/types";
+import { Article } from "../../../config/types";
 import ArticleListCard from "../../../components/ArticleListCard";
 import apis from "../../../config/api";
 
 const Articles = (props: any) => {
-  const navigate = useNavigate();
-  const dispatch: Dispatch<any> = useDispatch();
-  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 767px)" });
-  const locationParams = useLocation();
-
   var selectedArticleFilter = window.sessionStorage.getItem("articleFilter");
 
   // state hooks
@@ -114,7 +106,7 @@ const Articles = (props: any) => {
   // component conditional render
   const loadArticles = (articles: Article[]) => {
     return (
-      <div className=" noselect      col-12  d-flex flex-row flex-wrap ">
+      <div className=" noselect col-12  d-flex flex-row flex-wrap ">
         {articles.map((article: Article, index: number) => (
           <div key={index} className={`col-12 px-2 py-4 border-bottom `}>
             <ArticleListCard article={article} index={index} />
@@ -144,9 +136,9 @@ const Articles = (props: any) => {
         </div>
       </div>
 
-      <div className=" noselect      row col-12 py-2 m-0 px-md-3 flex-grow-1">
+      <div className=" noselect row col-12 py-2 m-0 px-md-3 flex-grow-1">
         {/* Left section */}
-        <div className=" noselect      col-12 col-md-3 px-4 pb-2 d-none d-md-block  ">
+        <div className=" noselect col-12 col-md-3 px-4 pb-2 d-none d-md-block  ">
           <div className=" noselect col col-12 sticky-md-top mt-5">
             <h6 style={{ fontWeight: "bold" }}>SORT ARTICLES</h6>
             <Input

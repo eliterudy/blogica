@@ -3,53 +3,21 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import {
-  Navbar,
-  NavbarBrand,
-  Nav,
-  NavbarToggler,
-  Collapse,
-  NavItem,
-  NavLink,
-  Button,
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownToggle,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  TabContent,
-  TabPane,
-  Col,
-  Row,
-} from "reactstrap";
-import classnames from "classnames";
-import { Dispatch } from "@reduxjs/toolkit";
+import { Col } from "reactstrap";
 import { useMediaQuery } from "react-responsive";
-import InfiniteScroll from "react-infinite-scroll-component";
 import moment from "moment";
 
 /* component/screen inports */
 
 /* helper imports */
-import { cssHover } from "../../../components/generic/hoverProps";
 import { Article, AuthorDetails } from "../../../config/types";
 import { constants, icons } from "../../../config/configuration";
 import Generic from "../../../components/generic/GenericComponents";
-import { toggler } from "../../../utils/generic";
-import actions from "../../../redux/actionReducers/index";
 import ArticleListCard from "../../../components/ArticleListCard";
 import apis from "../../../config/api";
 import Achievements from "../../../components/generic/Achievements";
 
 const AuthorProfile = (props: any) => {
-  const navigate = useNavigate();
   const location = useLocation();
   const isTabletOrMobile = useMediaQuery({ query: "(max-width: 767px)" });
 
@@ -108,7 +76,7 @@ const AuthorProfile = (props: any) => {
     } else {
       response = (
         <div
-          className=" noselect      col-12  d-flex flex-row flex-wrap pt-5 pe-3"
+          className=" noselect col-12  d-flex flex-row flex-wrap pt-5 pe-3"
           style={{ marginBottom: isTabletOrMobile ? 500 : 600 }}
         >
           <span className=" noselect col-12 text-center">{`The author has not written any articles yet`}</span>
@@ -129,7 +97,7 @@ const AuthorProfile = (props: any) => {
             <div>
               <div className=" noselect     row col-12 m-0">
                 {/* Left Section */}
-                <div className=" noselect      col-12 col-md-4 col-xl-3 border-end  px-4 ps-md-4 pe-md-3 bg-white  ">
+                <div className=" noselect col-12 col-md-4 col-xl-3 border-end  px-4 ps-md-4 pe-md-3 bg-white  ">
                   <div
                     className=" noselect sticky-top pt-2"
                     style={{ marginBottom: 20 }}
@@ -194,7 +162,7 @@ const AuthorProfile = (props: any) => {
                 </div>
 
                 {/* Right Section */}
-                <div className=" noselect      col-12 col-md-8 col-xl-9  p-0">
+                <div className=" noselect col-12 col-md-8 col-xl-9  p-0">
                   {author.articles && author.articles.published && (
                     <div>
                       <div className=" noselect bg-dark py-5 py-md-4 px-4 ">

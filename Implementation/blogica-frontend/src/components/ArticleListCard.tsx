@@ -21,7 +21,6 @@ import {
   addArticlesToArticleCategory,
   deleteArticlesFromArticleCategory,
 } from "../redux/actionReducers/userReducer";
-// https://picsum.photos/seed/picsum/200/300)
 
 const ArticleListCard = (cardProps: ArticleCardProps) => {
   const dispatch: Dispatch<any> = useDispatch();

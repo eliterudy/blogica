@@ -19,7 +19,7 @@ const RankArticleCard = (cardProps: ArticleCardProps) => {
       style={{ textDecoration: "none", color: "black" }}
     >
       <h2
-        className=" noselect      pe-3 "
+        className=" noselect pe-3 "
         style={{ color: "#999", fontWeight: "bold" }}
       >
         {index + 7}
@@ -46,7 +46,7 @@ const RankArticleCard = (cardProps: ArticleCardProps) => {
                 e.stopPropagation();
                 navigate(`/main/author/id/${article.author._id}`);
               }}
-              className=" noselect      ms-2 text-primary"
+              className=" noselect ms-2 text-primary"
               style={{ fontWeight: "bold", fontSize: 14 }}
             >
               {`${article.author.firstname} ${article.author.lastname}`}
@@ -54,7 +54,7 @@ const RankArticleCard = (cardProps: ArticleCardProps) => {
           </div>
         </div>
         <h6
-          className=" noselect      mt-2 col-12 "
+          className=" noselect mt-2 col-12 "
           style={{
             fontWeight: "bold",
             overflow: "hidden",
@@ -67,7 +67,7 @@ const RankArticleCard = (cardProps: ArticleCardProps) => {
           {article.title}
         </h6>
         <span
-          className=" noselect      mb-3  col-12"
+          className=" noselect mb-3  col-12"
           style={{ fontSize: 14, color: "#555" }}
         >
           {moment(article.createdAt).fromNow()}

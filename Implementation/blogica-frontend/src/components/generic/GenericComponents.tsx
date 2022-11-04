@@ -1,20 +1,13 @@
 /* package inports */
 import React, { useState, useRef, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
-import { Dispatch } from "@reduxjs/toolkit";
-import { useMediaQuery } from "react-responsive";
+
 import { DebounceInput } from "react-debounce-input";
-import { InputGroup, Button, Row, Col, Tooltip } from "reactstrap";
+import { InputGroup, Row, Tooltip } from "reactstrap";
 /* component/screen inports */
 
 /* helper imports */
-import { cssHover } from "./hoverProps";
 import { icons, gifs } from "../../config/configuration";
-import { toggler } from "../../utils/generic";
-import actions from "../../redux/actionReducers/index";
 import { randomColorGenerator } from "../../utils/generic";
-import Avatar from "react-avatar";
 
 const avatarColor = randomColorGenerator();
 
@@ -154,7 +147,6 @@ const Generic = {
   },
   SearchBar: (props: any) => {
     const { apiCallback, searchFor } = props;
-    // const [search, updateSearch] = useState("");
     return (
       <InputGroup className=" noselect col-12 border-bottom border-bottom-4 border-dark ps-2 pb-1 align-items-center cursorPointer">
         <img
@@ -171,12 +163,9 @@ const Generic = {
           style={{ outline: "none" }}
           placeholder={`Search ${searchFor}...`}
           onChange={async (e: any) => {
-            // updateSearch(e.target.value);
             apiCallback(e.target.value);
           }}
         />
-
-        {/* <InputGroupText></InputGroupText> */}
       </InputGroup>
     );
   },

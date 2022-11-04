@@ -312,9 +312,9 @@ const NewArticle = (props: any) => {
   return (
     <div className=" noselect col-12 d-flex flex-column flex-grow-1 p-4 container-fluid new-article">
       <div className=" noselect col-12 d-flex justify-content-between align-items-center">
-        <div className=" noselect      flex-1 ">
+        <div className=" noselect flex-1 ">
           <h1
-            className=" noselect      text-center text-md-center mb-0 "
+            className=" noselect text-center text-md-center mb-0 "
             style={{ fontSize: 36, color: "#666" }}
           >
             {titleMessage}

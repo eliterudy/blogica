@@ -17,7 +17,7 @@ const WideArticleCard = (cardProps: ArticleCardProps) => {
       state={{ articleId: article._id }}
       style={{ textDecoration: "none", color: "black" }}
     >
-      <div className=" noselect      d-flex mb-2">
+      <div className=" noselect d-flex mb-2">
         <div className=" noselect col-8 pe-4">
           <div className=" noselect d-flex flex-row align-items-center">
             <div
@@ -39,14 +39,14 @@ const WideArticleCard = (cardProps: ArticleCardProps) => {
                 e.stopPropagation();
                 navigate(`/main/author/id/${article.author._id}`);
               }}
-              className=" noselect      ms-2 text-primary"
+              className=" noselect ms-2 text-primary"
               style={{ fontWeight: "bold", fontSize: 14 }}
             >
               {`${article.author.firstname} ${article.author.lastname}`}
             </span>
           </div>
           <h6
-            className=" noselect      mt-2 col-12 "
+            className=" noselect mt-2 col-12 "
             style={{
               fontWeight: "bold",
               overflow: "hidden",
@@ -59,7 +59,7 @@ const WideArticleCard = (cardProps: ArticleCardProps) => {
             {article.title}
           </h6>
           <span
-            className=" noselect      mb-3  col-12"
+            className=" noselect mb-3  col-12"
             style={{ fontSize: 14, color: "#555" }}
           >
             {moment(article.createdAt).fromNow()}

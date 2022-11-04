@@ -3,54 +3,22 @@
 import React, { useState, useRef, useEffect, LegacyRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import {
-  Navbar,
-  NavbarBrand,
-  Nav,
-  NavbarToggler,
-  Collapse,
-  NavItem,
-  NavLink,
-  Button,
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownToggle,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  TabContent,
-  TabPane,
-  Col,
-  Row,
-} from "reactstrap";
+import { Nav, NavItem, NavLink, TabContent, TabPane, Col } from "reactstrap";
 import classnames from "classnames";
-import { Dispatch } from "@reduxjs/toolkit";
 import { useMediaQuery } from "react-responsive";
-import InfiniteScroll from "react-infinite-scroll-component";
 import moment from "moment";
 
 /* component/screen inports */
 
 /* helper imports */
-import { cssHover } from "../../../components/generic/hoverProps";
 import {
   Article,
-  PublishedDetails,
-  User,
-  UserArticleSegment,
   UserDetailArticleSegment,
   UserDetails,
 } from "../../../config/types";
 import { icons, constants } from "../../../config/configuration";
 import Generic from "../../../components/generic/GenericComponents";
-import { numberToCurrencyRounder, toggler } from "../../../utils/generic";
-import actions from "../../../redux/actionReducers/index";
+import { numberToCurrencyRounder } from "../../../utils/generic";
 import ArticleListingByCategory from "./ArticleListingByCategory";
 import NewArticleCard from "./NewArticleCard";
 import apis from "../../../config/api";
@@ -83,12 +51,6 @@ const tabs = [
 const Feeds = (props: any) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 767px)" });
-  const state = useSelector((state: any) => {
-    return {
-      userState: state.userActionReducer,
-    };
-  });
   var selectedFeedsTab = window.sessionStorage.getItem("feedsTab");
 
   const [activeTab, updateActiveTab] = useState(
@@ -120,9 +82,7 @@ const Feeds = (props: any) => {
       })
       .catch(({ response, message }) => {
         if (message && message === "Network Error") {
-          alert(
-            "This action cannot be performed at the moment because of no internet connection. Please connect to an internet connection and try again"
-          );
+          alert(constants.NO_INTERNET_ALERT_MESSAGE);
         } else {
           if (response && response.data && response.data.error) {
             updateError(response.data.error);
@@ -142,12 +102,12 @@ const Feeds = (props: any) => {
           <div className=" noselect col-12 ">
             <div className=" noselect     row col-12 m-0">
               {/* Left section */}
-              <div className=" noselect      col-12 col-md-4 col-xl-3 border-end  px-4 px-md-4  bg-white  ">
+              <div className=" noselect col-12 col-md-4 col-xl-3 border-end  px-4 px-md-4  bg-white  ">
                 <div
                   className=" noselect sticky-top pt-2"
                   style={{ marginBottom: 20 }}
                 >
-                  <div className=" noselect      d-flex justify-content-end mt-2 mb-3">
+                  <div className=" noselect d-flex justify-content-end mt-2 mb-3">
                     <div
                       style={{
                         padding: 5,
@@ -239,7 +199,7 @@ const Feeds = (props: any) => {
                 <div className=" noselect d-flex flex-row align-items-center mx-2">
                   {/* Left arrow for navtab */}
                   {/* <div
-                        className=" noselect      d-block  d-lg-none bg-primary text-white px-3 py-2"
+                        className=" noselect d-block  d-lg-none bg-primary text-white px-3 py-2"
                         style={{
                           borderTopLeftRadius: 5,
                           borderBottomLeftRadius: 5,
@@ -292,7 +252,7 @@ const Feeds = (props: any) => {
 
                   {/* Right arrow for navtab */}
                   {/* <div
-                        className=" noselect      d-block  d-lg-none bg-primary text-white px-3 py-2"
+                        className=" noselect d-block  d-lg-none bg-primary text-white px-3 py-2"
                         style={{
                           borderTopRightRadius: 5,
                           borderBottomRightRadius: 5,

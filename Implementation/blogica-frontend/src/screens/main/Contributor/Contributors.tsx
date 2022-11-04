@@ -10,20 +10,13 @@ import InfiniteScroll from "react-infinite-scroll-component";
 /* component/screen inports */
 
 /* helper imports */
-import { cssHover } from "../../../components/generic/hoverProps";
-import { icons, constants } from "../../../config/configuration";
+import { constants } from "../../../config/configuration";
 import Generic from "../../../components/generic/GenericComponents";
-import { toggler } from "../../../utils/generic";
-import actions from "../../../redux/actionReducers/index";
 import { Author, Person } from "../../../config/types";
 import ContributorListCard from "./ContributorListCard";
 import apis from "../../../config/api";
 
 const Contributors = (props: any) => {
-  const navigate = useNavigate();
-  const dispatch: Dispatch<any> = useDispatch();
-  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 767px)" });
-  const locationParams = useLocation();
   // state hooks
   const [search, updateSearch] = useState("");
   const [contributors, updateContributors] = useState<null | Author[]>(null);
@@ -118,7 +111,7 @@ const Contributors = (props: any) => {
 
       {loading && <Generic.Loader message="Loading" />}
       {!loading && contributors && (
-        <div className=" noselect      col-12   pt-1">
+        <div className=" noselect col-12   pt-1">
           <div className=" noselect container p-0">
             <div className=" noselect d-flex flex-column align-items-end pt-3 px-4">
               <em

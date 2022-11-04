@@ -1,17 +1,6 @@
-import React, { useState, useRef, useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  Navbar,
-  InputGroup,
-  Input,
-  Label,
-  Form,
-  FormGroup,
-  FormText,
-  FormFeedback,
-  Button,
-  Col,
-} from "reactstrap";
+import { Button } from "reactstrap";
 import { images } from "../config/configuration";
 
 const NotFound = (props: any) => {

@@ -4,7 +4,6 @@ import React, { useState, useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
-  Col,
   Button,
   Modal,
   ModalBody,
@@ -15,32 +14,25 @@ import {
   ToastBody,
 } from "reactstrap";
 import { Dispatch } from "@reduxjs/toolkit";
-import { useMediaQuery } from "react-responsive";
 import ReactQuill from "react-quill";
-import moment from "moment";
 
 /* component/screen inports */
 
 /* helper imports */
-import { cssHover } from "../../../components/generic/hoverProps";
-import actions from "../../../redux/actionReducers/index";
 import apis from "../../../config/api";
 import { constants, gifs, icons } from "../../../config/configuration";
 import {
   addArticlesToArticleCategory,
   deleteArticlesFromArticleCategory,
 } from "../../../redux/actionReducers/userReducer";
-import { url } from "inspector";
 import {
   EmailShareButton,
   FacebookShareButton,
   TwitterShareButton,
   LinkedinShareButton,
 } from "react-share";
-import Generic from "../../../components/generic/GenericComponents";
 
 const ArticleBody = ({ article, url, updateArticle }: any) => {
-  const location = useLocation();
   const navigate = useNavigate();
   const dispatch: Dispatch<any> = useDispatch();
 
@@ -81,7 +73,7 @@ const ArticleBody = ({ article, url, updateArticle }: any) => {
             user.articles &&
             user.articles.saved && (
               <Button
-                className=" noselect      rounded-pill  px-4 bg-primary"
+                className=" noselect rounded-pill  px-4 bg-primary"
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
@@ -131,7 +123,7 @@ const ArticleBody = ({ article, url, updateArticle }: any) => {
             article.author &&
             user._id === article.author._id && (
               <Button
-                className=" noselect      rounded-pill  px-4 bg-primary border-0 "
+                className=" noselect rounded-pill  px-4 bg-primary border-0 "
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
@@ -159,7 +151,7 @@ const ArticleBody = ({ article, url, updateArticle }: any) => {
             article.is_published === false &&
             user.articles && (
               <Button
-                className=" noselect      rounded-pill px-4 ms-3  bg-danger border-0 "
+                className=" noselect rounded-pill px-4 ms-3  bg-danger border-0 "
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
@@ -263,7 +255,7 @@ const ArticleBody = ({ article, url, updateArticle }: any) => {
               </Button>
 
               <span
-                className=" noselect      ms-2 text-secondary pb-1"
+                className=" noselect ms-2 text-secondary pb-1"
                 style={{ fontWeight: "normal" }}
               >
                 {`${article.number_of_likes} ${
@@ -272,7 +264,7 @@ const ArticleBody = ({ article, url, updateArticle }: any) => {
               </span>
             </div>
           </div>
-          <div className=" noselect      faCustomIcons col-12 px-0 pt-2 pt-md-0 col-md-6 d-flex flex-row align-items-end justify-content-start justify-content-md-end pb-1">
+          <div className=" noselect faCustomIcons col-12 px-0 pt-2 pt-md-0 col-md-6 d-flex flex-row align-items-end justify-content-start justify-content-md-end pb-1">
             <span className=" noselect text-secondary">Share with: </span>{" "}
             <EmailShareButton
               children={<i className=" noselect fa fa-envelope fa-lg mx-2" />}
@@ -312,7 +304,7 @@ const ArticleBody = ({ article, url, updateArticle }: any) => {
                 </Toast>
               </div>
               <i
-                className=" noselect      fa fa-link fa-lg mx-2"
+                className=" noselect fa fa-link fa-lg mx-2"
                 onClick={() => {
                   navigator.clipboard.writeText(url);
                   updateLinkToastOpen(true);

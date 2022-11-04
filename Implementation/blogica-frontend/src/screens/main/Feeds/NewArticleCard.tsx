@@ -1,16 +1,13 @@
 import React from "react";
-import { InputGroup, Input, Button } from "reactstrap";
-import { ArticleCardProps } from "../../../config/types";
+import { Input } from "reactstrap";
 import Generic from "../../../components/generic/GenericComponents";
 import { constants } from "../../../config/configuration";
-import moment from "moment";
-import { Link, useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 // https://picsum.photos/seed/picsum/200/300)
 
 const NewArticleCard = (cardProps: any) => {
-  const navigate = useNavigate();
   const state = useSelector((state: any) => {
     return {
       userState: state.userActionReducer,
@@ -21,7 +18,7 @@ const NewArticleCard = (cardProps: any) => {
   return (
     <Link
       to={`/main/article/new`}
-      className=" noselect      d-flex flex-column align-items-center  mt-3 p-4"
+      className=" noselect d-flex flex-column align-items-center  mt-3 p-4"
       style={{
         textDecoration: "none",
         color: "black",

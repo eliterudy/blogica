@@ -1,55 +1,15 @@
 /* package inports */
 
-import React, { useState, useRef, useEffect, LegacyRef, Key } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
-import {
-  Navbar,
-  NavbarBrand,
-  Nav,
-  NavbarToggler,
-  Collapse,
-  NavItem,
-  NavLink,
-  Button,
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownToggle,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  TabContent,
-  TabPane,
-  Col,
-  Row,
-} from "reactstrap";
-import classnames from "classnames";
-import { Dispatch } from "@reduxjs/toolkit";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
-import InfiniteScroll from "react-infinite-scroll-component";
 
 /* component/screen inports */
 
 /* helper imports */
-import { cssHover } from "../../../components/generic/hoverProps";
-import {
-  Article,
-  ArticleCardProps,
-  AuthorDetails,
-  User,
-} from "../../../config/types";
-import { icons, constants } from "../../../config/configuration";
-import Generic from "../../../components/generic/GenericComponents";
-import { toggler } from "../../../utils/generic";
-import actions from "../../../redux/actionReducers/index";
+import { Article } from "../../../config/types";
+import { constants } from "../../../config/configuration";
 import ArticleListCard from "../../../components/ArticleListCard";
-import moment from "moment";
 
 const ArticleListingByCategory = ({
   data,
@@ -81,7 +41,7 @@ const ArticleListingByCategory = ({
     if (articles.length > 0) {
       response = (
         <div>
-          <div className=" noselect      col-12  d-flex flex-row flex-wrap">
+          <div className=" noselect col-12  d-flex flex-row flex-wrap">
             {articles.map((article: Article, index: number) => (
               <div
                 key={index}
@@ -112,7 +72,7 @@ const ArticleListingByCategory = ({
     } else {
       response = (
         <div
-          className=" noselect      col-12  d-flex flex-row flex-wrap pt-5 pe-3"
+          className=" noselect col-12  d-flex flex-row flex-wrap pt-5 pe-3"
           style={{ marginBottom: isTabletOrMobile ? 500 : 600 }}
         >
           <p className=" noselect col-12 text-center">

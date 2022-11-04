@@ -1,33 +1,5 @@
 import React from "react";
-import { ArticleCardProps } from "../config/types";
-import Generic from "./generic/GenericComponents";
 import { constants } from "../config/configuration";
-import moment from "moment";
-import {
-  Navbar,
-  NavbarBrand,
-  Nav,
-  NavbarToggler,
-  Collapse,
-  NavItem,
-  Button,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  Row,
-  Card,
-  CardBody,
-  CardTitle,
-  CardSubtitle,
-  CardText,
-} from "reactstrap";
-import { Link, useNavigate } from "react-router-dom";
-
-// https://picsum.photos/seed/picsum/200/300)
 
 const AboutProjectCard = () => {
   return (
@@ -61,7 +33,7 @@ const AboutProjectCard = () => {
       </div>
 
       <a href={"https://github.com/GavinDmello97/blogica"}>
-        <div className=" noselect      btn mt-2  py-2 px-3 bg-black text-white rounded">
+        <div className=" noselect btn mt-2  py-2 px-3 bg-black text-white rounded">
           ✨ Star on GitHub
         </div>
       </a>
