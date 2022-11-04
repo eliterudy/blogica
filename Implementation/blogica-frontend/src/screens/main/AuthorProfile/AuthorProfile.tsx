@@ -3,53 +3,22 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import {
-  Navbar,
-  NavbarBrand,
-  Nav,
-  NavbarToggler,
-  Collapse,
-  NavItem,
-  NavLink,
-  Button,
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownToggle,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  TabContent,
-  TabPane,
-  Col,
-  Row,
-} from "reactstrap";
-import classnames from "classnames";
-import { Dispatch } from "@reduxjs/toolkit";
+import { Col } from "reactstrap";
 import { useMediaQuery } from "react-responsive";
-import InfiniteScroll from "react-infinite-scroll-component";
 import moment from "moment";
 
 /* component/screen inports */
 
 /* helper imports */
-import { cssHover } from "../../../components/generic/hoverProps";
 import { Article, AuthorDetails } from "../../../config/types";
-import { icons } from "../../../config/configuration";
+import { constants, icons } from "../../../config/configuration";
 import Generic from "../../../components/generic/GenericComponents";
-import { toggler } from "../../../utils/generic";
-import actions from "../../../redux/actionReducers/index";
 import ArticleListCard from "../../../components/ArticleListCard";
 import apis from "../../../config/api";
 import Achievements from "../../../components/generic/Achievements";
 
 const AuthorProfile = (props: any) => {
-  const navigate = useNavigate();
+  const location = useLocation();
   const isTabletOrMobile = useMediaQuery({ query: "(max-width: 767px)" });
 
   const [author, updateAuthorDetails] = useState<null | AuthorDetails>(null);
@@ -65,12 +34,21 @@ const AuthorProfile = (props: any) => {
     apis
       .getAuthorDetails({ author_id: authorId })
       .then(({ data }) => {
-        document.title = data.firstname + data.lastname;
+        document.title = `${constants.APP_NAME} Author - ${data.firstname} ${data.lastname}`;
         updateAuthorDetails(data);
         updateLoading(false);
       })
-      .catch((error) => {
-        updateError(error);
+      .catch(({ response, message }) => {
+        if (message && message === "Network Error") {
+          alert(constants.NO_INTERNET_ALERT_MESSAGE);
+        } else {
+          console.log(error);
+          if (response && response.data && response.data.error) {
+            updateError(response.data.error);
+          } else {
+            alert(constants.OOPS_MESSAGE);
+          }
+        }
         updateLoading(false);
       });
   }, []);
@@ -80,7 +58,7 @@ const AuthorProfile = (props: any) => {
 
     if (articles.length > 0) {
       response = (
-        <div className="noselect col-12 d-flex flex-row flex-wrap px-4  ">
+        <div className=" noselect     col-12 d-flex flex-row flex-wrap px-4  ">
           {articles.map((article: Article, index: number) => (
             <div key={index} className={`col-12  px-2 py-4 border-bottom `}>
               <ArticleListCard
@@ -90,7 +68,7 @@ const AuthorProfile = (props: any) => {
               />
             </div>
           ))}
-          <p className="col-12 mt-4" style={{ textAlign: "center" }}>
+          <p className=" noselect col-12 mt-4" style={{ textAlign: "center" }}>
             <em>Yay! You have seen it all</em>
           </p>
         </div>
@@ -98,10 +76,10 @@ const AuthorProfile = (props: any) => {
     } else {
       response = (
         <div
-          className="noselect  col-12  d-flex flex-row flex-wrap pt-5 pe-3"
+          className=" noselect col-12  d-flex flex-row flex-wrap pt-5 pe-3"
           style={{ marginBottom: isTabletOrMobile ? 500 : 600 }}
         >
-          <span className="col-12 text-center">{`The author has not written any articles yet`}</span>
+          <span className=" noselect col-12 text-center">{`The author has not written any articles yet`}</span>
         </div>
       );
     }
@@ -110,22 +88,23 @@ const AuthorProfile = (props: any) => {
   };
 
   return (
-    <div className="col-12 d-flex flex-column  flex-grow-1">
+    <div className=" noselect col-12 d-flex flex-column  flex-grow-1">
       {loading && <Generic.Loader message="Loading" />}
       {!loading && error && <Generic.ListError error={error} />}
       {!loading && author && (
-        <div className="">
-          <div className="col-12">
+        <div className=" noselect ">
+          <div className=" noselect col-12">
             <div>
-              <div className="noselect row col-12 m-0">
+              <div className=" noselect     row col-12 m-0">
                 {/* Left Section */}
-                <div className="noselect  col-12 col-md-4 col-xl-3 border-end  px-4 ps-md-4 pe-md-3 bg-white  ">
-                  <div className="sticky-top pt-2" style={{ marginBottom: 20 }}>
-                    <div className="d-flex flex-column align-items-center  mt-4 ">
+                <div className=" noselect col-12 col-md-4 col-xl-3 border-end  px-4 ps-md-4 pe-md-3 bg-white  ">
+                  <div
+                    className=" noselect sticky-top pt-2"
+                    style={{ marginBottom: 20 }}
+                  >
+                    <div className=" noselect d-flex flex-column align-items-center  mt-4 ">
                       <Generic.Avatar
-                        image_url={
-                          process.env.REACT_APP_API_URL + author.image_url
-                        }
+                        image_url={author.image_url}
                         fullname={author.firstname + author.lastname}
                         size={200}
                       />
@@ -145,18 +124,18 @@ const AuthorProfile = (props: any) => {
                       >{` @${author.username}`}</span>
                     </div>
 
-                    <Col className="my-3  text-justify">
+                    <Col className=" noselect my-3  text-justify">
                       <p
-                        className="text-justify"
+                        className=" noselect text-justify"
                         style={{ textAlign: "justify" }}
                       >
                         <em>{author.bio}</em>
                       </p>
                     </Col>
-                    <Col className="border-top py-3">
-                      <Col className="mt-1">
+                    <Col className=" noselect border-top py-3">
+                      <Col className=" noselect mt-1">
                         <i
-                          className="fa fa-file-text-o fa-lg me-2 "
+                          className=" noselect fa fa-file-text-o fa-lg me-2 "
                           aria-hidden="true"
                         ></i>
 
@@ -164,9 +143,9 @@ const AuthorProfile = (props: any) => {
                           {author.articles.published.length} Published Articles
                         </span>
                       </Col>
-                      <Col className="mt-1">
+                      <Col className=" noselect mt-1">
                         <i
-                          className="fa fa-desktop fa-lg me-2 "
+                          className=" noselect fa fa-desktop fa-lg me-2 "
                           aria-hidden="true"
                         ></i>
 
@@ -183,12 +162,12 @@ const AuthorProfile = (props: any) => {
                 </div>
 
                 {/* Right Section */}
-                <div className="noselect  col-12 col-md-8 col-xl-9  p-0">
+                <div className=" noselect col-12 col-md-8 col-xl-9  p-0">
                   {author.articles && author.articles.published && (
                     <div>
-                      <div className="bg-dark py-5 py-md-4 px-4 ">
+                      <div className=" noselect bg-dark py-5 py-md-4 px-4 ">
                         <h1
-                          className="text-white text-center"
+                          className=" noselect text-white text-center"
                           style={{ fontSize: 30 }}
                         >
                           <em>
@@ -197,7 +176,7 @@ const AuthorProfile = (props: any) => {
                         </h1>
                       </div>
                       <div
-                        className="col-12 pt-2 mx-0 px-0 "
+                        className=" noselect col-12 pt-2 mx-0 px-0 "
                         style={{
                           display: "flex",
                           flexDirection: "row",

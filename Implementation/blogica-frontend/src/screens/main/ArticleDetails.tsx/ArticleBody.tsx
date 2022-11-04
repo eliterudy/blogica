@@ -4,7 +4,6 @@ import React, { useState, useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
-  Col,
   Button,
   Modal,
   ModalBody,
@@ -15,32 +14,25 @@ import {
   ToastBody,
 } from "reactstrap";
 import { Dispatch } from "@reduxjs/toolkit";
-import { useMediaQuery } from "react-responsive";
 import ReactQuill from "react-quill";
-import moment from "moment";
 
 /* component/screen inports */
 
 /* helper imports */
-import { cssHover } from "../../../components/generic/hoverProps";
-import actions from "../../../redux/actionReducers/index";
 import apis from "../../../config/api";
-import { gifs, icons } from "../../../config/configuration";
+import { constants, gifs, icons } from "../../../config/configuration";
 import {
   addArticlesToArticleCategory,
   deleteArticlesFromArticleCategory,
 } from "../../../redux/actionReducers/userReducer";
-import { url } from "inspector";
 import {
   EmailShareButton,
   FacebookShareButton,
   TwitterShareButton,
   LinkedinShareButton,
 } from "react-share";
-import Generic from "../../../components/generic/GenericComponents";
 
 const ArticleBody = ({ article, url, updateArticle }: any) => {
-  const location = useLocation();
   const navigate = useNavigate();
   const dispatch: Dispatch<any> = useDispatch();
 
@@ -69,9 +61,9 @@ const ArticleBody = ({ article, url, updateArticle }: any) => {
   var likeAnimation = <img style={{ width: 40 }} src={gifs.like} />;
 
   return (
-    <div className="col-12 ">
-      <div className="d-flex justify-content-between align-items-center flex-wrap">
-        <span className="flex-1 h1 fw-bold">{article.title}</span>
+    <div className=" noselect col-12 ">
+      <div className=" noselect d-flex justify-content-between align-items-center flex-wrap">
+        <span className=" noselect flex-1 h1 fw-bold">{article.title}</span>
         <div>
           {user &&
             article &&
@@ -81,7 +73,7 @@ const ArticleBody = ({ article, url, updateArticle }: any) => {
             user.articles &&
             user.articles.saved && (
               <Button
-                className=" rounded-pill  px-4 bg-primary"
+                className=" noselect rounded-pill  px-4 bg-primary"
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
@@ -99,7 +91,9 @@ const ArticleBody = ({ article, url, updateArticle }: any) => {
                             })
                           );
                         })
-                        .catch((error) => {})
+                        .catch((error) => {
+                          alert(constants.OOPS_MESSAGE);
+                        })
                     : apis
                         .deleteFromCategory(
                           { property: "articles", category: "saved" },
@@ -113,7 +107,9 @@ const ArticleBody = ({ article, url, updateArticle }: any) => {
                             })
                           );
                         })
-                        .catch((error) => {});
+                        .catch((error) => {
+                          alert(constants.OOPS_MESSAGE);
+                        });
                 }}
               >
                 {user.articles.saved.includes(article._id)
@@ -127,7 +123,7 @@ const ArticleBody = ({ article, url, updateArticle }: any) => {
             article.author &&
             user._id === article.author._id && (
               <Button
-                className=" rounded-pill  px-4 bg-primary border-0 "
+                className=" noselect rounded-pill  px-4 bg-primary border-0 "
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
@@ -144,7 +140,7 @@ const ArticleBody = ({ article, url, updateArticle }: any) => {
                 }}
               >
                 <i
-                  className="fa fa-pencil-square-o fa-lg"
+                  className=" noselect fa fa-pencil-square-o fa-lg"
                   aria-hidden="true"
                 ></i>{" "}
                 <span>Edit Article</span>
@@ -155,43 +151,47 @@ const ArticleBody = ({ article, url, updateArticle }: any) => {
             article.is_published === false &&
             user.articles && (
               <Button
-                className=" rounded-pill px-4 ms-3  bg-danger border-0 "
+                className=" noselect rounded-pill px-4 ms-3  bg-danger border-0 "
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
                   toggleModal();
                 }}
               >
-                <i className="fa fa-trash-o fa-lg" aria-hidden="true"></i>{" "}
+                <i
+                  className=" noselect fa fa-trash-o fa-lg"
+                  aria-hidden="true"
+                ></i>{" "}
               </Button>
             )}
         </div>
       </div>
-      <div
-        className="img-fluid my-4"
-        style={{
-          backgroundImage: `url(${process.env.REACT_APP_API_URL +
-            article.image_url})`,
-          aspectRatio: "4/3",
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      ></div>
+      <div className=" noselect d-flex flex-column align-items-center">
+        <div
+          className=" noselect img-fluid my-4 col-12"
+          style={{
+            backgroundImage: `url(${article.image_url})`,
+            aspectRatio: "1/1",
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        ></div>
+      </div>
       <ReactQuill
         readOnly={true}
-        className="p-0 col-12 pb-4 "
+        className=" noselect p-0 col-12 pb-4 "
         style={{ flex: 1, backgroundColor: "#fff" }}
         theme="bubble"
         value={article.description}
       />
 
       {user && user.articles && article.is_published && (
-        <div className="col-12 row mx-0  my-4 p-0 align-items-end ">
-          <div className="col-12 col-md-6 px-0 d-flex flex-row align-items-center justify-content-between">
-            <div className="flex-1 d-flex flex-row align-items-end">
+        <div className=" noselect col-12 row mx-0  my-4 p-0 align-items-end ">
+          <div className=" noselect col-12 col-md-6 px-0 d-flex flex-row align-items-center justify-content-between">
+            <div className=" noselect flex-1 d-flex flex-row align-items-end">
               <Button
-                className="border-0 bg-transparent p-0"
+                className=" noselect border-0 bg-transparent p-0"
                 disabled={isAnimationPlaying}
                 style={{ width: 40, height: 40 }}
                 onClick={(e) => {
@@ -224,7 +224,9 @@ const ArticleBody = ({ article, url, updateArticle }: any) => {
                           number_of_likes: article.number_of_likes + 1,
                         });
                       })
-                      .catch((error) => {});
+                      .catch((error) => {
+                        alert(constants.OOPS_MESSAGE);
+                      });
                   } else {
                     apis
                       .deleteFromCategory(
@@ -243,7 +245,9 @@ const ArticleBody = ({ article, url, updateArticle }: any) => {
                           number_of_likes: article.number_of_likes - 1,
                         });
                       })
-                      .catch((error) => {});
+                      .catch((error) => {
+                        alert(constants.OOPS_MESSAGE);
+                      });
                   }
                 }}
               >
@@ -251,7 +255,7 @@ const ArticleBody = ({ article, url, updateArticle }: any) => {
               </Button>
 
               <span
-                className=" ms-2 text-secondary pb-1"
+                className=" noselect ms-2 text-secondary pb-1"
                 style={{ fontWeight: "normal" }}
               >
                 {`${article.number_of_likes} ${
@@ -260,33 +264,38 @@ const ArticleBody = ({ article, url, updateArticle }: any) => {
               </span>
             </div>
           </div>
-          <div className=" faCustomIcons col-12 px-0 pt-2 pt-md-0 col-md-6 d-flex flex-row align-items-end justify-content-start justify-content-md-end pb-1">
-            <span className="text-secondary">Share with: </span>{" "}
+          <div className=" noselect faCustomIcons col-12 px-0 pt-2 pt-md-0 col-md-6 d-flex flex-row align-items-end justify-content-start justify-content-md-end pb-1">
+            <span className=" noselect text-secondary">Share with: </span>{" "}
             <EmailShareButton
-              children={<i className="fa fa-envelope fa-lg mx-2" />}
+              children={<i className=" noselect fa fa-envelope fa-lg mx-2" />}
               url={url}
-              subject={"Check this amazing article published on Blogica"}
-              body={`I read this amazing article on Blogica about ${article.title}. 
-      I think this article will interest you, so give it a read!`}
+              subject={`Check this amazing article published on ${constants.APP_NAME}`}
+              body={`I read this amazing article on ${constants.APP_NAME} about ${article.title}. 
+      I think this article will interest you, so give it a read! `}
             />
             <FacebookShareButton
-              children={<i className="fa fa-facebook fa-lg mx-2" />}
+              children={<i className=" noselect fa fa-facebook fa-lg mx-2" />}
               url={url}
             />
             <TwitterShareButton
-              children={<i className="fa fa-twitter fa-lg mx-2" />}
+              children={<i className=" noselect fa fa-twitter fa-lg mx-2" />}
               url={url}
               title={article.title}
             />
             <LinkedinShareButton
-              children={<i className="fa fa-linkedin-square fa-lg mx-2 " />}
+              children={
+                <i className=" noselect fa fa-linkedin-square fa-lg mx-2 " />
+              }
               url={url}
               title={article.title}
-              summary={`I read this amazing article on Blogica about ${article.title}. 
-      I think this article will interest you, so give it a read!`}
+              summary={`I read this amazing article on ${constants.APP_NAME} about ${article.title}. 
+      I think this article will interest you, so give it a read! `}
             />
             <div style={{ position: "relative" }}>
-              <div className="position-absolute" style={{ top: 30, right: 0 }}>
+              <div
+                className=" noselect position-absolute"
+                style={{ top: 30, right: 0 }}
+              >
                 <Toast
                   style={{ backgroundColor: "black" }}
                   isOpen={isLinkToastOpen}
@@ -295,7 +304,7 @@ const ArticleBody = ({ article, url, updateArticle }: any) => {
                 </Toast>
               </div>
               <i
-                className=" fa fa-link fa-lg mx-2"
+                className=" noselect fa fa-link fa-lg mx-2"
                 onClick={() => {
                   navigator.clipboard.writeText(url);
                   updateLinkToastOpen(true);
@@ -315,20 +324,20 @@ const ArticleBody = ({ article, url, updateArticle }: any) => {
         isOpen={isModalOpen}
       >
         <ModalHeader
-          className="noselect"
+          className=" noselect    "
           charCode="Y"
           toggle={() => toggleModal()}
         >
           Delete Article
         </ModalHeader>
-        <ModalBody className="noselect">
+        <ModalBody className=" noselect    ">
           You are about to delete the article titled{" "}
           <strong>{article.title}</strong>. Are you sure you wish to delete this
           article?
         </ModalBody>
         <ModalFooter>
           <Button
-            className="bg-danger"
+            className=" noselect bg-danger"
             onClick={() => {
               updateDeleteArticleLoading(true);
               apis
@@ -339,6 +348,8 @@ const ArticleBody = ({ article, url, updateArticle }: any) => {
                   navigate(-1);
                 })
                 .catch((error) => {
+                  alert(constants.OOPS_MESSAGE);
+
                   updateDeleteArticleLoading(false);
                   toggleModal();
                 });

@@ -21,7 +21,6 @@ import {
   addArticlesToArticleCategory,
   deleteArticlesFromArticleCategory,
 } from "../redux/actionReducers/userReducer";
-// https://picsum.photos/seed/picsum/200/300)
 
 const ArticleListCard = (cardProps: ArticleCardProps) => {
   const dispatch: Dispatch<any> = useDispatch();
@@ -55,7 +54,7 @@ const ArticleListCard = (cardProps: ArticleCardProps) => {
 
   return (
     <div
-      className=" d-flex"
+      className=" noselect  d-flex "
       style={{ textDecoration: "none" }}
       onClick={() => {
         if (user && user._id && user._id !== article.author._id) {
@@ -72,10 +71,10 @@ const ArticleListCard = (cardProps: ArticleCardProps) => {
         });
       }}
     >
-      <div className="col-8 col-sm-9 col-lg-10   pe-4 d-flex flex-column justify-content-between ">
+      <div className=" noselect col-8 col-sm-9 col-lg-10   pe-4 d-flex flex-column justify-content-between ">
         <div>
           {showAuthorDetails && (
-            <div className="d-flex flex-row align-items-center">
+            <div className=" noselect d-flex flex-row align-items-center">
               <div
                 onClick={(e) => {
                   e.preventDefault();
@@ -84,9 +83,7 @@ const ArticleListCard = (cardProps: ArticleCardProps) => {
                 }}
               >
                 <Generic.Avatar
-                  image_url={
-                    process.env.REACT_APP_API_URL + article.author.image_url
-                  }
+                  image_url={article.author.image_url}
                   fullname={`${article.author.firstname} ${article.author.lastname}`}
                   size={25}
                 />
@@ -97,7 +94,7 @@ const ArticleListCard = (cardProps: ArticleCardProps) => {
                   e.stopPropagation();
                   navigate(`/main/author/id/${article.author._id}`);
                 }}
-                className=" ms-2 text-primary"
+                className=" noselect  ms-2 text-primary cursorPointer"
                 style={{ fontWeight: "bold", fontSize: 14 }}
               >
                 {`${article.author.firstname} ${article.author.lastname}`}
@@ -106,7 +103,7 @@ const ArticleListCard = (cardProps: ArticleCardProps) => {
           )}
 
           <h6
-            className=" mt-2 col-12 "
+            className=" noselect  mt-2 col-12 "
             style={{
               fontSize: 22,
               fontWeight: "bold",
@@ -120,11 +117,11 @@ const ArticleListCard = (cardProps: ArticleCardProps) => {
             {article.title}
           </h6>
           <div
-            className="cardDescription"
+            className=" noselect cardDescription"
             // style={{ height: 60, overflow: "hidden" }}
           >
             <ReactQuill
-              className=" col-12"
+              className=" noselect cursorPointer  col-12"
               readOnly={true}
               style={{}}
               theme="bubble"
@@ -133,15 +130,15 @@ const ArticleListCard = (cardProps: ArticleCardProps) => {
           </div>
         </div>
 
-        <div className="col-12 d-flex flex-row justify-content-between flex-wrap pt-1 ">
-          <div className="col-12 col-sm-7 d-flex flex-wrap py-1">
+        <div className=" noselect col-12 d-flex flex-row justify-content-between flex-wrap pt-1 ">
+          <div className=" noselect col-12 col-sm-7 d-flex flex-wrap py-1">
             <span style={{ fontSize: 14, color: "#555" }}>
               {moment(article.createdAt).fromNow()}
             </span>
             {user && user.articles.drafts.includes(article._id) && (
-              <div className="d-flex flex-wrap ms-2">
+              <div className=" noselect d-flex flex-wrap ms-2">
                 <div
-                  className="d-flex flex-wrap"
+                  className=" noselect d-flex flex-wrap"
                   style={{
                     padding: 1,
                     paddingLeft: 10,
@@ -156,11 +153,11 @@ const ArticleListCard = (cardProps: ArticleCardProps) => {
             )}
           </div>
           {user && (
-            <div className="  d-flex align-items-center justify-content-start justify-content-sm-end col-12 col-sm-5 py-1">
+            <div className=" noselect   d-flex align-items-center justify-content-start justify-content-sm-end col-12 col-sm-5 py-1">
               {(user.articles.drafts.includes(article._id) ||
                 user.articles.published.includes(article._id)) && (
                 <div
-                  className="pe-3 pe-sm-0 ps-sm-3 faCustomIcons"
+                  className=" noselect pe-3 pe-sm-0 ps-sm-3 faCustomIcons cursorPointer"
                   id="edit"
                   onClick={(e) => {
                     e.preventDefault();
@@ -178,7 +175,7 @@ const ArticleListCard = (cardProps: ArticleCardProps) => {
                   }}
                 >
                   <i
-                    className="fa fa-pencil-square-o fa-lg"
+                    className=" noselect fa fa-pencil-square-o fa-lg"
                     aria-hidden="true"
                   ></i>
 
@@ -194,7 +191,7 @@ const ArticleListCard = (cardProps: ArticleCardProps) => {
               )}
               {user.articles.drafts.includes(article._id) && (
                 <div
-                  className="pe-3 pe-sm-0 ps-sm-3 faDeleteIcon"
+                  className=" noselect pe-3 pe-sm-0 ps-sm-3 faDeleteIcon cursorPointer"
                   id="delete"
                   onClick={(e) => {
                     e.preventDefault();
@@ -202,7 +199,10 @@ const ArticleListCard = (cardProps: ArticleCardProps) => {
                     toggleModal();
                   }}
                 >
-                  <i className="fa fa-trash-o fa-lg" aria-hidden="true"></i>
+                  <i
+                    className=" noselect fa fa-trash-o fa-lg"
+                    aria-hidden="true"
+                  ></i>
 
                   <Tooltip
                     placement={"top"}
@@ -216,7 +216,7 @@ const ArticleListCard = (cardProps: ArticleCardProps) => {
               )}
               {user && user._id && user._id !== article.author._id ? (
                 <div
-                  className="pe-3 pe-sm-0 ps-sm-3"
+                  className=" noselect pe-3 pe-sm-0 ps-sm-3 cursorPointer"
                   id="save"
                   onClick={(e) => {
                     e.preventDefault();
@@ -236,7 +236,18 @@ const ArticleListCard = (cardProps: ArticleCardProps) => {
                             );
                             addCallback(article, "saved");
                           })
-                          .catch((error) => {})
+                          .catch(({ response, message }) => {
+                            if (message && message === "Network Error") {
+                              alert(constants.NO_INTERNET_ALERT_MESSAGE);
+                            } else {
+                              if (
+                                response &&
+                                response.data &&
+                                response.data.error
+                              )
+                                alert(response.data.error);
+                            }
+                          })
                       : apis
                           .deleteFromCategory(
                             { property: "articles", category: "saved" },
@@ -251,13 +262,24 @@ const ArticleListCard = (cardProps: ArticleCardProps) => {
                             );
                             deleteCallback(index, "saved");
                           })
-                          .catch((error) => {});
+                          .catch(({ response, message }) => {
+                            if (message && message === "Network Error") {
+                              alert(constants.NO_INTERNET_ALERT_MESSAGE);
+                            } else {
+                              if (
+                                response &&
+                                response.data &&
+                                response.data.error
+                              )
+                                alert(response.data.error);
+                            }
+                          });
                   }}
                 >
                   {user.articles.saved.includes(article._id) ? (
-                    <i className="fa fa-bookmark fa-lg" />
+                    <i className=" noselect fa fa-bookmark fa-lg" />
                   ) : (
-                    <i className="fa fa-bookmark-o fa-lg" />
+                    <i className=" noselect fa fa-bookmark-o fa-lg" />
                   )}
                   <Tooltip
                     placement={"top"}
@@ -277,10 +299,9 @@ const ArticleListCard = (cardProps: ArticleCardProps) => {
         className={`col-4 col-sm-3 col-lg-2    d-flex flex-column justify-content-end `}
       >
         <div
-          className="img-fluid "
+          className=" noselect img-fluid "
           style={{
-            backgroundImage: `url(${process.env.REACT_APP_API_URL +
-              article.image_url})`,
+            backgroundImage: `url(${article.image_url})`,
             aspectRatio: "1/1",
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
@@ -295,20 +316,20 @@ const ArticleListCard = (cardProps: ArticleCardProps) => {
         isOpen={isModalOpen}
       >
         <ModalHeader
-          className="noselect"
+          className=" noselect    "
           charCode="Y"
           toggle={() => toggleModal()}
         >
           Delete Article
         </ModalHeader>
-        <ModalBody className="noselect">
+        <ModalBody className=" noselect    ">
           You are about to delete the article titled{" "}
           <strong>{article.title}</strong>. Are you sure you wish to delete this
           article?
         </ModalBody>
         <ModalFooter>
           <Button
-            className="bg-danger"
+            className=" noselect bg-danger"
             onClick={() => {
               updateDeleteArticleLoading(true);
               apis
@@ -318,7 +339,13 @@ const ArticleListCard = (cardProps: ArticleCardProps) => {
                   updateDeleteArticleLoading(false);
                   toggleModal();
                 })
-                .catch((error) => {
+                .catch(({ response, message }) => {
+                  if (message && message === "Network Error") {
+                    alert(constants.NO_INTERNET_ALERT_MESSAGE);
+                  } else {
+                    if (response && response.data && response.data.error)
+                      alert(response.data.error);
+                  }
                   updateDeleteArticleLoading(false);
                   toggleModal();
                 });

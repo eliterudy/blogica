@@ -1,56 +1,22 @@
 /* package inports */
 
-import React, { useState, useRef, useEffect, LegacyRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import {
-  Navbar,
-  NavbarBrand,
-  Nav,
-  NavbarToggler,
-  Collapse,
-  NavItem,
-  NavLink,
-  Button,
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownToggle,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  TabContent,
-  TabPane,
-  Col,
-  Row,
-} from "reactstrap";
+import { Nav, NavItem, NavLink, TabContent, TabPane, Col } from "reactstrap";
 import classnames from "classnames";
-import { Dispatch } from "@reduxjs/toolkit";
-import { useMediaQuery } from "react-responsive";
-import InfiniteScroll from "react-infinite-scroll-component";
 import moment from "moment";
 
 /* component/screen inports */
 
 /* helper imports */
-import { cssHover } from "../../../components/generic/hoverProps";
 import {
   Article,
-  PublishedDetails,
-  User,
-  UserArticleSegment,
   UserDetailArticleSegment,
   UserDetails,
 } from "../../../config/types";
 import { icons, constants } from "../../../config/configuration";
 import Generic from "../../../components/generic/GenericComponents";
-import { numberToCurrencyRounder, toggler } from "../../../utils/generic";
-import actions from "../../../redux/actionReducers/index";
+import { numberToCurrencyRounder } from "../../../utils/generic";
 import ArticleListingByCategory from "./ArticleListingByCategory";
 import NewArticleCard from "./NewArticleCard";
 import apis from "../../../config/api";
@@ -60,31 +26,29 @@ const tabs = [
   {
     key: "published",
     title: "My Published Articles",
-    message: constants.PUBLISHED_ARTICLES,
+    message: constants.TAB_MESSAGE_PUBLISHED_ARTICLES,
   },
   {
     key: "drafts",
     title: "My Article Drafts",
-    message: constants.ARTICLES_DRAFTS,
+    message: constants.TAB_MESSAGE_ARTICLES_DRAFTS,
   },
 
   {
     key: "recents",
     title: "Recently Viewed Articles",
-    message: constants.RECENTLY_VIEWED_ARTICLES,
+    message: constants.TAB_MESSAGE_RECENTLY_VIEWED_ARTICLES,
   },
-  { key: "saved", title: "Saved Articles", message: constants.SAVED_ARTICLES },
+  {
+    key: "saved",
+    title: "Saved Articles",
+    message: constants.TAB_MESSAGE_SAVED_ARTICLES,
+  },
 ];
 
 const Feeds = (props: any) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 767px)" });
-  const state = useSelector((state: any) => {
-    return {
-      userState: state.userActionReducer,
-    };
-  });
   var selectedFeedsTab = window.sessionStorage.getItem("feedsTab");
 
   const [activeTab, updateActiveTab] = useState(
@@ -114,25 +78,34 @@ const Feeds = (props: any) => {
         updateUser(data);
         updateLoading(false);
       })
-      .catch((err) => {
-        console.log("FEEDS ERR", err);
-
-        updateError(err.message.toString());
-        if (err.response.status == "401") navigate("/main/home");
+      .catch(({ response, message }) => {
+        if (message && message === "Network Error") {
+          alert(constants.NO_INTERNET_ALERT_MESSAGE);
+        } else {
+          if (response && response.data && response.data.error) {
+            updateError(response.data.error);
+          } else {
+            alert(constants.OOPS_MESSAGE);
+          }
+        }
+        if (response.status == "401") navigate("/main/home");
         updateLoading(false);
       });
   }, []);
   return (
     <div>
-      {isLoading && <div className="vh-100 vw-100"></div>}
+      {isLoading && <div className=" noselect vh-100 vw-100"></div>}
       {!isLoading && userData ? (
-        <div className="col-12 d-flex flex-column  flex-grow-1">
-          <div className="col-12 ">
-            <div className="noselect row col-12 m-0">
+        <div className=" noselect col-12 d-flex flex-column  flex-grow-1">
+          <div className=" noselect col-12 ">
+            <div className=" noselect     row col-12 m-0">
               {/* Left section */}
-              <div className="noselect  col-12 col-md-4 col-xl-3 border-end  px-4 px-md-4  bg-white  ">
-                <div className="sticky-top pt-2" style={{ marginBottom: 20 }}>
-                  <div className=" d-flex justify-content-end mt-2 mb-3">
+              <div className=" noselect col-12 col-md-4 col-xl-3 border-end  px-4 px-md-4  bg-white  ">
+                <div
+                  className=" noselect sticky-top pt-2"
+                  style={{ marginBottom: 20 }}
+                >
+                  <div className=" noselect d-flex justify-content-end mt-2 mb-3">
                     <div
                       style={{
                         padding: 5,
@@ -155,11 +128,9 @@ const Feeds = (props: any) => {
                       </span>
                     </div>
                   </div>
-                  <div className="d-flex flex-column align-items-center  ">
+                  <div className=" noselect d-flex flex-column align-items-center  ">
                     <Generic.Avatar
-                      image_url={
-                        process.env.REACT_APP_API_URL + userData.image_url
-                      }
+                      image_url={userData.image_url}
                       fullname={userData.firstname + userData.lastname}
                       size={200}
                     />
@@ -178,19 +149,19 @@ const Feeds = (props: any) => {
                       }}
                     >{` @${userData.username}`}</span>
                   </div>
-                  <div className="">
-                    <Col className="my-3  text-justify">
+                  <div className=" noselect ">
+                    <Col className=" noselect my-3  text-justify">
                       <p
-                        className="text-justify"
+                        className=" noselect text-justify"
                         style={{ textAlign: "justify", fontSize: 14 }}
                       >
                         <em>{userData.bio}</em>
                       </p>
                     </Col>
-                    <Col className="border-top py-3">
-                      <Col className="mt-1">
+                    <Col className=" noselect border-top py-3">
+                      <Col className=" noselect mt-1">
                         <i
-                          className="fa fa-file-text-o fa-lg me-2 "
+                          className=" noselect fa fa-file-text-o fa-lg me-2 "
                           aria-hidden="true"
                         ></i>
 
@@ -199,9 +170,9 @@ const Feeds = (props: any) => {
                           Articles
                         </span>
                       </Col>
-                      <Col className="mt-1">
+                      <Col className=" noselect mt-1">
                         <i
-                          className="fa fa-desktop fa-lg me-2 "
+                          className=" noselect fa fa-desktop fa-lg me-2 "
                           aria-hidden="true"
                         ></i>
 
@@ -221,12 +192,12 @@ const Feeds = (props: any) => {
               </div>
 
               {/* Right section */}
-              <div className="noselect d-flex flex-column flex-grow-1 col-12 col-md-8 col-xl-9 px-4 ">
+              <div className=" noselect     d-flex flex-column flex-grow-1 col-12 col-md-8 col-xl-9 px-4 ">
                 <NewArticleCard />
-                <div className="d-flex flex-row align-items-center mx-2">
+                <div className=" noselect d-flex flex-row align-items-center mx-2">
                   {/* Left arrow for navtab */}
                   {/* <div
-                        className=" d-block  d-lg-none bg-primary text-white px-3 py-2"
+                        className=" noselect d-block  d-lg-none bg-primary text-white px-3 py-2"
                         style={{
                           borderTopLeftRadius: 5,
                           borderBottomLeftRadius: 5,
@@ -238,7 +209,7 @@ const Feeds = (props: any) => {
                   <Nav
                     id="feedtabs"
                     tabs
-                    className="my-2"
+                    className=" noselect my-2"
                     style={{
                       display: "flex",
                       flex: 1,
@@ -265,9 +236,12 @@ const Feeds = (props: any) => {
                               }}
                               style={{
                                 whiteSpace: "nowrap",
+                                cursor: "pointer",
                               }}
                             >
-                              <span className="px-1">{tab.title}</span>
+                              <span className=" noselect px-1">
+                                {tab.title}
+                              </span>
                             </NavLink>
                           </NavItem>
                         );
@@ -276,7 +250,7 @@ const Feeds = (props: any) => {
 
                   {/* Right arrow for navtab */}
                   {/* <div
-                        className=" d-block  d-lg-none bg-primary text-white px-3 py-2"
+                        className=" noselect d-block  d-lg-none bg-primary text-white px-3 py-2"
                         style={{
                           borderTopRightRadius: 5,
                           borderBottomRightRadius: 5,
@@ -285,13 +259,13 @@ const Feeds = (props: any) => {
                         <b>{"▶️"}</b>
                       </div> */}
                 </div>
-                <TabContent activeTab={activeTab} className="my-2 ">
+                <TabContent activeTab={activeTab} className=" noselect my-2 ">
                   {tabs.map((tab, index) => {
                     return (
                       <TabPane
                         key={index}
                         tabId={index}
-                        className="flex-grow-1"
+                        className=" noselect flex-grow-1"
                       >
                         <ArticleListingByCategory
                           index={index}
@@ -330,7 +304,6 @@ const Feeds = (props: any) => {
                             userDetails.articles[
                               articleCategoryProps as keyof UserDetailArticleSegment
                             ] = articleCategory;
-                            console.log("articleCategory", userDetails);
                             updateUser({ ...userDetails });
                           }}
                           showAuthorDetails={

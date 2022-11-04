@@ -10,20 +10,13 @@ import InfiniteScroll from "react-infinite-scroll-component";
 /* component/screen inports */
 
 /* helper imports */
-import { cssHover } from "../../../components/generic/hoverProps";
-import { icons } from "../../../config/configuration";
+import { constants } from "../../../config/configuration";
 import Generic from "../../../components/generic/GenericComponents";
-import { toggler } from "../../../utils/generic";
-import actions from "../../../redux/actionReducers/index";
 import { Author, Person } from "../../../config/types";
 import ContributorListCard from "./ContributorListCard";
 import apis from "../../../config/api";
 
 const Contributors = (props: any) => {
-  const navigate = useNavigate();
-  const dispatch: Dispatch<any> = useDispatch();
-  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 767px)" });
-  const locationParams = useLocation();
   // state hooks
   const [search, updateSearch] = useState("");
   const [contributors, updateContributors] = useState<null | Author[]>(null);
@@ -80,14 +73,15 @@ const Contributors = (props: any) => {
         updateLoading(false);
       })
 
-      .catch((err) => {
-        if (err && err.message && err.message === "Network Error") {
-          alert(
-            "This action cannot be performed at the moment because of no internet connection. Please connect to an internet connection and try again"
-          );
+      .catch(({ response, message }) => {
+        if (message && message === "Network Error") {
+          alert(constants.NO_INTERNET_ALERT_MESSAGE);
         } else {
-          updateError(err);
-          updateLoading(false);
+          if (response && response.data && response.data.error) {
+            updateError(response.data.error);
+          } else {
+            alert(constants.OOPS_MESSAGE);
+          }
         }
       });
   };
@@ -103,10 +97,10 @@ const Contributors = (props: any) => {
 
   // main render
   return (
-    <div className="col-12 d-flex flex-column  flex-grow-1">
+    <div className=" noselect col-12 d-flex flex-column  flex-grow-1">
       {/* Searchbar */}
-      <div className="d-flex col-12 flex-row justify-content-center container mt-4 px-0 ">
-        <div className="col-12 col-md-8  p-4 " style={{}}>
+      <div className=" noselect d-flex col-12 flex-row justify-content-center container mt-4 px-0 ">
+        <div className=" noselect col-12 col-md-8  p-4 " style={{}}>
           <Generic.SearchBar
             searchFor="contributors"
             apiCallback={(val: any) => searchUpdateCallback(val)}
@@ -117,11 +111,11 @@ const Contributors = (props: any) => {
 
       {loading && <Generic.Loader message="Loading" />}
       {!loading && contributors && (
-        <div className="noselect  col-12   pt-1">
-          <div className="container p-0">
-            <div className="d-flex flex-column align-items-end pt-3 px-4">
+        <div className=" noselect col-12   pt-1">
+          <div className=" noselect container p-0">
+            <div className=" noselect d-flex flex-column align-items-end pt-3 px-4">
               <em
-                className="px-2 pt-1"
+                className=" noselect px-2 pt-1"
                 style={{
                   border: "0.5px solid #ddd",
                   backgroundColor: "#eee",
@@ -132,7 +126,7 @@ const Contributors = (props: any) => {
               </em>
             </div>
             <InfiniteScroll
-              className="pt-4 px-2"
+              className=" noselect pt-4 px-2"
               dataLength={contributors ? contributors.length : 0} //This is important field to render the next data
               next={() => {
                 getContributorsFromApi();
@@ -143,16 +137,23 @@ const Contributors = (props: any) => {
                 flexDirection: "row",
                 flexWrap: "wrap",
               }}
-              loader={<h4 className="col-12 text-center">Fetching more...</h4>}
+              loader={
+                <h4 className=" noselect col-12 text-center">
+                  Fetching more...
+                </h4>
+              }
               endMessage={
-                <p className="col-12 mt-4" style={{ textAlign: "center" }}>
+                <p
+                  className=" noselect col-12 mt-4"
+                  style={{ textAlign: "center" }}
+                >
                   <em>
                     {contributors.length === 0
                       ? search.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "").length >
                         0
-                        ? "No match found! Please try a different search"
-                        : "There are no contributors to our website yet."
-                      : "Yay! You have seen it all"}
+                        ? constants.NO_SEARCH_RESULT_MATCH
+                        : constants.NO_CONTRIBUTORS
+                      : constants.SEEN_ALL}
                   </em>
                 </p>
               }

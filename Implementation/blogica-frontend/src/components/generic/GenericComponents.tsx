@@ -1,27 +1,20 @@
 /* package inports */
 import React, { useState, useRef, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
-import { Dispatch } from "@reduxjs/toolkit";
-import { useMediaQuery } from "react-responsive";
+
 import { DebounceInput } from "react-debounce-input";
-import { InputGroup, Button, Row, Col, Tooltip } from "reactstrap";
+import { InputGroup, Row, Tooltip } from "reactstrap";
 /* component/screen inports */
 
 /* helper imports */
-import { cssHover } from "./hoverProps";
 import { icons, gifs } from "../../config/configuration";
-import { toggler } from "../../utils/generic";
-import actions from "../../redux/actionReducers/index";
 import { randomColorGenerator } from "../../utils/generic";
-import Avatar from "react-avatar";
 
 const avatarColor = randomColorGenerator();
 
 const Generic = {
   Loader: ({ message }: { message: String }) => {
     return (
-      <div className="d-flex flex-grow-1 flex-column justify-content-center align-items-center">
+      <div className=" noselect d-flex flex-grow-1 flex-column justify-content-center align-items-center">
         <img src={gifs.loader} alt="loader" style={{ width: 60, height: 60 }} />
         <span>{message}</span>
       </div>
@@ -43,6 +36,7 @@ const Generic = {
     if (image_url)
       return (
         <img
+          className="cursorPointer"
           src={image_url}
           alt={fullname}
           style={{
@@ -56,6 +50,7 @@ const Generic = {
     else
       return (
         <div
+          className="cursorPointer"
           style={{
             width: size,
             height: size,
@@ -95,11 +90,11 @@ const Generic = {
       countString += "99+";
     }
     return (
-      <div className="py-2 pe-3 d-flex flex-column justify-content-center align-items-center">
+      <div className=" noselect py-2 pe-3 d-flex flex-column justify-content-center align-items-center cursorPointer">
         <div style={{ position: "relative" }}>
           <img
             id={`Tooltip${index}`}
-            src={process.env.REACT_APP_API_URL + image_url}
+            src={image_url}
             alt={title}
             style={{
               objectFit: "cover",
@@ -144,7 +139,7 @@ const Generic = {
             color: "black",
           }}
         >
-          <h5 className="border-bottom ">{title}</h5>
+          <h5 className=" noselect border-bottom ">{title}</h5>
           <p>{description}</p>
         </Tooltip>
       </div>
@@ -152,40 +147,36 @@ const Generic = {
   },
   SearchBar: (props: any) => {
     const { apiCallback, searchFor } = props;
-    // const [search, updateSearch] = useState("");
     return (
-      <InputGroup className="col-12 border-bottom border-bottom-4 border-dark ps-2 pb-1 align-items-center">
+      <InputGroup className=" noselect col-12 border-bottom border-bottom-4 border-dark ps-2 pb-1 align-items-center cursorPointer">
         <img
-          className="noselect col-auto me-3"
+          className=" noselect     col-auto me-3"
           src={icons.search_black}
           height={20}
           width={20}
           alt="Search"
         />
         <DebounceInput
-          className="d-flex flex-grow-1 border-0"
+          className=" noselect d-flex flex-grow-1 border-0 "
           minLength={2}
           debounceTimeout={300}
           style={{ outline: "none" }}
           placeholder={`Search ${searchFor}...`}
           onChange={async (e: any) => {
-            // updateSearch(e.target.value);
             apiCallback(e.target.value);
           }}
         />
-
-        {/* <InputGroupText></InputGroupText> */}
       </InputGroup>
     );
   },
   ListError: ({ error }: any) => {
     return (
       <div
-        className="container"
+        className=" noselect container"
         style={{ height: 600, justifyContent: "center", alignItems: "center" }}
       >
-        <Row className="justify-content-center">
-          <p className="text-center">Error {error}</p>
+        <Row className=" noselect justify-content-center">
+          <p className=" noselect text-center">Error {error}</p>
         </Row>
       </div>
     );

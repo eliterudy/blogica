@@ -1,22 +1,14 @@
 /* package inports */
 
-import React, { useState, useRef, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Col, Button } from "reactstrap";
-import { Dispatch } from "@reduxjs/toolkit";
-import { useMediaQuery } from "react-responsive";
-import ReactQuill from "react-quill";
 
 /* component/screen inports */
 
 /* helper imports */
-import { cssHover } from "../../../components/generic/hoverProps";
-import { icons } from "../../../config/configuration";
+import { constants } from "../../../config/configuration";
 import Generic from "../../../components/generic/GenericComponents";
-import { toggler } from "../../../utils/generic";
-import actions from "../../../redux/actionReducers/index";
-import moment from "moment";
 import ArticleHead from "./ArticleHead";
 import ArticleBody from "./ArticleBody";
 import { ArticleDetails } from "../../../config/types";
@@ -49,24 +41,39 @@ const ArticleDetail = (props: any) => {
         updateArticleDetails(data);
         updateLoading(false);
       })
-      .catch((err) => {
-        updateError(err.message.toString());
-        if (err.response.status == "401") navigate("/main/home");
+      .catch(({ response, message }) => {
+        if (message && message === "Network Error") {
+          alert(constants.NO_INTERNET_ALERT_MESSAGE);
+        } else {
+          if (response && response.data && response.data.error) {
+            updateError(response.data.error);
+          } else {
+            alert(constants.OOPS_MESSAGE);
+          }
+        }
+        if (response.status == "401") navigate("/main/home");
         updateLoading(false);
       });
   }, []);
 
   return (
-    <div className="col-12 d-flex flex-column  flex-grow-1 ">
+    <div className=" noselect col-12 d-flex flex-column  flex-grow-1 ">
       {loading && <Generic.Loader message="Loading" />}
       {!loading && article && (
-        <div className="col-12">
-          <div className="col-12 d-flex flex-column align-items-center ">
-            <div className="col-12 col-md-8 p-4 px-md-0  ">
-              <ArticleHead article={article} url={window.location.href} />
+        <div className=" noselect col-12">
+          <div className=" noselect col-12 d-flex flex-column align-items-center ">
+            <div className=" noselect col-12 col-md-8 p-4 px-md-0  ">
+              <ArticleHead
+                article={article}
+                url={
+                  "https://blogica.netlify.app/#/main/article/id/636486d6d063a2f9828939a5"
+                }
+              />
               <ArticleBody
                 article={article}
-                url={window.location.href}
+                url={
+                  "https://blogica.netlify.app/#/main/article/id/636486d6d063a2f9828939a5"
+                }
                 updateArticle={(article: ArticleDetails) =>
                   updateArticleDetails({ ...article })
                 }
@@ -75,7 +82,7 @@ const ArticleDetail = (props: any) => {
           </div>
           {article.is_published && (
             <div
-              className="col-12 d-flex flex-column align-items-center "
+              className=" noselect col-12 d-flex flex-column align-items-center "
               style={{ backgroundColor: "#eee" }}
             >
               <AuthorInfo article={article} />

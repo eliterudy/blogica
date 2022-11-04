@@ -1,15 +1,11 @@
 /* package inports */
 
-import React, { useState, useRef, useEffect, LegacyRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
-  FormGroup,
   Input,
-  Label,
   Button,
-  Alert,
-  Tooltip,
   Modal,
   ModalBody,
   ModalFooter,
@@ -17,8 +13,6 @@ import {
   Spinner,
 } from "reactstrap";
 
-import { Dispatch } from "@reduxjs/toolkit";
-import { useMediaQuery } from "react-responsive";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.bubble.css";
 import "react-quill/dist/quill.snow.css";
@@ -29,9 +23,6 @@ import "react-quill/dist/quill.snow.css";
 import { cssHover } from "../../../components/generic/hoverProps";
 
 import { constants, icons } from "../../../config/configuration";
-import Generic from "../../../components/generic/GenericComponents";
-import { toggler } from "../../../utils/generic";
-import actions from "../../../redux/actionReducers/index";
 import apis from "../../../config/api";
 
 var toolbarOptions = [
@@ -153,9 +144,19 @@ const NewArticle = (props: any) => {
                   updateUpdateDraftLoading(false);
                   navigate(-1);
                 })
-                .catch(({ response }) => {
-                  const { data } = response || {};
-                  alert(data.error);
+                .catch(({ response, message }) => {
+                  if (message && message === "Network Error") {
+                    alert(
+                      "This action cannot be performed at the moment because of no internet connection. Please connect to an internet connection and try again"
+                    );
+                  } else {
+                    if (response && response.data && response.data.error) {
+                      alert(response.data.error);
+                    } else {
+                      alert(constants.OOPS_MESSAGE);
+                    }
+                  }
+
                   updateUpdateDraftLoading(false);
                 })
             : location.state &&
@@ -168,15 +169,26 @@ const NewArticle = (props: any) => {
                   updateUpdateDraftLoading(false);
                   navigate(-1);
                 })
-                .catch((error) => {
+                .catch(({ message, response }) => {
+                  if (message && message === "Network Error") {
+                    alert(
+                      "This action cannot be performed at the moment because of no internet connection. Please connect to an internet connection and try again"
+                    );
+                  } else {
+                    if (response && response.data && response.data.error) {
+                      alert(response.data.error);
+                    } else {
+                      alert(constants.OOPS_MESSAGE);
+                    }
+                  }
                   updateUpdateDraftLoading(false);
                 });
         }}
       >
         {updateDraftLoading ? (
-          <div className="d-flex flex-row align-items-center">
+          <div className=" noselect d-flex flex-row align-items-center">
             <Spinner color="light" size={"sm"} />{" "}
-            <span className="ms-2">
+            <span className=" noselect ms-2">
               <b>Uploading Draft</b>
             </span>{" "}
           </div>
@@ -208,7 +220,18 @@ const NewArticle = (props: any) => {
                   updatePublishDraftLoading(false);
                   navigate(-1);
                 })
-                .catch((error) => {
+                .catch(({ message, response }) => {
+                  if (message && message === "Network Error") {
+                    alert(
+                      "This action cannot be performed at the moment because of no internet connection. Please connect to an internet connection and try again"
+                    );
+                  } else {
+                    if (response && response.data && response.data.error) {
+                      alert(response.data.error);
+                    } else {
+                      alert(constants.OOPS_MESSAGE);
+                    }
+                  }
                   updatePublishDraftLoading(false);
                 })
             : location.state &&
@@ -221,15 +244,26 @@ const NewArticle = (props: any) => {
                   updateUpdateDraftLoading(false);
                   navigate(-1);
                 })
-                .catch((error) => {
+                .catch(({ response, message }) => {
+                  if (message && message === "Network Error") {
+                    alert(
+                      "This action cannot be performed at the moment because of no internet connection. Please connect to an internet connection and try again"
+                    );
+                  } else {
+                    if (response && response.data && response.data.error) {
+                      alert(response.data.error);
+                    } else {
+                      alert(constants.OOPS_MESSAGE);
+                    }
+                  }
                   updateUpdateDraftLoading(false);
                 });
         }}
       >
         {publishDraftLoading ? (
-          <div className="d-flex flex-row align-items-center">
+          <div className=" noselect d-flex flex-row align-items-center">
             <Spinner color="light" size={"sm"} />{" "}
-            <span className="ms-2">
+            <span className=" noselect ms-2">
               <b>Publishing Article</b>
             </span>{" "}
           </div>
@@ -267,25 +301,25 @@ const NewArticle = (props: any) => {
   }
 
   return (
-    <div className="col-12 d-flex flex-column flex-grow-1 p-4 container-fluid new-article">
-      <div className="col-12 d-flex justify-content-between align-items-center">
-        <div className=" flex-1 ">
+    <div className=" noselect col-12 d-flex flex-column flex-grow-1 p-4 container-fluid new-article">
+      <div className=" noselect col-12 d-flex justify-content-between align-items-center">
+        <div className=" noselect flex-1 ">
           <h1
-            className=" text-center text-md-center mb-0 "
+            className=" noselect text-center text-md-center mb-0 "
             style={{ fontSize: 36, color: "#666" }}
           >
             {titleMessage}
           </h1>
         </div>
         <Button
-          className="rounded-pill bg-danger "
+          className=" noselect rounded-pill bg-danger "
           onClick={() => toggleModal()}
         >
           <b>X</b>
         </Button>
       </div>
       <Input
-        className="my-4"
+        className=" noselect my-4"
         style={{
           backgroundColor: "#eee",
           border: "0px",
@@ -299,7 +333,7 @@ const NewArticle = (props: any) => {
         }
       />
       {isNew && (
-        <div className="mb-4 d-flex flex-column ">
+        <div className=" noselect mb-4 d-flex flex-column ">
           <FileUploader
             image={formValues.image}
             handleFile={(callback: any) => {
@@ -307,7 +341,7 @@ const NewArticle = (props: any) => {
             }}
           />
           <p
-            className="subMessages mb-0 "
+            className=" noselect subMessages mb-0 "
             style={{ fontSize: 14, marginLeft: 2 }}
           >
             {constants.UPLOAD_ARTICLE_POSTER_WARNING}
@@ -316,12 +350,11 @@ const NewArticle = (props: any) => {
       )}
 
       <ReactQuill
-        className="mb-4 col-12"
+        className=" noselect mb-4 col-12"
         style={{ flex: 1, backgroundColor: "#eee" }}
         theme="bubble"
         value={formValues.description}
         onChange={(e) => {
-          console.log(e);
           updateFormValues({ ...formValues, description: e });
         }}
         modules={{ toolbar: toolbarOptions }}
@@ -330,7 +363,7 @@ const NewArticle = (props: any) => {
 
       {/* HEre */}
       {isNew && (
-        <div className="col col-12 d-flex justify-content-center flex-wrap ">
+        <div className=" noselect col col-12 d-flex justify-content-center flex-wrap ">
           {renderDraftButton(isNew)}
           {renderPublishButton(isNew)}
           {renderDiscardButton()}
@@ -340,7 +373,7 @@ const NewArticle = (props: any) => {
       {!isNew &&
       location.state &&
       (location.state as PassedProps).is_published == false ? (
-        <div className="col col-12 d-flex justify-content-center flex-wrap ">
+        <div className=" noselect col col-12 d-flex justify-content-center flex-wrap ">
           {renderDraftButton(isNew)}
           {renderPublishButton(isNew)}
           {renderDiscardButton()}
@@ -350,50 +383,12 @@ const NewArticle = (props: any) => {
       {!isNew &&
       location.state &&
       (location.state as PassedProps).is_published == true ? (
-        <div className="col col-12 d-flex justify-content-center flex-wrap ">
+        <div className=" noselect col col-12 d-flex justify-content-center flex-wrap ">
           {renderPublishButton(isNew)}
           {renderDiscardButton()}
         </div>
       ) : null}
-      {/* <div className="d-flex flex-row justify-content-center align-items-center">
-        <Button
-          className={" bg-primary px-4 "}
-          style={{ borderRadius: 40, height: 40 }}
-          onClick={() => {}}
-        >
-          <span>Scroll to top</span>
-        </Button>
-      </div> */}
-      {/* {isNew && (
-        <Tooltip
-          placement={"top"}
-          isOpen={draftTooltipStatus}
-          target={"draftButton"}
-          toggle={toggleDraftTooltip}
-        >
-          Button disabled
-        </Tooltip>
-      )}
-      {isNew && (
-        <Tooltip
-          placement={"top"}
-          isOpen={publishTooltipStatus}
-          target={"publishButton"}
-          toggle={togglePublishTooltip}
-        >
-          Button disabled
-        </Tooltip>
-      )}
-      {!isNew && (
-        <Tooltip
-          placement={"top"}
-          isOpen={updateTooltipStatus}
-          target={"updateButton"}
-          toggle={toggleUpdateTooltip}
-        >
-          Button disabled
-        </Tooltip>
-      )} */}
+
       <Modal
         style={{
           paddingTop: 50,
@@ -401,7 +396,7 @@ const NewArticle = (props: any) => {
         isOpen={isModalOpen}
       >
         <ModalHeader
-          className="noselect"
+          className=" noselect    "
           charCode="Y"
           toggle={() => {
             navigate(-1);
@@ -410,13 +405,13 @@ const NewArticle = (props: any) => {
         >
           Discard Changes
         </ModalHeader>
-        <ModalBody className="noselect">
+        <ModalBody className=" noselect    ">
           You are about to lose all the changes you made to this{" "}
           {isNew ? "draft" : "article"}. Are you sure you want to proceed?
         </ModalBody>
         <ModalFooter>
           <Button
-            className="bg-danger"
+            className=" noselect bg-danger"
             onClick={() => {
               navigate(-1);
               toggleModal();
@@ -455,7 +450,7 @@ const FileUploader = (props: any) => {
     }
   };
   return (
-    <div className="d-flex flex-grow-1">
+    <div className=" noselect d-flex flex-grow-1">
       <Button
         className={`d-flex flex-grow-1 ${
           props.image ? "bg-success" : "bg-primary"

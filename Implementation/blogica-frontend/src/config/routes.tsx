@@ -31,6 +31,7 @@ import apis from "../config/api";
 import reduxApiCallers from "../redux/thunks/reduxApiCallers";
 import actions from "../redux/actionReducers/index";
 import Footer from "../components/Footer";
+import { constants } from "./configuration";
 const { loadUser, removeUser } = actions;
 
 const MainRouter = () => {
@@ -55,11 +56,19 @@ const MainRouter = () => {
               dispatch(loadUser(data));
               updateLoading(false);
             })
-            .catch((err) => {
-              alert("failed to load user. Please login");
-              dispatch(removeUser());
-              navigate("/auth/signin");
-              updateLoading(false);
+            .catch(({ response, message }) => {
+              if (message && message === "Network Error") {
+                alert(constants.NO_INTERNET_ALERT_MESSAGE);
+              } else {
+                if (response && response.data && response.data.error) {
+                  alert(response.data.error);
+                } else {
+                  alert("failed to load user. Please login");
+                }
+                dispatch(removeUser());
+                navigate("/");
+                updateLoading(false);
+              }
             })
         : updateLoading(false);
     }, []);
@@ -73,11 +82,11 @@ const MainRouter = () => {
     }, [location.pathname, user]);
     if (loading) {
       return (
-        <div className="vh-100 col-12 d-flex flex-column justify-content-between align-items-center"></div>
+        <div className=" noselect vh-100 col-12 d-flex flex-column justify-content-between align-items-center"></div>
       );
     } else {
       return (
-        <div className="vh-100 col-12 d-flex flex-column">
+        <div className=" noselect vh-100 col-12 d-flex flex-column">
           {location.pathname != "/main/article/new" &&
             location.pathname != "/main/article/edit" && <Header />}
           <Routes>
@@ -147,7 +156,7 @@ const MainRouter = () => {
   };
 
   return (
-    <div className="">
+    <div className=" noselect ">
       <Routes>
         <Route path="/" element={<Navigate to="/main" replace />} />
         <Route path={"main/*"} element={<MainRoutes />} />

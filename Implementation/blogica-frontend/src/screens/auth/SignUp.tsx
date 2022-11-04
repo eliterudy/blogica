@@ -1,7 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import {
-  Navbar,
-  InputGroup,
   Input,
   Label,
   Form,
@@ -35,7 +33,6 @@ interface SignupFormValues {
 const SignUpComponent = () => {
   const isTabletOrMobile = useMediaQuery({ query: "(max-width: 767px)" });
 
-  const dispatch: Dispatch<any> = useDispatch();
   const navigate = useNavigate();
   const signUpButtonStyle = cssHover(
     {
@@ -53,9 +50,6 @@ const SignUpComponent = () => {
       borderColor: "#2b59a1",
     }
   );
-  const state = useSelector((state: any) => {
-    return { userState: state.userActionReducer };
-  });
 
   const [imagePreview, updateImagePreview] = useState<undefined | string>(
     undefined
@@ -122,18 +116,18 @@ const SignUpComponent = () => {
           } else {
             if (data.status === "success") {
               updateUsernameAvailableStatus(true);
-
               updateUsernameAvailableMessage(data.message);
             }
           }
         })
-        .catch((err) => {
-          if (err && err.message && err.message === "Network Error") {
-            alert(
-              "This action cannot be performed at the moment because of no internet connection. Please connect to an internet connection and try again"
-            );
+        .catch(({ response, message }) => {
+          if (message && message === "Network Error") {
+            alert(constants.NO_INTERNET_ALERT_MESSAGE);
           } else {
-            updateUsernameAvailableMessage("data.message");
+            if (response && response.data && response.data.error) {
+              updateUsernameAvailableStatus(false);
+              updateUsernameAvailableMessage(response.data.error);
+            }
           }
         });
     }
@@ -145,28 +139,28 @@ const SignUpComponent = () => {
     confirmPasswordValidator,
   } = FormValidators;
   return (
-    <div className="p-3">
-      <div className="noselect col-12 d-flex flex-row justify-content-center my-5  ">
+    <div className=" noselect p-3">
+      <div className=" noselect     col-12 d-flex flex-row justify-content-center my-5  ">
         <div
-          className="noselect col-12 col-sm-10 col-md-10 col-lg-8 col-xl-8 m-2 row"
+          className=" noselect     col-12 col-sm-10 col-md-10 col-lg-8 col-xl-8 m-2 row"
           style={isTabletOrMobile ? {} : { border: "1px solid #eee" }}
         >
-          <div className="col-12 col-md-7">
-            <div className="col-12  p-2 ">
-              <div className=" mx-5 mt-3 d-flex flex-column align-items-center">
+          <div className=" noselect col-12 col-md-7">
+            <div className=" noselect col-12  p-2 ">
+              <div className=" noselect mx-5 mt-3 d-flex flex-column align-items-center">
                 <img
-                  className="noselect m-auto"
+                  className=" noselect     m-auto"
                   src={icons.app_logo}
                   width={100}
                   alt={constants.APP_NAME}
                 />
 
-                <span className="noselect col-auto  mb-0 mt-2 align-middle h3 ">
+                <span className=" noselect     col-auto  mb-0 mt-2 align-middle h3 ">
                   {`Sign Up to ${constants.APP_NAME}`}
                 </span>
               </div>
               {isTabletOrMobile && (
-                <div className="d-flex flex-row justify-content-center mt-4">
+                <div className=" noselect d-flex flex-row justify-content-center mt-4">
                   {imagePreview ? (
                     <Generic.Avatar
                       image_url={imagePreview}
@@ -177,21 +171,21 @@ const SignUpComponent = () => {
                     />
                   ) : (
                     <div
-                      className="bg-secondary d-flex flex-row justify-content-center align-items-center"
+                      className=" noselect bg-secondary d-flex flex-row justify-content-center align-items-center"
                       style={{ width: 140, height: 140, borderRadius: 140 }}
                     >
                       <i
-                        className=" img-fluid fa fa-user fa-lg "
+                        className=" noselect img-fluid fa fa-user fa-lg "
                         style={{ fontSize: 120, color: "white" }}
                       />
                     </div>
                   )}
                 </div>
               )}
-              <div className="col-12  mt-3  p-3 ">
+              <div className=" noselect col-12  mt-3  p-3 ">
                 <Form>
                   {/* Username */}
-                  <FormGroup className="mb-4">
+                  <FormGroup className=" noselect mb-4">
                     <Label for="username">
                       Username<span style={{ color: "red" }}>*</span>
                     </Label>
@@ -243,7 +237,7 @@ const SignUpComponent = () => {
                   </FormGroup>
 
                   {/* Firstname */}
-                  <FormGroup className="mb-4">
+                  <FormGroup className=" noselect mb-4">
                     <Label for="firstname">
                       First name<span style={{ color: "red" }}>*</span>
                     </Label>
@@ -261,13 +255,13 @@ const SignUpComponent = () => {
                         });
                         updateFormErrors({
                           ...formErrors,
-                          firstname: textValidator(target.value, 4, 20)[0],
+                          firstname: textValidator(target.value, 2, 20)[0],
                         });
                       }}
                       onBlur={({ target }) => {
                         updateFormErrors({
                           ...formErrors,
-                          firstname: textValidator(target.value, 4, 20)[0],
+                          firstname: textValidator(target.value, 2, 20)[0],
                         });
                       }}
                     />
@@ -275,7 +269,7 @@ const SignUpComponent = () => {
                   </FormGroup>
 
                   {/* Lastname */}
-                  <FormGroup className="mb-4">
+                  <FormGroup className=" noselect mb-4">
                     <Label for="lastname">
                       Last name<span style={{ color: "red" }}>*</span>
                     </Label>
@@ -293,13 +287,13 @@ const SignUpComponent = () => {
                         });
                         updateFormErrors({
                           ...formErrors,
-                          lastname: textValidator(target.value, 4, 20)[0],
+                          lastname: textValidator(target.value, 2, 20)[0],
                         });
                       }}
                       onBlur={({ target }) => {
                         updateFormErrors({
                           ...formErrors,
-                          lastname: textValidator(target.value, 4, 20)[0],
+                          lastname: textValidator(target.value, 2, 20)[0],
                         });
                       }}
                     />
@@ -307,7 +301,7 @@ const SignUpComponent = () => {
                   </FormGroup>
 
                   {/* Profile Picture */}
-                  <FormGroup className="mb-4">
+                  <FormGroup className=" noselect mb-4">
                     <Label for="profile-picture">
                       Profile picture
                       <span style={{ color: "red" }}>*</span>
@@ -346,7 +340,7 @@ const SignUpComponent = () => {
                   </FormGroup>
 
                   {/* Bio */}
-                  <FormGroup className="mb-4">
+                  <FormGroup className=" noselect mb-4">
                     <Label for="bio">
                       About me<span style={{ color: "red" }}>*</span>
                     </Label>
@@ -379,7 +373,7 @@ const SignUpComponent = () => {
                   </FormGroup>
 
                   {/* Email */}
-                  <FormGroup className="mb-4">
+                  <FormGroup className=" noselect mb-4">
                     <Label for="email">
                       Email<span style={{ color: "red" }}>*</span>
                     </Label>
@@ -412,7 +406,7 @@ const SignUpComponent = () => {
                   </FormGroup>
 
                   {/* Password */}
-                  <FormGroup className="mb-4">
+                  <FormGroup className=" noselect mb-4">
                     <Label for="password">
                       Password<span style={{ color: "red" }}>*</span>
                     </Label>
@@ -444,7 +438,7 @@ const SignUpComponent = () => {
                   </FormGroup>
 
                   {/* Confirm Password */}
-                  <FormGroup className="mb-4">
+                  <FormGroup className=" noselect mb-4">
                     <Label for="confirmpassword">
                       Confirm Password<span style={{ color: "red" }}>*</span>
                     </Label>
@@ -509,8 +503,8 @@ const SignUpComponent = () => {
 
                       if (
                         textValidator(username, 5, 20)[1] ||
-                        textValidator(firstname, 4, 20)[1] ||
-                        textValidator(lastname, 4, 20)[1] ||
+                        textValidator(firstname, 2, 20)[1] ||
+                        textValidator(lastname, 2, 20)[1] ||
                         image == null ||
                         textValidator(bio, 10, 1000)[0] ||
                         emailValidator(email)[1] ||
@@ -525,8 +519,8 @@ const SignUpComponent = () => {
                         updateFormErrors({
                           ...formErrors,
                           username: textValidator(username, 5, 20)[0],
-                          firstname: textValidator(firstname, 4, 20)[0],
-                          lastname: textValidator(lastname, 4, 20)[0],
+                          firstname: textValidator(firstname, 2, 20)[0],
+                          lastname: textValidator(lastname, 2, 20)[0],
                           email: emailValidator(email)[0],
                           image: image ? "" : "Please upload profile picture",
                           password: passwordValidator(password, 6, 20)[0],
@@ -561,9 +555,7 @@ const SignUpComponent = () => {
                               err.message &&
                               err.message === "Network Error"
                             ) {
-                              alert(
-                                "This action cannot be performed at the moment because of no internet connection. Please connect to an internet connection and try again"
-                              );
+                              alert(constants.NO_INTERNET_ALERT_MESSAGE);
                             } else {
                             }
                             updateLoading(false);
@@ -576,8 +568,8 @@ const SignUpComponent = () => {
                   </Button>
                 </Form>
               </div>
-              <div className="col-12  p-3 ">
-                <p className="text-center">
+              <div className=" noselect col-12  p-3 ">
+                <p className=" noselect text-center">
                   <span style={{ fontSize: 14 }}>
                     Already have an account.{" "}
                     <Link to="/auth/signin">Sign In</Link>
@@ -587,8 +579,8 @@ const SignUpComponent = () => {
             </div>
           </div>
           {!isTabletOrMobile && (
-            <div className="col-12 col-sm-5 d-flex justify-content-center align-items-center">
-              <div className="col-12 d-flex flex-column align-items-center">
+            <div className=" noselect col-12 col-sm-5 d-flex justify-content-center align-items-center">
+              <div className=" noselect col-12 d-flex flex-column align-items-center">
                 {imagePreview ? (
                   <Generic.Avatar
                     image_url={imagePreview}
@@ -597,11 +589,11 @@ const SignUpComponent = () => {
                   />
                 ) : (
                   <div
-                    className="bg-secondary d-flex flex-row justify-content-center align-items-center"
+                    className=" noselect bg-secondary d-flex flex-row justify-content-center align-items-center"
                     style={{ width: 200, height: 200, borderRadius: 200 }}
                   >
                     <i
-                      className=" img-fluid fa fa-user fa-lg "
+                      className=" noselect img-fluid fa fa-user fa-lg "
                       style={{ fontSize: 140, color: "white" }}
                     />
                   </div>
