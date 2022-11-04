@@ -43,7 +43,7 @@ userRouter.get(
         },
       ],
       admin: false,
-      "published.articles.0": { $exists: true },
+      "articles.published.0": { $exists: true },
     };
 
     User.find(filters)
