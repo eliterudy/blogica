@@ -65,16 +65,23 @@ const ArticleDetail = (props: any) => {
   }, []);
 
   return (
-    <div className="col-12 d-flex flex-column  flex-grow-1 ">
+    <div className=" col-12 d-flex flex-column  flex-grow-1 ">
       {loading && <Generic.Loader message="Loading" />}
       {!loading && article && (
-        <div className="col-12">
-          <div className="col-12 d-flex flex-column align-items-center ">
-            <div className="col-12 col-md-8 p-4 px-md-0  ">
-              <ArticleHead article={article} url={window.location.href} />
+        <div className=" col-12">
+          <div className=" col-12 d-flex flex-column align-items-center ">
+            <div className=" col-12 col-md-8 p-4 px-md-0  ">
+              <ArticleHead
+                article={article}
+                url={
+                  "https://blogica.netlify.app/#/main/article/id/636486d6d063a2f9828939a5"
+                }
+              />
               <ArticleBody
                 article={article}
-                url={window.location.href}
+                url={
+                  "https://blogica.netlify.app/#/main/article/id/636486d6d063a2f9828939a5"
+                }
                 updateArticle={(article: ArticleDetails) =>
                   updateArticleDetails({ ...article })
                 }
@@ -83,7 +90,7 @@ const ArticleDetail = (props: any) => {
           </div>
           {article.is_published && (
             <div
-              className="col-12 d-flex flex-column align-items-center "
+              className=" col-12 d-flex flex-column align-items-center "
               style={{ backgroundColor: "#eee" }}
             >
               <AuthorInfo article={article} />

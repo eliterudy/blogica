@@ -35,18 +35,17 @@ const ContributorListCard = (cardProps: ContributorCardProps) => {
       style={{ textDecoration: "none", color: "black" }}
     >
       <div {...cardHoverStlye}>
-        <Card className="noselect  col-12 col-sm-12 ">
-          <CardBody className="noselect p-0">
+        <Card className="      col-12 col-sm-12 ">
+          <CardBody className="     p-0">
             {/* eslint-disable-next-line jsx-a11y/img-redundant-alt */}
             <div
-              className="noselect w-100 img-fluid center"
+              className="     w-100 img-fluid center"
               style={{
                 borderTopRightRadius: 4,
                 borderTopLeftRadius: 4,
                 aspectRatio: "1/1",
                 objectFit: "cover",
-                backgroundImage: `url(${process.env.REACT_APP_API_URL +
-                  image_url})`,
+                backgroundImage: `url(${image_url})`,
                 backgroundRepeat: "no-repeat",
                 backgroundSize: "cover",
                 backgroundPosition: "center",
@@ -58,18 +57,18 @@ const ContributorListCard = (cardProps: ContributorCardProps) => {
               }}
             >
               {/* <div
-                className="noselect px-2 mb-1 me-1 py-1"
+                className="     px-2 mb-1 me-1 py-1"
                 style={{ backgroundColor: "antiquewhite", borderRadius: 50 }}
               >
                 {} min
               </div> */}
             </div>
-            <div className="noselect p-4 pb-2">
+            <div className="     p-4 pb-2">
               <CardTitle tag="h5" style={{ color: "black" }}>
                 {`${firstname} ${lastname}`}
               </CardTitle>
               <CardSubtitle
-                className="noselect mb-2 text-muted"
+                className="     mb-2 text-muted"
                 tag="h6"
                 style={{
                   overflow: "hidden",

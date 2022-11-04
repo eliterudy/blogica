@@ -21,7 +21,7 @@ const NewArticleCard = (cardProps: any) => {
   return (
     <Link
       to={`/main/article/new`}
-      className=" d-flex flex-column align-items-center  mt-3 p-4"
+      className="      d-flex flex-column align-items-center  mt-3 p-4"
       style={{
         textDecoration: "none",
         color: "black",
@@ -29,25 +29,25 @@ const NewArticleCard = (cardProps: any) => {
         borderRadius: 5,
       }}
     >
-      <p className="subMessages " style={{ fontSize: 14 }}>
+      <p className=" subMessages " style={{ fontSize: 14 }}>
         {constants.NEW_ARTICLE_NOTES}
       </p>
 
-      <div className="col-12 d-flex flex-row">
-        <div className="me-2">
+      <div className=" col-12 d-flex flex-row">
+        <div className=" me-2">
           {user && (
             <Generic.Avatar
-              image_url={process.env.REACT_APP_API_URL + user.image_url}
+              image_url={user.image_url}
               fullname={`${user.firstname} ${user.lastname}`}
               size={40}
             />
           )}
         </div>
-        <div style={{ flex: 1 }} className="px-2">
+        <div style={{ flex: 1 }} className=" px-2">
           <Input
             type="text"
             name="new"
-            className="py-2 bg-white"
+            className=" py-2 bg-white"
             value={"What is on your mind? "}
             disabled
           />

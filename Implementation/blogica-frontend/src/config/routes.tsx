@@ -66,7 +66,7 @@ const MainRouter = () => {
                   alert("failed to load user. Please login");
                 }
                 dispatch(removeUser());
-                navigate("/auth/signin");
+                navigate("/");
                 updateLoading(false);
               }
             })
@@ -82,11 +82,11 @@ const MainRouter = () => {
     }, [location.pathname, user]);
     if (loading) {
       return (
-        <div className="vh-100 col-12 d-flex flex-column justify-content-between align-items-center"></div>
+        <div className=" vh-100 col-12 d-flex flex-column justify-content-between align-items-center"></div>
       );
     } else {
       return (
-        <div className="vh-100 col-12 d-flex flex-column">
+        <div className=" vh-100 col-12 d-flex flex-column">
           {location.pathname != "/main/article/new" &&
             location.pathname != "/main/article/edit" && <Header />}
           <Routes>
@@ -156,7 +156,7 @@ const MainRouter = () => {
   };
 
   return (
-    <div className="">
+    <div className=" ">
       <Routes>
         <Route path="/" element={<Navigate to="/main" replace />} />
         <Route path={"main/*"} element={<MainRoutes />} />

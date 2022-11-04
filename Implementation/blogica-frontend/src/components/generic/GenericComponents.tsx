@@ -21,7 +21,7 @@ const avatarColor = randomColorGenerator();
 const Generic = {
   Loader: ({ message }: { message: String }) => {
     return (
-      <div className="d-flex flex-grow-1 flex-column justify-content-center align-items-center">
+      <div className=" d-flex flex-grow-1 flex-column justify-content-center align-items-center">
         <img src={gifs.loader} alt="loader" style={{ width: 60, height: 60 }} />
         <span>{message}</span>
       </div>
@@ -95,11 +95,11 @@ const Generic = {
       countString += "99+";
     }
     return (
-      <div className="py-2 pe-3 d-flex flex-column justify-content-center align-items-center">
+      <div className=" py-2 pe-3 d-flex flex-column justify-content-center align-items-center">
         <div style={{ position: "relative" }}>
           <img
             id={`Tooltip${index}`}
-            src={process.env.REACT_APP_API_URL + image_url}
+            src={image_url}
             alt={title}
             style={{
               objectFit: "cover",
@@ -144,7 +144,7 @@ const Generic = {
             color: "black",
           }}
         >
-          <h5 className="border-bottom ">{title}</h5>
+          <h5 className=" border-bottom ">{title}</h5>
           <p>{description}</p>
         </Tooltip>
       </div>
@@ -154,16 +154,16 @@ const Generic = {
     const { apiCallback, searchFor } = props;
     // const [search, updateSearch] = useState("");
     return (
-      <InputGroup className="col-12 border-bottom border-bottom-4 border-dark ps-2 pb-1 align-items-center">
+      <InputGroup className=" col-12 border-bottom border-bottom-4 border-dark ps-2 pb-1 align-items-center">
         <img
-          className="noselect col-auto me-3"
+          className="     col-auto me-3"
           src={icons.search_black}
           height={20}
           width={20}
           alt="Search"
         />
         <DebounceInput
-          className="d-flex flex-grow-1 border-0"
+          className=" d-flex flex-grow-1 border-0"
           minLength={2}
           debounceTimeout={300}
           style={{ outline: "none" }}
@@ -181,11 +181,11 @@ const Generic = {
   ListError: ({ error }: any) => {
     return (
       <div
-        className="container"
+        className=" container"
         style={{ height: 600, justifyContent: "center", alignItems: "center" }}
       >
-        <Row className="justify-content-center">
-          <p className="text-center">Error {error}</p>
+        <Row className=" justify-content-center">
+          <p className=" text-center">Error {error}</p>
         </Row>
       </div>
     );

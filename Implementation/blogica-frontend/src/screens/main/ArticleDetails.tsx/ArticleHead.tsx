@@ -33,9 +33,9 @@ const ArticleHead = ({ article, url }: any) => {
   if (article.is_published) {
     const [isLinkToastOpen, updateLinkToastOpen] = useState(false);
     return (
-      <div className="col-12 row mx-0  my-4 p-0 ">
-        <div className="col-12 col-md-6 px-0 d-flex flex-row align-items-center justify-content-between">
-          <div className="flex-1 d-flex flex-row align-items-center">
+      <div className=" col-12 row mx-0  my-4 p-0 ">
+        <div className=" col-12 col-md-6 px-0 d-flex flex-row align-items-center justify-content-between">
+          <div className=" flex-1 d-flex flex-row align-items-center">
             <div
               onClick={(e) => {
                 e.preventDefault();
@@ -44,22 +44,20 @@ const ArticleHead = ({ article, url }: any) => {
               }}
             >
               <Generic.Avatar
-                image_url={
-                  process.env.REACT_APP_API_URL + article.author.image_url
-                }
+                image_url={article.author.image_url}
                 fullname={`${article.author.firstname} ${article.author.lastname}`}
                 size={60}
               />
             </div>
 
-            <div className="d-flex flex-column">
+            <div className=" d-flex flex-column">
               <span
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
                   navigate(`/main/author/id/${article.author._id}`);
                 }}
-                className=" ms-2 text-primary"
+                className="      ms-2 text-primary"
                 style={{ fontWeight: "bold", fontSize: 16 }}
               >
                 {`${article.author.firstname} ${article.author.lastname}`}
@@ -70,7 +68,7 @@ const ArticleHead = ({ article, url }: any) => {
                   e.stopPropagation();
                   navigate(`/main/author/id/${article.author._id}`);
                 }}
-                className=" ms-2 "
+                className="      ms-2 "
                 style={{ fontSize: 14 }}
               >
                 {`
@@ -80,33 +78,33 @@ const ArticleHead = ({ article, url }: any) => {
             </div>
           </div>
         </div>
-        <div className=" faCustomIcons col-12 px-0 pt-2 pt-md-0 col-md-6 d-flex flex-row align-items-center justify-content-start justify-content-md-end">
-          <span className="text-secondary">Share with: </span>{" "}
+        <div className="      faCustomIcons col-12 px-0 pt-2 pt-md-0 col-md-6 d-flex flex-row align-items-center justify-content-start justify-content-md-end">
+          <span className=" text-secondary">Share with: </span>{" "}
           <EmailShareButton
-            children={<i className="fa fa-envelope fa-lg mx-2" />}
+            children={<i className=" fa fa-envelope fa-lg mx-2" />}
             url={url}
-            subject={"Check this amazing article published on Blogica"}
+            subject={`Check this amazing article published on ${constants.APP_NAME}`}
             body={`I read this amazing article on ${constants.APP_NAME} about ${article.title}. 
-          I think this article will interest you, so give it a read!`}
+          I think this article will interest you, so give it a read! `}
           />
           <FacebookShareButton
-            children={<i className="fa fa-facebook fa-lg mx-2" />}
+            children={<i className=" fa fa-facebook fa-lg mx-2" />}
             url={url}
           />
           <TwitterShareButton
-            children={<i className="fa fa-twitter fa-lg mx-2" />}
+            children={<i className=" fa fa-twitter fa-lg mx-2" />}
             url={url}
             title={article.title}
           />
           <LinkedinShareButton
-            children={<i className="fa fa-linkedin-square fa-lg mx-2 " />}
+            children={<i className=" fa fa-linkedin-square fa-lg mx-2 " />}
             url={url}
             title={article.title}
-            summary={`I read this amazing article on Blogica about ${article.title}. 
+            summary={`I read this amazing article on ${constants.APP_NAME} about ${article.title}. 
           I think this article will interest you, so give it a read!`}
           />
           <div style={{ position: "relative" }}>
-            <div className="position-absolute" style={{ top: 30, right: 0 }}>
+            <div className=" position-absolute" style={{ top: 30, right: 0 }}>
               <Toast
                 style={{ backgroundColor: "black" }}
                 isOpen={isLinkToastOpen}
@@ -115,7 +113,7 @@ const ArticleHead = ({ article, url }: any) => {
               </Toast>
             </div>
             <i
-              className=" fa fa-link fa-lg mx-2"
+              className="      fa fa-link fa-lg mx-2"
               onClick={() => {
                 navigator.clipboard.writeText(url);
                 updateLinkToastOpen(true);
@@ -130,9 +128,9 @@ const ArticleHead = ({ article, url }: any) => {
     );
   } else {
     return (
-      <div className="d-flex flex-wrap mb-2 align-items-center justify-content-start ">
+      <div className=" d-flex flex-wrap mb-2 align-items-center justify-content-start ">
         <div
-          className="d-flex flex-wrap"
+          className=" d-flex flex-wrap"
           style={{
             padding: 5,
             paddingLeft: 20,

@@ -17,9 +17,9 @@ const WideArticleCard = (cardProps: ArticleCardProps) => {
       state={{ articleId: article._id }}
       style={{ textDecoration: "none", color: "black" }}
     >
-      <div className=" d-flex mb-2">
-        <div className="col-8 pe-4">
-          <div className="d-flex flex-row align-items-center">
+      <div className="      d-flex mb-2">
+        <div className=" col-8 pe-4">
+          <div className=" d-flex flex-row align-items-center">
             <div
               onClick={(e) => {
                 e.preventDefault();
@@ -28,9 +28,7 @@ const WideArticleCard = (cardProps: ArticleCardProps) => {
               }}
             >
               <Generic.Avatar
-                image_url={
-                  process.env.REACT_APP_API_URL + article.author.image_url
-                }
+                image_url={article.author.image_url}
                 fullname="Gavin D'mello"
                 size={25}
               />
@@ -41,14 +39,14 @@ const WideArticleCard = (cardProps: ArticleCardProps) => {
                 e.stopPropagation();
                 navigate(`/main/author/id/${article.author._id}`);
               }}
-              className=" ms-2 text-primary"
+              className="      ms-2 text-primary"
               style={{ fontWeight: "bold", fontSize: 14 }}
             >
               {`${article.author.firstname} ${article.author.lastname}`}
             </span>
           </div>
           <h6
-            className=" mt-2 col-12 "
+            className="      mt-2 col-12 "
             style={{
               fontWeight: "bold",
               overflow: "hidden",
@@ -61,19 +59,18 @@ const WideArticleCard = (cardProps: ArticleCardProps) => {
             {article.title}
           </h6>
           <span
-            className=" mb-3  col-12"
+            className="      mb-3  col-12"
             style={{ fontSize: 14, color: "#555" }}
           >
             {moment(article.createdAt).fromNow()}
           </span>
         </div>
-        <div className="col-4 row align-items-center justify-content-center">
+        <div className=" col-4 row align-items-center justify-content-center">
           <div
             onClick={() => {}}
-            className="img-fluid"
+            className=" img-fluid"
             style={{
-              backgroundImage: `url(${process.env.REACT_APP_API_URL +
-                article.image_url})`,
+              backgroundImage: `url(${article.image_url})`,
               aspectRatio: "1/1",
               backgroundRepeat: "no-repeat",
               backgroundSize: "cover",

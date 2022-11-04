@@ -104,10 +104,10 @@ const Contributors = (props: any) => {
 
   // main render
   return (
-    <div className="col-12 d-flex flex-column  flex-grow-1">
+    <div className=" col-12 d-flex flex-column  flex-grow-1">
       {/* Searchbar */}
-      <div className="d-flex col-12 flex-row justify-content-center container mt-4 px-0 ">
-        <div className="col-12 col-md-8  p-4 " style={{}}>
+      <div className=" d-flex col-12 flex-row justify-content-center container mt-4 px-0 ">
+        <div className=" col-12 col-md-8  p-4 " style={{}}>
           <Generic.SearchBar
             searchFor="contributors"
             apiCallback={(val: any) => searchUpdateCallback(val)}
@@ -118,11 +118,11 @@ const Contributors = (props: any) => {
 
       {loading && <Generic.Loader message="Loading" />}
       {!loading && contributors && (
-        <div className="noselect  col-12   pt-1">
-          <div className="container p-0">
-            <div className="d-flex flex-column align-items-end pt-3 px-4">
+        <div className="      col-12   pt-1">
+          <div className=" container p-0">
+            <div className=" d-flex flex-column align-items-end pt-3 px-4">
               <em
-                className="px-2 pt-1"
+                className=" px-2 pt-1"
                 style={{
                   border: "0.5px solid #ddd",
                   backgroundColor: "#eee",
@@ -133,7 +133,7 @@ const Contributors = (props: any) => {
               </em>
             </div>
             <InfiniteScroll
-              className="pt-4 px-2"
+              className=" pt-4 px-2"
               dataLength={contributors ? contributors.length : 0} //This is important field to render the next data
               next={() => {
                 getContributorsFromApi();
@@ -144,9 +144,9 @@ const Contributors = (props: any) => {
                 flexDirection: "row",
                 flexWrap: "wrap",
               }}
-              loader={<h4 className="col-12 text-center">Fetching more...</h4>}
+              loader={<h4 className=" col-12 text-center">Fetching more...</h4>}
               endMessage={
-                <p className="col-12 mt-4" style={{ textAlign: "center" }}>
+                <p className=" col-12 mt-4" style={{ textAlign: "center" }}>
                   <em>
                     {contributors.length === 0
                       ? search.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "").length >

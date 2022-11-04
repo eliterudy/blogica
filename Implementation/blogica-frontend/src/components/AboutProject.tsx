@@ -32,22 +32,22 @@ import { Link, useNavigate } from "react-router-dom";
 const AboutProjectCard = () => {
   return (
     <div
-      className="p-4  "
+      className=" p-4  "
       style={{ backgroundColor: "#ECDBBA", borderRadius: 5 }}
     >
-      <div className="w-100 d-flex mb-4 flex-row align-items-center">
-        <i className="mr-3 fa  fa-anchor fa-lg me-2" />
+      <div className=" w-100 d-flex mb-4 flex-row align-items-center">
+        <i className=" mr-3 fa  fa-anchor fa-lg me-2" />
         <div>
-          <h3 className="m-0" style={{ fontWeight: "bold" }}>
-            About Blogica
+          <h3 className=" m-0" style={{ fontWeight: "bold" }}>
+            About {constants.APP_NAME}
           </h3>
         </div>
       </div>
-      <div className="w-100 pb-6">
-        <p className="">
-          Blogica is a mobile-responsive web application, that acts as a
-          platform where you can interact with and read articles published by
-          article writers. Explore thousands of articles based on Culture and
+      <div className=" w-100 pb-6">
+        <p className=" ">
+          {constants.APP_NAME} is a mobile-responsive web application, that acts
+          as a platform where you can interact with and read articles published
+          by article writers. Explore thousands of articles based on Culture and
           Civilization, Defence and Security, Science and Technology, Stories,
           Essays and other similar categories today.
           <br />
@@ -61,7 +61,7 @@ const AboutProjectCard = () => {
       </div>
 
       <a href={"https://github.com/GavinDmello97/blogica"}>
-        <div className=" btn mt-2  py-2 px-3 bg-black text-white rounded">
+        <div className="      btn mt-2  py-2 px-3 bg-black text-white rounded">
           ✨ Star on GitHub
         </div>
       </a>
