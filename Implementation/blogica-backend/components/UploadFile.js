@@ -29,7 +29,6 @@ const uploadPhoto = async (file, folderName, width, height) => {
       height: height,
     })
     .then(async (response) => {
-      // console.log("imageURL", { success: true, url: response.url });
       var url = await imagekit.url({
         src: response.url,
         transformation: [
@@ -43,7 +42,6 @@ const uploadPhoto = async (file, folderName, width, height) => {
       return { success: true, url };
     })
     .catch((error) => {
-      console.log(error);
       return { success: false, url: "" };
     });
   return imageKitResponse;
