@@ -56,6 +56,7 @@ const constants: any = {
   NO_ARTICLES_UNDER_TAB:
     "There are no articles under this category/tab at the moment",
   OOPS_MESSAGE: "Oops! something went wrong",
+  REACT_APP_APP_URL: process.env.REACT_APP_APP_URL || "www.google.com",
 };
 
 const svgs: any = {};

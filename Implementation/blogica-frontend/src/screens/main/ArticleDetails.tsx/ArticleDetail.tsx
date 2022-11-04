@@ -65,12 +65,12 @@ const ArticleDetail = (props: any) => {
   }, []);
 
   return (
-    <div className=" col-12 d-flex flex-column  flex-grow-1 ">
+    <div className=" noselect col-12 d-flex flex-column  flex-grow-1 ">
       {loading && <Generic.Loader message="Loading" />}
       {!loading && article && (
-        <div className=" col-12">
-          <div className=" col-12 d-flex flex-column align-items-center ">
-            <div className=" col-12 col-md-8 p-4 px-md-0  ">
+        <div className=" noselect col-12">
+          <div className=" noselect col-12 d-flex flex-column align-items-center ">
+            <div className=" noselect col-12 col-md-8 p-4 px-md-0  ">
               <ArticleHead
                 article={article}
                 url={
@@ -90,7 +90,7 @@ const ArticleDetail = (props: any) => {
           </div>
           {article.is_published && (
             <div
-              className=" col-12 d-flex flex-column align-items-center "
+              className=" noselect col-12 d-flex flex-column align-items-center "
               style={{ backgroundColor: "#eee" }}
             >
               <AuthorInfo article={article} />

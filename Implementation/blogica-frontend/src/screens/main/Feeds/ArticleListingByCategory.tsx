@@ -81,7 +81,7 @@ const ArticleListingByCategory = ({
     if (articles.length > 0) {
       response = (
         <div>
-          <div className="      col-12  d-flex flex-row flex-wrap">
+          <div className=" noselect      col-12  d-flex flex-row flex-wrap">
             {articles.map((article: Article, index: number) => (
               <div
                 key={index}
@@ -104,7 +104,7 @@ const ArticleListingByCategory = ({
             ))}
           </div>
 
-          <p className=" col-12 mt-4" style={{ textAlign: "center" }}>
+          <p className=" noselect col-12 mt-4" style={{ textAlign: "center" }}>
             <em>Yay! You have seen it all</em>
           </p>
         </div>
@@ -112,10 +112,10 @@ const ArticleListingByCategory = ({
     } else {
       response = (
         <div
-          className="      col-12  d-flex flex-row flex-wrap pt-5 pe-3"
+          className=" noselect      col-12  d-flex flex-row flex-wrap pt-5 pe-3"
           style={{ marginBottom: isTabletOrMobile ? 500 : 600 }}
         >
-          <p className=" col-12 text-center">
+          <p className=" noselect col-12 text-center">
             <em>{constants.NO_ARTICLES_UNDER_TAB}</em>
           </p>
         </div>
@@ -128,9 +128,9 @@ const ArticleListingByCategory = ({
     <div
       className={`d-flex flex-column flex-grow-1 justify-content-center align-items-center`}
     >
-      <span className=" subMessages">{tabMessage}</span>
+      <span className=" noselect subMessages">{tabMessage}</span>
       {articles && (
-        <div className=" col-12" style={{}}>
+        <div className=" noselect col-12" style={{}}>
           {loadArticles(articles, showAuthorDetails)}
         </div>
       )}

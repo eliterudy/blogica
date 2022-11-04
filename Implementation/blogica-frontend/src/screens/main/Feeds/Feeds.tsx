@@ -136,15 +136,18 @@ const Feeds = (props: any) => {
   }, []);
   return (
     <div>
-      {isLoading && <div className=" vh-100 vw-100"></div>}
+      {isLoading && <div className=" noselect vh-100 vw-100"></div>}
       {!isLoading && userData ? (
-        <div className=" col-12 d-flex flex-column  flex-grow-1">
-          <div className=" col-12 ">
-            <div className="     row col-12 m-0">
+        <div className=" noselect col-12 d-flex flex-column  flex-grow-1">
+          <div className=" noselect col-12 ">
+            <div className=" noselect     row col-12 m-0">
               {/* Left section */}
-              <div className="      col-12 col-md-4 col-xl-3 border-end  px-4 px-md-4  bg-white  ">
-                <div className=" sticky-top pt-2" style={{ marginBottom: 20 }}>
-                  <div className="      d-flex justify-content-end mt-2 mb-3">
+              <div className=" noselect      col-12 col-md-4 col-xl-3 border-end  px-4 px-md-4  bg-white  ">
+                <div
+                  className=" noselect sticky-top pt-2"
+                  style={{ marginBottom: 20 }}
+                >
+                  <div className=" noselect      d-flex justify-content-end mt-2 mb-3">
                     <div
                       style={{
                         padding: 5,
@@ -167,7 +170,7 @@ const Feeds = (props: any) => {
                       </span>
                     </div>
                   </div>
-                  <div className=" d-flex flex-column align-items-center  ">
+                  <div className=" noselect d-flex flex-column align-items-center  ">
                     <Generic.Avatar
                       image_url={userData.image_url}
                       fullname={userData.firstname + userData.lastname}
@@ -188,19 +191,19 @@ const Feeds = (props: any) => {
                       }}
                     >{` @${userData.username}`}</span>
                   </div>
-                  <div className=" ">
-                    <Col className=" my-3  text-justify">
+                  <div className=" noselect ">
+                    <Col className=" noselect my-3  text-justify">
                       <p
-                        className=" text-justify"
+                        className=" noselect text-justify"
                         style={{ textAlign: "justify", fontSize: 14 }}
                       >
                         <em>{userData.bio}</em>
                       </p>
                     </Col>
-                    <Col className=" border-top py-3">
-                      <Col className=" mt-1">
+                    <Col className=" noselect border-top py-3">
+                      <Col className=" noselect mt-1">
                         <i
-                          className=" fa fa-file-text-o fa-lg me-2 "
+                          className=" noselect fa fa-file-text-o fa-lg me-2 "
                           aria-hidden="true"
                         ></i>
 
@@ -209,9 +212,9 @@ const Feeds = (props: any) => {
                           Articles
                         </span>
                       </Col>
-                      <Col className=" mt-1">
+                      <Col className=" noselect mt-1">
                         <i
-                          className=" fa fa-desktop fa-lg me-2 "
+                          className=" noselect fa fa-desktop fa-lg me-2 "
                           aria-hidden="true"
                         ></i>
 
@@ -231,12 +234,12 @@ const Feeds = (props: any) => {
               </div>
 
               {/* Right section */}
-              <div className="     d-flex flex-column flex-grow-1 col-12 col-md-8 col-xl-9 px-4 ">
+              <div className=" noselect     d-flex flex-column flex-grow-1 col-12 col-md-8 col-xl-9 px-4 ">
                 <NewArticleCard />
-                <div className=" d-flex flex-row align-items-center mx-2">
+                <div className=" noselect d-flex flex-row align-items-center mx-2">
                   {/* Left arrow for navtab */}
                   {/* <div
-                        className="      d-block  d-lg-none bg-primary text-white px-3 py-2"
+                        className=" noselect      d-block  d-lg-none bg-primary text-white px-3 py-2"
                         style={{
                           borderTopLeftRadius: 5,
                           borderBottomLeftRadius: 5,
@@ -248,7 +251,7 @@ const Feeds = (props: any) => {
                   <Nav
                     id="feedtabs"
                     tabs
-                    className=" my-2"
+                    className=" noselect my-2"
                     style={{
                       display: "flex",
                       flex: 1,
@@ -275,9 +278,12 @@ const Feeds = (props: any) => {
                               }}
                               style={{
                                 whiteSpace: "nowrap",
+                                cursor: "pointer",
                               }}
                             >
-                              <span className=" px-1">{tab.title}</span>
+                              <span className=" noselect px-1">
+                                {tab.title}
+                              </span>
                             </NavLink>
                           </NavItem>
                         );
@@ -286,7 +292,7 @@ const Feeds = (props: any) => {
 
                   {/* Right arrow for navtab */}
                   {/* <div
-                        className="      d-block  d-lg-none bg-primary text-white px-3 py-2"
+                        className=" noselect      d-block  d-lg-none bg-primary text-white px-3 py-2"
                         style={{
                           borderTopRightRadius: 5,
                           borderBottomRightRadius: 5,
@@ -295,13 +301,13 @@ const Feeds = (props: any) => {
                         <b>{"▶️"}</b>
                       </div> */}
                 </div>
-                <TabContent activeTab={activeTab} className=" my-2 ">
+                <TabContent activeTab={activeTab} className=" noselect my-2 ">
                   {tabs.map((tab, index) => {
                     return (
                       <TabPane
                         key={index}
                         tabId={index}
-                        className=" flex-grow-1"
+                        className=" noselect flex-grow-1"
                       >
                         <ArticleListingByCategory
                           index={index}

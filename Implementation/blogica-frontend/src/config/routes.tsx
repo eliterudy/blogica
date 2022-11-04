@@ -82,11 +82,11 @@ const MainRouter = () => {
     }, [location.pathname, user]);
     if (loading) {
       return (
-        <div className=" vh-100 col-12 d-flex flex-column justify-content-between align-items-center"></div>
+        <div className=" noselect vh-100 col-12 d-flex flex-column justify-content-between align-items-center"></div>
       );
     } else {
       return (
-        <div className=" vh-100 col-12 d-flex flex-column">
+        <div className=" noselect vh-100 col-12 d-flex flex-column">
           {location.pathname != "/main/article/new" &&
             location.pathname != "/main/article/edit" && <Header />}
           <Routes>
@@ -156,7 +156,7 @@ const MainRouter = () => {
   };
 
   return (
-    <div className=" ">
+    <div className=" noselect ">
       <Routes>
         <Route path="/" element={<Navigate to="/main" replace />} />
         <Route path={"main/*"} element={<MainRoutes />} />

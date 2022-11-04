@@ -132,7 +132,7 @@ const Home = (props: any) => {
   };
 
   return (
-    <div className="      col-12">
+    <div className=" noselect      col-12">
       <div
         id="intro"
         style={{
@@ -141,16 +141,16 @@ const Home = (props: any) => {
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
-        className="      bg-image shadow-5-strong vh-100 col-12"
+        className=" noselect      bg-image shadow-5-strong vh-100 col-12"
       >
         <div
-          className="      mask vh-100 col-12"
+          className=" noselect      mask vh-100 col-12"
           style={{ backgroundColor: "rgba(0, 0, 0, 0.85)" }}
         >
-          <div className="      container d-flex align-items-center justify-content-center text-center h-100">
-            <div className="      text-white">
+          <div className=" noselect      container d-flex align-items-center justify-content-center text-center h-100">
+            <div className=" noselect      text-white">
               <h1
-                className="      mb-3"
+                className=" noselect      mb-3"
                 style={{
                   fontFamily: "Kaushan Script",
                   fontWeight: 400,
@@ -159,16 +159,19 @@ const Home = (props: any) => {
               >
                 {constants.INTRO_BANNER_TITLE}
               </h1>
-              <h5 className="      mb-4"> {constants.INTRO_BANNER_MESSAGE}</h5>
+              <h5 className=" noselect      mb-4">
+                {" "}
+                {constants.INTRO_BANNER_MESSAGE}
+              </h5>
 
               <div
-                className="      btn btn-outline-light btn-lg m-2"
+                className=" noselect      btn btn-outline-light btn-lg m-2"
                 onClick={() => navigate("/main/articles")}
               >
                 Start Reading
               </div>
               <div
-                className="      btn btn-outline-light btn-lg m-2"
+                className=" noselect      btn btn-outline-light btn-lg m-2"
                 onClick={() => scrollTo(refToSpecialsUsingSmoothScroll)}
               >
                 {headerTitle} Articles
@@ -177,20 +180,20 @@ const Home = (props: any) => {
           </div>
         </div>
       </div>
-      <div className=" col-12 px-2 px-md-5">
+      <div className=" noselect col-12 px-2 px-md-5">
         <h1
-          className="      text-center pt-5 pb-2"
+          className=" noselect      text-center pt-5 pb-2"
           style={{ fontWeight: "bold" }}
           ref={refToSpecialsUsingSmoothScroll}
         >
           {headerTitle.toUpperCase()} ARTICLES
         </h1>
-        <div className="      row col-12 py-2 m-0 ">
+        <div className=" noselect      row col-12 py-2 m-0 ">
           {/* {isLoading && <Generic.Loader message="Loading" />} */}
 
-          <div className=" col col-12  col-lg-9 p-0  ">
-            <div className=" row col-12  m-0">
-              <div className=" col-12 col-md-7 p-4 p-md-2 ">
+          <div className=" noselect col col-12  col-lg-9 p-0  ">
+            <div className=" noselect row col-12  m-0">
+              <div className=" noselect col-12 col-md-7 p-4 p-md-2 ">
                 {articles && articles.length > 0 && !isLoading ? (
                   <LargeArticleCard
                     article={articles && articles[0]}
@@ -200,12 +203,12 @@ const Home = (props: any) => {
                   <LargeShimmerCard />
                 )}
               </div>
-              <div className=" col-12 col-md-5 p-4 p-md-2 px-md-3 col ">
+              <div className=" noselect col-12 col-md-5 p-4 p-md-2 px-md-3 col ">
                 {articles && !isLoading
                   ? articles
                       .slice(1, 6)
                       .map((article: Article, index: number) => (
-                        <div className=" p-2">
+                        <div className=" noselect p-2">
                           <WideArticleCard
                             key={index}
                             article={article}
@@ -214,20 +217,20 @@ const Home = (props: any) => {
                         </div>
                       ))
                   : new Array(5).fill(0).map((shimmer, index) => (
-                      <div className=" pb-3">
+                      <div className=" noselect pb-3">
                         <WideShimmerCard />
                       </div>
                     ))}
               </div>
             </div>
           </div>
-          <div className="      col-12 col-md-3 px-4 py-2 d-none d-lg-flex border-start">
-            <div className=" col col-12">
+          <div className=" noselect      col-12 col-md-3 px-4 py-2 d-none d-lg-flex border-start">
+            <div className=" noselect col col-12">
               <h6 style={{ fontWeight: "bold" }}>FILTER ARTICLES</h6>
               <Input
                 type="select"
                 name="select"
-                className=" col-12"
+                className=" noselect col-12 cursorPointer"
                 style={{ padding: 10 }}
                 onChange={(e) => onChange(e)}
                 value={selectFilter}
@@ -235,12 +238,12 @@ const Home = (props: any) => {
                 <option key="top">Top</option>
                 <option key="new">New</option>
               </Input>
-              <p className=" subMessages my-2">
+              <p className=" noselect subMessages my-2">
                 {constants.SORT_ARTICLE_NOTES}
               </p>
               {/* <Button
                 size="md"
-                className=" w-100 bg-black"
+                className=" noselect w-100 bg-black"
                 onClick={() => fetchArticles()}
               >
                 Filter
@@ -248,17 +251,19 @@ const Home = (props: any) => {
             </div>
           </div>
         </div>
-        <div className="      col col-12 border-top pt-4">
-          <div className=" d-flex flex-row ms-3">
-            <i className=" fa fa-cubes fa-lg me-2"></i>
-            <h6 style={{ fontWeight: "bold" }}>
-              MORE {headerTitle.toUpperCase()} ARTICLES
-            </h6>
-          </div>
-          <div className=" row col-12 m-0 p-4 p-md-3">
+        <div className=" noselect      col col-12 border-top pt-4">
+          {articles && !isLoading && articles.length > 6 && (
+            <div className=" noselect d-flex flex-row ms-3">
+              <i className=" noselect fa fa-cubes fa-lg me-2"></i>
+              <h6 style={{ fontWeight: "bold" }}>
+                MORE {headerTitle.toUpperCase()} ARTICLES
+              </h6>
+            </div>
+          )}
+          <div className=" noselect row col-12 m-0 p-4 p-md-3">
             {articles && !isLoading
               ? articles.slice(6, 13).map((article: Article, index: number) => (
-                  <div className="      d-flex  col-12 col-md-6 col-lg-4">
+                  <div className=" noselect      d-flex  col-12 col-md-6 col-lg-4">
                     <RankArticleCard
                       key={index}
                       article={article}
@@ -267,7 +272,7 @@ const Home = (props: any) => {
                   </div>
                 ))
               : new Array(6).fill(0).map((shimmer, index) => (
-                  <div className="      d-flex  col-12 col-md-6 col-lg-4">
+                  <div className=" noselect      d-flex  col-12 col-md-6 col-lg-4">
                     <RankShimmerCard index={index} />
                   </div>
                 ))}
@@ -276,7 +281,7 @@ const Home = (props: any) => {
         </div>
       </div>
       <div
-        className="      px-4 "
+        className=" noselect      px-4 "
         style={{ backgroundColor: "#ECDBBA", borderRadius: 5 }}
       >
         <AboutProjectCard />

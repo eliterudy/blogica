@@ -144,28 +144,28 @@ const SignInComponent = () => {
 
   const { textValidator, passwordValidator } = FormValidators;
   return (
-    <div className=" p-3">
-      <div className="     col-12 d-flex flex-row justify-content-center my-5  ">
-        <div className="     col-12 col-sm-9 col-md-7 col-xl-5 m-2">
+    <div className=" noselect p-3">
+      <div className=" noselect     col-12 d-flex flex-row justify-content-center my-5  ">
+        <div className=" noselect     col-12 col-sm-9 col-md-7 col-xl-5 m-2">
           <div
-            className=" col-12  p-4"
+            className=" noselect col-12  p-4"
             style={isTabletOrMobile ? {} : { border: "1px solid #eee" }}
           >
-            <div className="      mx-5 d-flex flex-column align-items-center">
+            <div className=" noselect      mx-5 d-flex flex-column align-items-center">
               <img
-                className="     m-auto"
+                className=" noselect     m-auto"
                 src={icons.app_logo}
                 width={100}
                 alt={constants.APP_NAME}
               />
-              <span className="     col-auto  mb-0 mt-2 align-middle h3 ">
+              <span className=" noselect     col-auto  mb-0 mt-2 align-middle h3 ">
                 {`Sign in to ${constants.APP_NAME}`}
               </span>
             </div>
-            <div className=" col-12  mt-3  p-3 ">
+            <div className=" noselect col-12  mt-3  p-3 ">
               {isErrorVisible && (
                 <div
-                  className=" col-12 py-2 px-3 mb-3 "
+                  className=" noselect col-12 py-2 px-3 mb-3 "
                   style={{
                     borderRadius: 5,
                     border: "1px solid #ff9f94",
@@ -180,13 +180,13 @@ const SignInComponent = () => {
                     {responseError}
                   </span>
                   <i
-                    className=" fa fa-close "
+                    className=" noselect fa fa-close "
                     onClick={() => updateErrorVisible(false)}
                   ></i>
                 </div>
               )}
               <Form>
-                <FormGroup className=" mb-4">
+                <FormGroup className=" noselect mb-4">
                   <Label for="password">Username</Label>
                   <Input
                     invalid={formErrors.username.length > 0}
@@ -208,7 +208,7 @@ const SignInComponent = () => {
                   />
                   <FormFeedback>{formErrors.username}</FormFeedback>
                 </FormGroup>
-                <FormGroup className=" mb-4">
+                <FormGroup className=" noselect mb-4">
                   <Label for="password">Password</Label>
                   <Input
                     invalid={formErrors.password.length > 0}
@@ -241,14 +241,14 @@ const SignInComponent = () => {
                 </Button>
               </Form>
             </div>
-            <div className=" d-flex flex-row align-items-center my-3">
-              <div style={{ flex: 1 }} className=" border-bottom" />
-              <span className=" mx-2">{` or `}</span>
-              <div style={{ flex: 1 }} className=" border-bottom" />
+            <div className=" noselect d-flex flex-row align-items-center my-3">
+              <div style={{ flex: 1 }} className=" noselect border-bottom" />
+              <span className=" noselect mx-2">{` or `}</span>
+              <div style={{ flex: 1 }} className=" noselect border-bottom" />
             </div>
 
-            <div className=" col-12  p-3 ">
-              <p className=" text-center">
+            <div className=" noselect col-12  p-3 ">
+              <p className=" noselect text-center">
                 <span style={{ fontSize: 14 }}>
                   If you haven't signed up with us yet and wish to access
                   premium features, sign up today
