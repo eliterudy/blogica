@@ -8,6 +8,7 @@ import {
   FormFeedback,
   Button,
   Spinner,
+  InputGroup,
 } from "reactstrap";
 import { useNavigate, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -84,6 +85,10 @@ const SignUpComponent = () => {
   );
 
   const [isLoading, updateLoading] = useState(false);
+  const [isShowingPassword, updateShowingPassword] = useState(false);
+  const [isShowingConfirmPassword, updateConfirmShowingPassword] = useState(
+    false
+  );
 
   useEffect(() => {
     document.title = `Sign Up with ${constants.APP_NAME}`;
@@ -139,14 +144,14 @@ const SignUpComponent = () => {
     confirmPasswordValidator,
   } = FormValidators;
   return (
-    <div className=" noselect p-3">
-      <div className=" noselect     col-12 d-flex flex-row justify-content-center my-5  ">
+    <div className=" noselect">
+      <div className=" noselect col-12 d-flex flex-row justify-content-center my-5 p-0  ">
         <div
-          className=" noselect     col-12 col-sm-10 col-md-10 col-lg-8 col-xl-8 m-2 row"
+          className=" noselect col-12 col-sm-10 col-md-10 col-lg-8 col-xl-8 m-2 row"
           style={isTabletOrMobile ? {} : { border: "1px solid #eee" }}
         >
-          <div className=" noselect col-12 col-md-7">
-            <div className=" noselect col-12  p-2 ">
+          <div className=" noselect col-12 col-md-7 px-5">
+            <div className=" noselect col-12  ">
               <div className=" noselect mx-5 mt-3 d-flex flex-column align-items-center">
                 <img
                   className=" noselect     m-auto"
@@ -182,7 +187,7 @@ const SignUpComponent = () => {
                   )}
                 </div>
               )}
-              <div className=" noselect col-12  mt-3  p-3 ">
+              <div className=" noselect col-12  mt-3 ">
                 <Form>
                   {/* Username */}
                   <FormGroup className=" noselect mb-4">
@@ -251,7 +256,12 @@ const SignUpComponent = () => {
                       onChange={({ target }) => {
                         updateFormValues({
                           ...formValues,
-                          firstname: target.value,
+                          // firstname: target.value,
+                          firstname:
+                            target.value.length > 0
+                              ? target.value.charAt(0).toUpperCase() +
+                                target.value.slice(1)
+                              : target.value,
                         });
                         updateFormErrors({
                           ...formErrors,
@@ -283,7 +293,11 @@ const SignUpComponent = () => {
                       onChange={({ target }) => {
                         updateFormValues({
                           ...formValues,
-                          lastname: target.value,
+                          lastname:
+                            target.value.length > 0
+                              ? target.value.charAt(0).toUpperCase() +
+                                target.value.slice(1)
+                              : target.value,
                         });
                         updateFormErrors({
                           ...formErrors,
@@ -406,35 +420,72 @@ const SignUpComponent = () => {
                   </FormGroup>
 
                   {/* Password */}
-                  <FormGroup className=" noselect mb-4">
+                  <FormGroup className=" noselect mb-4 ">
                     <Label for="password">
                       Password<span style={{ color: "red" }}>*</span>
                     </Label>
-                    <Input
-                      invalid={formErrors.password.length > 0}
-                      type="password"
-                      name="password"
-                      id="password"
-                      placeholder=""
-                      value={formValues.password}
-                      onChange={({ target }) => {
-                        updateFormValues({
-                          ...formValues,
-                          password: target.value,
-                        });
-                        updateFormErrors({
-                          ...formErrors,
-                          password: passwordValidator(target.value, 6, 20)[0],
-                        });
-                      }}
-                      onBlur={({ target }) => {
-                        updateFormErrors({
-                          ...formErrors,
-                          password: passwordValidator(target.value, 6, 20)[0],
-                        });
-                      }}
-                    />
-                    <FormFeedback>{formErrors.password}</FormFeedback>
+                    <div className="col-12 d-flex position-relative">
+                      <div
+                        className="col-12 d-flex flex-column  flex-1"
+                        style={{ paddingRight: 38 }}
+                      >
+                        <Input
+                          className=" rounded-0 rounded-start border-end-1 rounded-end-0"
+                          style={{ marginRight: 30 }}
+                          invalid={formErrors.password.length > 0}
+                          type={isShowingPassword ? "text" : "password"}
+                          name="password"
+                          id="password"
+                          placeholder=""
+                          value={formValues.password}
+                          onChange={({ target }) => {
+                            updateFormValues({
+                              ...formValues,
+                              password: target.value,
+                            });
+                            updateFormErrors({
+                              ...formErrors,
+                              password: passwordValidator(
+                                target.value,
+                                6,
+                                20
+                              )[0],
+                            });
+                          }}
+                          onBlur={({ target }) => {
+                            updateFormErrors({
+                              ...formErrors,
+                              password: passwordValidator(
+                                target.value,
+                                6,
+                                20
+                              )[0],
+                            });
+                          }}
+                        />
+                        <FormFeedback>{formErrors.password}</FormFeedback>
+                      </div>
+                      <Button
+                        className="px-2  d-flex  bg-transparent  position-absolute rounded-0 rounded-end"
+                        style={{
+                          // border: "0px solid",
+                          border: "1px solid #bbb ",
+                          paddingTop: 6,
+                          paddingBottom: 6,
+                          top: 0,
+                          right: 0,
+                        }}
+                        onClick={() => {
+                          updateShowingPassword(!isShowingPassword);
+                        }}
+                      >
+                        {isShowingPassword ? (
+                          <i className=" fa fa-eye fa-lg text-secondary my-1" />
+                        ) : (
+                          <i className=" fa fa-eye-slash fa-lg text-secondary my-1" />
+                        )}
+                      </Button>
+                    </div>
                   </FormGroup>
 
                   {/* Confirm Password */}
@@ -442,41 +493,73 @@ const SignUpComponent = () => {
                     <Label for="confirmpassword">
                       Confirm Password<span style={{ color: "red" }}>*</span>
                     </Label>
-                    <Input
-                      invalid={formErrors.confirmPassword.length > 0}
-                      type="password"
-                      name="confirmpassword"
-                      id="confirmpassword"
-                      placeholder=""
-                      value={formValues.confirmPassword}
-                      onChange={({ target }) => {
-                        updateFormValues({
-                          ...formValues,
-                          confirmPassword: target.value,
-                        });
-                        updateFormErrors({
-                          ...formErrors,
-                          confirmPassword: confirmPasswordValidator(
-                            target.value,
-                            6,
-                            20,
-                            formValues.password
-                          )[0],
-                        });
-                      }}
-                      onBlur={({ target }) => {
-                        updateFormErrors({
-                          ...formErrors,
-                          confirmPassword: confirmPasswordValidator(
-                            target.value,
-                            6,
-                            20,
-                            formValues.password
-                          )[0],
-                        });
-                      }}
-                    />
-                    <FormFeedback>{formErrors.confirmPassword}</FormFeedback>
+                    <div className="col-12 d-flex position-relative">
+                      <div
+                        className="col-12 d-flex flex-column  flex-1"
+                        style={{ paddingRight: 38 }}
+                      >
+                        <Input
+                          className=" rounded-0 rounded-start border-end-1 rounded-end-0"
+                          invalid={formErrors.confirmPassword.length > 0}
+                          type={isShowingConfirmPassword ? "text" : "password"}
+                          name="confirmpassword"
+                          id="confirmpassword"
+                          placeholder=""
+                          value={formValues.confirmPassword}
+                          onChange={({ target }) => {
+                            updateFormValues({
+                              ...formValues,
+                              confirmPassword: target.value,
+                            });
+                            updateFormErrors({
+                              ...formErrors,
+                              confirmPassword: confirmPasswordValidator(
+                                target.value,
+                                6,
+                                20,
+                                formValues.confirmPassword
+                              )[0],
+                            });
+                          }}
+                          onBlur={({ target }) => {
+                            updateFormErrors({
+                              ...formErrors,
+                              confirmPassword: confirmPasswordValidator(
+                                target.value,
+                                6,
+                                20,
+                                formValues.confirmPassword
+                              )[0],
+                            });
+                          }}
+                        />
+                        <FormFeedback>
+                          {formErrors.confirmPassword}
+                        </FormFeedback>
+                      </div>
+                      <Button
+                        className="px-2  d-flex  bg-transparent  position-absolute rounded-0 rounded-end"
+                        style={{
+                          // border: "0px solid",
+                          border: "1px solid #bbb ",
+                          paddingTop: 6,
+                          paddingBottom: 6,
+                          top: 0,
+                          right: 0,
+                        }}
+                        onClick={() => {
+                          updateConfirmShowingPassword(
+                            !isShowingConfirmPassword
+                          );
+                        }}
+                      >
+                        {isShowingConfirmPassword ? (
+                          <i className=" fa fa-eye fa-lg text-secondary my-1" />
+                        ) : (
+                          <i className=" fa fa-eye-slash fa-lg text-secondary my-1" />
+                        )}
+                      </Button>
+                    </div>
                   </FormGroup>
 
                   {/* Signup button */}
@@ -568,7 +651,7 @@ const SignUpComponent = () => {
                   </Button>
                 </Form>
               </div>
-              <div className=" noselect col-12  p-3 ">
+              <div className=" noselect col-12  ">
                 <p className=" noselect text-center">
                   <span style={{ fontSize: 14 }}>
                     Already have an account.{" "}
@@ -579,7 +662,7 @@ const SignUpComponent = () => {
             </div>
           </div>
           {!isTabletOrMobile && (
-            <div className=" noselect col-12 col-sm-5 d-flex justify-content-center align-items-center">
+            <div className=" noselect col-12 col-sm-5 d-flex justify-content-center align-items-center p-0">
               <div className=" noselect col-12 d-flex flex-column align-items-center">
                 {imagePreview ? (
                   <Generic.Avatar
