@@ -55,6 +55,8 @@ const SignInComponent = () => {
       color: "#2b59a1",
     },
     {
+      marginTop: 10,
+
       cursor: "pointer",
       width: "100%",
     }

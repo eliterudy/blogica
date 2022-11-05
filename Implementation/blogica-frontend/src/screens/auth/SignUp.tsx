@@ -45,6 +45,7 @@ const SignUpComponent = () => {
       color: "#2b59a1",
     },
     {
+      marginTop: 10,
       cursor: "pointer",
       width: "100%",
       borderWidth: 1,
@@ -187,7 +188,7 @@ const SignUpComponent = () => {
                   )}
                 </div>
               )}
-              <div className=" noselect col-12  mt-3 ">
+              <div className=" noselect col-12  ">
                 <Form>
                   {/* Username */}
                   <FormGroup className=" noselect mb-4">
@@ -651,7 +652,7 @@ const SignUpComponent = () => {
                   </Button>
                 </Form>
               </div>
-              <div className=" noselect col-12  ">
+              <div className=" noselect col-12  mt-4 ">
                 <p className=" noselect text-center">
                   <span style={{ fontSize: 14 }}>
                     Already have an account.{" "}
