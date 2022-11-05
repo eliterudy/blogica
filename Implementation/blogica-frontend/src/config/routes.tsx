@@ -63,7 +63,8 @@ const MainRouter = () => {
                 if (response && response.data && response.data.error) {
                   alert(response.data.error);
                 } else {
-                  alert("failed to load user. Please login");
+                  alert("Failed to load user. Please login again!");
+                  localStorage.setItem("token", "");
                 }
                 dispatch(removeUser());
                 navigate("/");
