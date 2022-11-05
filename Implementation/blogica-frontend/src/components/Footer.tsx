@@ -47,18 +47,21 @@ const Footer = () => {
           </span>
           <div className=" noselect col-12 d-flex flex-row justify-content-start justify-content-sm-end mt-2">
             <a
+              target="_blank"
               className=" noselect me-1 btn btn-social-icon btn-facebook"
               href="https://www.facebook.com/sharer/sharer.php?u=https%3A//blogica.netlify.app/"
             >
               <i className=" noselect fa fa-facebook"></i>
             </a>
             <a
+              target="_blank"
               className=" noselect me-1 btn btn-social-icon btn-linkedin"
               href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A//blogica.netlify.app/"
             >
               <i className=" noselect fa fa-linkedin"></i>
             </a>
             <a
+              target="_blank"
               className=" noselect me-1 btn btn-social-icon btn-twitter"
               href="https://twitter.com/intent/tweet?text=Come%20join%20me%20and%20read%20some%20of%20the%20amazing%20articles%20on%20Blogica%0Ahttps%3A//blogica.netlify.app/"
             >
@@ -66,6 +69,7 @@ const Footer = () => {
             </a>
 
             <a
+              target="_blank"
               className=" noselect me-1 btn btn-social-icon btn-microsoft"
               href="mailto:?body=Come%20join%20me%20and%20read%20some%20of%20the%20amazing%20articles%20on%20Blogica%0Ahttps%3A//blogica.netlify.app/"
             >

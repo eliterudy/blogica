@@ -144,8 +144,7 @@ const Articles = (props: any) => {
             <Input
               type="select"
               name="select"
-              className=" noselect col-12 cursorPointer"
-              style={{ padding: 10 }}
+              className=" noselect col-12 cursorPointer  selectOptions"
               onChange={(e) => onChange(e)}
               value={selectFilter}
             >

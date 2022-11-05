@@ -88,9 +88,7 @@ const Home = (props: any) => {
       })
       .catch(({ response, message }) => {
         if (message && message === "Network Error") {
-          alert(
-            "This action cannot be performed at the moment because of no internet connection. Please connect to an internet connection and try again"
-          );
+          alert(constants.NO_INTERNET_ALERT_MESSAGE);
         } else {
           alert(constants.OOPS_MESSAGE);
         }
@@ -203,7 +201,7 @@ const Home = (props: any) => {
               <Input
                 type="select"
                 name="select"
-                className=" noselect col-12 cursorPointer"
+                className=" noselect col-12 cursorPointer selectOptions"
                 style={{ padding: 10 }}
                 onChange={(e) => onChange(e)}
                 value={selectFilter}

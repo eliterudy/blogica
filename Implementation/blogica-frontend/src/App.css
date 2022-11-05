@@ -77,13 +77,16 @@
 .cardDescription .ql-container .ql-editor {
   padding: 0%;
   font-size: 16px;
-  text-justify: inter-word;
+  height: 2.8em;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+  -webkit-box-orient: vertical;  
+ 
   cursor: pointer;
+  
+ 
 }
 
 
@@ -120,6 +123,11 @@
   -ms-user-select: none; /* Internet Explorer/Edge */
   user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome, Opera and Firefox */
+}
+
+.selectOptions {
+  -webkit-appearance:none;
+
 }
 
 
@@ -198,19 +206,25 @@ Button:hover {
   }
 }
 
+/* p {
+  display: inline;
+} */
+
+
 
 @media (max-width: 480px){
   
   .cardDescription .ql-container .ql-editor {
     padding: 0%;
     font-size: 16px;
-    cursor: pointer;
-    text-justify: inter-word;
+    height: 2.8em;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;  
+   
+    cursor: pointer;
   }
 
 .faCustomIcons .fa {

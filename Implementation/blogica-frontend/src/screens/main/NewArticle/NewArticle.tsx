@@ -146,9 +146,7 @@ const NewArticle = (props: any) => {
                 })
                 .catch(({ response, message }) => {
                   if (message && message === "Network Error") {
-                    alert(
-                      "This action cannot be performed at the moment because of no internet connection. Please connect to an internet connection and try again"
-                    );
+                    alert(constants.NO_INTERNET_ALERT_MESSAGE);
                   } else {
                     if (response && response.data && response.data.error) {
                       alert(response.data.error);
@@ -171,9 +169,7 @@ const NewArticle = (props: any) => {
                 })
                 .catch(({ message, response }) => {
                   if (message && message === "Network Error") {
-                    alert(
-                      "This action cannot be performed at the moment because of no internet connection. Please connect to an internet connection and try again"
-                    );
+                    alert(constants.NO_INTERNET_ALERT_MESSAGE);
                   } else {
                     if (response && response.data && response.data.error) {
                       alert(response.data.error);
@@ -222,9 +218,7 @@ const NewArticle = (props: any) => {
                 })
                 .catch(({ message, response }) => {
                   if (message && message === "Network Error") {
-                    alert(
-                      "This action cannot be performed at the moment because of no internet connection. Please connect to an internet connection and try again"
-                    );
+                    alert(constants.NO_INTERNET_ALERT_MESSAGE);
                   } else {
                     if (response && response.data && response.data.error) {
                       alert(response.data.error);
@@ -246,9 +240,7 @@ const NewArticle = (props: any) => {
                 })
                 .catch(({ response, message }) => {
                   if (message && message === "Network Error") {
-                    alert(
-                      "This action cannot be performed at the moment because of no internet connection. Please connect to an internet connection and try again"
-                    );
+                    alert(constants.NO_INTERNET_ALERT_MESSAGE);
                   } else {
                     if (response && response.data && response.data.error) {
                       alert(response.data.error);
