@@ -77,16 +77,13 @@
 .cardDescription .ql-container .ql-editor {
   padding: 0%;
   font-size: 16px;
+  cursor: pointer;
   height: 2.8em;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;  
- 
-  cursor: pointer;
-  
- 
 }
 
 
@@ -127,7 +124,6 @@
 
 .selectOptions {
   -webkit-appearance:none;
-
 }
 
 
@@ -223,23 +219,21 @@ Button:hover {
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;  
-   
-    cursor: pointer;
   }
 
-.faCustomIcons .fa {
-  color: black
-}
+  .faCustomIcons .fa {
+    color: black
+  }
 
-.faCustomIcons .fa:hover {
-  color: black
-}
+  .faCustomIcons .fa:hover {
+    color: black
+  }
 
-.faDeleteIcon .fa {
-  color: rgb(231, 15, 15)
-}
+  .faDeleteIcon .fa {
+    color: rgb(231, 15, 15)
+  }
 
-.faDeleteIcon .fa:hover {
-  color: rgb(231, 15, 15)
-}
+  .faDeleteIcon .fa:hover {
+    color: rgb(231, 15, 15)
+  }
 }
