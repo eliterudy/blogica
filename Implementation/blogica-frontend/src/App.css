@@ -125,6 +125,11 @@
                                   supported by Chrome, Opera and Firefox */
 }
 
+.selectOptions {
+  -webkit-appearance:none;
+
+}
+
 
 
 .cursorPointer {
@@ -204,6 +209,8 @@ Button:hover {
 /* p {
   display: inline;
 } */
+
+
 
 @media (max-width: 480px){
   

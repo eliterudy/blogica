@@ -201,7 +201,7 @@ const Home = (props: any) => {
               <Input
                 type="select"
                 name="select"
-                className=" noselect col-12 cursorPointer"
+                className=" noselect col-12 cursorPointer selectOptions"
                 style={{ padding: 10 }}
                 onChange={(e) => onChange(e)}
                 value={selectFilter}

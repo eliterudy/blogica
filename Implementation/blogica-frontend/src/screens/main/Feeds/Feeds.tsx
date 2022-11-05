@@ -194,7 +194,7 @@ const Feeds = (props: any) => {
               {/* Right section */}
               <div className=" noselect     d-flex flex-column flex-grow-1 col-12 col-md-8 col-xl-9 px-4 ">
                 <NewArticleCard />
-                <div className=" noselect d-flex flex-row align-items-center mx-2">
+                <div className=" noselect d-flex flex-row align-items-center ">
                   {/* Left arrow for navtab */}
                   {/* <div
                         className=" noselect d-block  d-lg-none bg-primary text-white px-3 py-2"
