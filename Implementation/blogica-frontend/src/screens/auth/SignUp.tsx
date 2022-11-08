@@ -437,7 +437,7 @@ const SignUpComponent = () => {
                           type={isShowingPassword ? "text" : "password"}
                           name="password"
                           id="password"
-                          placeholder=""
+                          placeholder="***"
                           value={formValues.password}
                           onChange={({ target }) => {
                             updateFormValues({
@@ -505,7 +505,7 @@ const SignUpComponent = () => {
                           type={isShowingConfirmPassword ? "text" : "password"}
                           name="confirmpassword"
                           id="confirmpassword"
-                          placeholder=""
+                          placeholder="***"
                           value={formValues.confirmPassword}
                           onChange={({ target }) => {
                             updateFormValues({
