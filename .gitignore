@@ -3,6 +3,7 @@
 # dependencies
 node_modules
 /Ideas
+/Documentation
 /.pnp
 .pnp.js
 
