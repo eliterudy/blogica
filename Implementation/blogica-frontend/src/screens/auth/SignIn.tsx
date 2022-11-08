@@ -215,7 +215,7 @@ const SignInComponent = () => {
                         className=" rounded-0 rounded-start border-end-1 rounded-end-0"
                         style={{ marginRight: 30 }}
                         invalid={formErrors.password.length > 0}
-                        type="password"
+                        type={isShowingPassword ? "text" : "password"}
                         name="password"
                         id="password"
                         placeholder="***"

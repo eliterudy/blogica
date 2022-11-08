@@ -63,17 +63,10 @@ const ArticleDetail = (props: any) => {
         <div className=" noselect col-12">
           <div className=" noselect col-12 d-flex flex-column align-items-center ">
             <div className=" noselect col-12 col-md-8 p-4 px-md-0  ">
-              <ArticleHead
-                article={article}
-                url={
-                  "https://blogica.netlify.app/#/main/article/id/636486d6d063a2f9828939a5"
-                }
-              />
+              <ArticleHead article={article} url={window.location.href} />
               <ArticleBody
                 article={article}
-                url={
-                  "https://blogica.netlify.app/#/main/article/id/636486d6d063a2f9828939a5"
-                }
+                url={window.location.href}
                 updateArticle={(article: ArticleDetails) =>
                   updateArticleDetails({ ...article })
                 }
