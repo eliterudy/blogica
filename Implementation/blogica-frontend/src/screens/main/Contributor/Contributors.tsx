@@ -39,6 +39,8 @@ const Contributors = (props: any) => {
   }, []);
 
   useEffect(() => {
+    updateLoading(true);
+
     getContributorsFromApi();
   }, [callerCounter]);
 
@@ -52,8 +54,6 @@ const Contributors = (props: any) => {
   };
 
   const getContributorsFromApi = () => {
-    updateLoading(true);
-
     apis
       .getAllAuthors({
         search,

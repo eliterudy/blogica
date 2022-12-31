@@ -46,6 +46,7 @@ const Articles = (props: any) => {
       selectFilter && selectFilter == "Top"
         ? "Trending Articles"
         : "Latest Articles";
+    updateLoading(true);
 
     getArticlesFromApi();
   }, [callerCounter]);
@@ -69,8 +70,7 @@ const Articles = (props: any) => {
   };
 
   const getArticlesFromApi = () => {
-    updateLoading(true);
-
+    console.log("here");
     apis
       .getAllArticles({
         sort: selectFilter.toLowerCase(),
@@ -190,7 +190,7 @@ const Articles = (props: any) => {
                     className=" noselect px-4 "
                     dataLength={articles ? articles.length : 0} //This is important field to render the next data
                     next={() => {
-                      //  getContributorsFromApi();
+                      getArticlesFromApi();
                     }}
                     hasMore={listCount > articles.length}
                     style={{

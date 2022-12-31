@@ -61,17 +61,12 @@
 .ql-container .ql-editor {
   font-size: 18px;
   padding: 14px;
-  /* padding-left: 0px;
-  padding-right: 0px;
-  padding-bottom: 14px; */
   text-justify: inter-word;
   text-align: justify;
-  /* line-height: 40px; */
 }
 
 .quill > .ql-container > .ql-editor.ql-blank::before{
   font-style: normal;
-  
 }
 
 .cardDescription .ql-container .ql-editor {
