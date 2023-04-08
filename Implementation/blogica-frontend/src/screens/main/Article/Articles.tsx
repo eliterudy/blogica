@@ -48,6 +48,7 @@ const Articles = (props: any) => {
         : "Latest Articles";
     updateLoading(true);
 
+
     getArticlesFromApi();
   }, [callerCounter]);
 
