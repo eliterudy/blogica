@@ -9,7 +9,7 @@ const headers = {
 
 const ApiCaller = axios.create({
   baseURL: baseURL,
-  timeout: 10000,
+  timeout: 30000,
   headers: headers,
 });
 ApiCaller.interceptors.request.use(async function(config: any) {
