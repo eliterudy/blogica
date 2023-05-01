@@ -1,4 +1,7 @@
-# Blogica - Crowdsourcing Blog Website v1.0
+
+<h1><img src="https://github.com/eliterudy/blogica/blob/master/Implementation/blogica-frontend/src/assets/icons/app_icon.png?raw=true"  width="30" height="30" /> Blogica - Crowdsourcing Blog Website v1.0</h1>
+
+[<img src="https://img.freepik.com/premium-vector/live-streaming-icon-live-broadcasting-button_349999-641.jpg?w=100" />](https://blogica.netlify.app/)
 
 This is a crowdsourcing blog website that has been developed using the MERN stack - MongoDB, Express, React, and Node.js. Users are enabled to create and publish their own blog posts, read and engage with content shared by other users, and follow or subscribe to preferred authors. Additionally, the app features a badge system that endows authors with a sense of accomplishment, and an incentive system that rewards them based on the level of engagement their articles receive, including views and likes.
 
